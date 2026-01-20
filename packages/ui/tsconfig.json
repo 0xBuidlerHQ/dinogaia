@@ -1,0 +1,11 @@
+{
+	"extends": "@0xbuidlerhq/config-typescript/react-library.json",
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@0xbuidlerhq/ui/*": ["./src/*"]
+		}
+	},
+	"include": ["."],
+	"exclude": ["node_modules", "dist"]
+}
