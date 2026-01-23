@@ -2,14 +2,15 @@
 
 import type { PropsWithChildren } from "react";
 import { cookieStorage, createConfig, createStorage, http, WagmiProvider } from "wagmi";
-import { mainnet } from "wagmi/chains";
+import { anvil, mainnet } from "wagmi/chains";
 import { injected } from "wagmi/connectors";
 
 const wagmiConfig = createConfig({
-	chains: [mainnet],
+	chains: [mainnet, anvil],
 	ssr: true,
 	transports: {
 		[mainnet.id]: http(),
+		[anvil.id]: http(),
 	},
 	connectors: [injected()],
 	storage: createStorage({

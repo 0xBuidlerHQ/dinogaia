@@ -1,0 +1,23 @@
+{
+	"name": "@0xbuidlerhq/dinogaia.contracts",
+	"version": "0.0.0",
+	"private": true,
+	"main": "./package/index.tsx",
+	"types": "./package/index.tsx",
+	"exports": {
+		".": "./package/index.tsx"
+	},
+	"scripts": {
+		"build": "pnpm wagmi generate"
+	},
+	"dependencies": {
+		"wagmi": "catalog:react19"
+	},
+	"devDependencies": {
+		"@wagmi/cli": "catalog:react19"
+	},
+	"packageManager": "pnpm@10.13.1",
+	"engines": {
+		"node": ">=20"
+	}
+}
