@@ -248,89 +248,6 @@ export const dinoAccountAbi = [
 ] as const;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// DinoAccountFactory
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-export const dinoAccountFactoryAbi = [
-	{
-		type: "constructor",
-		inputs: [{ name: "_dinoERC721", internalType: "address", type: "address" }],
-		stateMutability: "nonpayable",
-	},
-	{
-		type: "function",
-		inputs: [{ name: "dinoId", internalType: "uint256", type: "uint256" }],
-		name: "accountOf",
-		outputs: [{ name: "", internalType: "address", type: "address" }],
-		stateMutability: "view",
-	},
-	{
-		type: "function",
-		inputs: [],
-		name: "dinoERC721",
-		outputs: [{ name: "", internalType: "contract DinoERC721", type: "address" }],
-		stateMutability: "view",
-	},
-	{
-		type: "function",
-		inputs: [{ name: "owner", internalType: "address", type: "address" }],
-		name: "dinosOf",
-		outputs: [
-			{ name: "dinoIds", internalType: "uint256[]", type: "uint256[]" },
-			{ name: "accounts", internalType: "address[]", type: "address[]" },
-		],
-		stateMutability: "view",
-	},
-	{
-		type: "function",
-		inputs: [],
-		name: "mintWithAccount",
-		outputs: [
-			{ name: "dinoId", internalType: "uint256", type: "uint256" },
-			{ name: "account", internalType: "address", type: "address" },
-		],
-		stateMutability: "nonpayable",
-	},
-	{
-		type: "event",
-		anonymous: false,
-		inputs: [
-			{
-				name: "owner",
-				internalType: "address",
-				type: "address",
-				indexed: true,
-			},
-			{
-				name: "dinoId",
-				internalType: "uint256",
-				type: "uint256",
-				indexed: true,
-			},
-			{
-				name: "account",
-				internalType: "address",
-				type: "address",
-				indexed: true,
-			},
-		],
-		name: "DinoCreated",
-	},
-	{
-		type: "error",
-		inputs: [{ name: "account", internalType: "address", type: "address" }],
-		name: "AccountAlreadyExists",
-	},
-] as const;
-
-export const dinoAccountFactoryAddress = "0x3E24afa67Cb7180f03bE42fdfAca3A8EAfc0dCa1" as const;
-
-export const dinoAccountFactoryConfig = {
-	address: dinoAccountFactoryAddress,
-	abi: dinoAccountFactoryAbi,
-} as const;
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // DinoERC721
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -732,7 +649,7 @@ export const dinoErc721Abi = [
 	},
 ] as const;
 
-export const dinoErc721Address = "0xAf06d3d9B12491b920B6a2d8c8c0c8c510939c35" as const;
+export const dinoErc721Address = "0xEB0A6da62103824436EB069Dee29EbFD5f92387a" as const;
 
 export const dinoErc721Config = {
 	address: dinoErc721Address,
@@ -740,101 +657,29 @@ export const dinoErc721Config = {
 } as const;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// DinoFactory
+// DinoJobsManager
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const dinoFactoryAbi = [
-	{
-		type: "constructor",
-		inputs: [{ name: "_dinoERC721", internalType: "address", type: "address" }],
-		stateMutability: "nonpayable",
-	},
-	{
-		type: "function",
-		inputs: [{ name: "dinoId", internalType: "uint256", type: "uint256" }],
-		name: "accountOf",
-		outputs: [{ name: "", internalType: "address", type: "address" }],
-		stateMutability: "view",
-	},
-	{
-		type: "function",
-		inputs: [],
-		name: "dinoERC721",
-		outputs: [{ name: "", internalType: "contract DinoERC721", type: "address" }],
-		stateMutability: "view",
-	},
-	{
-		type: "function",
-		inputs: [{ name: "owner", internalType: "address", type: "address" }],
-		name: "dinosOf",
-		outputs: [
-			{ name: "dinoIds", internalType: "uint256[]", type: "uint256[]" },
-			{ name: "accounts", internalType: "address[]", type: "address[]" },
-		],
-		stateMutability: "view",
-	},
-	{
-		type: "function",
-		inputs: [{ name: "name", internalType: "string", type: "string" }],
-		name: "mintWithAccount",
-		outputs: [
-			{ name: "dinoId", internalType: "uint256", type: "uint256" },
-			{ name: "account", internalType: "address", type: "address" },
-		],
-		stateMutability: "nonpayable",
-	},
-	{
-		type: "event",
-		anonymous: false,
-		inputs: [
-			{
-				name: "owner",
-				internalType: "address",
-				type: "address",
-				indexed: true,
-			},
-			{
-				name: "dinoId",
-				internalType: "uint256",
-				type: "uint256",
-				indexed: true,
-			},
-			{
-				name: "account",
-				internalType: "address",
-				type: "address",
-				indexed: true,
-			},
-		],
-		name: "DinoCreated",
-	},
-	{
-		type: "error",
-		inputs: [{ name: "account", internalType: "address", type: "address" }],
-		name: "AccountAlreadyExists",
-	},
-] as const;
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// DinoJobs
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-export const dinoJobsAbi = [
+export const dinoJobsManagerAbi = [
 	{
 		type: "constructor",
 		inputs: [
 			{ name: "owner", internalType: "address", type: "address" },
 			{
-				name: "_dinoAccountFactory",
-				internalType: "contract DinoAccountFactory",
+				name: "_emerald",
+				internalType: "contract EmeraldERC20",
 				type: "address",
 			},
 			{
-				name: "_dinoJobsKb",
-				internalType: "contract DinoJobsKB",
+				name: "_dinoRegistry",
+				internalType: "contract DinoRegistry",
 				type: "address",
 			},
-			{ name: "_emerald", internalType: "contract IERC20", type: "address" },
+			{
+				name: "_dinoJobsRegistry",
+				internalType: "contract DinoJobsRegistry",
+				type: "address",
+			},
 		],
 		stateMutability: "nonpayable",
 	},
@@ -855,28 +700,22 @@ export const dinoJobsAbi = [
 	{
 		type: "function",
 		inputs: [],
-		name: "dinoAccountFactory",
-		outputs: [
-			{
-				name: "",
-				internalType: "contract DinoAccountFactory",
-				type: "address",
-			},
-		],
+		name: "dinoJobsRegistry",
+		outputs: [{ name: "", internalType: "contract DinoJobsRegistry", type: "address" }],
 		stateMutability: "view",
 	},
 	{
 		type: "function",
 		inputs: [],
-		name: "dinoJobsKb",
-		outputs: [{ name: "", internalType: "contract DinoJobsKB", type: "address" }],
+		name: "dinoRegistry",
+		outputs: [{ name: "", internalType: "contract DinoRegistry", type: "address" }],
 		stateMutability: "view",
 	},
 	{
 		type: "function",
 		inputs: [],
 		name: "emerald",
-		outputs: [{ name: "", internalType: "contract IERC20", type: "address" }],
+		outputs: [{ name: "", internalType: "contract EmeraldERC20", type: "address" }],
 		stateMutability: "view",
 	},
 	{
@@ -942,20 +781,20 @@ export const dinoJobsAbi = [
 	},
 	{
 		type: "function",
-		inputs: [
-			{ name: "tokenId", internalType: "uint256", type: "uint256" },
-			{ name: "jobId", internalType: "uint256", type: "uint256" },
-		],
-		name: "setJob",
-		outputs: [],
-		stateMutability: "nonpayable",
-	},
-	{
-		type: "function",
 		inputs: [{ name: "interfaceId", internalType: "bytes4", type: "bytes4" }],
 		name: "supportsInterface",
 		outputs: [{ name: "", internalType: "bool", type: "bool" }],
 		stateMutability: "view",
+	},
+	{
+		type: "function",
+		inputs: [
+			{ name: "tokenId", internalType: "uint256", type: "uint256" },
+			{ name: "jobId", internalType: "uint256", type: "uint256" },
+		],
+		name: "switchJob",
+		outputs: [],
+		stateMutability: "nonpayable",
 	},
 	{
 		type: "event",
@@ -980,7 +819,7 @@ export const dinoJobsAbi = [
 				indexed: false,
 			},
 		],
-		name: "JobApplied",
+		name: "JobSwitched",
 	},
 	{
 		type: "event",
@@ -1089,18 +928,18 @@ export const dinoJobsAbi = [
 	{ type: "error", inputs: [], name: "PaymentFailed" },
 ] as const;
 
-export const dinoJobsAddress = "0x2420ca40667849dE80a3c4775F0E211D73D174dc" as const;
+export const dinoJobsManagerAddress = "0x2C39257edB7742735e3B81cBC60c6eB1f5DeE9Fe" as const;
 
-export const dinoJobsConfig = {
-	address: dinoJobsAddress,
-	abi: dinoJobsAbi,
+export const dinoJobsManagerConfig = {
+	address: dinoJobsManagerAddress,
+	abi: dinoJobsManagerAbi,
 } as const;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// DinoJobsKB
+// DinoJobsRegistry
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const dinoJobsKbAbi = [
+export const dinoJobsRegistryAbi = [
 	{
 		type: "constructor",
 		inputs: [{ name: "owner", internalType: "address", type: "address" }],
@@ -1117,7 +956,7 @@ export const dinoJobsKbAbi = [
 		type: "function",
 		inputs: [
 			{
-				name: "job",
+				name: "_job",
 				internalType: "struct DinoJob",
 				type: "tuple",
 				components: [
@@ -1161,7 +1000,26 @@ export const dinoJobsKbAbi = [
 	},
 	{
 		type: "function",
-		inputs: [{ name: "jobId", internalType: "uint256", type: "uint256" }],
+		inputs: [{ name: "_jobId", internalType: "uint256", type: "uint256" }],
+		name: "job",
+		outputs: [
+			{
+				name: "dinoJob",
+				internalType: "struct DinoJob",
+				type: "tuple",
+				components: [
+					{ name: "name", internalType: "string", type: "string" },
+					{ name: "dailyPay", internalType: "uint256", type: "uint256" },
+					{ name: "trainingCost", internalType: "uint256", type: "uint256" },
+					{ name: "requiredLevel", internalType: "uint16", type: "uint16" },
+				],
+			},
+		],
+		stateMutability: "view",
+	},
+	{
+		type: "function",
+		inputs: [{ name: "_jobId", internalType: "uint256", type: "uint256" }],
 		name: "jobExists",
 		outputs: [{ name: "", internalType: "bool", type: "bool" }],
 		stateMutability: "view",
@@ -1222,9 +1080,9 @@ export const dinoJobsKbAbi = [
 	{
 		type: "function",
 		inputs: [
-			{ name: "jobId", internalType: "uint256", type: "uint256" },
+			{ name: "_jobId", internalType: "uint256", type: "uint256" },
 			{
-				name: "job",
+				name: "_job",
 				internalType: "struct DinoJob",
 				type: "tuple",
 				components: [
@@ -1373,15 +1231,123 @@ export const dinoJobsKbAbi = [
 		name: "AccessControlUnauthorizedAccount",
 	},
 	{ type: "error", inputs: [], name: "EmptyName" },
+	{ type: "error", inputs: [], name: "InvalidJob" },
 	{ type: "error", inputs: [], name: "InvalidJobId" },
 	{ type: "error", inputs: [], name: "InvalidPay" },
 ] as const;
 
-export const dinoJobsKbAddress = "0xba9B72049dB6F93F51C91CAF8F0817fb6D8fd4Ff" as const;
+export const dinoJobsRegistryAddress = "0xaFeA7a2353f35eEDe5f43eAE22CCC845ED5bFEcA" as const;
 
-export const dinoJobsKbConfig = {
-	address: dinoJobsKbAddress,
-	abi: dinoJobsKbAbi,
+export const dinoJobsRegistryConfig = {
+	address: dinoJobsRegistryAddress,
+	abi: dinoJobsRegistryAbi,
+} as const;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// DinoRegistry
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const dinoRegistryAbi = [
+	{
+		type: "constructor",
+		inputs: [{ name: "_dinoERC721", internalType: "address", type: "address" }],
+		stateMutability: "nonpayable",
+	},
+	{
+		type: "function",
+		inputs: [{ name: "_dinoId", internalType: "uint256", type: "uint256" }],
+		name: "dino",
+		outputs: [
+			{
+				name: "_dino",
+				internalType: "struct Dino",
+				type: "tuple",
+				components: [
+					{ name: "dinoId", internalType: "uint256", type: "uint256" },
+					{
+						name: "dinoAccount",
+						internalType: "contract DinoAccount",
+						type: "address",
+					},
+				],
+			},
+		],
+		stateMutability: "view",
+	},
+	{
+		type: "function",
+		inputs: [],
+		name: "dinoERC721",
+		outputs: [{ name: "", internalType: "contract DinoERC721", type: "address" }],
+		stateMutability: "view",
+	},
+	{
+		type: "function",
+		inputs: [{ name: "owner", internalType: "address", type: "address" }],
+		name: "dinosOf",
+		outputs: [
+			{
+				name: "dinos",
+				internalType: "struct Dino[]",
+				type: "tuple[]",
+				components: [
+					{ name: "dinoId", internalType: "uint256", type: "uint256" },
+					{
+						name: "dinoAccount",
+						internalType: "contract DinoAccount",
+						type: "address",
+					},
+				],
+			},
+		],
+		stateMutability: "view",
+	},
+	{
+		type: "function",
+		inputs: [],
+		name: "mint",
+		outputs: [
+			{ name: "dinoId", internalType: "uint256", type: "uint256" },
+			{
+				name: "dinoAccount",
+				internalType: "contract DinoAccount",
+				type: "address",
+			},
+		],
+		stateMutability: "nonpayable",
+	},
+	{
+		type: "event",
+		anonymous: false,
+		inputs: [
+			{
+				name: "owner",
+				internalType: "address",
+				type: "address",
+				indexed: true,
+			},
+			{
+				name: "dinoId",
+				internalType: "uint256",
+				type: "uint256",
+				indexed: true,
+			},
+			{
+				name: "account",
+				internalType: "contract DinoAccount",
+				type: "address",
+				indexed: true,
+			},
+		],
+		name: "DinoCreated",
+	},
+] as const;
+
+export const dinoRegistryAddress = "0xDf8b09D5aea4f237A7c595fA229018B838cAC494" as const;
+
+export const dinoRegistryConfig = {
+	address: dinoRegistryAddress,
+	abi: dinoRegistryAbi,
 } as const;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2359,7 +2325,7 @@ export const emeraldErc20Abi = [
 	},
 ] as const;
 
-export const emeraldErc20Address = "0xc4d1624AdD956428Cc257cA95229C80CF5Ed1aB0" as const;
+export const emeraldErc20Address = "0xb2eFcdD92ead13bb93ECFA3d6077bCb62f4038Fe" as const;
 
 export const emeraldErc20Config = {
 	address: emeraldErc20Address,
@@ -2486,34 +2452,6 @@ export const iAccessControlAbi = [
 			{ name: "neededRole", internalType: "bytes32", type: "bytes32" },
 		],
 		name: "AccessControlUnauthorizedAccount",
-	},
-] as const;
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IDinoNFT
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-export const iDinoNftAbi = [
-	{
-		type: "function",
-		inputs: [{ name: "to", internalType: "address", type: "address" }],
-		name: "mint",
-		outputs: [{ name: "", internalType: "uint256", type: "uint256" }],
-		stateMutability: "nonpayable",
-	},
-	{
-		type: "function",
-		inputs: [{ name: "tokenId", internalType: "uint256", type: "uint256" }],
-		name: "ownerOf",
-		outputs: [{ name: "", internalType: "address", type: "address" }],
-		stateMutability: "view",
-	},
-	{
-		type: "function",
-		inputs: [],
-		name: "totalSupply",
-		outputs: [{ name: "", internalType: "uint256", type: "uint256" }],
-		stateMutability: "view",
 	},
 ] as const;
 
@@ -3696,96 +3634,6 @@ export const useWatchDinoAccountExecutedEvent = /*#__PURE__*/ createUseWatchCont
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoAccountFactoryAbi}__
- */
-export const useReadDinoAccountFactory = /*#__PURE__*/ createUseReadContract({
-	abi: dinoAccountFactoryAbi,
-	address: dinoAccountFactoryAddress,
-});
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoAccountFactoryAbi}__ and `functionName` set to `"accountOf"`
- */
-export const useReadDinoAccountFactoryAccountOf = /*#__PURE__*/ createUseReadContract({
-	abi: dinoAccountFactoryAbi,
-	address: dinoAccountFactoryAddress,
-	functionName: "accountOf",
-});
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoAccountFactoryAbi}__ and `functionName` set to `"dinoERC721"`
- */
-export const useReadDinoAccountFactoryDinoErc721 = /*#__PURE__*/ createUseReadContract({
-	abi: dinoAccountFactoryAbi,
-	address: dinoAccountFactoryAddress,
-	functionName: "dinoERC721",
-});
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoAccountFactoryAbi}__ and `functionName` set to `"dinosOf"`
- */
-export const useReadDinoAccountFactoryDinosOf = /*#__PURE__*/ createUseReadContract({
-	abi: dinoAccountFactoryAbi,
-	address: dinoAccountFactoryAddress,
-	functionName: "dinosOf",
-});
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoAccountFactoryAbi}__
- */
-export const useWriteDinoAccountFactory = /*#__PURE__*/ createUseWriteContract({
-	abi: dinoAccountFactoryAbi,
-	address: dinoAccountFactoryAddress,
-});
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoAccountFactoryAbi}__ and `functionName` set to `"mintWithAccount"`
- */
-export const useWriteDinoAccountFactoryMintWithAccount = /*#__PURE__*/ createUseWriteContract({
-	abi: dinoAccountFactoryAbi,
-	address: dinoAccountFactoryAddress,
-	functionName: "mintWithAccount",
-});
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoAccountFactoryAbi}__
- */
-export const useSimulateDinoAccountFactory = /*#__PURE__*/ createUseSimulateContract({
-	abi: dinoAccountFactoryAbi,
-	address: dinoAccountFactoryAddress,
-});
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoAccountFactoryAbi}__ and `functionName` set to `"mintWithAccount"`
- */
-export const useSimulateDinoAccountFactoryMintWithAccount = /*#__PURE__*/ createUseSimulateContract(
-	{
-		abi: dinoAccountFactoryAbi,
-		address: dinoAccountFactoryAddress,
-		functionName: "mintWithAccount",
-	},
-);
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoAccountFactoryAbi}__
- */
-export const useWatchDinoAccountFactoryEvent = /*#__PURE__*/ createUseWatchContractEvent({
-	abi: dinoAccountFactoryAbi,
-	address: dinoAccountFactoryAddress,
-});
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoAccountFactoryAbi}__ and `eventName` set to `"DinoCreated"`
- */
-export const useWatchDinoAccountFactoryDinoCreatedEvent = /*#__PURE__*/ createUseWatchContractEvent(
-	{
-		abi: dinoAccountFactoryAbi,
-		address: dinoAccountFactoryAddress,
-		eventName: "DinoCreated",
-	},
-);
-
-/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoErc721Abi}__
  */
 export const useReadDinoErc721 = /*#__PURE__*/ createUseReadContract({
@@ -4151,566 +3999,587 @@ export const useWatchDinoErc721TransferEvent = /*#__PURE__*/ createUseWatchContr
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoFactoryAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsManagerAbi}__
  */
-export const useReadDinoFactory = /*#__PURE__*/ createUseReadContract({
-	abi: dinoFactoryAbi,
+export const useReadDinoJobsManager = /*#__PURE__*/ createUseReadContract({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoFactoryAbi}__ and `functionName` set to `"accountOf"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsManagerAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
  */
-export const useReadDinoFactoryAccountOf = /*#__PURE__*/ createUseReadContract({
-	abi: dinoFactoryAbi,
-	functionName: "accountOf",
-});
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoFactoryAbi}__ and `functionName` set to `"dinoERC721"`
- */
-export const useReadDinoFactoryDinoErc721 = /*#__PURE__*/ createUseReadContract({
-	abi: dinoFactoryAbi,
-	functionName: "dinoERC721",
-});
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoFactoryAbi}__ and `functionName` set to `"dinosOf"`
- */
-export const useReadDinoFactoryDinosOf = /*#__PURE__*/ createUseReadContract({
-	abi: dinoFactoryAbi,
-	functionName: "dinosOf",
-});
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoFactoryAbi}__
- */
-export const useWriteDinoFactory = /*#__PURE__*/ createUseWriteContract({
-	abi: dinoFactoryAbi,
-});
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoFactoryAbi}__ and `functionName` set to `"mintWithAccount"`
- */
-export const useWriteDinoFactoryMintWithAccount = /*#__PURE__*/ createUseWriteContract({
-	abi: dinoFactoryAbi,
-	functionName: "mintWithAccount",
-});
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoFactoryAbi}__
- */
-export const useSimulateDinoFactory = /*#__PURE__*/ createUseSimulateContract({
-	abi: dinoFactoryAbi,
-});
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoFactoryAbi}__ and `functionName` set to `"mintWithAccount"`
- */
-export const useSimulateDinoFactoryMintWithAccount = /*#__PURE__*/ createUseSimulateContract({
-	abi: dinoFactoryAbi,
-	functionName: "mintWithAccount",
-});
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoFactoryAbi}__
- */
-export const useWatchDinoFactoryEvent = /*#__PURE__*/ createUseWatchContractEvent({
-	abi: dinoFactoryAbi,
-});
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoFactoryAbi}__ and `eventName` set to `"DinoCreated"`
- */
-export const useWatchDinoFactoryDinoCreatedEvent = /*#__PURE__*/ createUseWatchContractEvent({
-	abi: dinoFactoryAbi,
-	eventName: "DinoCreated",
-});
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsAbi}__
- */
-export const useReadDinoJobs = /*#__PURE__*/ createUseReadContract({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
-});
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
- */
-export const useReadDinoJobsDefaultAdminRole = /*#__PURE__*/ createUseReadContract({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
+export const useReadDinoJobsManagerDefaultAdminRole = /*#__PURE__*/ createUseReadContract({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
 	functionName: "DEFAULT_ADMIN_ROLE",
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsAbi}__ and `functionName` set to `"dinoAccountFactory"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsManagerAbi}__ and `functionName` set to `"dinoJobsRegistry"`
  */
-export const useReadDinoJobsDinoAccountFactory = /*#__PURE__*/ createUseReadContract({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
-	functionName: "dinoAccountFactory",
+export const useReadDinoJobsManagerDinoJobsRegistry = /*#__PURE__*/ createUseReadContract({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
+	functionName: "dinoJobsRegistry",
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsAbi}__ and `functionName` set to `"dinoJobsKb"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsManagerAbi}__ and `functionName` set to `"dinoRegistry"`
  */
-export const useReadDinoJobsDinoJobsKb = /*#__PURE__*/ createUseReadContract({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
-	functionName: "dinoJobsKb",
+export const useReadDinoJobsManagerDinoRegistry = /*#__PURE__*/ createUseReadContract({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
+	functionName: "dinoRegistry",
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsAbi}__ and `functionName` set to `"emerald"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsManagerAbi}__ and `functionName` set to `"emerald"`
  */
-export const useReadDinoJobsEmerald = /*#__PURE__*/ createUseReadContract({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
+export const useReadDinoJobsManagerEmerald = /*#__PURE__*/ createUseReadContract({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
 	functionName: "emerald",
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsAbi}__ and `functionName` set to `"getRoleAdmin"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsManagerAbi}__ and `functionName` set to `"getRoleAdmin"`
  */
-export const useReadDinoJobsGetRoleAdmin = /*#__PURE__*/ createUseReadContract({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
+export const useReadDinoJobsManagerGetRoleAdmin = /*#__PURE__*/ createUseReadContract({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
 	functionName: "getRoleAdmin",
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsAbi}__ and `functionName` set to `"hasRole"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsManagerAbi}__ and `functionName` set to `"hasRole"`
  */
-export const useReadDinoJobsHasRole = /*#__PURE__*/ createUseReadContract({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
+export const useReadDinoJobsManagerHasRole = /*#__PURE__*/ createUseReadContract({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
 	functionName: "hasRole",
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsAbi}__ and `functionName` set to `"jobOf"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsManagerAbi}__ and `functionName` set to `"jobOf"`
  */
-export const useReadDinoJobsJobOf = /*#__PURE__*/ createUseReadContract({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
+export const useReadDinoJobsManagerJobOf = /*#__PURE__*/ createUseReadContract({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
 	functionName: "jobOf",
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsAbi}__ and `functionName` set to `"lastClaimDay"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsManagerAbi}__ and `functionName` set to `"lastClaimDay"`
  */
-export const useReadDinoJobsLastClaimDay = /*#__PURE__*/ createUseReadContract({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
+export const useReadDinoJobsManagerLastClaimDay = /*#__PURE__*/ createUseReadContract({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
 	functionName: "lastClaimDay",
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsAbi}__ and `functionName` set to `"supportsInterface"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsManagerAbi}__ and `functionName` set to `"supportsInterface"`
  */
-export const useReadDinoJobsSupportsInterface = /*#__PURE__*/ createUseReadContract({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
+export const useReadDinoJobsManagerSupportsInterface = /*#__PURE__*/ createUseReadContract({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
 	functionName: "supportsInterface",
 });
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoJobsAbi}__
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoJobsManagerAbi}__
  */
-export const useWriteDinoJobs = /*#__PURE__*/ createUseWriteContract({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
+export const useWriteDinoJobsManager = /*#__PURE__*/ createUseWriteContract({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
 });
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoJobsAbi}__ and `functionName` set to `"claimSalary"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoJobsManagerAbi}__ and `functionName` set to `"claimSalary"`
  */
-export const useWriteDinoJobsClaimSalary = /*#__PURE__*/ createUseWriteContract({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
+export const useWriteDinoJobsManagerClaimSalary = /*#__PURE__*/ createUseWriteContract({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
 	functionName: "claimSalary",
 });
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoJobsAbi}__ and `functionName` set to `"grantRole"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoJobsManagerAbi}__ and `functionName` set to `"grantRole"`
  */
-export const useWriteDinoJobsGrantRole = /*#__PURE__*/ createUseWriteContract({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
+export const useWriteDinoJobsManagerGrantRole = /*#__PURE__*/ createUseWriteContract({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
 	functionName: "grantRole",
 });
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoJobsAbi}__ and `functionName` set to `"renounceRole"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoJobsManagerAbi}__ and `functionName` set to `"renounceRole"`
  */
-export const useWriteDinoJobsRenounceRole = /*#__PURE__*/ createUseWriteContract({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
+export const useWriteDinoJobsManagerRenounceRole = /*#__PURE__*/ createUseWriteContract({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
 	functionName: "renounceRole",
 });
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoJobsAbi}__ and `functionName` set to `"revokeRole"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoJobsManagerAbi}__ and `functionName` set to `"revokeRole"`
  */
-export const useWriteDinoJobsRevokeRole = /*#__PURE__*/ createUseWriteContract({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
+export const useWriteDinoJobsManagerRevokeRole = /*#__PURE__*/ createUseWriteContract({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
 	functionName: "revokeRole",
 });
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoJobsAbi}__ and `functionName` set to `"setJob"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoJobsManagerAbi}__ and `functionName` set to `"switchJob"`
  */
-export const useWriteDinoJobsSetJob = /*#__PURE__*/ createUseWriteContract({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
-	functionName: "setJob",
+export const useWriteDinoJobsManagerSwitchJob = /*#__PURE__*/ createUseWriteContract({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
+	functionName: "switchJob",
 });
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoJobsAbi}__
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoJobsManagerAbi}__
  */
-export const useSimulateDinoJobs = /*#__PURE__*/ createUseSimulateContract({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
+export const useSimulateDinoJobsManager = /*#__PURE__*/ createUseSimulateContract({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
 });
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoJobsAbi}__ and `functionName` set to `"claimSalary"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoJobsManagerAbi}__ and `functionName` set to `"claimSalary"`
  */
-export const useSimulateDinoJobsClaimSalary = /*#__PURE__*/ createUseSimulateContract({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
+export const useSimulateDinoJobsManagerClaimSalary = /*#__PURE__*/ createUseSimulateContract({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
 	functionName: "claimSalary",
 });
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoJobsAbi}__ and `functionName` set to `"grantRole"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoJobsManagerAbi}__ and `functionName` set to `"grantRole"`
  */
-export const useSimulateDinoJobsGrantRole = /*#__PURE__*/ createUseSimulateContract({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
+export const useSimulateDinoJobsManagerGrantRole = /*#__PURE__*/ createUseSimulateContract({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
 	functionName: "grantRole",
 });
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoJobsAbi}__ and `functionName` set to `"renounceRole"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoJobsManagerAbi}__ and `functionName` set to `"renounceRole"`
  */
-export const useSimulateDinoJobsRenounceRole = /*#__PURE__*/ createUseSimulateContract({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
+export const useSimulateDinoJobsManagerRenounceRole = /*#__PURE__*/ createUseSimulateContract({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
 	functionName: "renounceRole",
 });
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoJobsAbi}__ and `functionName` set to `"revokeRole"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoJobsManagerAbi}__ and `functionName` set to `"revokeRole"`
  */
-export const useSimulateDinoJobsRevokeRole = /*#__PURE__*/ createUseSimulateContract({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
+export const useSimulateDinoJobsManagerRevokeRole = /*#__PURE__*/ createUseSimulateContract({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
 	functionName: "revokeRole",
 });
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoJobsAbi}__ and `functionName` set to `"setJob"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoJobsManagerAbi}__ and `functionName` set to `"switchJob"`
  */
-export const useSimulateDinoJobsSetJob = /*#__PURE__*/ createUseSimulateContract({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
-	functionName: "setJob",
+export const useSimulateDinoJobsManagerSwitchJob = /*#__PURE__*/ createUseSimulateContract({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
+	functionName: "switchJob",
 });
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoJobsAbi}__
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoJobsManagerAbi}__
  */
-export const useWatchDinoJobsEvent = /*#__PURE__*/ createUseWatchContractEvent({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
+export const useWatchDinoJobsManagerEvent = /*#__PURE__*/ createUseWatchContractEvent({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
 });
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoJobsAbi}__ and `eventName` set to `"JobApplied"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoJobsManagerAbi}__ and `eventName` set to `"JobSwitched"`
  */
-export const useWatchDinoJobsJobAppliedEvent = /*#__PURE__*/ createUseWatchContractEvent({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
-	eventName: "JobApplied",
+export const useWatchDinoJobsManagerJobSwitchedEvent = /*#__PURE__*/ createUseWatchContractEvent({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
+	eventName: "JobSwitched",
 });
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoJobsAbi}__ and `eventName` set to `"RoleAdminChanged"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoJobsManagerAbi}__ and `eventName` set to `"RoleAdminChanged"`
  */
-export const useWatchDinoJobsRoleAdminChangedEvent = /*#__PURE__*/ createUseWatchContractEvent({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
-	eventName: "RoleAdminChanged",
-});
+export const useWatchDinoJobsManagerRoleAdminChangedEvent =
+	/*#__PURE__*/ createUseWatchContractEvent({
+		abi: dinoJobsManagerAbi,
+		address: dinoJobsManagerAddress,
+		eventName: "RoleAdminChanged",
+	});
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoJobsAbi}__ and `eventName` set to `"RoleGranted"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoJobsManagerAbi}__ and `eventName` set to `"RoleGranted"`
  */
-export const useWatchDinoJobsRoleGrantedEvent = /*#__PURE__*/ createUseWatchContractEvent({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
+export const useWatchDinoJobsManagerRoleGrantedEvent = /*#__PURE__*/ createUseWatchContractEvent({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
 	eventName: "RoleGranted",
 });
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoJobsAbi}__ and `eventName` set to `"RoleRevoked"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoJobsManagerAbi}__ and `eventName` set to `"RoleRevoked"`
  */
-export const useWatchDinoJobsRoleRevokedEvent = /*#__PURE__*/ createUseWatchContractEvent({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
+export const useWatchDinoJobsManagerRoleRevokedEvent = /*#__PURE__*/ createUseWatchContractEvent({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
 	eventName: "RoleRevoked",
 });
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoJobsAbi}__ and `eventName` set to `"SalaryClaimed"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoJobsManagerAbi}__ and `eventName` set to `"SalaryClaimed"`
  */
-export const useWatchDinoJobsSalaryClaimedEvent = /*#__PURE__*/ createUseWatchContractEvent({
-	abi: dinoJobsAbi,
-	address: dinoJobsAddress,
+export const useWatchDinoJobsManagerSalaryClaimedEvent = /*#__PURE__*/ createUseWatchContractEvent({
+	abi: dinoJobsManagerAbi,
+	address: dinoJobsManagerAddress,
 	eventName: "SalaryClaimed",
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsKbAbi}__
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsRegistryAbi}__
  */
-export const useReadDinoJobsKb = /*#__PURE__*/ createUseReadContract({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useReadDinoJobsRegistry = /*#__PURE__*/ createUseReadContract({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsKbAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsRegistryAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
  */
-export const useReadDinoJobsKbDefaultAdminRole = /*#__PURE__*/ createUseReadContract({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useReadDinoJobsRegistryDefaultAdminRole = /*#__PURE__*/ createUseReadContract({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 	functionName: "DEFAULT_ADMIN_ROLE",
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsKbAbi}__ and `functionName` set to `"getRoleAdmin"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsRegistryAbi}__ and `functionName` set to `"getRoleAdmin"`
  */
-export const useReadDinoJobsKbGetRoleAdmin = /*#__PURE__*/ createUseReadContract({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useReadDinoJobsRegistryGetRoleAdmin = /*#__PURE__*/ createUseReadContract({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 	functionName: "getRoleAdmin",
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsKbAbi}__ and `functionName` set to `"hasRole"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsRegistryAbi}__ and `functionName` set to `"hasRole"`
  */
-export const useReadDinoJobsKbHasRole = /*#__PURE__*/ createUseReadContract({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useReadDinoJobsRegistryHasRole = /*#__PURE__*/ createUseReadContract({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 	functionName: "hasRole",
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsKbAbi}__ and `functionName` set to `"jobExists"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsRegistryAbi}__ and `functionName` set to `"job"`
  */
-export const useReadDinoJobsKbJobExists = /*#__PURE__*/ createUseReadContract({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useReadDinoJobsRegistryJob = /*#__PURE__*/ createUseReadContract({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
+	functionName: "job",
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsRegistryAbi}__ and `functionName` set to `"jobExists"`
+ */
+export const useReadDinoJobsRegistryJobExists = /*#__PURE__*/ createUseReadContract({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 	functionName: "jobExists",
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsKbAbi}__ and `functionName` set to `"jobIds"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsRegistryAbi}__ and `functionName` set to `"jobIds"`
  */
-export const useReadDinoJobsKbJobIds = /*#__PURE__*/ createUseReadContract({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useReadDinoJobsRegistryJobIds = /*#__PURE__*/ createUseReadContract({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 	functionName: "jobIds",
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsKbAbi}__ and `functionName` set to `"jobs"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsRegistryAbi}__ and `functionName` set to `"jobs"`
  */
-export const useReadDinoJobsKbJobs = /*#__PURE__*/ createUseReadContract({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useReadDinoJobsRegistryJobs = /*#__PURE__*/ createUseReadContract({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 	functionName: "jobs",
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsKbAbi}__ and `functionName` set to `"nextJobId"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsRegistryAbi}__ and `functionName` set to `"nextJobId"`
  */
-export const useReadDinoJobsKbNextJobId = /*#__PURE__*/ createUseReadContract({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useReadDinoJobsRegistryNextJobId = /*#__PURE__*/ createUseReadContract({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 	functionName: "nextJobId",
 });
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsKbAbi}__ and `functionName` set to `"supportsInterface"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoJobsRegistryAbi}__ and `functionName` set to `"supportsInterface"`
  */
-export const useReadDinoJobsKbSupportsInterface = /*#__PURE__*/ createUseReadContract({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useReadDinoJobsRegistrySupportsInterface = /*#__PURE__*/ createUseReadContract({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 	functionName: "supportsInterface",
 });
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoJobsKbAbi}__
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoJobsRegistryAbi}__
  */
-export const useWriteDinoJobsKb = /*#__PURE__*/ createUseWriteContract({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useWriteDinoJobsRegistry = /*#__PURE__*/ createUseWriteContract({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 });
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoJobsKbAbi}__ and `functionName` set to `"createJob"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoJobsRegistryAbi}__ and `functionName` set to `"createJob"`
  */
-export const useWriteDinoJobsKbCreateJob = /*#__PURE__*/ createUseWriteContract({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useWriteDinoJobsRegistryCreateJob = /*#__PURE__*/ createUseWriteContract({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 	functionName: "createJob",
 });
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoJobsKbAbi}__ and `functionName` set to `"grantRole"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoJobsRegistryAbi}__ and `functionName` set to `"grantRole"`
  */
-export const useWriteDinoJobsKbGrantRole = /*#__PURE__*/ createUseWriteContract({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useWriteDinoJobsRegistryGrantRole = /*#__PURE__*/ createUseWriteContract({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 	functionName: "grantRole",
 });
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoJobsKbAbi}__ and `functionName` set to `"renounceRole"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoJobsRegistryAbi}__ and `functionName` set to `"renounceRole"`
  */
-export const useWriteDinoJobsKbRenounceRole = /*#__PURE__*/ createUseWriteContract({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useWriteDinoJobsRegistryRenounceRole = /*#__PURE__*/ createUseWriteContract({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 	functionName: "renounceRole",
 });
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoJobsKbAbi}__ and `functionName` set to `"revokeRole"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoJobsRegistryAbi}__ and `functionName` set to `"revokeRole"`
  */
-export const useWriteDinoJobsKbRevokeRole = /*#__PURE__*/ createUseWriteContract({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useWriteDinoJobsRegistryRevokeRole = /*#__PURE__*/ createUseWriteContract({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 	functionName: "revokeRole",
 });
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoJobsKbAbi}__ and `functionName` set to `"updateJob"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoJobsRegistryAbi}__ and `functionName` set to `"updateJob"`
  */
-export const useWriteDinoJobsKbUpdateJob = /*#__PURE__*/ createUseWriteContract({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useWriteDinoJobsRegistryUpdateJob = /*#__PURE__*/ createUseWriteContract({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 	functionName: "updateJob",
 });
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoJobsKbAbi}__
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoJobsRegistryAbi}__
  */
-export const useSimulateDinoJobsKb = /*#__PURE__*/ createUseSimulateContract({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useSimulateDinoJobsRegistry = /*#__PURE__*/ createUseSimulateContract({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 });
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoJobsKbAbi}__ and `functionName` set to `"createJob"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoJobsRegistryAbi}__ and `functionName` set to `"createJob"`
  */
-export const useSimulateDinoJobsKbCreateJob = /*#__PURE__*/ createUseSimulateContract({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useSimulateDinoJobsRegistryCreateJob = /*#__PURE__*/ createUseSimulateContract({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 	functionName: "createJob",
 });
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoJobsKbAbi}__ and `functionName` set to `"grantRole"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoJobsRegistryAbi}__ and `functionName` set to `"grantRole"`
  */
-export const useSimulateDinoJobsKbGrantRole = /*#__PURE__*/ createUseSimulateContract({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useSimulateDinoJobsRegistryGrantRole = /*#__PURE__*/ createUseSimulateContract({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 	functionName: "grantRole",
 });
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoJobsKbAbi}__ and `functionName` set to `"renounceRole"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoJobsRegistryAbi}__ and `functionName` set to `"renounceRole"`
  */
-export const useSimulateDinoJobsKbRenounceRole = /*#__PURE__*/ createUseSimulateContract({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useSimulateDinoJobsRegistryRenounceRole = /*#__PURE__*/ createUseSimulateContract({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 	functionName: "renounceRole",
 });
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoJobsKbAbi}__ and `functionName` set to `"revokeRole"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoJobsRegistryAbi}__ and `functionName` set to `"revokeRole"`
  */
-export const useSimulateDinoJobsKbRevokeRole = /*#__PURE__*/ createUseSimulateContract({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useSimulateDinoJobsRegistryRevokeRole = /*#__PURE__*/ createUseSimulateContract({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 	functionName: "revokeRole",
 });
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoJobsKbAbi}__ and `functionName` set to `"updateJob"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoJobsRegistryAbi}__ and `functionName` set to `"updateJob"`
  */
-export const useSimulateDinoJobsKbUpdateJob = /*#__PURE__*/ createUseSimulateContract({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useSimulateDinoJobsRegistryUpdateJob = /*#__PURE__*/ createUseSimulateContract({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 	functionName: "updateJob",
 });
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoJobsKbAbi}__
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoJobsRegistryAbi}__
  */
-export const useWatchDinoJobsKbEvent = /*#__PURE__*/ createUseWatchContractEvent({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useWatchDinoJobsRegistryEvent = /*#__PURE__*/ createUseWatchContractEvent({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 });
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoJobsKbAbi}__ and `eventName` set to `"JobCreated"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoJobsRegistryAbi}__ and `eventName` set to `"JobCreated"`
  */
-export const useWatchDinoJobsKbJobCreatedEvent = /*#__PURE__*/ createUseWatchContractEvent({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useWatchDinoJobsRegistryJobCreatedEvent = /*#__PURE__*/ createUseWatchContractEvent({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 	eventName: "JobCreated",
 });
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoJobsKbAbi}__ and `eventName` set to `"JobUpdated"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoJobsRegistryAbi}__ and `eventName` set to `"JobUpdated"`
  */
-export const useWatchDinoJobsKbJobUpdatedEvent = /*#__PURE__*/ createUseWatchContractEvent({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useWatchDinoJobsRegistryJobUpdatedEvent = /*#__PURE__*/ createUseWatchContractEvent({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 	eventName: "JobUpdated",
 });
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoJobsKbAbi}__ and `eventName` set to `"RoleAdminChanged"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoJobsRegistryAbi}__ and `eventName` set to `"RoleAdminChanged"`
  */
-export const useWatchDinoJobsKbRoleAdminChangedEvent = /*#__PURE__*/ createUseWatchContractEvent({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
-	eventName: "RoleAdminChanged",
-});
+export const useWatchDinoJobsRegistryRoleAdminChangedEvent =
+	/*#__PURE__*/ createUseWatchContractEvent({
+		abi: dinoJobsRegistryAbi,
+		address: dinoJobsRegistryAddress,
+		eventName: "RoleAdminChanged",
+	});
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoJobsKbAbi}__ and `eventName` set to `"RoleGranted"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoJobsRegistryAbi}__ and `eventName` set to `"RoleGranted"`
  */
-export const useWatchDinoJobsKbRoleGrantedEvent = /*#__PURE__*/ createUseWatchContractEvent({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useWatchDinoJobsRegistryRoleGrantedEvent = /*#__PURE__*/ createUseWatchContractEvent({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 	eventName: "RoleGranted",
 });
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoJobsKbAbi}__ and `eventName` set to `"RoleRevoked"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoJobsRegistryAbi}__ and `eventName` set to `"RoleRevoked"`
  */
-export const useWatchDinoJobsKbRoleRevokedEvent = /*#__PURE__*/ createUseWatchContractEvent({
-	abi: dinoJobsKbAbi,
-	address: dinoJobsKbAddress,
+export const useWatchDinoJobsRegistryRoleRevokedEvent = /*#__PURE__*/ createUseWatchContractEvent({
+	abi: dinoJobsRegistryAbi,
+	address: dinoJobsRegistryAddress,
 	eventName: "RoleRevoked",
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoRegistryAbi}__
+ */
+export const useReadDinoRegistry = /*#__PURE__*/ createUseReadContract({
+	abi: dinoRegistryAbi,
+	address: dinoRegistryAddress,
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoRegistryAbi}__ and `functionName` set to `"dino"`
+ */
+export const useReadDinoRegistryDino = /*#__PURE__*/ createUseReadContract({
+	abi: dinoRegistryAbi,
+	address: dinoRegistryAddress,
+	functionName: "dino",
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoRegistryAbi}__ and `functionName` set to `"dinoERC721"`
+ */
+export const useReadDinoRegistryDinoErc721 = /*#__PURE__*/ createUseReadContract({
+	abi: dinoRegistryAbi,
+	address: dinoRegistryAddress,
+	functionName: "dinoERC721",
+});
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoRegistryAbi}__ and `functionName` set to `"dinosOf"`
+ */
+export const useReadDinoRegistryDinosOf = /*#__PURE__*/ createUseReadContract({
+	abi: dinoRegistryAbi,
+	address: dinoRegistryAddress,
+	functionName: "dinosOf",
+});
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoRegistryAbi}__
+ */
+export const useWriteDinoRegistry = /*#__PURE__*/ createUseWriteContract({
+	abi: dinoRegistryAbi,
+	address: dinoRegistryAddress,
+});
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoRegistryAbi}__ and `functionName` set to `"mint"`
+ */
+export const useWriteDinoRegistryMint = /*#__PURE__*/ createUseWriteContract({
+	abi: dinoRegistryAbi,
+	address: dinoRegistryAddress,
+	functionName: "mint",
+});
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoRegistryAbi}__
+ */
+export const useSimulateDinoRegistry = /*#__PURE__*/ createUseSimulateContract({
+	abi: dinoRegistryAbi,
+	address: dinoRegistryAddress,
+});
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoRegistryAbi}__ and `functionName` set to `"mint"`
+ */
+export const useSimulateDinoRegistryMint = /*#__PURE__*/ createUseSimulateContract({
+	abi: dinoRegistryAbi,
+	address: dinoRegistryAddress,
+	functionName: "mint",
+});
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoRegistryAbi}__
+ */
+export const useWatchDinoRegistryEvent = /*#__PURE__*/ createUseWatchContractEvent({
+	abi: dinoRegistryAbi,
+	address: dinoRegistryAddress,
+});
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link dinoRegistryAbi}__ and `eventName` set to `"DinoCreated"`
+ */
+export const useWatchDinoRegistryDinoCreatedEvent = /*#__PURE__*/ createUseWatchContractEvent({
+	abi: dinoRegistryAbi,
+	address: dinoRegistryAddress,
+	eventName: "DinoCreated",
 });
 
 /**
@@ -5672,59 +5541,6 @@ export const useWatchIAccessControlRoleGrantedEvent = /*#__PURE__*/ createUseWat
 export const useWatchIAccessControlRoleRevokedEvent = /*#__PURE__*/ createUseWatchContractEvent({
 	abi: iAccessControlAbi,
 	eventName: "RoleRevoked",
-});
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iDinoNftAbi}__
- */
-export const useReadIDinoNft = /*#__PURE__*/ createUseReadContract({
-	abi: iDinoNftAbi,
-});
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iDinoNftAbi}__ and `functionName` set to `"ownerOf"`
- */
-export const useReadIDinoNftOwnerOf = /*#__PURE__*/ createUseReadContract({
-	abi: iDinoNftAbi,
-	functionName: "ownerOf",
-});
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link iDinoNftAbi}__ and `functionName` set to `"totalSupply"`
- */
-export const useReadIDinoNftTotalSupply = /*#__PURE__*/ createUseReadContract({
-	abi: iDinoNftAbi,
-	functionName: "totalSupply",
-});
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iDinoNftAbi}__
- */
-export const useWriteIDinoNft = /*#__PURE__*/ createUseWriteContract({
-	abi: iDinoNftAbi,
-});
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link iDinoNftAbi}__ and `functionName` set to `"mint"`
- */
-export const useWriteIDinoNftMint = /*#__PURE__*/ createUseWriteContract({
-	abi: iDinoNftAbi,
-	functionName: "mint",
-});
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iDinoNftAbi}__
- */
-export const useSimulateIDinoNft = /*#__PURE__*/ createUseSimulateContract({
-	abi: iDinoNftAbi,
-});
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link iDinoNftAbi}__ and `functionName` set to `"mint"`
- */
-export const useSimulateIDinoNftMint = /*#__PURE__*/ createUseSimulateContract({
-	abi: iDinoNftAbi,
-	functionName: "mint",
 });
 
 /**

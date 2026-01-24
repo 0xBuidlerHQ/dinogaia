@@ -8,12 +8,12 @@ export default defineConfig({
 		foundry({
 			project: ".",
 			deployments: {
-				DinoERC721: "0xAf06d3d9B12491b920B6a2d8c8c0c8c510939c35",
-				DinoAccountFactory: "0x3E24afa67Cb7180f03bE42fdfAca3A8EAfc0dCa1",
+				DinoERC721: "0xEB0A6da62103824436EB069Dee29EbFD5f92387a",
+				DinoRegistry: "0xDf8b09D5aea4f237A7c595fA229018B838cAC494",
 
-				EmeraldERC20: "0xc4d1624AdD956428Cc257cA95229C80CF5Ed1aB0",
-				DinoJobsKB: "0xba9B72049dB6F93F51C91CAF8F0817fb6D8fd4Ff",
-				DinoJobs: "0x2420ca40667849dE80a3c4775F0E211D73D174dc",
+				EmeraldERC20: "0xb2eFcdD92ead13bb93ECFA3d6077bCb62f4038Fe",
+				DinoJobsRegistry: "0xaFeA7a2353f35eEDe5f43eAE22CCC845ED5bFEcA",
+				DinoJobsManager: "0x2C39257edB7742735e3B81cBC60c6eB1f5DeE9Fe",
 			},
 		}),
 	],

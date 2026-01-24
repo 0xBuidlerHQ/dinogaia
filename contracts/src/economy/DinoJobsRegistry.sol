@@ -13,14 +13,15 @@ struct DinoJob {
 contract DinoJobsRegistry is AccessControl {
     mapping(uint256 => DinoJob) public jobs;
     uint256[] public jobIds;
-    uint256 public nextJobId = 0;
+    uint256 public nextJobId = 1;
 
     error EmptyName();
     error InvalidPay();
     error InvalidJobId();
+    error InvalidJob();
 
-    event JobCreated(uint256 indexed jobId, string name, uint256 dailyPay, uint256 trainingCost, uint16 requiredLevel);
-    event JobUpdated(uint256 indexed jobId, string name, uint256 dailyPay, uint256 trainingCost, uint16 requiredLevel);
+    event JobCreated(uint256 indexed jobId, DinoJob dinoJob);
+    event JobUpdated(uint256 indexed jobId, DinoJob dinoJob);
 
     constructor(address owner) {
         /**
@@ -74,44 +75,53 @@ contract DinoJobsRegistry is AccessControl {
     /**
      * @dev
      */
-    function createJob(DinoJob memory job) public onlyRole(DEFAULT_ADMIN_ROLE) returns (uint256 jobId) {
-        jobId = _createJob(job);
+    function createJob(DinoJob memory _job) public onlyRole(DEFAULT_ADMIN_ROLE) returns (uint256 jobId) {
+        jobId = _createJob(_job);
     }
 
     /**
      * @dev
      */
-    function updateJob(uint256 jobId, DinoJob memory job) public onlyRole(DEFAULT_ADMIN_ROLE) {
-        if (jobId >= nextJobId) revert InvalidJobId();
-        if (bytes(job.name).length == 0) revert EmptyName();
-        if (job.dailyPay == 0) revert InvalidPay();
+    function updateJob(uint256 _jobId, DinoJob memory _job) public onlyRole(DEFAULT_ADMIN_ROLE) {
+        if (_jobId >= nextJobId) revert InvalidJobId();
+        if (bytes(_job.name).length == 0) revert EmptyName();
+        if (_job.dailyPay == 0) revert InvalidPay();
 
-        jobs[jobId] = job;
+        jobs[_jobId] = _job;
 
-        emit JobUpdated(jobId, job.name, job.dailyPay, job.trainingCost, job.requiredLevel);
+        emit JobUpdated(_jobId, _job);
     }
 
     /**
      * @dev
      */
-    function jobExists(uint256 jobId) public view returns (bool) {
-        if (jobId >= nextJobId) return false;
+    function jobExists(uint256 _jobId) public view returns (bool) {
+        if (_jobId >= nextJobId) return false;
         return true;
     }
 
     /**
      * @dev
      */
-    function _createJob(DinoJob memory job) internal returns (uint256 jobId) {
-        if (bytes(job.name).length == 0) revert EmptyName();
-        if (job.dailyPay == 0) revert InvalidPay();
+    function job(uint256 _jobId) public view returns (DinoJob memory dinoJob) {
+        if (!jobExists(_jobId)) revert InvalidJob();
+        return jobs[_jobId];
+    }
 
-        jobId = nextJobId;
-        jobs[jobId] = job;
+    /**
+     * @dev
+     */
+    function _createJob(DinoJob memory _job) internal returns (uint256) {
+        if (bytes(_job.name).length == 0) revert EmptyName();
+        if (_job.dailyPay == 0) revert InvalidPay();
+
+        uint256 jobId = nextJobId;
+        jobs[jobId] = _job;
         jobIds.push(jobId);
 
-        emit JobCreated(jobId, job.name, job.dailyPay, job.trainingCost, job.requiredLevel);
+        emit JobCreated(jobId, _job);
 
         nextJobId++;
+        return jobId;
     }
 }
