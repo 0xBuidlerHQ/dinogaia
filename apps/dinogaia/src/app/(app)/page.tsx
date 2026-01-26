@@ -1,8 +1,8 @@
 "use client";
 
 import {
-	dinoJobsManagerAbi,
-	dinoJobsManagerAddress,
+	jobsManagerAbi,
+	jobsManagerAddress,
 	useReadEmeraldErc20BalanceOf,
 } from "@0xbuidlerhq/dinogaia.contracts";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
@@ -10,9 +10,10 @@ import { Container } from "@0xbuidlerhq/ui/system/base/container";
 import { H2, H3, H4 } from "@0xbuidlerhq/ui/system/base/typography";
 import { useWeb3 } from "@config/providers/web3";
 import { useDinoActions } from "@features/dinos/hooks/useDinoActions";
-import { DinoJobsManager } from "@features/dinos/hooks/useDinoJobsManager";
-import { DinoJobsRegistry } from "@features/dinos/hooks/useDinoJobsRegistry";
-import { DinoRegistry } from "@features/dinos/hooks/useDinoRegistry";
+import { DinoFactory } from "@features/dinos/hooks/useDinoFactory";
+import { JobsRegistry } from "@features/dinos/hooks/useDinoJobsRegistry";
+import { DinoManager } from "@features/dinos/hooks/useDinoManager";
+import { jobsManager } from "@features/dinos/hooks/useJobsManager";
 import { type Address, encodeFunctionData } from "viem";
 
 type Props = {
@@ -24,13 +25,13 @@ const MyDino = (props: Props) => {
 	const { dinoId, dinoAccount } = props;
 
 	const { sendTxsFromDinoAccount } = useDinoActions({ dinoAccount });
-	const { dinoJob } = DinoJobsManager.useDinoJob({ dinoId });
+	const { dinoJob } = jobsManager.useDinoJob({ dinoId });
 
-	const { job } = DinoJobsRegistry.useJob({ jobId: dinoJob.data! });
+	const { job } = JobsRegistry.useJob({ jobId: dinoJob.data! });
 	const { data: balanceOf } = useReadEmeraldErc20BalanceOf({ args: [dinoAccount] });
 
 	const data = encodeFunctionData({
-		abi: dinoJobsManagerAbi,
+		abi: jobsManagerAbi,
 		functionName: "claimSalary",
 		args: [dinoId],
 	});
@@ -61,7 +62,7 @@ const MyDino = (props: Props) => {
 				onClick={async () =>
 					await sendTxsFromDinoAccount([
 						{
-							target: dinoJobsManagerAddress,
+							target: jobsManagerAddress,
 							value: 0n,
 							data: data,
 						},
@@ -77,8 +78,8 @@ const MyDino = (props: Props) => {
 const Page = () => {
 	const { eoa } = useWeb3();
 
-	const { dinosOf } = DinoRegistry.useDinosOf({ owner: eoa.address! });
-	const { mint } = DinoRegistry.useMint();
+	const { dinosOf } = DinoManager.useDinosOf({ owner: eoa.address! });
+	const { mint } = DinoFactory.useMint();
 
 	return (
 		<Container className="pt-10">

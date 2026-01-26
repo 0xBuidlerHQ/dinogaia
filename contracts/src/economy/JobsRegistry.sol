@@ -10,7 +10,7 @@ struct DinoJob {
     uint16 requiredLevel;
 }
 
-contract DinoJobsRegistry is AccessControl {
+contract JobsRegistry is AccessControl {
     mapping(uint256 => DinoJob) public jobs;
     uint256[] public jobIds;
     uint256 public nextJobId = 1;

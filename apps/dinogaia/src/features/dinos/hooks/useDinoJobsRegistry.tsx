@@ -1,4 +1,4 @@
-import { useReadDinoJobsRegistryJob } from "@0xbuidlerhq/dinogaia.contracts";
+import { useReadJobsRegistryJob } from "@0xbuidlerhq/dinogaia.contracts";
 
 type useJobProps = {
 	jobId: bigint;
@@ -6,12 +6,12 @@ type useJobProps = {
 const useJob = (props: useJobProps) => {
 	const { jobId } = props;
 
-	const job = useReadDinoJobsRegistryJob({ args: [jobId] });
+	const job = useReadJobsRegistryJob({ args: [jobId] });
 	return { job };
 };
 
-const DinoJobsRegistry = {
+const JobsRegistry = {
 	useJob,
 };
 
-export { DinoJobsRegistry };
+export { JobsRegistry };

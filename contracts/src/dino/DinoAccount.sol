@@ -9,8 +9,10 @@ import {IERC721} from "@openzeppelin/contracts/interfaces/IERC721.sol";
  * @notice Minimal per-Dino smart account controlled by the owner of a Dino NFT.
  */
 contract DinoAccount {
-    address public immutable dinoERC721;
     uint256 public immutable dinoId;
+
+    address public immutable dinoERC721;
+    address public immutable dinoFactory;
 
     struct Call {
         address target;
@@ -23,7 +25,7 @@ contract DinoAccount {
 
     event Executed(address indexed target, uint256 value, bytes data, bytes result);
 
-    constructor(address _dinoERC721, uint256 _dinoId) {
+    constructor(uint256 _dinoId, address _dinoERC721) {
         dinoERC721 = _dinoERC721;
         dinoId = _dinoId;
     }

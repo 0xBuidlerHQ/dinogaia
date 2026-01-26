@@ -1,7 +1,6 @@
 import {
-	useReadDinoRegistryDino,
-	useReadDinoRegistryDinosOf,
-	useWriteDinoRegistryMint,
+	useReadDinoManagerGetDino,
+	useReadDinoManagerGetDinosOfOwner,
 } from "@0xbuidlerhq/dinogaia.contracts";
 import type { Address } from "viem";
 
@@ -15,7 +14,7 @@ type useDinoProps = {
 const useDino = (props: useDinoProps) => {
 	const { dinoId } = props;
 
-	const dino = useReadDinoRegistryDino({ args: [dinoId] });
+	const dino = useReadDinoManagerGetDino({ args: [dinoId] });
 	return { dino };
 };
 
@@ -28,20 +27,13 @@ type useDinosOfProps = {
 const useDinosOf = (props: useDinosOfProps) => {
 	const { owner } = props;
 
-	const dinosOf = useReadDinoRegistryDinosOf({ args: [owner] });
+	const dinosOf = useReadDinoManagerGetDinosOfOwner({ args: [owner] });
 	return { dinosOf };
 };
 
-const useMint = () => {
-	const mint = useWriteDinoRegistryMint({});
-
-	return { mint };
-};
-
-const DinoRegistry = {
+const DinoManager = {
 	useDino,
 	useDinosOf,
-	useMint,
 };
 
-export { DinoRegistry };
+export { DinoManager };

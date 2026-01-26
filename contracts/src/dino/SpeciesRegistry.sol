@@ -16,7 +16,7 @@ struct DinoSpecies {
     Stats stats;
 }
 
-contract DinoSpeciesRegistry is AccessControl {
+contract SpeciesRegistry is AccessControl {
     mapping(uint256 => DinoSpecies) public speciesRegistry;
     uint256[] public speciesIds;
     uint256 public nextSpeciesId = 1;

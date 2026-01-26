@@ -4,12 +4,13 @@ pragma solidity ^0.8.20;
 import "forge-std/console2.sol";
 
 import {DinoERC721} from "../src/dino/DinoERC721.sol";
-import {DinoRegistry} from "../src/dino/DinoRegistry.sol";
 
 import {EmeraldERC20} from "../src/economy/EmeraldERC20.sol";
-import {DinoJobsRegistry} from "../src/economy/DinoJobsRegistry.sol";
-import {DinoJobsManager} from "../src/economy/DinoJobsManager.sol";
-
+import {JobsRegistry} from "../src/economy/JobsRegistry.sol";
+import {JobsManager} from "../src/economy/JobsManager.sol";
+import {SpeciesRegistry} from "../src/dino/SpeciesRegistry.sol";
+import {SpeciesManager} from "../src/dino/SpeciesManager.sol";
+import {DinoFactory} from "../src/dino/DinoFactory.sol";
 import {Actors} from "./utils/Actors.s.sol";
 
 contract Deploy is Actors {
@@ -30,18 +31,31 @@ contract Deploy is Actors {
         start(deployer);
 
         /**
-         * @dev Dinos.
+         * @dev Pures.
          */
         DinoERC721 dinoERC721 = new DinoERC721{salt: SALT}(deployer.addr);
-        DinoRegistry dinoRegistry = new DinoRegistry{salt: SALT}(address(dinoERC721));
+        EmeraldERC20 emeraldERC20 = new EmeraldERC20{salt: SALT}(deployer.addr);
 
         /**
-         * @dev Economy.
+         * @dev Registries.
          */
-        EmeraldERC20 emeraldERC20 = new EmeraldERC20{salt: SALT}(deployer.addr);
-        DinoJobsRegistry dinoJobsRegistry = new DinoJobsRegistry{salt: SALT}(deployer.addr);
-        DinoJobsManager dinoJobsManager =
-            new DinoJobsManager{salt: SALT}(deployer.addr, emeraldERC20, dinoRegistry, dinoJobsRegistry);
+        JobsRegistry jobsRegistry = new JobsRegistry{salt: SALT}(deployer.addr);
+        SpeciesRegistry speciesRegistry = new SpeciesRegistry{salt: SALT}(deployer.addr);
+
+        /**
+         * @dev Setters.
+         */
+        SpeciesManager speciesManager = new SpeciesManager{salt: SALT}(deployer.addr, speciesRegistry);
+
+        /**
+         * @dev Factories.
+         */
+        DinoFactory dinoFactory = new DinoFactory{salt: SALT}(dinoERC721, speciesManager);
+
+        /**
+         * @dev Managers.
+         */
+        JobsManager jobsManager = new JobsManager{salt: SALT}(deployer.addr, emeraldERC20, dinoFactory, jobsRegistry);
 
         stop();
 
@@ -49,10 +63,13 @@ contract Deploy is Actors {
          * @dev Update roles.
          */
         start(deployer);
-        dinoERC721.grantRole(dinoERC721.MINTER_ROLE(), address(dinoRegistry));
+        dinoERC721.grantRole(dinoERC721.MINTER_ROLE(), address(dinoFactory));
         dinoERC721.revokeRole(dinoERC721.MINTER_ROLE(), deployer.addr);
 
-        emeraldERC20.grantRole(emeraldERC20.MINTER_ROLE(), address(dinoJobsManager));
+        emeraldERC20.grantRole(emeraldERC20.MINTER_ROLE(), address(jobsManager));
+
+        speciesManager.grantRole(speciesManager.DEFAULT_ADMIN_ROLE(), address(dinoFactory));
+
         stop();
 
         /**
@@ -66,10 +83,24 @@ contract Deploy is Actors {
          * @dev Logs.
          */
         console2.log("DinoERC721: ", address(dinoERC721));
-        console2.log("DinoRegistry: ", address(dinoRegistry));
-
         console2.log("EmeraldERC20: ", address(emeraldERC20));
-        console2.log("DinoJobsRegistry: ", address(dinoJobsRegistry));
-        console2.log("DinoJobsManager: ", address(dinoJobsManager));
+
+        console2.log("JobsRegistry: ", address(jobsRegistry));
+        console2.log("SpeciesRegistry: ", address(speciesRegistry));
+
+        console2.log("SpeciesManager: ", address(speciesManager));
+        console2.log("JobsManager: ", address(jobsManager));
+
+        console2.log("DinoFactory: ", address(dinoFactory));
+
+        //
+        console2.log("00: ", address(dinoFactory.getDinoAccount((0))));
+        console2.log("00: ", address(dinoFactory.getDinoAccount((1))));
+        console2.log("00: ", address(dinoFactory.getDinoAccount((2))));
+
+        start(alice);
+
+        dinoFactory.mint(1);
+        stop();
     }
 }
