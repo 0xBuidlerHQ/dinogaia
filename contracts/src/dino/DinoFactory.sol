@@ -26,21 +26,13 @@ contract DinoFactory is IERC721Receiver {
     }
 
     function mint(uint256 dinoSpeciesId) external returns (uint256 dinoId, DinoAccount dinoAccount) {
-        dinoId = dinoERC721.mint(address(this));
+        dinoId = dinoERC721.mint(msg.sender);
         dinoAccount = new DinoAccount{salt: _generateSalt(dinoId)}(dinoId, address(dinoERC721));
 
         /**
          * @dev Set Dino params.
          */
-        DinoAccount.Call[] memory calls = new DinoAccount.Call[](1);
-        calls[0] = DinoAccount.Call({
-            target: address(speciesManager),
-            value: 0,
-            data: abi.encodeWithSelector(SpeciesManager.selectSpecies.selector, dinoId, dinoSpeciesId)
-        });
-
-        dinoAccount.executeBatch(calls);
-        dinoERC721.safeTransferFrom(address(this), msg.sender, dinoId);
+        speciesManager.selectSpecies(dinoId, dinoSpeciesId);
 
         emit DinoCreated(msg.sender, dinoId, dinoAccount);
     }
