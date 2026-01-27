@@ -19,7 +19,7 @@ struct DinoSpecies {
 contract SpeciesRegistry is AccessControl {
     mapping(uint256 => DinoSpecies) public speciesRegistry;
     uint256[] public speciesIds;
-    uint256 public nextSpeciesId = 1;
+    uint256 public nextSpeciesId = 0;
 
     error EmptyName();
     error InvalidSpeciesId();
@@ -79,7 +79,7 @@ contract SpeciesRegistry is AccessControl {
      * @dev
      */
     function speciesExists(uint256 _speciesId) public view returns (bool) {
-        if (_speciesId == 0 || _speciesId >= nextSpeciesId) return false;
+        if (_speciesId >= nextSpeciesId) return false;
         return true;
     }
 

@@ -7,6 +7,7 @@ import {ERC721Enumerable} from "@openzeppelin/contracts/token/ERC721/extensions/
 
 contract DinoERC721 is ERC721, ERC721Enumerable, AccessControl {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+
     uint256 private _nextTokenId = 0;
 
     constructor(address owner) ERC721("Dino", "DINO") {

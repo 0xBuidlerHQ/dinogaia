@@ -4,15 +4,16 @@ pragma solidity ^0.8.20;
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-import {DinoFactory, Dino} from "../dino/DinoFactory.sol";
-import {JobsRegistry, DinoJob} from "./JobsRegistry.sol";
+import {DinoFactory, Dino} from "@dino/DinoFactory.sol";
 
-import {EmeraldERC20} from "./EmeraldERC20.sol";
+import {JobsRegistry, DinoJob} from "@registry/JobsRegistry.sol";
+
+import {EmeraldERC20} from "@economy/tokens/EmeraldERC20.sol";
 
 /**
  * @title JobsManager
  */
-contract JobsManager is AccessControl {
+contract JobsModule is AccessControl {
     EmeraldERC20 public immutable emerald;
 
     DinoFactory public immutable dinoFactory;

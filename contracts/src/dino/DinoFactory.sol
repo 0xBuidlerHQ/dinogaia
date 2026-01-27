@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import {DinoAccount} from "./DinoAccount.sol";
-import {DinoERC721} from "./DinoERC721.sol";
-
-import {SpeciesManager} from "./SpeciesManager.sol";
-
 import {IERC721Receiver} from "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
+
+import {DinoAccount} from "@core/DinoAccount.sol";
+import {DinoERC721} from "@core/DinoERC721.sol";
+
+import {DinoGenesis} from "@dino/DinoGenesis.sol";
 
 struct Dino {
     uint256 dinoId;
@@ -16,23 +16,20 @@ struct Dino {
 contract DinoFactory is IERC721Receiver {
     DinoERC721 public immutable dinoERC721;
 
-    SpeciesManager public immutable speciesManager;
+    DinoGenesis public immutable dinoGenesis;
 
     event DinoCreated(address indexed owner, uint256 indexed dinoId, DinoAccount indexed account);
 
-    constructor(DinoERC721 _dinoERC721, SpeciesManager _dinoSpeciesManager) {
+    constructor(DinoERC721 _dinoERC721, DinoGenesis _dinoGenesis) {
         dinoERC721 = _dinoERC721;
-        speciesManager = _dinoSpeciesManager;
+        dinoGenesis = _dinoGenesis;
     }
 
-    function mint(uint256 dinoSpeciesId) external returns (uint256 dinoId, DinoAccount dinoAccount) {
+    function mint(DinoGenesis.Genesis calldata genesis) external returns (uint256 dinoId, DinoAccount dinoAccount) {
         dinoId = dinoERC721.mint(msg.sender);
         dinoAccount = new DinoAccount{salt: _generateSalt(dinoId)}(dinoId, address(dinoERC721));
 
-        /**
-         * @dev Set Dino params.
-         */
-        speciesManager.selectSpecies(dinoId, dinoSpeciesId);
+        dinoGenesis.set(dinoId, genesis);
 
         emit DinoCreated(msg.sender, dinoId, dinoAccount);
     }
