@@ -4,38 +4,50 @@ pragma solidity ^0.8.20;
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-import {DinoFactory, Dino} from "@dino/DinoFactory.sol";
-
-import {JobsRegistry, DinoJob} from "@registry/JobsRegistry.sol";
-
+import {DinoFactory} from "@dino/DinoFactory.sol";
+import {JobsRegistry} from "@registry/JobsRegistry.sol";
 import {EmeraldERC20} from "@economy/tokens/EmeraldERC20.sol";
 
 /**
- * @title JobsManager
+ * @title JobsModule
  */
 contract JobsModule is AccessControl {
+    /**
+     * @dev Immutables.
+     */
     EmeraldERC20 public immutable emerald;
-
     DinoFactory public immutable dinoFactory;
     JobsRegistry public immutable jobsRegistry;
 
+    /**
+     * @dev Mappings.
+     */
     mapping(uint256 => uint256) public jobOf;
     mapping(uint256 => uint256) public lastClaimDay;
 
+    /**
+     * @dev Errors.
+     */
     error InvalidJobId();
     error NotDinoAccount();
     error PaymentFailed();
     error NoJobAssigned();
     error AlreadyClaimed();
 
+    /**
+     * @dev Events.
+     */
     event JobSwitched(uint256 indexed tokenId, uint256 indexed jobId, uint256 trainingCost);
     event SalaryClaimed(uint256 indexed tokenId, uint256 indexed jobId, uint256 amount, uint256 dayIndex);
 
-    constructor(address owner, EmeraldERC20 _emerald, DinoFactory _dinoFactory, JobsRegistry _dinoJobsRegistry) {
+    /**
+     * @dev Constructor.
+     */
+    constructor(address _owner, EmeraldERC20 _emerald, DinoFactory _dinoFactory, JobsRegistry _dinoJobsRegistry) {
         /**
-         * @dev Grant `DEFAULT_ADMIN_ROLE` to `owner`.
+         * @dev Grant `DEFAULT_ADMIN_ROLE` to `_owner`.
          */
-        _grantRole(DEFAULT_ADMIN_ROLE, owner);
+        _grantRole(DEFAULT_ADMIN_ROLE, _owner);
 
         emerald = _emerald;
         dinoFactory = _dinoFactory;
@@ -45,40 +57,40 @@ contract JobsModule is AccessControl {
     /**
      * @dev
      */
-    function switchJob(uint256 tokenId, uint256 jobId) external {
-        Dino memory dino = dinoFactory.getDino(tokenId);
+    function switchJob(uint256 _tokenId, uint256 _jobId) external {
+        DinoFactory.Dino memory dino = dinoFactory.getDino(_tokenId);
 
         if (address(dino.dinoAccount) != msg.sender) revert NotDinoAccount();
-        if (!jobsRegistry.jobExists(jobId)) revert InvalidJobId();
+        if (!jobsRegistry.jobExists(_jobId)) revert InvalidJobId();
 
-        DinoJob memory job = jobsRegistry.job(jobId);
+        JobsRegistry.Job memory job = jobsRegistry.getJob(_jobId);
         if (job.trainingCost > 0) {
             bool ok = emerald.transferFrom(msg.sender, address(0), job.trainingCost);
             if (!ok) revert PaymentFailed();
         }
 
-        jobOf[tokenId] = jobId;
-        emit JobSwitched(tokenId, jobId, job.trainingCost);
+        jobOf[_tokenId] = _jobId;
+        emit JobSwitched(_tokenId, _jobId, job.trainingCost);
     }
 
     /**
      * @dev
      */
-    function claimSalary(uint256 tokenId) external {
-        Dino memory dino = dinoFactory.getDino(tokenId);
+    function claimSalary(uint256 _tokenId) external {
+        DinoFactory.Dino memory dino = dinoFactory.getDino(_tokenId);
 
         if (address(dino.dinoAccount) != msg.sender) revert NotDinoAccount();
 
-        uint256 jobId = jobOf[tokenId];
+        uint256 jobId = jobOf[_tokenId];
         if (!jobsRegistry.jobExists(jobId)) revert InvalidJobId();
 
         uint256 day = block.timestamp / 1 days;
-        if (lastClaimDay[tokenId] == day) revert AlreadyClaimed();
-        lastClaimDay[tokenId] = day;
+        if (lastClaimDay[_tokenId] == day) revert AlreadyClaimed();
+        lastClaimDay[_tokenId] = day;
 
-        DinoJob memory job = jobsRegistry.job(jobId);
+        JobsRegistry.Job memory job = jobsRegistry.getJob(jobId);
         emerald.mint(msg.sender, job.dailyPay);
 
-        emit SalaryClaimed(tokenId, jobId, job.dailyPay, day);
+        emit SalaryClaimed(_tokenId, jobId, job.dailyPay, day);
     }
 }

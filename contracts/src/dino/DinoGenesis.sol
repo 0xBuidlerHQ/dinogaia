@@ -3,27 +3,45 @@ pragma solidity ^0.8.20;
 
 import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 
-import {SpeciesRegistry, DinoSpecies} from "@registry/SpeciesRegistry.sol";
+import {SpeciesRegistry} from "@registry/SpeciesRegistry.sol";
 
 /**
- * @title DinoProfile
+ * @title DinoGenesis.
  */
 contract DinoGenesis is AccessControl {
-    struct Genesis {
+    /**
+     * @dev Struct GenesisData.
+     */
+    struct GenesisData {
         string name;
+        //
         uint256 species;
     }
 
+    /**
+     * @dev Immutables.
+     */
     SpeciesRegistry public immutable speciesRegistry;
 
-    mapping(uint256 => Genesis) public genesisOf;
+    /**
+     * @dev Mappings.
+     */
+    mapping(uint256 => GenesisData) public genesisOf;
 
+    /**
+     * @dev Errors.
+     */
     error InvalidSpeciesId();
-    error NotDinoAccount();
     error SpeciesAlreadySet();
 
-    event GenesisSet(uint256 indexed tokenId, Genesis indexed genesis);
+    /**
+     * @dev Events.
+     */
+    event GenesisDataSet(uint256 indexed tokenId, GenesisData indexed genesis);
 
+    /**
+     * @dev Constructor.
+     */
     constructor(address owner, SpeciesRegistry _dinoSpeciesRegistry) {
         /**
          * @dev Grant `DEFAULT_ADMIN_ROLE` to `owner`.
@@ -33,24 +51,37 @@ contract DinoGenesis is AccessControl {
         speciesRegistry = _dinoSpeciesRegistry;
     }
 
-    function set(uint256 dinoId, Genesis calldata genesis) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        emit GenesisSet(dinoId, genesis);
+    /**
+     * @dev
+     */
+    function setGenesisData(uint256 _dinoId, GenesisData calldata _genesisData) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        _setName(_dinoId, _genesisData.name);
+        _setSpecies(_dinoId, _genesisData.species);
+
+        emit GenesisDataSet(_dinoId, _genesisData);
     }
 
     /**
      * @dev
      */
-    function _selectSpecies(uint256 tokenId, uint256 speciesId) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        if (!speciesRegistry.speciesExists(speciesId)) revert InvalidSpeciesId();
-        if (genesisOf[tokenId].species != 0) revert SpeciesAlreadySet();
-
-        genesisOf[tokenId].species = speciesId;
+    function getGenesisData(uint256 _dinoId) external view returns (GenesisData memory genesisData) {
+        genesisData = genesisOf[_dinoId];
     }
 
     /**
      * @dev
      */
-    function _setName(uint256 tokenId, string calldata name) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        genesisOf[tokenId].name = name;
+    function _setSpecies(uint256 _tokenId, uint256 _speciesId) internal onlyRole(DEFAULT_ADMIN_ROLE) {
+        if (!speciesRegistry.speciesExists(_speciesId)) revert InvalidSpeciesId();
+        if (genesisOf[_tokenId].species != 0) revert SpeciesAlreadySet();
+
+        genesisOf[_tokenId].species = _speciesId;
+    }
+
+    /**
+     * @dev
+     */
+    function _setName(uint256 _tokenId, string calldata _name) internal onlyRole(DEFAULT_ADMIN_ROLE) {
+        genesisOf[_tokenId].name = _name;
     }
 }

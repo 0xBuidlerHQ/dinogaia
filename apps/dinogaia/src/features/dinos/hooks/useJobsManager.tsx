@@ -1,17 +1,18 @@
-import { useReadJobsManagerJobOf } from "@0xbuidlerhq/dinogaia.contracts";
+import { useReadJobsModuleJobOf } from "@0xbuidlerhq/dinogaia.contracts";
 
 type useDinoJobProps = {
 	dinoId: bigint;
 };
-const useDinoJob = (props: useDinoJobProps) => {
+const useJob = (props: useDinoJobProps) => {
 	const { dinoId } = props;
 
-	const dinoJob = useReadJobsManagerJobOf({ args: [dinoId] });
-	return { dinoJob };
+	const jobOf = useReadJobsModuleJobOf({ args: [dinoId] });
+
+	return { jobOf };
 };
 
 const jobsManager = {
-	useDinoJob,
+	useJob,
 };
 
 export { jobsManager };

@@ -93,18 +93,9 @@ contract Deploy is Actors {
         console2.log("SpeciesRegistry: ", address(speciesRegistry));
 
         console2.log("DinoGenesis: ", address(dinoGenesis));
-        console2.log("JobsModule: ", address(jobsModule));
 
         console2.log("DinoFactory: ", address(dinoFactory));
 
-        //
-        console2.log("00: ", address(dinoFactory.getDinoAccount((0))));
-        console2.log("00: ", address(dinoFactory.getDinoAccount((1))));
-        console2.log("00: ", address(dinoFactory.getDinoAccount((2))));
-
-        start(alice);
-
-        dinoFactory.mint(DinoGenesis.Genesis({name: "MyDino", species: 1}));
-        stop();
+        console2.log("JobsModule: ", address(jobsModule));
     }
 }

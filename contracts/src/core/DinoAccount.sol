@@ -5,44 +5,55 @@ import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {IERC721} from "@openzeppelin/contracts/interfaces/IERC721.sol";
 
 /**
- * @title DinoAccount
- * @notice Minimal per-Dino smart account controlled by the owner of a Dino NFT.
+ * @dev DinoAccount.
  */
 contract DinoAccount {
-    uint256 public immutable dinoId;
-
-    address public immutable dinoERC721;
-    address public immutable dinoFactory;
-
+    /**
+     * @dev Struct Call.
+     */
     struct Call {
         address target;
         uint256 value;
         bytes data;
     }
 
+    /**
+     * @dev Immutables.
+     */
+    uint256 public immutable dinoId;
+    address public immutable dinoERC721;
+    address public immutable dinoFactory;
+
+    /**
+     * @dev Errors.
+     */
     error NotDinoOwner(address caller);
     error CallFailed(bytes returndata);
 
+    /**
+     * @dev Events.
+     */
     event Executed(address indexed target, uint256 value, bytes data, bytes result);
 
+    /**
+     * @dev Modifiers.
+     */
+    modifier onlyOwner() {
+        address owner = IERC721(dinoERC721).ownerOf(dinoId);
+        if (msg.sender != owner) revert NotDinoOwner(msg.sender);
+        _;
+    }
+
+    /**
+     * @dev Constructor.
+     */
     constructor(uint256 _dinoId, address _dinoERC721) {
         dinoERC721 = _dinoERC721;
         dinoId = _dinoId;
     }
 
-    /// @notice Returns the current controller (owner of the Dino NFT).
-    function owner() public view returns (address) {
-        return IERC721(dinoERC721).ownerOf(dinoId);
-    }
-
-    modifier onlyOwner() {
-        address o = owner();
-        if (msg.sender != o) revert NotDinoOwner(msg.sender);
-        _;
-    }
-
     /**
-     * @dev Execute one call.
+     * @dev
      */
     function execute(Call calldata call_) external onlyOwner returns (bytes memory result) {
         (bool ok, bytes memory ret) = call_.target.call{value: call_.value}(call_.data);
@@ -52,7 +63,7 @@ contract DinoAccount {
     }
 
     /**
-     * @dev Execute multiple calls in one tx (quality-of-life).
+     * @dev
      */
     function executeBatch(Call[] calldata calls) external onlyOwner returns (bytes[] memory results) {
         uint256 n = calls.length;
@@ -66,8 +77,6 @@ contract DinoAccount {
         }
     }
 
-    /// @notice Allow receiving ETH.
     receive() external payable {}
-
     fallback() external payable {}
 }

@@ -5,11 +5,23 @@ import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import {ERC721Enumerable} from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
+/**
+ * @dev DinoERC721.
+ */
 contract DinoERC721 is ERC721, ERC721Enumerable, AccessControl {
+    /**
+     * @dev Constants.
+     */
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-    uint256 private _nextTokenId = 0;
+    /**
+     * @dev Variables.
+     */
+    uint256 public tokenIdsIndex = 0;
 
+    /**
+     * @dev Constructor.
+     */
     constructor(address owner) ERC721("Dino", "DINO") {
         /**
          * @dev Grant `DEFAULT_ADMIN_ROLE` to `owner`.
@@ -26,7 +38,8 @@ contract DinoERC721 is ERC721, ERC721Enumerable, AccessControl {
      * @dev
      */
     function mint(address to) external onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
-        tokenId = ++_nextTokenId;
+        tokenId = tokenIdsIndex++;
+
         _safeMint(to, tokenId);
     }
 

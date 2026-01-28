@@ -8,16 +8,17 @@ export default defineConfig({
 		foundry({
 			project: ".",
 			deployments: {
-				DinoERC721: "0xEB0A6da62103824436EB069Dee29EbFD5f92387a",
-				EmeraldERC20: "0xb2eFcdD92ead13bb93ECFA3d6077bCb62f4038Fe",
+				DinoERC721: "0xB703001F3b7866dB921e445Fc7598b968097369b",
+				EmeraldERC20: "0x9A6255a3F40Ff2415567ba2db11d0C8C2071a096",
 
-				JobsRegistry: "0x307E397B5ec8A75Bf5919828f7Af922ff7052987",
-				SpeciesRegistry: "0x3e8336aF46d3fcC22598395e0867119Fbb9a502b",
-				DinoManager: "0xB1637bAD3b1d0571A697E2cDDC8D1a7eDAbEEA72",
+				JobsRegistry: "0xB257aa9A1d25bDC6A6eb4c49100EE887d8Fa5531",
+				SpeciesRegistry: "0xc0e44eD52c0D68a2F7a6e26d705CE24F20731Be0",
 
-				SpeciesManager: "0x875611ef2f51d93DC4394EE1aFf9ab2c8A1a2a63",
-				JobsManager: "0x7Cf6a597c8457C76687F63c97a0204b82d03fD42",
-				DinoFactory: "0x1D3DdD53ce3c4cA2F2Ae1a89611f0CaB078824d2",
+				DinoGenesis: "0xb9FAaC8d305303eeF270C148aa8F385Cd5D810FF",
+
+				DinoFactory: "0x5d4eb69003A0646645C8Ce214441d2851A6fE43a",
+
+				JobsModule: "0xE50012DA43eF185FD9835D2A26c4F02C3A2689a3",
 			},
 		}),
 	],
