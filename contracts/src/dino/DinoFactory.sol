@@ -41,14 +41,14 @@ contract DinoFactory {
     /**
      * @dev
      */
-    function mint(DinoGenesis.GenesisData calldata genesisData)
+    function mint(DinoGenesis.GenesisDataParams calldata genesisDataParams)
         external
         returns (uint256 dinoId, DinoAccount dinoAccount)
     {
         dinoId = dinoERC721.mint(msg.sender);
         dinoAccount = new DinoAccount{salt: _generateSalt(dinoId)}(dinoId, address(dinoERC721));
 
-        dinoGenesis.setGenesisData(dinoId, genesisData);
+        dinoGenesis.setGenesisData(dinoId, genesisDataParams);
 
         emit DinoCreated(msg.sender, dinoId, dinoAccount);
     }

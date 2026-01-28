@@ -1,0 +1,23 @@
+{
+  "DinoERC721": {
+    "31337": "0xB703001F3b7866dB921e445Fc7598b968097369b"
+  },
+  "EmeraldERC20": {
+    "31337": "0x9A6255a3F40Ff2415567ba2db11d0C8C2071a096"
+  },
+  "JobsRegistry": {
+    "31337": "0xB257aa9A1d25bDC6A6eb4c49100EE887d8Fa5531"
+  },
+  "SpeciesRegistry": {
+    "31337": "0xc0e44eD52c0D68a2F7a6e26d705CE24F20731Be0"
+  },
+  "DinoGenesis": {
+    "31337": "0x69eB1Bcac25C067A7Cba0137Acfd402051777714"
+  },
+  "DinoFactory": {
+    "31337": "0x3796821bFc5be01bBe83eded56cF30DC8d80097F"
+  },
+  "JobsModule": {
+    "31337": "0x723b74495e356265B39410d1B1656d0616feEd70"
+  }
+}

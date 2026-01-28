@@ -23,12 +23,16 @@ dev:
 	anvil $(ANVIL_DEV_FLAGS)
 
 FORGE_DEPLOY_FLAGS=--rpc-url $(LOCAL_RPC) --broadcast
+
 .PHONY: deploy
 deploy:
 	forge script $(SCRIPT_DINO_DEPLOY) $(FORGE_DEPLOY_FLAGS)
+	$(MAKE) package
+
+.PHONY: package
+package:
+	pnpm build
 
 .PHONY: build
 build:
 	forge build
-
-    

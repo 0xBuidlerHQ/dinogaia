@@ -16,8 +16,9 @@ import {DinoGenesis} from "@dino/DinoGenesis.sol";
 import {JobsModule} from "@modules/jobs/JobsModule.sol";
 
 import {Actors} from "./utils/Actors.s.sol";
+import {Packages} from "./utils/Packages.s.sol";
 
-contract Deploy is Actors {
+contract Deploy is Actors, Packages {
     bytes32 internal constant SALT = keccak256("SALT");
 
     function run() external {
@@ -86,16 +87,12 @@ contract Deploy is Actors {
         /**
          * @dev Logs.
          */
-        console2.log("DinoERC721: ", address(dinoERC721));
-        console2.log("EmeraldERC20: ", address(emeraldERC20));
-
-        console2.log("JobsRegistry: ", address(jobsRegistry));
-        console2.log("SpeciesRegistry: ", address(speciesRegistry));
-
-        console2.log("DinoGenesis: ", address(dinoGenesis));
-
-        console2.log("DinoFactory: ", address(dinoFactory));
-
-        console2.log("JobsModule: ", address(jobsModule));
+        addDeployment("DinoERC721", address(dinoERC721));
+        addDeployment("EmeraldERC20", address(emeraldERC20));
+        addDeployment("JobsRegistry", address(jobsRegistry));
+        addDeployment("SpeciesRegistry", address(speciesRegistry));
+        addDeployment("DinoGenesis", address(dinoGenesis));
+        addDeployment("DinoFactory", address(dinoFactory));
+        addDeployment("JobsModule", address(jobsModule));
     }
 }
