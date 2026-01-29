@@ -96,6 +96,17 @@ contract SpeciesRegistry is AccessControl {
     /**
      * @dev
      */
+    function getAllSpecies() external view returns (Species[] memory allSpecies) {
+        uint256 len = speciesIdsIndex;
+        allSpecies = new Species[](len);
+        for (uint256 i = 0; i < len; i++) {
+            allSpecies[i] = speciesRegistry[i];
+        }
+    }
+
+    /**
+     * @dev
+     */
     function _initSpeciesRegistry() internal {
         _createSpecies(Species({name: "Trex", stats: Stats({force: 40, endurance: 30, agility: 20, intelligence: 10})}));
         _createSpecies(

@@ -88,6 +88,17 @@ contract JobsRegistry is AccessControl {
     /**
      * @dev
      */
+    function getAllJobs() external view returns (Job[] memory allJobs) {
+        uint256 len = jobIdsIndex;
+        allJobs = new Job[](len);
+        for (uint256 i = 0; i < len; i++) {
+            allJobs[i] = jobs[i];
+        }
+    }
+
+    /**
+     * @dev
+     */
     function _initJobsRegistry() internal {
         // Starter
         _createJob(Job({name: "Unemployed", dailyPay: 1, trainingCost: 0, requiredLevel: 0}));

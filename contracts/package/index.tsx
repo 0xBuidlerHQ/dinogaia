@@ -841,7 +841,7 @@ export const dinoFactoryAbi = [
  *
  */
 export const dinoFactoryAddress = {
-  31337: '0x3796821bFc5be01bBe83eded56cF30DC8d80097F',
+  31337: '0x8a0da349846007af4C931874369c9Ee6160AD1A3',
 } as const
 
 /**
@@ -1091,7 +1091,7 @@ export const dinoGenesisAbi = [
  *
  */
 export const dinoGenesisAddress = {
-  31337: '0x69eB1Bcac25C067A7Cba0137Acfd402051777714',
+  31337: '0x4286C01CdeB981555Cb87b0434AC173d596fB493',
 } as const
 
 /**
@@ -1793,6 +1793,13 @@ export const emeraldErc20Abi = [
   },
   {
     type: 'function',
+    inputs: [],
+    name: 'TRANSFER_ROLE',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
     inputs: [
       { name: 'owner', internalType: 'address', type: 'address' },
       { name: 'spender', internalType: 'address', type: 'address' },
@@ -2078,13 +2085,14 @@ export const emeraldErc20Abi = [
     inputs: [{ name: 'spender', internalType: 'address', type: 'address' }],
     name: 'ERC20InvalidSpender',
   },
+  { type: 'error', inputs: [], name: 'UnauthorizedTransferCaller' },
 ] as const
 
 /**
  *
  */
 export const emeraldErc20Address = {
-  31337: '0x9A6255a3F40Ff2415567ba2db11d0C8C2071a096',
+  31337: '0xa9D96A2e5E31F52c337e5e3f9b4c2e99F86f5585',
 } as const
 
 /**
@@ -3403,7 +3411,7 @@ export const jobsModuleAbi = [
  *
  */
 export const jobsModuleAddress = {
-  31337: '0x723b74495e356265B39410d1B1656d0616feEd70',
+  31337: '0x29cD0817754026da38f872039A37B08776d520d6',
 } as const
 
 /**
@@ -3452,6 +3460,25 @@ export const jobsRegistryAbi = [
     name: 'createJob',
     outputs: [{ name: 'jobId', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getAllJobs',
+    outputs: [
+      {
+        name: 'allJobs',
+        internalType: 'struct JobsRegistry.Job[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'name', internalType: 'string', type: 'string' },
+          { name: 'dailyPay', internalType: 'uint256', type: 'uint256' },
+          { name: 'trainingCost', internalType: 'uint256', type: 'uint256' },
+          { name: 'requiredLevel', internalType: 'uint16', type: 'uint16' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
   },
   {
     type: 'function',
@@ -3707,7 +3734,7 @@ export const jobsRegistryAbi = [
  *
  */
 export const jobsRegistryAddress = {
-  31337: '0xB257aa9A1d25bDC6A6eb4c49100EE887d8Fa5531',
+  31337: '0x23258F0b86ae640E1798C8d60eD49d1408480374',
 } as const
 
 /**
@@ -3797,6 +3824,33 @@ export const speciesRegistryAbi = [
     name: 'createSpecies',
     outputs: [{ name: 'speciesId', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getAllSpecies',
+    outputs: [
+      {
+        name: 'allSpecies',
+        internalType: 'struct SpeciesRegistry.Species[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'name', internalType: 'string', type: 'string' },
+          {
+            name: 'stats',
+            internalType: 'struct SpeciesRegistry.Stats',
+            type: 'tuple',
+            components: [
+              { name: 'force', internalType: 'uint8', type: 'uint8' },
+              { name: 'endurance', internalType: 'uint8', type: 'uint8' },
+              { name: 'agility', internalType: 'uint8', type: 'uint8' },
+              { name: 'intelligence', internalType: 'uint8', type: 'uint8' },
+            ],
+          },
+        ],
+      },
+    ],
+    stateMutability: 'view',
   },
   {
     type: 'function',
@@ -4092,7 +4146,7 @@ export const speciesRegistryAbi = [
  *
  */
 export const speciesRegistryAddress = {
-  31337: '0xc0e44eD52c0D68a2F7a6e26d705CE24F20731Be0',
+  31337: '0x17B8CB38cc519621C71f5D8eBD75aEFef9DF73BB',
 } as const
 
 /**
@@ -5846,6 +5900,18 @@ export const useReadEmeraldErc20MinterRole =
   })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link emeraldErc20Abi}__ and `functionName` set to `"TRANSFER_ROLE"`
+ *
+ *
+ */
+export const useReadEmeraldErc20TransferRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: emeraldErc20Abi,
+    address: emeraldErc20Address,
+    functionName: 'TRANSFER_ROLE',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link emeraldErc20Abi}__ and `functionName` set to `"allowance"`
  *
  *
@@ -7464,6 +7530,18 @@ export const useReadJobsRegistryDefaultAdminRole =
   })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link jobsRegistryAbi}__ and `functionName` set to `"getAllJobs"`
+ *
+ *
+ */
+export const useReadJobsRegistryGetAllJobs =
+  /*#__PURE__*/ createUseReadContract({
+    abi: jobsRegistryAbi,
+    address: jobsRegistryAddress,
+    functionName: 'getAllJobs',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link jobsRegistryAbi}__ and `functionName` set to `"getJob"`
  *
  *
@@ -7787,6 +7865,18 @@ export const useReadSpeciesRegistryDefaultAdminRole =
     abi: speciesRegistryAbi,
     address: speciesRegistryAddress,
     functionName: 'DEFAULT_ADMIN_ROLE',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link speciesRegistryAbi}__ and `functionName` set to `"getAllSpecies"`
+ *
+ *
+ */
+export const useReadSpeciesRegistryGetAllSpecies =
+  /*#__PURE__*/ createUseReadContract({
+    abi: speciesRegistryAbi,
+    address: speciesRegistryAddress,
+    functionName: 'getAllSpecies',
   })
 
 /**

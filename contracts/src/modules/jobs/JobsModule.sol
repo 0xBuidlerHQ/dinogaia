@@ -13,6 +13,11 @@ import {EmeraldERC20} from "@economy/tokens/EmeraldERC20.sol";
  */
 contract JobsModule is AccessControl {
     /**
+     * @dev Constants.
+     */
+    uint256 private constant DAY = 1 days;
+
+    /**
      * @dev Immutables.
      */
     EmeraldERC20 public immutable emerald;
@@ -23,7 +28,7 @@ contract JobsModule is AccessControl {
      * @dev Mappings.
      */
     mapping(uint256 => uint256) public jobOf;
-    mapping(uint256 => uint256) public lastClaimDay;
+    mapping(uint256 => uint256) public lastClaimDayStart;
 
     /**
      * @dev Errors.
@@ -84,13 +89,13 @@ contract JobsModule is AccessControl {
         uint256 jobId = jobOf[_tokenId];
         if (!jobsRegistry.jobExists(jobId)) revert InvalidJobId();
 
-        uint256 day = block.timestamp / 1 days;
-        if (lastClaimDay[_tokenId] == day) revert AlreadyClaimed();
-        lastClaimDay[_tokenId] = day;
+        uint256 dayStart = block.timestamp - (block.timestamp % DAY);
+        if (lastClaimDayStart[_tokenId] == dayStart) revert AlreadyClaimed();
+        lastClaimDayStart[_tokenId] = dayStart;
 
         JobsRegistry.Job memory job = jobsRegistry.getJob(jobId);
         emerald.mint(msg.sender, job.dailyPay);
 
-        emit SalaryClaimed(_tokenId, jobId, job.dailyPay, day);
+        emit SalaryClaimed(_tokenId, jobId, job.dailyPay, dayStart / DAY);
     }
 }

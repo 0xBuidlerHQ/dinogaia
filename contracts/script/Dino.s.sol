@@ -72,16 +72,9 @@ contract Deploy is Actors, Packages {
         dinoERC721.revokeRole(dinoERC721.MINTER_ROLE(), deployer.addr);
 
         emeraldERC20.grantRole(emeraldERC20.MINTER_ROLE(), address(jobsModule));
+        emeraldERC20.grantRole(emeraldERC20.TRANSFER_ROLE(), address(jobsModule));
 
         dinoGenesis.grantRole(dinoGenesis.DEFAULT_ADMIN_ROLE(), address(dinoFactory));
-
-        stop();
-
-        /**
-         * @dev Misc.
-         */
-        start(deployer);
-        emeraldERC20.mint(deployer.addr, 100_000 ether);
         stop();
 
         /**

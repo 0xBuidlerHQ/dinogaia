@@ -1,4 +1,7 @@
-import { useReadSpeciesRegistryGetSpecies } from "@0xbuidlerhq/dinogaia.contracts";
+import {
+	useReadSpeciesRegistryGetAllSpecies,
+	useReadSpeciesRegistryGetSpecies,
+} from "@0xbuidlerhq/dinogaia.contracts";
 
 type useSpeciesRegistryProps = {
 	speciesId: bigint;
@@ -10,8 +13,15 @@ const useSpecies = (props: useSpeciesRegistryProps) => {
 	return { species };
 };
 
+const useAllSpecies = () => {
+	const allSpecies = useReadSpeciesRegistryGetAllSpecies();
+
+	return { allSpecies };
+};
+
 const SpeciesRegistry = {
 	useSpecies,
+	useAllSpecies,
 };
 
 export { SpeciesRegistry };
