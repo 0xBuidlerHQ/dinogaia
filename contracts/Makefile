@@ -31,7 +31,7 @@ deploy:
 
 .PHONY: package
 package:
-	pnpm build
+	pnpm buildd
 
 .PHONY: build
 build:

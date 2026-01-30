@@ -12,6 +12,8 @@ import {SpeciesRegistry} from "@registry/SpeciesRegistry.sol";
 
 import {DinoFactory} from "@dino/DinoFactory.sol";
 import {DinoGenesis} from "@dino/DinoGenesis.sol";
+import {DinoProfile} from "@dino/DinoProfile.sol";
+import {DinoStatus} from "@dino/DinoStatus.sol";
 
 import {JobsModule} from "@modules/jobs/JobsModule.sol";
 
@@ -58,6 +60,12 @@ contract Deploy is Actors, Packages {
         DinoFactory dinoFactory = new DinoFactory{salt: SALT}(dinoERC721, dinoGenesis);
 
         /**
+         * @dev Addons.
+         */
+        DinoProfile dinoProfile = new DinoProfile{salt: SALT}(deployer.addr);
+        DinoStatus dinoStatus = new DinoStatus{salt: SALT}(deployer.addr);
+
+        /**
          * @dev Modules.
          */
         JobsModule jobsModule = new JobsModule{salt: SALT}(deployer.addr, emeraldERC20, dinoFactory, jobsRegistry);
@@ -86,6 +94,8 @@ contract Deploy is Actors, Packages {
         addDeployment("SpeciesRegistry", address(speciesRegistry));
         addDeployment("DinoGenesis", address(dinoGenesis));
         addDeployment("DinoFactory", address(dinoFactory));
+        addDeployment("DinoProfile", address(dinoProfile));
+        addDeployment("DinoStatus", address(dinoStatus));
         addDeployment("JobsModule", address(jobsModule));
     }
 }
