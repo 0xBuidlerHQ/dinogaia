@@ -5,6 +5,8 @@ import {DinoAccount} from "@core/DinoAccount.sol";
 import {DinoERC721} from "@core/DinoERC721.sol";
 
 import {DinoGenesis} from "@dino/DinoGenesis.sol";
+import {DinoProfile} from "@dino/DinoProfile.sol";
+import {DinoStatus} from "@dino/DinoStatus.sol";
 
 /**
  * @dev Events.
@@ -15,15 +17,22 @@ contract DinoFactory {
      */
     struct Dino {
         uint256 dinoId;
+        //
         DinoAccount dinoAccount;
-        DinoGenesis.GenesisData dinoGenesisData;
+        //
+        DinoGenesis.Genesis dinoGenesis;
+        DinoProfile.Profile dinoProfile;
+        DinoStatus.Status dinoStatus;
     }
 
     /**
      * @dev Immutables.
      */
     DinoERC721 public immutable dinoERC721;
+    //
     DinoGenesis public immutable dinoGenesis;
+    DinoProfile public immutable dinoProfile;
+    DinoStatus public immutable dinoStatus;
 
     /**
      * @dev Events.
@@ -33,22 +42,27 @@ contract DinoFactory {
     /**
      * @dev Constructor.
      */
-    constructor(DinoERC721 _dinoERC721, DinoGenesis _dinoGenesis) {
+    constructor(DinoERC721 _dinoERC721, DinoGenesis _dinoGenesis, DinoProfile _dinoProfile, DinoStatus _dinoStatus) {
         dinoERC721 = _dinoERC721;
+        //
         dinoGenesis = _dinoGenesis;
+        dinoProfile = _dinoProfile;
+        dinoStatus = _dinoStatus;
     }
 
     /**
      * @dev
      */
-    function mint(DinoGenesis.GenesisDataParams calldata genesisDataParams)
+    function mint(DinoGenesis.GenesisParams calldata genesisDataParams)
         external
         returns (uint256 dinoId, DinoAccount dinoAccount)
     {
         dinoId = dinoERC721.mint(msg.sender);
         dinoAccount = new DinoAccount{salt: _generateSalt(dinoId)}(dinoId, address(dinoERC721));
 
-        dinoGenesis.setGenesisData(dinoId, genesisDataParams);
+        dinoGenesis.initialize(dinoId, genesisDataParams);
+        dinoProfile.initialize(dinoId);
+        dinoStatus.initialize(dinoId);
 
         emit DinoCreated(msg.sender, dinoId, dinoAccount);
     }
@@ -61,7 +75,9 @@ contract DinoFactory {
             dinoId: _dinoId,
             //
             dinoAccount: _getDinoAccount(_dinoId),
-            dinoGenesisData: dinoGenesis.getGenesisData(_dinoId)
+            dinoGenesis: dinoGenesis.getGenesis(_dinoId),
+            dinoProfile: dinoProfile.getProfile(_dinoId),
+            dinoStatus: dinoStatus.getStatus(_dinoId)
         });
     }
 

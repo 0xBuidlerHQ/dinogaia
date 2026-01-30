@@ -27,11 +27,11 @@ FORGE_DEPLOY_FLAGS=--rpc-url $(LOCAL_RPC) --broadcast
 .PHONY: deploy
 deploy:
 	forge script $(SCRIPT_DINO_DEPLOY) $(FORGE_DEPLOY_FLAGS)
-	$(MAKE) package
+	$(MAKE) build-contracts
 
-.PHONY: package
-package:
-	pnpm buildd
+.PHONY: build-contracts
+build-contracts:
+	pnpm build-contracts
 
 .PHONY: build
 build:

@@ -18,7 +18,7 @@ import { timestampToAge } from "../../utils";
 type Props = {
 	dinoId: bigint;
 	dinoAccount: Address;
-	dinoGenesisData: {
+	dinoGenesis: {
 		name: string;
 		speciesId: bigint;
 		birthTimestamp: bigint;
@@ -26,7 +26,7 @@ type Props = {
 };
 
 const MyDino = (props: Props) => {
-	const { dinoId, dinoAccount, dinoGenesisData } = props;
+	const { dinoId, dinoAccount, dinoGenesis } = props;
 
 	const { sendTxsFromDinoAccount } = useDinoActions({ dinoAccount });
 	const { jobOf } = jobsManager.useJob({ dinoId });
@@ -40,14 +40,14 @@ const MyDino = (props: Props) => {
 		args: [dinoId],
 	});
 
-	const { species } = SpeciesRegistry.useSpecies({ speciesId: dinoGenesisData.speciesId });
+	const { species } = SpeciesRegistry.useSpecies({ speciesId: dinoGenesis.speciesId });
 
-	const a = timestampToAge(dinoGenesisData.birthTimestamp);
+	const a = timestampToAge(dinoGenesis.birthTimestamp);
 	return (
 		<Box className="border border-accent p-2">
 			<Box className="flex flex-col gap-4 w-60">
 				<Box className="flex justify-between items-center">
-					<H5 className="font-bold">{dinoGenesisData.name}</H5>
+					<H5 className="font-bold">{dinoGenesis.name}</H5>
 
 					<H6>{species.data?.name}</H6>
 				</Box>

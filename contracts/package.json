@@ -8,7 +8,7 @@
 		".": "./package/index.tsx"
 	},
 	"scripts": {
-		"build": "pnpm wagmi generate"
+		"build-contracts": "pnpm wagmi generate"
 	},
 	"dependencies": {
 		"wagmi": "catalog:react19"

@@ -34,6 +34,7 @@ contract DinoProfile is AccessControl {
     /**
      * @dev Events.
      */
+    event InitializedProfile(uint256 indexed dinoId);
     event XpIncreased(uint256 indexed dinoId, uint256 indexed xp);
     event LevelIncreased(uint256 indexed dinoId, uint256 indexed newLevel);
 
@@ -50,7 +51,23 @@ contract DinoProfile is AccessControl {
     /**
      * @dev
      */
-    function increaseXp(uint256 _dinoId, uint256 _xp) public {
+    function initialize(uint256 _dinoId) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        profileOf[_dinoId] = Profile({level: 1, xp: 0});
+
+        emit InitializedProfile({dinoId: _dinoId});
+    }
+
+    /**
+     * @dev
+     */
+    function getProfile(uint256 _dinoId) external view returns (Profile memory profile) {
+        profile = profileOf[_dinoId];
+    }
+
+    /**
+     * @dev
+     */
+    function increaseXp(uint256 _dinoId, uint256 _xp) public onlyRole(DEFAULT_ADMIN_ROLE) {
         profileOf[_dinoId].xp += _xp;
 
         emit XpIncreased({dinoId: _dinoId, xp: _xp});
@@ -59,7 +76,7 @@ contract DinoProfile is AccessControl {
     /**
      * @dev
      */
-    function increaseLevel(uint256 _dinoId) public {
+    function increaseLevel(uint256 _dinoId) public onlyRole(DEFAULT_ADMIN_ROLE) {
         profileOf[_dinoId].level += 1;
 
         emit LevelIncreased({dinoId: _dinoId, newLevel: profileOf[_dinoId].level});

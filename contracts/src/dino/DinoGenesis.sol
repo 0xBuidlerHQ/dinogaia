@@ -10,18 +10,18 @@ import {SpeciesRegistry} from "@registry/SpeciesRegistry.sol";
  */
 contract DinoGenesis is AccessControl {
     /**
-     * @dev Struct GenesisDataParams.
+     * @dev Struct GenesisParams.
      */
-    struct GenesisDataParams {
+    struct GenesisParams {
         string name;
         //
         uint256 speciesId;
     }
 
     /**
-     * @dev Struct GenesisData.
+     * @dev Struct Genesis.
      */
-    struct GenesisData {
+    struct Genesis {
         string name;
         //
         uint256 speciesId;
@@ -36,7 +36,7 @@ contract DinoGenesis is AccessControl {
     /**
      * @dev Mappings.
      */
-    mapping(uint256 => GenesisData) public genesisDataOf;
+    mapping(uint256 => Genesis) public genesisOf;
 
     /**
      * @dev Errors.
@@ -48,7 +48,7 @@ contract DinoGenesis is AccessControl {
     /**
      * @dev Events.
      */
-    event GenesisDataSet(uint256 indexed tokenId, GenesisData indexed genesis);
+    event InitializedGenesis(uint256 indexed dinoId, Genesis indexed genesis);
 
     /**
      * @dev Constructor.
@@ -65,22 +65,19 @@ contract DinoGenesis is AccessControl {
     /**
      * @dev
      */
-    function setGenesisData(uint256 _dinoId, GenesisDataParams calldata _genesisDataParams)
-        external
-        onlyRole(DEFAULT_ADMIN_ROLE)
-    {
-        _setName(_dinoId, _genesisDataParams.name);
-        _setSpeciesId(_dinoId, _genesisDataParams.speciesId);
+    function initialize(uint256 _dinoId, GenesisParams calldata _genesisParams) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        _setName(_dinoId, _genesisParams.name);
+        _setSpeciesId(_dinoId, _genesisParams.speciesId);
         _setBirth(_dinoId, block.timestamp);
 
-        emit GenesisDataSet(_dinoId, genesisDataOf[_dinoId]);
+        emit InitializedGenesis({dinoId: _dinoId, genesis: genesisOf[_dinoId]});
     }
 
     /**
      * @dev
      */
-    function getGenesisData(uint256 _dinoId) external view returns (GenesisData memory genesisData) {
-        genesisData = genesisDataOf[_dinoId];
+    function getGenesis(uint256 _dinoId) external view returns (Genesis memory genesis) {
+        genesis = genesisOf[_dinoId];
     }
 
     /**
@@ -88,23 +85,23 @@ contract DinoGenesis is AccessControl {
      */
     function _setSpeciesId(uint256 _tokenId, uint256 _speciesId) internal onlyRole(DEFAULT_ADMIN_ROLE) {
         if (!speciesRegistry.speciesExists(_speciesId)) revert InvalidSpeciesId();
-        if (genesisDataOf[_tokenId].speciesId != 0) revert SpeciesIdAlreadySet();
+        if (genesisOf[_tokenId].speciesId != 0) revert SpeciesIdAlreadySet();
 
-        genesisDataOf[_tokenId].speciesId = _speciesId;
+        genesisOf[_tokenId].speciesId = _speciesId;
     }
 
     /**
      * @dev
      */
     function _setName(uint256 _tokenId, string calldata _name) internal onlyRole(DEFAULT_ADMIN_ROLE) {
-        genesisDataOf[_tokenId].name = _name;
+        genesisOf[_tokenId].name = _name;
     }
 
     /**
      * @dev
      */
     function _setBirth(uint256 _id, uint256 _birthTimestamp) internal onlyRole(DEFAULT_ADMIN_ROLE) {
-        if (genesisDataOf[_id].birthTimestamp != 0) revert BirthAlreadySet();
-        genesisDataOf[_id].birthTimestamp = _birthTimestamp;
+        if (genesisOf[_id].birthTimestamp != 0) revert BirthAlreadySet();
+        genesisOf[_id].birthTimestamp = _birthTimestamp;
     }
 }

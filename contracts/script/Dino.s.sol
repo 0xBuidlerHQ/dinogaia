@@ -50,20 +50,16 @@ contract Deploy is Actors, Packages {
         SpeciesRegistry speciesRegistry = new SpeciesRegistry{salt: SALT}(deployer.addr);
 
         /**
-         * @dev Genesis.
+         * @dev Dino Basis.
          */
         DinoGenesis dinoGenesis = new DinoGenesis{salt: SALT}(deployer.addr, speciesRegistry);
+        DinoProfile dinoProfile = new DinoProfile{salt: SALT}(deployer.addr);
+        DinoStatus dinoStatus = new DinoStatus{salt: SALT}(deployer.addr);
 
         /**
          * @dev Factories.
          */
-        DinoFactory dinoFactory = new DinoFactory{salt: SALT}(dinoERC721, dinoGenesis);
-
-        /**
-         * @dev Addons.
-         */
-        DinoProfile dinoProfile = new DinoProfile{salt: SALT}(deployer.addr);
-        DinoStatus dinoStatus = new DinoStatus{salt: SALT}(deployer.addr);
+        DinoFactory dinoFactory = new DinoFactory{salt: SALT}(dinoERC721, dinoGenesis, dinoProfile, dinoStatus);
 
         /**
          * @dev Modules.
@@ -83,6 +79,8 @@ contract Deploy is Actors, Packages {
         emeraldERC20.grantRole(emeraldERC20.TRANSFER_ROLE(), address(jobsModule));
 
         dinoGenesis.grantRole(dinoGenesis.DEFAULT_ADMIN_ROLE(), address(dinoFactory));
+        dinoProfile.grantRole(dinoProfile.DEFAULT_ADMIN_ROLE(), address(dinoFactory));
+        dinoStatus.grantRole(dinoStatus.DEFAULT_ADMIN_ROLE(), address(dinoFactory));
         stop();
 
         /**
