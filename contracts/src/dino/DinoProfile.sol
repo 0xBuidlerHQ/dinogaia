@@ -14,16 +14,13 @@ contract DinoProfile is AccessControl {
      * @dev Struct Profile.
      */
     struct Profile {
-        uint16 level;
-
-        uint16 xp;
+        uint256 level;
+        uint256 xp;
     }
 
     /**
      * @dev Immutable.
      */
-    DinoFactory public immutable dinoFactory;
-    SpeciesRegistry public immutable speciesRegistry;
 
     /**
      * @dev Mappings.
@@ -37,17 +34,34 @@ contract DinoProfile is AccessControl {
     /**
      * @dev Events.
      */
+    event XpIncreased(uint256 indexed dinoId, uint256 indexed xp);
+    event LevelIncreased(uint256 indexed dinoId, uint256 indexed newLevel);
 
     /**
      * @dev Constructor.
      */
-    constructor(address owner, DinoFactory _dinoFactory, SpeciesRegistry _speciesRegistry) {
+    constructor(address _owner) {
         /**
-         * @dev Grant `DEFAULT_ADMIN_ROLE` to `owner`.
+         * @dev Grant `DEFAULT_ADMIN_ROLE` to `_owner`.
          */
-        _grantRole(DEFAULT_ADMIN_ROLE, owner);
+        _grantRole(DEFAULT_ADMIN_ROLE, _owner);
+    }
 
-        dinoFactory = _dinoFactory;
-        speciesRegistry = _speciesRegistry;
+    /**
+     * @dev
+     */
+    function increaseXp(uint256 _dinoId, uint256 _xp) public {
+        profileOf[_dinoId].xp += _xp;
+
+        emit XpIncreased({dinoId: _dinoId, xp: _xp});
+    }
+
+    /**
+     * @dev
+     */
+    function increaseLevel(uint256 _dinoId) public {
+        profileOf[_dinoId].level += 1;
+
+        emit LevelIncreased({dinoId: _dinoId, newLevel: profileOf[_dinoId].level});
     }
 }
