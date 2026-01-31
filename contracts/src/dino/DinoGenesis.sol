@@ -10,6 +10,11 @@ import {SpeciesRegistry} from "@registry/SpeciesRegistry.sol";
  */
 contract DinoGenesis is AccessControl {
     /**
+     * @dev Constants.
+     */
+    bytes32 public constant FACTORY_ROLE = keccak256("FACTORY_ROLE");
+
+    /**
      * @dev Struct GenesisParams.
      */
     struct GenesisParams {
@@ -22,6 +27,8 @@ contract DinoGenesis is AccessControl {
      * @dev Struct Genesis.
      */
     struct Genesis {
+        bool _initialized;
+        //
         string name;
         //
         uint256 speciesId;
@@ -41,9 +48,7 @@ contract DinoGenesis is AccessControl {
     /**
      * @dev Errors.
      */
-    error InvalidSpeciesId();
-    error SpeciesIdAlreadySet();
-    error BirthAlreadySet();
+    error GenesisAlreadyInitialized();
 
     /**
      * @dev Events.
@@ -65,17 +70,6 @@ contract DinoGenesis is AccessControl {
     /**
      * @dev
      */
-    function initialize(uint256 _dinoId, GenesisParams calldata _genesisParams) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        _setName(_dinoId, _genesisParams.name);
-        _setSpeciesId(_dinoId, _genesisParams.speciesId);
-        _setBirth(_dinoId, block.timestamp);
-
-        emit InitializedGenesis({dinoId: _dinoId, genesis: genesisOf[_dinoId]});
-    }
-
-    /**
-     * @dev
-     */
     function getGenesis(uint256 _dinoId) external view returns (Genesis memory genesis) {
         genesis = genesisOf[_dinoId];
     }
@@ -83,25 +77,36 @@ contract DinoGenesis is AccessControl {
     /**
      * @dev
      */
-    function _setSpeciesId(uint256 _tokenId, uint256 _speciesId) internal onlyRole(DEFAULT_ADMIN_ROLE) {
-        if (!speciesRegistry.speciesExists(_speciesId)) revert InvalidSpeciesId();
-        if (genesisOf[_tokenId].speciesId != 0) revert SpeciesIdAlreadySet();
+    function initialize(uint256 _dinoId, GenesisParams calldata _genesisParams) external onlyRole(FACTORY_ROLE) {
+        if (genesisOf[_dinoId]._initialized) revert GenesisAlreadyInitialized();
 
+        _setName(_dinoId, _genesisParams.name);
+        _setSpeciesId(_dinoId, _genesisParams.speciesId);
+        _setBirth(_dinoId, block.timestamp);
+
+        genesisOf[_dinoId]._initialized = true;
+
+        emit InitializedGenesis({dinoId: _dinoId, genesis: genesisOf[_dinoId]});
+    }
+
+    /**
+     * @dev
+     */
+    function _setSpeciesId(uint256 _tokenId, uint256 _speciesId) internal {
         genesisOf[_tokenId].speciesId = _speciesId;
     }
 
     /**
      * @dev
      */
-    function _setName(uint256 _tokenId, string calldata _name) internal onlyRole(DEFAULT_ADMIN_ROLE) {
+    function _setName(uint256 _tokenId, string calldata _name) internal {
         genesisOf[_tokenId].name = _name;
     }
 
     /**
      * @dev
      */
-    function _setBirth(uint256 _id, uint256 _birthTimestamp) internal onlyRole(DEFAULT_ADMIN_ROLE) {
-        if (genesisOf[_id].birthTimestamp != 0) revert BirthAlreadySet();
+    function _setBirth(uint256 _id, uint256 _birthTimestamp) internal {
         genesisOf[_id].birthTimestamp = _birthTimestamp;
     }
 }

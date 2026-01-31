@@ -78,9 +78,9 @@ contract Deploy is Actors, Packages {
         emeraldERC20.grantRole(emeraldERC20.MINTER_ROLE(), address(jobsModule));
         emeraldERC20.grantRole(emeraldERC20.TRANSFER_ROLE(), address(jobsModule));
 
-        dinoGenesis.grantRole(dinoGenesis.DEFAULT_ADMIN_ROLE(), address(dinoFactory));
-        dinoProfile.grantRole(dinoProfile.DEFAULT_ADMIN_ROLE(), address(dinoFactory));
-        dinoStatus.grantRole(dinoStatus.DEFAULT_ADMIN_ROLE(), address(dinoFactory));
+        dinoGenesis.grantRole(dinoGenesis.FACTORY_ROLE(), address(dinoFactory));
+        dinoProfile.grantRole(dinoProfile.FACTORY_ROLE(), address(dinoFactory));
+        dinoStatus.grantRole(dinoStatus.FACTORY_ROLE(), address(dinoFactory));
         stop();
 
         /**

@@ -11,6 +11,11 @@ import {SpeciesRegistry} from "@registry/SpeciesRegistry.sol";
  */
 contract DinoStatus is AccessControl {
     /**
+     * @dev Constants.
+     */
+    bytes32 public constant FACTORY_ROLE = keccak256("FACTORY_ROLE");
+
+    /**
      * @dev Struct Status.
      */
     struct Status {
@@ -50,15 +55,6 @@ contract DinoStatus is AccessControl {
     /**
      * @dev
      */
-    function initialize(uint256 _dinoId) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        statusOf[_dinoId] = Status({alive: true, health: 100});
-
-        emit InitializedStatus({dinoId: _dinoId});
-    }
-
-    /**
-     * @dev
-     */
     function getStatus(uint256 _dinoId) external view returns (Status memory status) {
         status = statusOf[_dinoId];
     }
@@ -66,7 +62,9 @@ contract DinoStatus is AccessControl {
     /**
      * @dev
      */
-    function getStatusOf(uint256 _dinoId) external view returns (Status memory status) {
-        status = statusOf[_dinoId];
+    function initialize(uint256 _dinoId) external onlyRole(FACTORY_ROLE) {
+        statusOf[_dinoId] = Status({alive: true, health: 100});
+
+        emit InitializedStatus({dinoId: _dinoId});
     }
 }

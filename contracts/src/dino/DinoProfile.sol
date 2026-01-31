@@ -11,6 +11,11 @@ import {SpeciesRegistry} from "@registry/SpeciesRegistry.sol";
  */
 contract DinoProfile is AccessControl {
     /**
+     * @dev Constants.
+     */
+    bytes32 public constant FACTORY_ROLE = keccak256("FACTORY_ROLE");
+
+    /**
      * @dev Struct Profile.
      */
     struct Profile {
@@ -35,8 +40,6 @@ contract DinoProfile is AccessControl {
      * @dev Events.
      */
     event InitializedProfile(uint256 indexed dinoId);
-    event XpIncreased(uint256 indexed dinoId, uint256 indexed xp);
-    event LevelIncreased(uint256 indexed dinoId, uint256 indexed newLevel);
 
     /**
      * @dev Constructor.
@@ -51,15 +54,6 @@ contract DinoProfile is AccessControl {
     /**
      * @dev
      */
-    function initialize(uint256 _dinoId) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        profileOf[_dinoId] = Profile({level: 1, xp: 0});
-
-        emit InitializedProfile({dinoId: _dinoId});
-    }
-
-    /**
-     * @dev
-     */
     function getProfile(uint256 _dinoId) external view returns (Profile memory profile) {
         profile = profileOf[_dinoId];
     }
@@ -67,18 +61,9 @@ contract DinoProfile is AccessControl {
     /**
      * @dev
      */
-    function increaseXp(uint256 _dinoId, uint256 _xp) public onlyRole(DEFAULT_ADMIN_ROLE) {
-        profileOf[_dinoId].xp += _xp;
+    function initialize(uint256 _dinoId) external onlyRole(FACTORY_ROLE) {
+        profileOf[_dinoId] = Profile({level: 1, xp: 0});
 
-        emit XpIncreased({dinoId: _dinoId, xp: _xp});
-    }
-
-    /**
-     * @dev
-     */
-    function increaseLevel(uint256 _dinoId) public onlyRole(DEFAULT_ADMIN_ROLE) {
-        profileOf[_dinoId].level += 1;
-
-        emit LevelIncreased({dinoId: _dinoId, newLevel: profileOf[_dinoId].level});
+        emit InitializedProfile({dinoId: _dinoId});
     }
 }
