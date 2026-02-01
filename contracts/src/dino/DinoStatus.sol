@@ -20,8 +20,11 @@ contract DinoStatus is AccessControl {
      */
     struct Status {
         bool alive;
-
+        //
         uint256 health;
+        //
+        bool hungry;
+        bool thirsty;
     }
 
     /**
@@ -63,7 +66,7 @@ contract DinoStatus is AccessControl {
      * @dev
      */
     function initialize(uint256 _dinoId) external onlyRole(FACTORY_ROLE) {
-        statusOf[_dinoId] = Status({alive: true, health: 100});
+        statusOf[_dinoId] = Status({alive: true, health: 100, hungry: true, thirsty: true});
 
         emit InitializedStatus({dinoId: _dinoId});
     }

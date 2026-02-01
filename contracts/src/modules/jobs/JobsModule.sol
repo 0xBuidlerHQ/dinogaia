@@ -1,17 +1,16 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-
 import {DinoFactory} from "@dino/DinoFactory.sol";
 import {JobsRegistry} from "@registry/JobsRegistry.sol";
 import {EmeraldERC20} from "@economy/tokens/EmeraldERC20.sol";
+import {ModuleBase} from "@modules/ModuleBase.sol";
 
 /**
  * @title JobsModule
  */
-contract JobsModule is AccessControl {
+contract JobsModule is ModuleBase {
     /**
      * @dev Constants.
      */
@@ -21,7 +20,6 @@ contract JobsModule is AccessControl {
      * @dev Immutables.
      */
     EmeraldERC20 public immutable emerald;
-    DinoFactory public immutable dinoFactory;
     JobsRegistry public immutable jobsRegistry;
 
     /**
@@ -34,7 +32,6 @@ contract JobsModule is AccessControl {
      * @dev Errors.
      */
     error InvalidJobId();
-    error NotDinoAccount();
     error PaymentFailed();
     error NoJobAssigned();
     error AlreadyClaimed();
@@ -48,24 +45,17 @@ contract JobsModule is AccessControl {
     /**
      * @dev Constructor.
      */
-    constructor(address _owner, EmeraldERC20 _emerald, DinoFactory _dinoFactory, JobsRegistry _dinoJobsRegistry) {
-        /**
-         * @dev Grant `DEFAULT_ADMIN_ROLE` to `_owner`.
-         */
-        _grantRole(DEFAULT_ADMIN_ROLE, _owner);
-
+    constructor(address _owner, EmeraldERC20 _emerald, DinoFactory _dinoFactory, JobsRegistry _dinoJobsRegistry)
+        ModuleBase(_owner, _dinoFactory)
+    {
         emerald = _emerald;
-        dinoFactory = _dinoFactory;
         jobsRegistry = _dinoJobsRegistry;
     }
 
     /**
      * @dev
      */
-    function switchJob(uint256 _tokenId, uint256 _jobId) external {
-        DinoFactory.Dino memory dino = dinoFactory.getDino(_tokenId);
-
-        if (address(dino.dinoAccount) != msg.sender) revert NotDinoAccount();
+    function switchJob(uint256 _dinoId, uint256 _jobId) external onlyDinoAccount(_dinoId) {
         if (!jobsRegistry.jobExists(_jobId)) revert InvalidJobId();
 
         JobsRegistry.Job memory job = jobsRegistry.getJob(_jobId);
@@ -74,28 +64,24 @@ contract JobsModule is AccessControl {
             if (!ok) revert PaymentFailed();
         }
 
-        jobOf[_tokenId] = _jobId;
-        emit JobSwitched(_tokenId, _jobId, job.trainingCost);
+        jobOf[_dinoId] = _jobId;
+        emit JobSwitched(_dinoId, _jobId, job.trainingCost);
     }
 
     /**
      * @dev
      */
-    function claimSalary(uint256 _tokenId) external {
-        DinoFactory.Dino memory dino = dinoFactory.getDino(_tokenId);
-
-        if (address(dino.dinoAccount) != msg.sender) revert NotDinoAccount();
-
-        uint256 jobId = jobOf[_tokenId];
+    function claimSalary(uint256 _dinoId) external onlyDinoAccount(_dinoId) {
+        uint256 jobId = jobOf[_dinoId];
         if (!jobsRegistry.jobExists(jobId)) revert InvalidJobId();
 
         uint256 dayStart = block.timestamp - (block.timestamp % DAY);
-        if (lastClaimDayStart[_tokenId] == dayStart) revert AlreadyClaimed();
-        lastClaimDayStart[_tokenId] = dayStart;
+        if (lastClaimDayStart[_dinoId] == dayStart) revert AlreadyClaimed();
+        lastClaimDayStart[_dinoId] = dayStart;
 
         JobsRegistry.Job memory job = jobsRegistry.getJob(jobId);
         emerald.mint(msg.sender, job.dailyPay);
 
-        emit SalaryClaimed(_tokenId, jobId, job.dailyPay, dayStart / DAY);
+        emit SalaryClaimed(_dinoId, jobId, job.dailyPay, dayStart / DAY);
     }
 }

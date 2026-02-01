@@ -1,6 +1,11 @@
 "use client";
 
-import { jobsModuleAbi, jobsModuleAddress } from "@0xbuidlerhq/dinogaia.contracts";
+import {
+	jobsModuleAbi,
+	jobsModuleAddress,
+	shopModuleAbi,
+	shopModuleAddress,
+} from "@0xbuidlerhq/dinogaia.contracts";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { Container } from "@0xbuidlerhq/ui/system/base/container";
 import { H5, H6 } from "@0xbuidlerhq/ui/system/base/typography";
@@ -40,6 +45,12 @@ const MyDino = (props: Props) => {
 		args: [dinoId],
 	});
 
+	const data2 = encodeFunctionData({
+		abi: shopModuleAbi,
+		functionName: "buy",
+		args: [dinoId, 0n, 1n],
+	});
+
 	const { species } = SpeciesRegistry.useSpecies({ speciesId: dinoGenesis.speciesId });
 
 	const a = timestampToAge(dinoGenesis.birthTimestamp);
@@ -73,6 +84,41 @@ const MyDino = (props: Props) => {
 					}
 				>
 					<H5>Claim Salary</H5>
+				</ButtonBase>
+
+				<ButtonBase
+					className="bg-white text-black"
+					onClick={async () => {
+						// try {
+						// 	await sendTxsFromDinoAccount([
+						// 		{
+						// 			target: emeraldErc20Address["31337"],
+						// 			value: 0n,
+						// 			data: encodeFunctionData({
+						// 				abi: emeraldErc20Abi,
+						// 				functionName: "approve",
+						// 				args: [shopModuleAddress["31337"], parseEther("1")],
+						// 			}),
+						// 		},
+						// 	]);
+						// } catch (e) {
+						// 	console.log(e);
+						// }
+
+						try {
+							await sendTxsFromDinoAccount([
+								{
+									target: shopModuleAddress["31337"],
+									value: 0n,
+									data: data2,
+								},
+							]);
+						} catch (e) {
+							console.log(e);
+						}
+					}}
+				>
+					<H5>Buy From Shop</H5>
 				</ButtonBase>
 			</Box>
 		</Box>

@@ -6,3 +6,4 @@
 @modules/=src/modules
 @registry/=src/registry
 @economy/=src/economy
+@items/=src/items

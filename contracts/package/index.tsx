@@ -663,7 +663,7 @@ export const dinoErc721Abi = [
  *
  */
 export const dinoErc721Address = {
-  31337: '0xB703001F3b7866dB921e445Fc7598b968097369b',
+  31337: '0x12C67B9F0aE14dAAC4a28120F9a8b712c71CA90a',
 } as const
 
 /**
@@ -791,6 +791,8 @@ export const dinoFactoryAbi = [
             components: [
               { name: 'alive', internalType: 'bool', type: 'bool' },
               { name: 'health', internalType: 'uint256', type: 'uint256' },
+              { name: 'hungry', internalType: 'bool', type: 'bool' },
+              { name: 'thirsty', internalType: 'bool', type: 'bool' },
             ],
           },
         ],
@@ -845,6 +847,8 @@ export const dinoFactoryAbi = [
             components: [
               { name: 'alive', internalType: 'bool', type: 'bool' },
               { name: 'health', internalType: 'uint256', type: 'uint256' },
+              { name: 'hungry', internalType: 'bool', type: 'bool' },
+              { name: 'thirsty', internalType: 'bool', type: 'bool' },
             ],
           },
         ],
@@ -907,7 +911,7 @@ export const dinoFactoryAbi = [
  *
  */
 export const dinoFactoryAddress = {
-  31337: '0xb7c89b1e9508902694443389AEB86358C4770706',
+  31337: '0x704712a90BF4Ba67A7AE986CC8eee68b4548F032',
 } as const
 
 /**
@@ -1165,7 +1169,7 @@ export const dinoGenesisAbi = [
  *
  */
 export const dinoGenesisAddress = {
-  31337: '0xdda1457adCfbf302DB5BEe877d860869401fE2e1',
+  31337: '0x2b6191192ad8759B848Ba1A7dFC32500aA32DeB3',
 } as const
 
 /**
@@ -1379,7 +1383,7 @@ export const dinoProfileAbi = [
  *
  */
 export const dinoProfileAddress = {
-  31337: '0x1856C2aEEb093Ec88396092cc4F64f83e887a3ed',
+  31337: '0xf82624b45112D44a1F47b4c841e9c935097185a1',
 } as const
 
 /**
@@ -1436,6 +1440,8 @@ export const dinoStatusAbi = [
         components: [
           { name: 'alive', internalType: 'bool', type: 'bool' },
           { name: 'health', internalType: 'uint256', type: 'uint256' },
+          { name: 'hungry', internalType: 'bool', type: 'bool' },
+          { name: 'thirsty', internalType: 'bool', type: 'bool' },
         ],
       },
     ],
@@ -1495,6 +1501,8 @@ export const dinoStatusAbi = [
     outputs: [
       { name: 'alive', internalType: 'bool', type: 'bool' },
       { name: 'health', internalType: 'uint256', type: 'uint256' },
+      { name: 'hungry', internalType: 'bool', type: 'bool' },
+      { name: 'thirsty', internalType: 'bool', type: 'bool' },
     ],
     stateMutability: 'view',
   },
@@ -1593,7 +1601,7 @@ export const dinoStatusAbi = [
  *
  */
 export const dinoStatusAddress = {
-  31337: '0xE65D07c6dFF7CB46b672fE21DBa577B844f064d3',
+  31337: '0x9DD6E2FCd3FB637ABFC63fa96Bf2e4DB39be03c4',
 } as const
 
 /**
@@ -1776,6 +1784,697 @@ export const erc20Abi = [
     type: 'error',
     inputs: [{ name: 'spender', internalType: 'address', type: 'address' }],
     name: 'ERC20InvalidSpender',
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ERC6909
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const erc6909Abi = [
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'allowance',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'approve',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'balanceOf',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+    ],
+    name: 'isOperator',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'approved', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'setOperator',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
+    name: 'supportsInterface',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'receiver', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'sender', internalType: 'address', type: 'address' },
+      { name: 'receiver', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transferFrom',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Approval',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
+    ],
+    name: 'OperatorSet',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'caller',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'receiver',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Transfer',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'allowance', internalType: 'uint256', type: 'uint256' },
+      { name: 'needed', internalType: 'uint256', type: 'uint256' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'ERC6909InsufficientAllowance',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'sender', internalType: 'address', type: 'address' },
+      { name: 'balance', internalType: 'uint256', type: 'uint256' },
+      { name: 'needed', internalType: 'uint256', type: 'uint256' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'ERC6909InsufficientBalance',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'approver', internalType: 'address', type: 'address' }],
+    name: 'ERC6909InvalidApprover',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'receiver', internalType: 'address', type: 'address' }],
+    name: 'ERC6909InvalidReceiver',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'sender', internalType: 'address', type: 'address' }],
+    name: 'ERC6909InvalidSender',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'spender', internalType: 'address', type: 'address' }],
+    name: 'ERC6909InvalidSpender',
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ERC6909Metadata
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const erc6909MetadataAbi = [
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'allowance',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'approve',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'balanceOf',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
+    name: 'decimals',
+    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+    ],
+    name: 'isOperator',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
+    name: 'name',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'approved', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'setOperator',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
+    name: 'supportsInterface',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
+    name: 'symbol',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'receiver', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'sender', internalType: 'address', type: 'address' },
+      { name: 'receiver', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transferFrom',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Approval',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'newDecimals',
+        internalType: 'uint8',
+        type: 'uint8',
+        indexed: false,
+      },
+    ],
+    name: 'ERC6909DecimalsUpdated',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'newName',
+        internalType: 'string',
+        type: 'string',
+        indexed: false,
+      },
+    ],
+    name: 'ERC6909NameUpdated',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'newSymbol',
+        internalType: 'string',
+        type: 'string',
+        indexed: false,
+      },
+    ],
+    name: 'ERC6909SymbolUpdated',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
+    ],
+    name: 'OperatorSet',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'caller',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'receiver',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Transfer',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'allowance', internalType: 'uint256', type: 'uint256' },
+      { name: 'needed', internalType: 'uint256', type: 'uint256' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'ERC6909InsufficientAllowance',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'sender', internalType: 'address', type: 'address' },
+      { name: 'balance', internalType: 'uint256', type: 'uint256' },
+      { name: 'needed', internalType: 'uint256', type: 'uint256' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'ERC6909InsufficientBalance',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'approver', internalType: 'address', type: 'address' }],
+    name: 'ERC6909InvalidApprover',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'receiver', internalType: 'address', type: 'address' }],
+    name: 'ERC6909InvalidReceiver',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'sender', internalType: 'address', type: 'address' }],
+    name: 'ERC6909InvalidSender',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'spender', internalType: 'address', type: 'address' }],
+    name: 'ERC6909InvalidSpender',
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ERC6909TokenSupply
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const erc6909TokenSupplyAbi = [
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'allowance',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'approve',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'balanceOf',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+    ],
+    name: 'isOperator',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'approved', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'setOperator',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
+    name: 'supportsInterface',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
+    name: 'totalSupply',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'receiver', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'sender', internalType: 'address', type: 'address' },
+      { name: 'receiver', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transferFrom',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Approval',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
+    ],
+    name: 'OperatorSet',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'caller',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'receiver',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Transfer',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'allowance', internalType: 'uint256', type: 'uint256' },
+      { name: 'needed', internalType: 'uint256', type: 'uint256' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'ERC6909InsufficientAllowance',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'sender', internalType: 'address', type: 'address' },
+      { name: 'balance', internalType: 'uint256', type: 'uint256' },
+      { name: 'needed', internalType: 'uint256', type: 'uint256' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'ERC6909InsufficientBalance',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'approver', internalType: 'address', type: 'address' }],
+    name: 'ERC6909InvalidApprover',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'receiver', internalType: 'address', type: 'address' }],
+    name: 'ERC6909InvalidReceiver',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'sender', internalType: 'address', type: 'address' }],
+    name: 'ERC6909InvalidSender',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'spender', internalType: 'address', type: 'address' }],
+    name: 'ERC6909InvalidSpender',
   },
 ] as const
 
@@ -2594,7 +3293,7 @@ export const emeraldErc20Abi = [
  *
  */
 export const emeraldErc20Address = {
-  31337: '0x13f1f7F3a33B1157e5cd87239379b9cfab8487Ed',
+  31337: '0x54c64d5EAD2F5bF6550f4be3aE7721F7422082BC',
 } as const
 
 /**
@@ -2940,6 +3639,716 @@ export const ierc20MetadataAbi = [
       { name: 'to', internalType: 'address', type: 'address', indexed: true },
       {
         name: 'value',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Transfer',
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// IERC6909
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const ierc6909Abi = [
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'allowance',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'approve',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'balanceOf',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+    ],
+    name: 'isOperator',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'approved', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'setOperator',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
+    name: 'supportsInterface',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'receiver', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'sender', internalType: 'address', type: 'address' },
+      { name: 'receiver', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transferFrom',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Approval',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
+    ],
+    name: 'OperatorSet',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'caller',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'receiver',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Transfer',
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// IERC6909ContentURI
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const ierc6909ContentUriAbi = [
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'allowance',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'approve',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'balanceOf',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'contractURI',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+    ],
+    name: 'isOperator',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'approved', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'setOperator',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
+    name: 'supportsInterface',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
+    name: 'tokenURI',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'receiver', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'sender', internalType: 'address', type: 'address' },
+      { name: 'receiver', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transferFrom',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Approval',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
+    ],
+    name: 'OperatorSet',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'caller',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'receiver',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Transfer',
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// IERC6909Metadata
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const ierc6909MetadataAbi = [
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'allowance',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'approve',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'balanceOf',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
+    name: 'decimals',
+    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+    ],
+    name: 'isOperator',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
+    name: 'name',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'approved', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'setOperator',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
+    name: 'supportsInterface',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
+    name: 'symbol',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'receiver', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'sender', internalType: 'address', type: 'address' },
+      { name: 'receiver', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transferFrom',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Approval',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
+    ],
+    name: 'OperatorSet',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'caller',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'receiver',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Transfer',
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// IERC6909TokenSupply
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const ierc6909TokenSupplyAbi = [
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'allowance',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'approve',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'balanceOf',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+    ],
+    name: 'isOperator',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'approved', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'setOperator',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
+    name: 'supportsInterface',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
+    name: 'totalSupply',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'receiver', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'sender', internalType: 'address', type: 'address' },
+      { name: 'receiver', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transferFrom',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Approval',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
+    ],
+    name: 'OperatorSet',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'caller',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'receiver',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'amount',
         internalType: 'uint256',
         type: 'uint256',
         indexed: false,
@@ -3629,6 +5038,1268 @@ export const iMulticall3Abi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ItemsSet0
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ *
+ */
+export const itemsSet0Abi = [
+  {
+    type: 'constructor',
+    inputs: [{ name: '_owner', internalType: 'address', type: 'address' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'DEFAULT_ADMIN_ROLE',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'MINTER_ROLE',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'allowance',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'approve',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'balanceOf',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
+    name: 'decimals',
+    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_id', internalType: 'uint256', type: 'uint256' }],
+    name: 'getEquipmentSpec',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct ItemsSet0.EquipmentSpec',
+        type: 'tuple',
+        components: [
+          { name: 'slot', internalType: 'string', type: 'string' },
+          { name: 'defense', internalType: 'uint256', type: 'uint256' },
+          { name: 'durability', internalType: 'uint256', type: 'uint256' },
+          { name: 'price', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_id', internalType: 'uint256', type: 'uint256' }],
+    name: 'getFoodSpec',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct ItemsSet0.FoodSpec',
+        type: 'tuple',
+        components: [
+          { name: 'weight', internalType: 'uint256', type: 'uint256' },
+          { name: 'price', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_id', internalType: 'uint256', type: 'uint256' }],
+    name: 'getHealSpec',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct ItemsSet0.HealSpec',
+        type: 'tuple',
+        components: [
+          { name: 'healAmount', internalType: 'uint256', type: 'uint256' },
+          { name: 'price', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_itemId', internalType: 'uint256', type: 'uint256' }],
+    name: 'getItem',
+    outputs: [
+      {
+        name: '_itemBase',
+        internalType: 'struct ItemsSetBase.ItemBase',
+        type: 'tuple',
+        components: [
+          {
+            name: 'rarity',
+            internalType: 'enum ItemsSetBase.ItemBaseRarity',
+            type: 'uint8',
+          },
+          {
+            name: 'itemType',
+            internalType: 'enum ItemsSetBase.ItemBaseType',
+            type: 'uint8',
+          },
+          {
+            name: 'trading',
+            internalType: 'struct ItemsSetBase.ItemTrading',
+            type: 'tuple',
+            components: [
+              { name: 'tradable', internalType: 'bool', type: 'bool' },
+              { name: 'sellable', internalType: 'bool', type: 'bool' },
+              { name: 'price', internalType: 'uint256', type: 'uint256' },
+            ],
+          },
+          {
+            name: 'usage',
+            internalType: 'struct ItemsSetBase.ItemUsage',
+            type: 'tuple',
+            components: [
+              { name: 'destroyOnUse', internalType: 'bool', type: 'bool' },
+              { name: 'soulbound', internalType: 'bool', type: 'bool' },
+            ],
+          },
+          {
+            name: 'requirements',
+            internalType: 'struct ItemsSetBase.ItemRequirements',
+            type: 'tuple',
+            components: [
+              {
+                name: 'requiredLevel',
+                internalType: 'uint256',
+                type: 'uint256',
+              },
+            ],
+          },
+          {
+            name: 'metadata',
+            internalType: 'struct ItemsSetBase.ItemBaseMetadata',
+            type: 'tuple',
+            components: [
+              { name: 'name', internalType: 'string', type: 'string' },
+              { name: 'symbol', internalType: 'string', type: 'string' },
+              { name: 'decimals', internalType: 'uint8', type: 'uint8' },
+            ],
+          },
+          {
+            name: 'tagging',
+            internalType: 'struct ItemsSetBase.ItemTags',
+            type: 'tuple',
+            components: [
+              { name: 'tags', internalType: 'string[]', type: 'string[]' },
+            ],
+          },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_id', internalType: 'uint256', type: 'uint256' }],
+    name: 'getQuestSpec',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct ItemsSet0.QuestSpec',
+        type: 'tuple',
+        components: [
+          { name: 'description', internalType: 'string', type: 'string' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'role', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'getRoleAdmin',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_id', internalType: 'uint256', type: 'uint256' }],
+    name: 'getWeaponSpec',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct ItemsSet0.WeaponSpec',
+        type: 'tuple',
+        components: [
+          { name: 'damage', internalType: 'uint256', type: 'uint256' },
+          { name: 'durability', internalType: 'uint256', type: 'uint256' },
+          { name: 'price', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'grantRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'hasRole',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+    ],
+    name: 'isOperator',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'itemIdsIndex',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_to', internalType: 'address', type: 'address' },
+      { name: '_id', internalType: 'uint256', type: 'uint256' },
+      { name: '_amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'mint',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
+    name: 'name',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'callerConfirmation', internalType: 'address', type: 'address' },
+    ],
+    name: 'renounceRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'revokeRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'approved', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'setOperator',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
+    name: 'supportsInterface',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
+    name: 'symbol',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
+    name: 'totalSupply',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'receiver', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'sender', internalType: 'address', type: 'address' },
+      { name: 'receiver', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transferFrom',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Approval',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'newDecimals',
+        internalType: 'uint8',
+        type: 'uint8',
+        indexed: false,
+      },
+    ],
+    name: 'ERC6909DecimalsUpdated',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'newName',
+        internalType: 'string',
+        type: 'string',
+        indexed: false,
+      },
+    ],
+    name: 'ERC6909NameUpdated',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'newSymbol',
+        internalType: 'string',
+        type: 'string',
+        indexed: false,
+      },
+    ],
+    name: 'ERC6909SymbolUpdated',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'meta',
+        internalType: 'struct ItemsSetBase.ItemBase',
+        type: 'tuple',
+        components: [
+          {
+            name: 'rarity',
+            internalType: 'enum ItemsSetBase.ItemBaseRarity',
+            type: 'uint8',
+          },
+          {
+            name: 'itemType',
+            internalType: 'enum ItemsSetBase.ItemBaseType',
+            type: 'uint8',
+          },
+          {
+            name: 'trading',
+            internalType: 'struct ItemsSetBase.ItemTrading',
+            type: 'tuple',
+            components: [
+              { name: 'tradable', internalType: 'bool', type: 'bool' },
+              { name: 'sellable', internalType: 'bool', type: 'bool' },
+              { name: 'price', internalType: 'uint256', type: 'uint256' },
+            ],
+          },
+          {
+            name: 'usage',
+            internalType: 'struct ItemsSetBase.ItemUsage',
+            type: 'tuple',
+            components: [
+              { name: 'destroyOnUse', internalType: 'bool', type: 'bool' },
+              { name: 'soulbound', internalType: 'bool', type: 'bool' },
+            ],
+          },
+          {
+            name: 'requirements',
+            internalType: 'struct ItemsSetBase.ItemRequirements',
+            type: 'tuple',
+            components: [
+              {
+                name: 'requiredLevel',
+                internalType: 'uint256',
+                type: 'uint256',
+              },
+            ],
+          },
+          {
+            name: 'metadata',
+            internalType: 'struct ItemsSetBase.ItemBaseMetadata',
+            type: 'tuple',
+            components: [
+              { name: 'name', internalType: 'string', type: 'string' },
+              { name: 'symbol', internalType: 'string', type: 'string' },
+              { name: 'decimals', internalType: 'uint8', type: 'uint8' },
+            ],
+          },
+          {
+            name: 'tagging',
+            internalType: 'struct ItemsSetBase.ItemTags',
+            type: 'tuple',
+            components: [
+              { name: 'tags', internalType: 'string[]', type: 'string[]' },
+            ],
+          },
+        ],
+        indexed: false,
+      },
+    ],
+    name: 'ItemDefined',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
+    ],
+    name: 'OperatorSet',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'previousAdminRole',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: true,
+      },
+      {
+        name: 'newAdminRole',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: true,
+      },
+    ],
+    name: 'RoleAdminChanged',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'RoleGranted',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'RoleRevoked',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'caller',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'receiver',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Transfer',
+  },
+  { type: 'error', inputs: [], name: 'AccessControlBadConfirmation' },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'account', internalType: 'address', type: 'address' },
+      { name: 'neededRole', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'AccessControlUnauthorizedAccount',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'allowance', internalType: 'uint256', type: 'uint256' },
+      { name: 'needed', internalType: 'uint256', type: 'uint256' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'ERC6909InsufficientAllowance',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'sender', internalType: 'address', type: 'address' },
+      { name: 'balance', internalType: 'uint256', type: 'uint256' },
+      { name: 'needed', internalType: 'uint256', type: 'uint256' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'ERC6909InsufficientBalance',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'approver', internalType: 'address', type: 'address' }],
+    name: 'ERC6909InvalidApprover',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'receiver', internalType: 'address', type: 'address' }],
+    name: 'ERC6909InvalidReceiver',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'sender', internalType: 'address', type: 'address' }],
+    name: 'ERC6909InvalidSender',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'spender', internalType: 'address', type: 'address' }],
+    name: 'ERC6909InvalidSpender',
+  },
+  { type: 'error', inputs: [], name: 'InvalidItemId' },
+  { type: 'error', inputs: [], name: 'InvalidItemType' },
+] as const
+
+/**
+ *
+ */
+export const itemsSet0Address = {
+  31337: '0xbA94cCa9bB4C661a6c98a0d8e0D849145A62fD91',
+} as const
+
+/**
+ *
+ */
+export const itemsSet0Config = {
+  address: itemsSet0Address,
+  abi: itemsSet0Abi,
+} as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ItemsSetBase
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const itemsSetBaseAbi = [
+  {
+    type: 'function',
+    inputs: [],
+    name: 'DEFAULT_ADMIN_ROLE',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'MINTER_ROLE',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'allowance',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'approve',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'balanceOf',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
+    name: 'decimals',
+    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_itemId', internalType: 'uint256', type: 'uint256' }],
+    name: 'getItem',
+    outputs: [
+      {
+        name: '_itemBase',
+        internalType: 'struct ItemsSetBase.ItemBase',
+        type: 'tuple',
+        components: [
+          {
+            name: 'rarity',
+            internalType: 'enum ItemsSetBase.ItemBaseRarity',
+            type: 'uint8',
+          },
+          {
+            name: 'itemType',
+            internalType: 'enum ItemsSetBase.ItemBaseType',
+            type: 'uint8',
+          },
+          {
+            name: 'trading',
+            internalType: 'struct ItemsSetBase.ItemTrading',
+            type: 'tuple',
+            components: [
+              { name: 'tradable', internalType: 'bool', type: 'bool' },
+              { name: 'sellable', internalType: 'bool', type: 'bool' },
+              { name: 'price', internalType: 'uint256', type: 'uint256' },
+            ],
+          },
+          {
+            name: 'usage',
+            internalType: 'struct ItemsSetBase.ItemUsage',
+            type: 'tuple',
+            components: [
+              { name: 'destroyOnUse', internalType: 'bool', type: 'bool' },
+              { name: 'soulbound', internalType: 'bool', type: 'bool' },
+            ],
+          },
+          {
+            name: 'requirements',
+            internalType: 'struct ItemsSetBase.ItemRequirements',
+            type: 'tuple',
+            components: [
+              {
+                name: 'requiredLevel',
+                internalType: 'uint256',
+                type: 'uint256',
+              },
+            ],
+          },
+          {
+            name: 'metadata',
+            internalType: 'struct ItemsSetBase.ItemBaseMetadata',
+            type: 'tuple',
+            components: [
+              { name: 'name', internalType: 'string', type: 'string' },
+              { name: 'symbol', internalType: 'string', type: 'string' },
+              { name: 'decimals', internalType: 'uint8', type: 'uint8' },
+            ],
+          },
+          {
+            name: 'tagging',
+            internalType: 'struct ItemsSetBase.ItemTags',
+            type: 'tuple',
+            components: [
+              { name: 'tags', internalType: 'string[]', type: 'string[]' },
+            ],
+          },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'role', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'getRoleAdmin',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'grantRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'hasRole',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+    ],
+    name: 'isOperator',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'itemIdsIndex',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_to', internalType: 'address', type: 'address' },
+      { name: '_id', internalType: 'uint256', type: 'uint256' },
+      { name: '_amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'mint',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
+    name: 'name',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'callerConfirmation', internalType: 'address', type: 'address' },
+    ],
+    name: 'renounceRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'revokeRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'approved', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'setOperator',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
+    name: 'supportsInterface',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
+    name: 'symbol',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
+    name: 'totalSupply',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'receiver', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'sender', internalType: 'address', type: 'address' },
+      { name: 'receiver', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transferFrom',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Approval',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'newDecimals',
+        internalType: 'uint8',
+        type: 'uint8',
+        indexed: false,
+      },
+    ],
+    name: 'ERC6909DecimalsUpdated',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'newName',
+        internalType: 'string',
+        type: 'string',
+        indexed: false,
+      },
+    ],
+    name: 'ERC6909NameUpdated',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'newSymbol',
+        internalType: 'string',
+        type: 'string',
+        indexed: false,
+      },
+    ],
+    name: 'ERC6909SymbolUpdated',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'meta',
+        internalType: 'struct ItemsSetBase.ItemBase',
+        type: 'tuple',
+        components: [
+          {
+            name: 'rarity',
+            internalType: 'enum ItemsSetBase.ItemBaseRarity',
+            type: 'uint8',
+          },
+          {
+            name: 'itemType',
+            internalType: 'enum ItemsSetBase.ItemBaseType',
+            type: 'uint8',
+          },
+          {
+            name: 'trading',
+            internalType: 'struct ItemsSetBase.ItemTrading',
+            type: 'tuple',
+            components: [
+              { name: 'tradable', internalType: 'bool', type: 'bool' },
+              { name: 'sellable', internalType: 'bool', type: 'bool' },
+              { name: 'price', internalType: 'uint256', type: 'uint256' },
+            ],
+          },
+          {
+            name: 'usage',
+            internalType: 'struct ItemsSetBase.ItemUsage',
+            type: 'tuple',
+            components: [
+              { name: 'destroyOnUse', internalType: 'bool', type: 'bool' },
+              { name: 'soulbound', internalType: 'bool', type: 'bool' },
+            ],
+          },
+          {
+            name: 'requirements',
+            internalType: 'struct ItemsSetBase.ItemRequirements',
+            type: 'tuple',
+            components: [
+              {
+                name: 'requiredLevel',
+                internalType: 'uint256',
+                type: 'uint256',
+              },
+            ],
+          },
+          {
+            name: 'metadata',
+            internalType: 'struct ItemsSetBase.ItemBaseMetadata',
+            type: 'tuple',
+            components: [
+              { name: 'name', internalType: 'string', type: 'string' },
+              { name: 'symbol', internalType: 'string', type: 'string' },
+              { name: 'decimals', internalType: 'uint8', type: 'uint8' },
+            ],
+          },
+          {
+            name: 'tagging',
+            internalType: 'struct ItemsSetBase.ItemTags',
+            type: 'tuple',
+            components: [
+              { name: 'tags', internalType: 'string[]', type: 'string[]' },
+            ],
+          },
+        ],
+        indexed: false,
+      },
+    ],
+    name: 'ItemDefined',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
+    ],
+    name: 'OperatorSet',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'previousAdminRole',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: true,
+      },
+      {
+        name: 'newAdminRole',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: true,
+      },
+    ],
+    name: 'RoleAdminChanged',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'RoleGranted',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'RoleRevoked',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'caller',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'receiver',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Transfer',
+  },
+  { type: 'error', inputs: [], name: 'AccessControlBadConfirmation' },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'account', internalType: 'address', type: 'address' },
+      { name: 'neededRole', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'AccessControlUnauthorizedAccount',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'allowance', internalType: 'uint256', type: 'uint256' },
+      { name: 'needed', internalType: 'uint256', type: 'uint256' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'ERC6909InsufficientAllowance',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'sender', internalType: 'address', type: 'address' },
+      { name: 'balance', internalType: 'uint256', type: 'uint256' },
+      { name: 'needed', internalType: 'uint256', type: 'uint256' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'ERC6909InsufficientBalance',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'approver', internalType: 'address', type: 'address' }],
+    name: 'ERC6909InvalidApprover',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'receiver', internalType: 'address', type: 'address' }],
+    name: 'ERC6909InvalidReceiver',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'sender', internalType: 'address', type: 'address' }],
+    name: 'ERC6909InvalidSender',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'spender', internalType: 'address', type: 'address' }],
+    name: 'ERC6909InvalidSpender',
+  },
+  { type: 'error', inputs: [], name: 'InvalidItemId' },
+  { type: 'error', inputs: [], name: 'InvalidItemType' },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // JobsModule
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -3667,7 +6338,7 @@ export const jobsModuleAbi = [
   },
   {
     type: 'function',
-    inputs: [{ name: '_tokenId', internalType: 'uint256', type: 'uint256' }],
+    inputs: [{ name: '_dinoId', internalType: 'uint256', type: 'uint256' }],
     name: 'claimSalary',
     outputs: [],
     stateMutability: 'nonpayable',
@@ -3770,7 +6441,7 @@ export const jobsModuleAbi = [
   {
     type: 'function',
     inputs: [
-      { name: '_tokenId', internalType: 'uint256', type: 'uint256' },
+      { name: '_dinoId', internalType: 'uint256', type: 'uint256' },
       { name: '_jobId', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'switchJob',
@@ -3913,7 +6584,7 @@ export const jobsModuleAbi = [
  *
  */
 export const jobsModuleAddress = {
-  31337: '0x640eC30f1C63B686DAf39AbA61A496A69a4765CD',
+  31337: '0xD79D296e6F50D80a818542D98fc9600E5f19f05a',
 } as const
 
 /**
@@ -4236,7 +6907,7 @@ export const jobsRegistryAbi = [
  *
  */
 export const jobsRegistryAddress = {
-  31337: '0x23258F0b86ae640E1798C8d60eD49d1408480374',
+  31337: '0x3DF7F550DCAC80892feF3E4930eDCa53A4a96b82',
 } as const
 
 /**
@@ -4246,6 +6917,153 @@ export const jobsRegistryConfig = {
   address: jobsRegistryAddress,
   abi: jobsRegistryAbi,
 } as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ModuleBase
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const moduleBaseAbi = [
+  {
+    type: 'function',
+    inputs: [],
+    name: 'DEFAULT_ADMIN_ROLE',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'dinoFactory',
+    outputs: [
+      { name: '', internalType: 'contract DinoFactory', type: 'address' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'role', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'getRoleAdmin',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'grantRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'hasRole',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'callerConfirmation', internalType: 'address', type: 'address' },
+    ],
+    name: 'renounceRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'revokeRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
+    name: 'supportsInterface',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'previousAdminRole',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: true,
+      },
+      {
+        name: 'newAdminRole',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: true,
+      },
+    ],
+    name: 'RoleAdminChanged',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'RoleGranted',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'RoleRevoked',
+  },
+  { type: 'error', inputs: [], name: 'AccessControlBadConfirmation' },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'account', internalType: 'address', type: 'address' },
+      { name: 'neededRole', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'AccessControlUnauthorizedAccount',
+  },
+  { type: 'error', inputs: [], name: 'NotDinoAccount' },
+] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // SafeCast
@@ -4279,6 +7097,277 @@ export const safeCastAbi = [
     name: 'SafeCastOverflowedUintToInt',
   },
 ] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ShopModule
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ *
+ */
+export const shopModuleAbi = [
+  {
+    type: 'constructor',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      {
+        name: '_emerald',
+        internalType: 'contract EmeraldERC20',
+        type: 'address',
+      },
+      {
+        name: '_dinoFactory',
+        internalType: 'contract DinoFactory',
+        type: 'address',
+      },
+      {
+        name: '_items',
+        internalType: 'contract ItemsSetBase',
+        type: 'address',
+      },
+      { name: '_treasury', internalType: 'address', type: 'address' },
+    ],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'DEFAULT_ADMIN_ROLE',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_dinoId', internalType: 'uint256', type: 'uint256' },
+      { name: 'itemId', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'buy',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'dinoFactory',
+    outputs: [
+      { name: '', internalType: 'contract DinoFactory', type: 'address' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'emerald',
+    outputs: [
+      { name: '', internalType: 'contract EmeraldERC20', type: 'address' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'role', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'getRoleAdmin',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'grantRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'hasRole',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'items',
+    outputs: [
+      { name: '', internalType: 'contract ItemsSetBase', type: 'address' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'callerConfirmation', internalType: 'address', type: 'address' },
+    ],
+    name: 'renounceRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'revokeRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
+    name: 'supportsInterface',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'treasury',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'buyer',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'itemId',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: true,
+      },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'totalCost',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'ItemPurchased',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'previousAdminRole',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: true,
+      },
+      {
+        name: 'newAdminRole',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: true,
+      },
+    ],
+    name: 'RoleAdminChanged',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'RoleGranted',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'RoleRevoked',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'treasury',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'TreasuryUpdated',
+  },
+  { type: 'error', inputs: [], name: 'AccessControlBadConfirmation' },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'account', internalType: 'address', type: 'address' },
+      { name: 'neededRole', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'AccessControlUnauthorizedAccount',
+  },
+  { type: 'error', inputs: [], name: 'InvalidAmount' },
+  { type: 'error', inputs: [], name: 'ItemNotPriced' },
+  { type: 'error', inputs: [], name: 'NotDinoAccount' },
+  { type: 'error', inputs: [], name: 'ZeroAddress' },
+] as const
+
+/**
+ *
+ */
+export const shopModuleAddress = {
+  31337: '0xBA1B4883393fB695A9C27088a7252de8a9505635',
+} as const
+
+/**
+ *
+ */
+export const shopModuleConfig = {
+  address: shopModuleAddress,
+  abi: shopModuleAbi,
+} as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // SpeciesRegistry
@@ -4648,7 +7737,7 @@ export const speciesRegistryAbi = [
  *
  */
 export const speciesRegistryAddress = {
-  31337: '0x17B8CB38cc519621C71f5D8eBD75aEFef9DF73BB',
+  31337: '0x92a53dB9AD485269Dd7bd3e6FfA1f9AC637c1F65',
 } as const
 
 /**
@@ -6525,6 +9614,543 @@ export const useWatchErc20TransferEvent =
   })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc6909Abi}__
+ */
+export const useReadErc6909 = /*#__PURE__*/ createUseReadContract({
+  abi: erc6909Abi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc6909Abi}__ and `functionName` set to `"allowance"`
+ */
+export const useReadErc6909Allowance = /*#__PURE__*/ createUseReadContract({
+  abi: erc6909Abi,
+  functionName: 'allowance',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc6909Abi}__ and `functionName` set to `"balanceOf"`
+ */
+export const useReadErc6909BalanceOf = /*#__PURE__*/ createUseReadContract({
+  abi: erc6909Abi,
+  functionName: 'balanceOf',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc6909Abi}__ and `functionName` set to `"isOperator"`
+ */
+export const useReadErc6909IsOperator = /*#__PURE__*/ createUseReadContract({
+  abi: erc6909Abi,
+  functionName: 'isOperator',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc6909Abi}__ and `functionName` set to `"supportsInterface"`
+ */
+export const useReadErc6909SupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: erc6909Abi,
+    functionName: 'supportsInterface',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc6909Abi}__
+ */
+export const useWriteErc6909 = /*#__PURE__*/ createUseWriteContract({
+  abi: erc6909Abi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc6909Abi}__ and `functionName` set to `"approve"`
+ */
+export const useWriteErc6909Approve = /*#__PURE__*/ createUseWriteContract({
+  abi: erc6909Abi,
+  functionName: 'approve',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc6909Abi}__ and `functionName` set to `"setOperator"`
+ */
+export const useWriteErc6909SetOperator = /*#__PURE__*/ createUseWriteContract({
+  abi: erc6909Abi,
+  functionName: 'setOperator',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc6909Abi}__ and `functionName` set to `"transfer"`
+ */
+export const useWriteErc6909Transfer = /*#__PURE__*/ createUseWriteContract({
+  abi: erc6909Abi,
+  functionName: 'transfer',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc6909Abi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useWriteErc6909TransferFrom = /*#__PURE__*/ createUseWriteContract(
+  { abi: erc6909Abi, functionName: 'transferFrom' },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc6909Abi}__
+ */
+export const useSimulateErc6909 = /*#__PURE__*/ createUseSimulateContract({
+  abi: erc6909Abi,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc6909Abi}__ and `functionName` set to `"approve"`
+ */
+export const useSimulateErc6909Approve =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: erc6909Abi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc6909Abi}__ and `functionName` set to `"setOperator"`
+ */
+export const useSimulateErc6909SetOperator =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: erc6909Abi,
+    functionName: 'setOperator',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc6909Abi}__ and `functionName` set to `"transfer"`
+ */
+export const useSimulateErc6909Transfer =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: erc6909Abi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc6909Abi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useSimulateErc6909TransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: erc6909Abi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc6909Abi}__
+ */
+export const useWatchErc6909Event = /*#__PURE__*/ createUseWatchContractEvent({
+  abi: erc6909Abi,
+})
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc6909Abi}__ and `eventName` set to `"Approval"`
+ */
+export const useWatchErc6909ApprovalEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: erc6909Abi,
+    eventName: 'Approval',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc6909Abi}__ and `eventName` set to `"OperatorSet"`
+ */
+export const useWatchErc6909OperatorSetEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: erc6909Abi,
+    eventName: 'OperatorSet',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc6909Abi}__ and `eventName` set to `"Transfer"`
+ */
+export const useWatchErc6909TransferEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: erc6909Abi,
+    eventName: 'Transfer',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc6909MetadataAbi}__
+ */
+export const useReadErc6909Metadata = /*#__PURE__*/ createUseReadContract({
+  abi: erc6909MetadataAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc6909MetadataAbi}__ and `functionName` set to `"allowance"`
+ */
+export const useReadErc6909MetadataAllowance =
+  /*#__PURE__*/ createUseReadContract({
+    abi: erc6909MetadataAbi,
+    functionName: 'allowance',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc6909MetadataAbi}__ and `functionName` set to `"balanceOf"`
+ */
+export const useReadErc6909MetadataBalanceOf =
+  /*#__PURE__*/ createUseReadContract({
+    abi: erc6909MetadataAbi,
+    functionName: 'balanceOf',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc6909MetadataAbi}__ and `functionName` set to `"decimals"`
+ */
+export const useReadErc6909MetadataDecimals =
+  /*#__PURE__*/ createUseReadContract({
+    abi: erc6909MetadataAbi,
+    functionName: 'decimals',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc6909MetadataAbi}__ and `functionName` set to `"isOperator"`
+ */
+export const useReadErc6909MetadataIsOperator =
+  /*#__PURE__*/ createUseReadContract({
+    abi: erc6909MetadataAbi,
+    functionName: 'isOperator',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc6909MetadataAbi}__ and `functionName` set to `"name"`
+ */
+export const useReadErc6909MetadataName = /*#__PURE__*/ createUseReadContract({
+  abi: erc6909MetadataAbi,
+  functionName: 'name',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc6909MetadataAbi}__ and `functionName` set to `"supportsInterface"`
+ */
+export const useReadErc6909MetadataSupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: erc6909MetadataAbi,
+    functionName: 'supportsInterface',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc6909MetadataAbi}__ and `functionName` set to `"symbol"`
+ */
+export const useReadErc6909MetadataSymbol = /*#__PURE__*/ createUseReadContract(
+  { abi: erc6909MetadataAbi, functionName: 'symbol' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc6909MetadataAbi}__
+ */
+export const useWriteErc6909Metadata = /*#__PURE__*/ createUseWriteContract({
+  abi: erc6909MetadataAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc6909MetadataAbi}__ and `functionName` set to `"approve"`
+ */
+export const useWriteErc6909MetadataApprove =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: erc6909MetadataAbi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc6909MetadataAbi}__ and `functionName` set to `"setOperator"`
+ */
+export const useWriteErc6909MetadataSetOperator =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: erc6909MetadataAbi,
+    functionName: 'setOperator',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc6909MetadataAbi}__ and `functionName` set to `"transfer"`
+ */
+export const useWriteErc6909MetadataTransfer =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: erc6909MetadataAbi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc6909MetadataAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useWriteErc6909MetadataTransferFrom =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: erc6909MetadataAbi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc6909MetadataAbi}__
+ */
+export const useSimulateErc6909Metadata =
+  /*#__PURE__*/ createUseSimulateContract({ abi: erc6909MetadataAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc6909MetadataAbi}__ and `functionName` set to `"approve"`
+ */
+export const useSimulateErc6909MetadataApprove =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: erc6909MetadataAbi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc6909MetadataAbi}__ and `functionName` set to `"setOperator"`
+ */
+export const useSimulateErc6909MetadataSetOperator =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: erc6909MetadataAbi,
+    functionName: 'setOperator',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc6909MetadataAbi}__ and `functionName` set to `"transfer"`
+ */
+export const useSimulateErc6909MetadataTransfer =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: erc6909MetadataAbi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc6909MetadataAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useSimulateErc6909MetadataTransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: erc6909MetadataAbi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc6909MetadataAbi}__
+ */
+export const useWatchErc6909MetadataEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: erc6909MetadataAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc6909MetadataAbi}__ and `eventName` set to `"Approval"`
+ */
+export const useWatchErc6909MetadataApprovalEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: erc6909MetadataAbi,
+    eventName: 'Approval',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc6909MetadataAbi}__ and `eventName` set to `"ERC6909DecimalsUpdated"`
+ */
+export const useWatchErc6909MetadataErc6909DecimalsUpdatedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: erc6909MetadataAbi,
+    eventName: 'ERC6909DecimalsUpdated',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc6909MetadataAbi}__ and `eventName` set to `"ERC6909NameUpdated"`
+ */
+export const useWatchErc6909MetadataErc6909NameUpdatedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: erc6909MetadataAbi,
+    eventName: 'ERC6909NameUpdated',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc6909MetadataAbi}__ and `eventName` set to `"ERC6909SymbolUpdated"`
+ */
+export const useWatchErc6909MetadataErc6909SymbolUpdatedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: erc6909MetadataAbi,
+    eventName: 'ERC6909SymbolUpdated',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc6909MetadataAbi}__ and `eventName` set to `"OperatorSet"`
+ */
+export const useWatchErc6909MetadataOperatorSetEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: erc6909MetadataAbi,
+    eventName: 'OperatorSet',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc6909MetadataAbi}__ and `eventName` set to `"Transfer"`
+ */
+export const useWatchErc6909MetadataTransferEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: erc6909MetadataAbi,
+    eventName: 'Transfer',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc6909TokenSupplyAbi}__
+ */
+export const useReadErc6909TokenSupply = /*#__PURE__*/ createUseReadContract({
+  abi: erc6909TokenSupplyAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc6909TokenSupplyAbi}__ and `functionName` set to `"allowance"`
+ */
+export const useReadErc6909TokenSupplyAllowance =
+  /*#__PURE__*/ createUseReadContract({
+    abi: erc6909TokenSupplyAbi,
+    functionName: 'allowance',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc6909TokenSupplyAbi}__ and `functionName` set to `"balanceOf"`
+ */
+export const useReadErc6909TokenSupplyBalanceOf =
+  /*#__PURE__*/ createUseReadContract({
+    abi: erc6909TokenSupplyAbi,
+    functionName: 'balanceOf',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc6909TokenSupplyAbi}__ and `functionName` set to `"isOperator"`
+ */
+export const useReadErc6909TokenSupplyIsOperator =
+  /*#__PURE__*/ createUseReadContract({
+    abi: erc6909TokenSupplyAbi,
+    functionName: 'isOperator',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc6909TokenSupplyAbi}__ and `functionName` set to `"supportsInterface"`
+ */
+export const useReadErc6909TokenSupplySupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: erc6909TokenSupplyAbi,
+    functionName: 'supportsInterface',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc6909TokenSupplyAbi}__ and `functionName` set to `"totalSupply"`
+ */
+export const useReadErc6909TokenSupplyTotalSupply =
+  /*#__PURE__*/ createUseReadContract({
+    abi: erc6909TokenSupplyAbi,
+    functionName: 'totalSupply',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc6909TokenSupplyAbi}__
+ */
+export const useWriteErc6909TokenSupply = /*#__PURE__*/ createUseWriteContract({
+  abi: erc6909TokenSupplyAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc6909TokenSupplyAbi}__ and `functionName` set to `"approve"`
+ */
+export const useWriteErc6909TokenSupplyApprove =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: erc6909TokenSupplyAbi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc6909TokenSupplyAbi}__ and `functionName` set to `"setOperator"`
+ */
+export const useWriteErc6909TokenSupplySetOperator =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: erc6909TokenSupplyAbi,
+    functionName: 'setOperator',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc6909TokenSupplyAbi}__ and `functionName` set to `"transfer"`
+ */
+export const useWriteErc6909TokenSupplyTransfer =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: erc6909TokenSupplyAbi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link erc6909TokenSupplyAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useWriteErc6909TokenSupplyTransferFrom =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: erc6909TokenSupplyAbi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc6909TokenSupplyAbi}__
+ */
+export const useSimulateErc6909TokenSupply =
+  /*#__PURE__*/ createUseSimulateContract({ abi: erc6909TokenSupplyAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc6909TokenSupplyAbi}__ and `functionName` set to `"approve"`
+ */
+export const useSimulateErc6909TokenSupplyApprove =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: erc6909TokenSupplyAbi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc6909TokenSupplyAbi}__ and `functionName` set to `"setOperator"`
+ */
+export const useSimulateErc6909TokenSupplySetOperator =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: erc6909TokenSupplyAbi,
+    functionName: 'setOperator',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc6909TokenSupplyAbi}__ and `functionName` set to `"transfer"`
+ */
+export const useSimulateErc6909TokenSupplyTransfer =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: erc6909TokenSupplyAbi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link erc6909TokenSupplyAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useSimulateErc6909TokenSupplyTransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: erc6909TokenSupplyAbi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc6909TokenSupplyAbi}__
+ */
+export const useWatchErc6909TokenSupplyEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: erc6909TokenSupplyAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc6909TokenSupplyAbi}__ and `eventName` set to `"Approval"`
+ */
+export const useWatchErc6909TokenSupplyApprovalEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: erc6909TokenSupplyAbi,
+    eventName: 'Approval',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc6909TokenSupplyAbi}__ and `eventName` set to `"OperatorSet"`
+ */
+export const useWatchErc6909TokenSupplyOperatorSetEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: erc6909TokenSupplyAbi,
+    eventName: 'OperatorSet',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link erc6909TokenSupplyAbi}__ and `eventName` set to `"Transfer"`
+ */
+export const useWatchErc6909TokenSupplyTransferEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: erc6909TokenSupplyAbi,
+    eventName: 'Transfer',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link erc721Abi}__
  */
 export const useReadErc721 = /*#__PURE__*/ createUseReadContract({
@@ -7621,6 +11247,698 @@ export const useWatchIerc20MetadataTransferEvent =
   })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909Abi}__
+ */
+export const useReadIerc6909 = /*#__PURE__*/ createUseReadContract({
+  abi: ierc6909Abi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909Abi}__ and `functionName` set to `"allowance"`
+ */
+export const useReadIerc6909Allowance = /*#__PURE__*/ createUseReadContract({
+  abi: ierc6909Abi,
+  functionName: 'allowance',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909Abi}__ and `functionName` set to `"balanceOf"`
+ */
+export const useReadIerc6909BalanceOf = /*#__PURE__*/ createUseReadContract({
+  abi: ierc6909Abi,
+  functionName: 'balanceOf',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909Abi}__ and `functionName` set to `"isOperator"`
+ */
+export const useReadIerc6909IsOperator = /*#__PURE__*/ createUseReadContract({
+  abi: ierc6909Abi,
+  functionName: 'isOperator',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909Abi}__ and `functionName` set to `"supportsInterface"`
+ */
+export const useReadIerc6909SupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ierc6909Abi,
+    functionName: 'supportsInterface',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc6909Abi}__
+ */
+export const useWriteIerc6909 = /*#__PURE__*/ createUseWriteContract({
+  abi: ierc6909Abi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc6909Abi}__ and `functionName` set to `"approve"`
+ */
+export const useWriteIerc6909Approve = /*#__PURE__*/ createUseWriteContract({
+  abi: ierc6909Abi,
+  functionName: 'approve',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc6909Abi}__ and `functionName` set to `"setOperator"`
+ */
+export const useWriteIerc6909SetOperator = /*#__PURE__*/ createUseWriteContract(
+  { abi: ierc6909Abi, functionName: 'setOperator' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc6909Abi}__ and `functionName` set to `"transfer"`
+ */
+export const useWriteIerc6909Transfer = /*#__PURE__*/ createUseWriteContract({
+  abi: ierc6909Abi,
+  functionName: 'transfer',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc6909Abi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useWriteIerc6909TransferFrom =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ierc6909Abi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc6909Abi}__
+ */
+export const useSimulateIerc6909 = /*#__PURE__*/ createUseSimulateContract({
+  abi: ierc6909Abi,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc6909Abi}__ and `functionName` set to `"approve"`
+ */
+export const useSimulateIerc6909Approve =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ierc6909Abi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc6909Abi}__ and `functionName` set to `"setOperator"`
+ */
+export const useSimulateIerc6909SetOperator =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ierc6909Abi,
+    functionName: 'setOperator',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc6909Abi}__ and `functionName` set to `"transfer"`
+ */
+export const useSimulateIerc6909Transfer =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ierc6909Abi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc6909Abi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useSimulateIerc6909TransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ierc6909Abi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ierc6909Abi}__
+ */
+export const useWatchIerc6909Event = /*#__PURE__*/ createUseWatchContractEvent({
+  abi: ierc6909Abi,
+})
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ierc6909Abi}__ and `eventName` set to `"Approval"`
+ */
+export const useWatchIerc6909ApprovalEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ierc6909Abi,
+    eventName: 'Approval',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ierc6909Abi}__ and `eventName` set to `"OperatorSet"`
+ */
+export const useWatchIerc6909OperatorSetEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ierc6909Abi,
+    eventName: 'OperatorSet',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ierc6909Abi}__ and `eventName` set to `"Transfer"`
+ */
+export const useWatchIerc6909TransferEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ierc6909Abi,
+    eventName: 'Transfer',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909ContentUriAbi}__
+ */
+export const useReadIerc6909ContentUri = /*#__PURE__*/ createUseReadContract({
+  abi: ierc6909ContentUriAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909ContentUriAbi}__ and `functionName` set to `"allowance"`
+ */
+export const useReadIerc6909ContentUriAllowance =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ierc6909ContentUriAbi,
+    functionName: 'allowance',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909ContentUriAbi}__ and `functionName` set to `"balanceOf"`
+ */
+export const useReadIerc6909ContentUriBalanceOf =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ierc6909ContentUriAbi,
+    functionName: 'balanceOf',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909ContentUriAbi}__ and `functionName` set to `"contractURI"`
+ */
+export const useReadIerc6909ContentUriContractUri =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ierc6909ContentUriAbi,
+    functionName: 'contractURI',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909ContentUriAbi}__ and `functionName` set to `"isOperator"`
+ */
+export const useReadIerc6909ContentUriIsOperator =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ierc6909ContentUriAbi,
+    functionName: 'isOperator',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909ContentUriAbi}__ and `functionName` set to `"supportsInterface"`
+ */
+export const useReadIerc6909ContentUriSupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ierc6909ContentUriAbi,
+    functionName: 'supportsInterface',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909ContentUriAbi}__ and `functionName` set to `"tokenURI"`
+ */
+export const useReadIerc6909ContentUriTokenUri =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ierc6909ContentUriAbi,
+    functionName: 'tokenURI',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc6909ContentUriAbi}__
+ */
+export const useWriteIerc6909ContentUri = /*#__PURE__*/ createUseWriteContract({
+  abi: ierc6909ContentUriAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc6909ContentUriAbi}__ and `functionName` set to `"approve"`
+ */
+export const useWriteIerc6909ContentUriApprove =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ierc6909ContentUriAbi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc6909ContentUriAbi}__ and `functionName` set to `"setOperator"`
+ */
+export const useWriteIerc6909ContentUriSetOperator =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ierc6909ContentUriAbi,
+    functionName: 'setOperator',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc6909ContentUriAbi}__ and `functionName` set to `"transfer"`
+ */
+export const useWriteIerc6909ContentUriTransfer =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ierc6909ContentUriAbi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc6909ContentUriAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useWriteIerc6909ContentUriTransferFrom =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ierc6909ContentUriAbi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc6909ContentUriAbi}__
+ */
+export const useSimulateIerc6909ContentUri =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ierc6909ContentUriAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc6909ContentUriAbi}__ and `functionName` set to `"approve"`
+ */
+export const useSimulateIerc6909ContentUriApprove =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ierc6909ContentUriAbi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc6909ContentUriAbi}__ and `functionName` set to `"setOperator"`
+ */
+export const useSimulateIerc6909ContentUriSetOperator =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ierc6909ContentUriAbi,
+    functionName: 'setOperator',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc6909ContentUriAbi}__ and `functionName` set to `"transfer"`
+ */
+export const useSimulateIerc6909ContentUriTransfer =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ierc6909ContentUriAbi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc6909ContentUriAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useSimulateIerc6909ContentUriTransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ierc6909ContentUriAbi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ierc6909ContentUriAbi}__
+ */
+export const useWatchIerc6909ContentUriEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ierc6909ContentUriAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ierc6909ContentUriAbi}__ and `eventName` set to `"Approval"`
+ */
+export const useWatchIerc6909ContentUriApprovalEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ierc6909ContentUriAbi,
+    eventName: 'Approval',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ierc6909ContentUriAbi}__ and `eventName` set to `"OperatorSet"`
+ */
+export const useWatchIerc6909ContentUriOperatorSetEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ierc6909ContentUriAbi,
+    eventName: 'OperatorSet',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ierc6909ContentUriAbi}__ and `eventName` set to `"Transfer"`
+ */
+export const useWatchIerc6909ContentUriTransferEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ierc6909ContentUriAbi,
+    eventName: 'Transfer',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909MetadataAbi}__
+ */
+export const useReadIerc6909Metadata = /*#__PURE__*/ createUseReadContract({
+  abi: ierc6909MetadataAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909MetadataAbi}__ and `functionName` set to `"allowance"`
+ */
+export const useReadIerc6909MetadataAllowance =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ierc6909MetadataAbi,
+    functionName: 'allowance',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909MetadataAbi}__ and `functionName` set to `"balanceOf"`
+ */
+export const useReadIerc6909MetadataBalanceOf =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ierc6909MetadataAbi,
+    functionName: 'balanceOf',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909MetadataAbi}__ and `functionName` set to `"decimals"`
+ */
+export const useReadIerc6909MetadataDecimals =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ierc6909MetadataAbi,
+    functionName: 'decimals',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909MetadataAbi}__ and `functionName` set to `"isOperator"`
+ */
+export const useReadIerc6909MetadataIsOperator =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ierc6909MetadataAbi,
+    functionName: 'isOperator',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909MetadataAbi}__ and `functionName` set to `"name"`
+ */
+export const useReadIerc6909MetadataName = /*#__PURE__*/ createUseReadContract({
+  abi: ierc6909MetadataAbi,
+  functionName: 'name',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909MetadataAbi}__ and `functionName` set to `"supportsInterface"`
+ */
+export const useReadIerc6909MetadataSupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ierc6909MetadataAbi,
+    functionName: 'supportsInterface',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909MetadataAbi}__ and `functionName` set to `"symbol"`
+ */
+export const useReadIerc6909MetadataSymbol =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ierc6909MetadataAbi,
+    functionName: 'symbol',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc6909MetadataAbi}__
+ */
+export const useWriteIerc6909Metadata = /*#__PURE__*/ createUseWriteContract({
+  abi: ierc6909MetadataAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc6909MetadataAbi}__ and `functionName` set to `"approve"`
+ */
+export const useWriteIerc6909MetadataApprove =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ierc6909MetadataAbi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc6909MetadataAbi}__ and `functionName` set to `"setOperator"`
+ */
+export const useWriteIerc6909MetadataSetOperator =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ierc6909MetadataAbi,
+    functionName: 'setOperator',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc6909MetadataAbi}__ and `functionName` set to `"transfer"`
+ */
+export const useWriteIerc6909MetadataTransfer =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ierc6909MetadataAbi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc6909MetadataAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useWriteIerc6909MetadataTransferFrom =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ierc6909MetadataAbi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc6909MetadataAbi}__
+ */
+export const useSimulateIerc6909Metadata =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ierc6909MetadataAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc6909MetadataAbi}__ and `functionName` set to `"approve"`
+ */
+export const useSimulateIerc6909MetadataApprove =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ierc6909MetadataAbi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc6909MetadataAbi}__ and `functionName` set to `"setOperator"`
+ */
+export const useSimulateIerc6909MetadataSetOperator =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ierc6909MetadataAbi,
+    functionName: 'setOperator',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc6909MetadataAbi}__ and `functionName` set to `"transfer"`
+ */
+export const useSimulateIerc6909MetadataTransfer =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ierc6909MetadataAbi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc6909MetadataAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useSimulateIerc6909MetadataTransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ierc6909MetadataAbi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ierc6909MetadataAbi}__
+ */
+export const useWatchIerc6909MetadataEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ierc6909MetadataAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ierc6909MetadataAbi}__ and `eventName` set to `"Approval"`
+ */
+export const useWatchIerc6909MetadataApprovalEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ierc6909MetadataAbi,
+    eventName: 'Approval',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ierc6909MetadataAbi}__ and `eventName` set to `"OperatorSet"`
+ */
+export const useWatchIerc6909MetadataOperatorSetEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ierc6909MetadataAbi,
+    eventName: 'OperatorSet',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ierc6909MetadataAbi}__ and `eventName` set to `"Transfer"`
+ */
+export const useWatchIerc6909MetadataTransferEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ierc6909MetadataAbi,
+    eventName: 'Transfer',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909TokenSupplyAbi}__
+ */
+export const useReadIerc6909TokenSupply = /*#__PURE__*/ createUseReadContract({
+  abi: ierc6909TokenSupplyAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909TokenSupplyAbi}__ and `functionName` set to `"allowance"`
+ */
+export const useReadIerc6909TokenSupplyAllowance =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ierc6909TokenSupplyAbi,
+    functionName: 'allowance',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909TokenSupplyAbi}__ and `functionName` set to `"balanceOf"`
+ */
+export const useReadIerc6909TokenSupplyBalanceOf =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ierc6909TokenSupplyAbi,
+    functionName: 'balanceOf',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909TokenSupplyAbi}__ and `functionName` set to `"isOperator"`
+ */
+export const useReadIerc6909TokenSupplyIsOperator =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ierc6909TokenSupplyAbi,
+    functionName: 'isOperator',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909TokenSupplyAbi}__ and `functionName` set to `"supportsInterface"`
+ */
+export const useReadIerc6909TokenSupplySupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ierc6909TokenSupplyAbi,
+    functionName: 'supportsInterface',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc6909TokenSupplyAbi}__ and `functionName` set to `"totalSupply"`
+ */
+export const useReadIerc6909TokenSupplyTotalSupply =
+  /*#__PURE__*/ createUseReadContract({
+    abi: ierc6909TokenSupplyAbi,
+    functionName: 'totalSupply',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc6909TokenSupplyAbi}__
+ */
+export const useWriteIerc6909TokenSupply = /*#__PURE__*/ createUseWriteContract(
+  { abi: ierc6909TokenSupplyAbi },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc6909TokenSupplyAbi}__ and `functionName` set to `"approve"`
+ */
+export const useWriteIerc6909TokenSupplyApprove =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ierc6909TokenSupplyAbi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc6909TokenSupplyAbi}__ and `functionName` set to `"setOperator"`
+ */
+export const useWriteIerc6909TokenSupplySetOperator =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ierc6909TokenSupplyAbi,
+    functionName: 'setOperator',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc6909TokenSupplyAbi}__ and `functionName` set to `"transfer"`
+ */
+export const useWriteIerc6909TokenSupplyTransfer =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ierc6909TokenSupplyAbi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link ierc6909TokenSupplyAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useWriteIerc6909TokenSupplyTransferFrom =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: ierc6909TokenSupplyAbi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc6909TokenSupplyAbi}__
+ */
+export const useSimulateIerc6909TokenSupply =
+  /*#__PURE__*/ createUseSimulateContract({ abi: ierc6909TokenSupplyAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc6909TokenSupplyAbi}__ and `functionName` set to `"approve"`
+ */
+export const useSimulateIerc6909TokenSupplyApprove =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ierc6909TokenSupplyAbi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc6909TokenSupplyAbi}__ and `functionName` set to `"setOperator"`
+ */
+export const useSimulateIerc6909TokenSupplySetOperator =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ierc6909TokenSupplyAbi,
+    functionName: 'setOperator',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc6909TokenSupplyAbi}__ and `functionName` set to `"transfer"`
+ */
+export const useSimulateIerc6909TokenSupplyTransfer =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ierc6909TokenSupplyAbi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link ierc6909TokenSupplyAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useSimulateIerc6909TokenSupplyTransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: ierc6909TokenSupplyAbi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ierc6909TokenSupplyAbi}__
+ */
+export const useWatchIerc6909TokenSupplyEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: ierc6909TokenSupplyAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ierc6909TokenSupplyAbi}__ and `eventName` set to `"Approval"`
+ */
+export const useWatchIerc6909TokenSupplyApprovalEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ierc6909TokenSupplyAbi,
+    eventName: 'Approval',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ierc6909TokenSupplyAbi}__ and `eventName` set to `"OperatorSet"`
+ */
+export const useWatchIerc6909TokenSupplyOperatorSetEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ierc6909TokenSupplyAbi,
+    eventName: 'OperatorSet',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link ierc6909TokenSupplyAbi}__ and `eventName` set to `"Transfer"`
+ */
+export const useWatchIerc6909TokenSupplyTransferEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: ierc6909TokenSupplyAbi,
+    eventName: 'Transfer',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link ierc721EnumerableAbi}__
  */
 export const useReadIerc721Enumerable = /*#__PURE__*/ createUseReadContract({
@@ -8255,6 +12573,941 @@ export const useSimulateIMulticall3TryBlockAndAggregate =
   /*#__PURE__*/ createUseSimulateContract({
     abi: iMulticall3Abi,
     functionName: 'tryBlockAndAggregate',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSet0Abi}__
+ *
+ *
+ */
+export const useReadItemsSet0 = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSet0Abi,
+  address: itemsSet0Address,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
+ *
+ *
+ */
+export const useReadItemsSet0DefaultAdminRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    functionName: 'DEFAULT_ADMIN_ROLE',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"MINTER_ROLE"`
+ *
+ *
+ */
+export const useReadItemsSet0MinterRole = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSet0Abi,
+  address: itemsSet0Address,
+  functionName: 'MINTER_ROLE',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"allowance"`
+ *
+ *
+ */
+export const useReadItemsSet0Allowance = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSet0Abi,
+  address: itemsSet0Address,
+  functionName: 'allowance',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"balanceOf"`
+ *
+ *
+ */
+export const useReadItemsSet0BalanceOf = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSet0Abi,
+  address: itemsSet0Address,
+  functionName: 'balanceOf',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"decimals"`
+ *
+ *
+ */
+export const useReadItemsSet0Decimals = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSet0Abi,
+  address: itemsSet0Address,
+  functionName: 'decimals',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"getEquipmentSpec"`
+ *
+ *
+ */
+export const useReadItemsSet0GetEquipmentSpec =
+  /*#__PURE__*/ createUseReadContract({
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    functionName: 'getEquipmentSpec',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"getFoodSpec"`
+ *
+ *
+ */
+export const useReadItemsSet0GetFoodSpec = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSet0Abi,
+  address: itemsSet0Address,
+  functionName: 'getFoodSpec',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"getHealSpec"`
+ *
+ *
+ */
+export const useReadItemsSet0GetHealSpec = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSet0Abi,
+  address: itemsSet0Address,
+  functionName: 'getHealSpec',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"getItem"`
+ *
+ *
+ */
+export const useReadItemsSet0GetItem = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSet0Abi,
+  address: itemsSet0Address,
+  functionName: 'getItem',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"getQuestSpec"`
+ *
+ *
+ */
+export const useReadItemsSet0GetQuestSpec = /*#__PURE__*/ createUseReadContract(
+  {
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    functionName: 'getQuestSpec',
+  },
+)
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"getRoleAdmin"`
+ *
+ *
+ */
+export const useReadItemsSet0GetRoleAdmin = /*#__PURE__*/ createUseReadContract(
+  {
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    functionName: 'getRoleAdmin',
+  },
+)
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"getWeaponSpec"`
+ *
+ *
+ */
+export const useReadItemsSet0GetWeaponSpec =
+  /*#__PURE__*/ createUseReadContract({
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    functionName: 'getWeaponSpec',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"hasRole"`
+ *
+ *
+ */
+export const useReadItemsSet0HasRole = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSet0Abi,
+  address: itemsSet0Address,
+  functionName: 'hasRole',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"isOperator"`
+ *
+ *
+ */
+export const useReadItemsSet0IsOperator = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSet0Abi,
+  address: itemsSet0Address,
+  functionName: 'isOperator',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"itemIdsIndex"`
+ *
+ *
+ */
+export const useReadItemsSet0ItemIdsIndex = /*#__PURE__*/ createUseReadContract(
+  {
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    functionName: 'itemIdsIndex',
+  },
+)
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"name"`
+ *
+ *
+ */
+export const useReadItemsSet0Name = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSet0Abi,
+  address: itemsSet0Address,
+  functionName: 'name',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"supportsInterface"`
+ *
+ *
+ */
+export const useReadItemsSet0SupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    functionName: 'supportsInterface',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"symbol"`
+ *
+ *
+ */
+export const useReadItemsSet0Symbol = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSet0Abi,
+  address: itemsSet0Address,
+  functionName: 'symbol',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"totalSupply"`
+ *
+ *
+ */
+export const useReadItemsSet0TotalSupply = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSet0Abi,
+  address: itemsSet0Address,
+  functionName: 'totalSupply',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSet0Abi}__
+ *
+ *
+ */
+export const useWriteItemsSet0 = /*#__PURE__*/ createUseWriteContract({
+  abi: itemsSet0Abi,
+  address: itemsSet0Address,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"approve"`
+ *
+ *
+ */
+export const useWriteItemsSet0Approve = /*#__PURE__*/ createUseWriteContract({
+  abi: itemsSet0Abi,
+  address: itemsSet0Address,
+  functionName: 'approve',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"grantRole"`
+ *
+ *
+ */
+export const useWriteItemsSet0GrantRole = /*#__PURE__*/ createUseWriteContract({
+  abi: itemsSet0Abi,
+  address: itemsSet0Address,
+  functionName: 'grantRole',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"mint"`
+ *
+ *
+ */
+export const useWriteItemsSet0Mint = /*#__PURE__*/ createUseWriteContract({
+  abi: itemsSet0Abi,
+  address: itemsSet0Address,
+  functionName: 'mint',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"renounceRole"`
+ *
+ *
+ */
+export const useWriteItemsSet0RenounceRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    functionName: 'renounceRole',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"revokeRole"`
+ *
+ *
+ */
+export const useWriteItemsSet0RevokeRole = /*#__PURE__*/ createUseWriteContract(
+  { abi: itemsSet0Abi, address: itemsSet0Address, functionName: 'revokeRole' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"setOperator"`
+ *
+ *
+ */
+export const useWriteItemsSet0SetOperator =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    functionName: 'setOperator',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"transfer"`
+ *
+ *
+ */
+export const useWriteItemsSet0Transfer = /*#__PURE__*/ createUseWriteContract({
+  abi: itemsSet0Abi,
+  address: itemsSet0Address,
+  functionName: 'transfer',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"transferFrom"`
+ *
+ *
+ */
+export const useWriteItemsSet0TransferFrom =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSet0Abi}__
+ *
+ *
+ */
+export const useSimulateItemsSet0 = /*#__PURE__*/ createUseSimulateContract({
+  abi: itemsSet0Abi,
+  address: itemsSet0Address,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"approve"`
+ *
+ *
+ */
+export const useSimulateItemsSet0Approve =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"grantRole"`
+ *
+ *
+ */
+export const useSimulateItemsSet0GrantRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    functionName: 'grantRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"mint"`
+ *
+ *
+ */
+export const useSimulateItemsSet0Mint = /*#__PURE__*/ createUseSimulateContract(
+  { abi: itemsSet0Abi, address: itemsSet0Address, functionName: 'mint' },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"renounceRole"`
+ *
+ *
+ */
+export const useSimulateItemsSet0RenounceRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    functionName: 'renounceRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"revokeRole"`
+ *
+ *
+ */
+export const useSimulateItemsSet0RevokeRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    functionName: 'revokeRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"setOperator"`
+ *
+ *
+ */
+export const useSimulateItemsSet0SetOperator =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    functionName: 'setOperator',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"transfer"`
+ *
+ *
+ */
+export const useSimulateItemsSet0Transfer =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"transferFrom"`
+ *
+ *
+ */
+export const useSimulateItemsSet0TransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSet0Abi}__
+ *
+ *
+ */
+export const useWatchItemsSet0Event = /*#__PURE__*/ createUseWatchContractEvent(
+  { abi: itemsSet0Abi, address: itemsSet0Address },
+)
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSet0Abi}__ and `eventName` set to `"Approval"`
+ *
+ *
+ */
+export const useWatchItemsSet0ApprovalEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    eventName: 'Approval',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSet0Abi}__ and `eventName` set to `"ERC6909DecimalsUpdated"`
+ *
+ *
+ */
+export const useWatchItemsSet0Erc6909DecimalsUpdatedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    eventName: 'ERC6909DecimalsUpdated',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSet0Abi}__ and `eventName` set to `"ERC6909NameUpdated"`
+ *
+ *
+ */
+export const useWatchItemsSet0Erc6909NameUpdatedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    eventName: 'ERC6909NameUpdated',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSet0Abi}__ and `eventName` set to `"ERC6909SymbolUpdated"`
+ *
+ *
+ */
+export const useWatchItemsSet0Erc6909SymbolUpdatedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    eventName: 'ERC6909SymbolUpdated',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSet0Abi}__ and `eventName` set to `"ItemDefined"`
+ *
+ *
+ */
+export const useWatchItemsSet0ItemDefinedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    eventName: 'ItemDefined',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSet0Abi}__ and `eventName` set to `"OperatorSet"`
+ *
+ *
+ */
+export const useWatchItemsSet0OperatorSetEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    eventName: 'OperatorSet',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSet0Abi}__ and `eventName` set to `"RoleAdminChanged"`
+ *
+ *
+ */
+export const useWatchItemsSet0RoleAdminChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    eventName: 'RoleAdminChanged',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSet0Abi}__ and `eventName` set to `"RoleGranted"`
+ *
+ *
+ */
+export const useWatchItemsSet0RoleGrantedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    eventName: 'RoleGranted',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSet0Abi}__ and `eventName` set to `"RoleRevoked"`
+ *
+ *
+ */
+export const useWatchItemsSet0RoleRevokedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    eventName: 'RoleRevoked',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSet0Abi}__ and `eventName` set to `"Transfer"`
+ *
+ *
+ */
+export const useWatchItemsSet0TransferEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSet0Abi,
+    address: itemsSet0Address,
+    eventName: 'Transfer',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetBaseAbi}__
+ */
+export const useReadItemsSetBase = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSetBaseAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
+ */
+export const useReadItemsSetBaseDefaultAdminRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: itemsSetBaseAbi,
+    functionName: 'DEFAULT_ADMIN_ROLE',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"MINTER_ROLE"`
+ */
+export const useReadItemsSetBaseMinterRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: itemsSetBaseAbi,
+    functionName: 'MINTER_ROLE',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"allowance"`
+ */
+export const useReadItemsSetBaseAllowance = /*#__PURE__*/ createUseReadContract(
+  { abi: itemsSetBaseAbi, functionName: 'allowance' },
+)
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"balanceOf"`
+ */
+export const useReadItemsSetBaseBalanceOf = /*#__PURE__*/ createUseReadContract(
+  { abi: itemsSetBaseAbi, functionName: 'balanceOf' },
+)
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"decimals"`
+ */
+export const useReadItemsSetBaseDecimals = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSetBaseAbi,
+  functionName: 'decimals',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"getItem"`
+ */
+export const useReadItemsSetBaseGetItem = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSetBaseAbi,
+  functionName: 'getItem',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"getRoleAdmin"`
+ */
+export const useReadItemsSetBaseGetRoleAdmin =
+  /*#__PURE__*/ createUseReadContract({
+    abi: itemsSetBaseAbi,
+    functionName: 'getRoleAdmin',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"hasRole"`
+ */
+export const useReadItemsSetBaseHasRole = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSetBaseAbi,
+  functionName: 'hasRole',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"isOperator"`
+ */
+export const useReadItemsSetBaseIsOperator =
+  /*#__PURE__*/ createUseReadContract({
+    abi: itemsSetBaseAbi,
+    functionName: 'isOperator',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"itemIdsIndex"`
+ */
+export const useReadItemsSetBaseItemIdsIndex =
+  /*#__PURE__*/ createUseReadContract({
+    abi: itemsSetBaseAbi,
+    functionName: 'itemIdsIndex',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"name"`
+ */
+export const useReadItemsSetBaseName = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSetBaseAbi,
+  functionName: 'name',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"supportsInterface"`
+ */
+export const useReadItemsSetBaseSupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: itemsSetBaseAbi,
+    functionName: 'supportsInterface',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"symbol"`
+ */
+export const useReadItemsSetBaseSymbol = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSetBaseAbi,
+  functionName: 'symbol',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"totalSupply"`
+ */
+export const useReadItemsSetBaseTotalSupply =
+  /*#__PURE__*/ createUseReadContract({
+    abi: itemsSetBaseAbi,
+    functionName: 'totalSupply',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSetBaseAbi}__
+ */
+export const useWriteItemsSetBase = /*#__PURE__*/ createUseWriteContract({
+  abi: itemsSetBaseAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"approve"`
+ */
+export const useWriteItemsSetBaseApprove = /*#__PURE__*/ createUseWriteContract(
+  { abi: itemsSetBaseAbi, functionName: 'approve' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"grantRole"`
+ */
+export const useWriteItemsSetBaseGrantRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: itemsSetBaseAbi,
+    functionName: 'grantRole',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"mint"`
+ */
+export const useWriteItemsSetBaseMint = /*#__PURE__*/ createUseWriteContract({
+  abi: itemsSetBaseAbi,
+  functionName: 'mint',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"renounceRole"`
+ */
+export const useWriteItemsSetBaseRenounceRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: itemsSetBaseAbi,
+    functionName: 'renounceRole',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"revokeRole"`
+ */
+export const useWriteItemsSetBaseRevokeRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: itemsSetBaseAbi,
+    functionName: 'revokeRole',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"setOperator"`
+ */
+export const useWriteItemsSetBaseSetOperator =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: itemsSetBaseAbi,
+    functionName: 'setOperator',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"transfer"`
+ */
+export const useWriteItemsSetBaseTransfer =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: itemsSetBaseAbi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useWriteItemsSetBaseTransferFrom =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: itemsSetBaseAbi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSetBaseAbi}__
+ */
+export const useSimulateItemsSetBase = /*#__PURE__*/ createUseSimulateContract({
+  abi: itemsSetBaseAbi,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"approve"`
+ */
+export const useSimulateItemsSetBaseApprove =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: itemsSetBaseAbi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"grantRole"`
+ */
+export const useSimulateItemsSetBaseGrantRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: itemsSetBaseAbi,
+    functionName: 'grantRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"mint"`
+ */
+export const useSimulateItemsSetBaseMint =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: itemsSetBaseAbi,
+    functionName: 'mint',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"renounceRole"`
+ */
+export const useSimulateItemsSetBaseRenounceRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: itemsSetBaseAbi,
+    functionName: 'renounceRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"revokeRole"`
+ */
+export const useSimulateItemsSetBaseRevokeRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: itemsSetBaseAbi,
+    functionName: 'revokeRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"setOperator"`
+ */
+export const useSimulateItemsSetBaseSetOperator =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: itemsSetBaseAbi,
+    functionName: 'setOperator',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"transfer"`
+ */
+export const useSimulateItemsSetBaseTransfer =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: itemsSetBaseAbi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useSimulateItemsSetBaseTransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: itemsSetBaseAbi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSetBaseAbi}__
+ */
+export const useWatchItemsSetBaseEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: itemsSetBaseAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `eventName` set to `"Approval"`
+ */
+export const useWatchItemsSetBaseApprovalEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSetBaseAbi,
+    eventName: 'Approval',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `eventName` set to `"ERC6909DecimalsUpdated"`
+ */
+export const useWatchItemsSetBaseErc6909DecimalsUpdatedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSetBaseAbi,
+    eventName: 'ERC6909DecimalsUpdated',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `eventName` set to `"ERC6909NameUpdated"`
+ */
+export const useWatchItemsSetBaseErc6909NameUpdatedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSetBaseAbi,
+    eventName: 'ERC6909NameUpdated',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `eventName` set to `"ERC6909SymbolUpdated"`
+ */
+export const useWatchItemsSetBaseErc6909SymbolUpdatedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSetBaseAbi,
+    eventName: 'ERC6909SymbolUpdated',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `eventName` set to `"ItemDefined"`
+ */
+export const useWatchItemsSetBaseItemDefinedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSetBaseAbi,
+    eventName: 'ItemDefined',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `eventName` set to `"OperatorSet"`
+ */
+export const useWatchItemsSetBaseOperatorSetEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSetBaseAbi,
+    eventName: 'OperatorSet',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `eventName` set to `"RoleAdminChanged"`
+ */
+export const useWatchItemsSetBaseRoleAdminChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSetBaseAbi,
+    eventName: 'RoleAdminChanged',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `eventName` set to `"RoleGranted"`
+ */
+export const useWatchItemsSetBaseRoleGrantedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSetBaseAbi,
+    eventName: 'RoleGranted',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `eventName` set to `"RoleRevoked"`
+ */
+export const useWatchItemsSetBaseRoleRevokedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSetBaseAbi,
+    eventName: 'RoleRevoked',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `eventName` set to `"Transfer"`
+ */
+export const useWatchItemsSetBaseTransferEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSetBaseAbi,
+    eventName: 'Transfer',
   })
 
 /**
@@ -8914,6 +14167,437 @@ export const useWatchJobsRegistryRoleRevokedEvent =
     abi: jobsRegistryAbi,
     address: jobsRegistryAddress,
     eventName: 'RoleRevoked',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link moduleBaseAbi}__
+ */
+export const useReadModuleBase = /*#__PURE__*/ createUseReadContract({
+  abi: moduleBaseAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link moduleBaseAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
+ */
+export const useReadModuleBaseDefaultAdminRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: moduleBaseAbi,
+    functionName: 'DEFAULT_ADMIN_ROLE',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link moduleBaseAbi}__ and `functionName` set to `"dinoFactory"`
+ */
+export const useReadModuleBaseDinoFactory = /*#__PURE__*/ createUseReadContract(
+  { abi: moduleBaseAbi, functionName: 'dinoFactory' },
+)
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link moduleBaseAbi}__ and `functionName` set to `"getRoleAdmin"`
+ */
+export const useReadModuleBaseGetRoleAdmin =
+  /*#__PURE__*/ createUseReadContract({
+    abi: moduleBaseAbi,
+    functionName: 'getRoleAdmin',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link moduleBaseAbi}__ and `functionName` set to `"hasRole"`
+ */
+export const useReadModuleBaseHasRole = /*#__PURE__*/ createUseReadContract({
+  abi: moduleBaseAbi,
+  functionName: 'hasRole',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link moduleBaseAbi}__ and `functionName` set to `"supportsInterface"`
+ */
+export const useReadModuleBaseSupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: moduleBaseAbi,
+    functionName: 'supportsInterface',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link moduleBaseAbi}__
+ */
+export const useWriteModuleBase = /*#__PURE__*/ createUseWriteContract({
+  abi: moduleBaseAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link moduleBaseAbi}__ and `functionName` set to `"grantRole"`
+ */
+export const useWriteModuleBaseGrantRole = /*#__PURE__*/ createUseWriteContract(
+  { abi: moduleBaseAbi, functionName: 'grantRole' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link moduleBaseAbi}__ and `functionName` set to `"renounceRole"`
+ */
+export const useWriteModuleBaseRenounceRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: moduleBaseAbi,
+    functionName: 'renounceRole',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link moduleBaseAbi}__ and `functionName` set to `"revokeRole"`
+ */
+export const useWriteModuleBaseRevokeRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: moduleBaseAbi,
+    functionName: 'revokeRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link moduleBaseAbi}__
+ */
+export const useSimulateModuleBase = /*#__PURE__*/ createUseSimulateContract({
+  abi: moduleBaseAbi,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link moduleBaseAbi}__ and `functionName` set to `"grantRole"`
+ */
+export const useSimulateModuleBaseGrantRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: moduleBaseAbi,
+    functionName: 'grantRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link moduleBaseAbi}__ and `functionName` set to `"renounceRole"`
+ */
+export const useSimulateModuleBaseRenounceRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: moduleBaseAbi,
+    functionName: 'renounceRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link moduleBaseAbi}__ and `functionName` set to `"revokeRole"`
+ */
+export const useSimulateModuleBaseRevokeRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: moduleBaseAbi,
+    functionName: 'revokeRole',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link moduleBaseAbi}__
+ */
+export const useWatchModuleBaseEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: moduleBaseAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link moduleBaseAbi}__ and `eventName` set to `"RoleAdminChanged"`
+ */
+export const useWatchModuleBaseRoleAdminChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: moduleBaseAbi,
+    eventName: 'RoleAdminChanged',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link moduleBaseAbi}__ and `eventName` set to `"RoleGranted"`
+ */
+export const useWatchModuleBaseRoleGrantedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: moduleBaseAbi,
+    eventName: 'RoleGranted',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link moduleBaseAbi}__ and `eventName` set to `"RoleRevoked"`
+ */
+export const useWatchModuleBaseRoleRevokedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: moduleBaseAbi,
+    eventName: 'RoleRevoked',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link shopModuleAbi}__
+ *
+ *
+ */
+export const useReadShopModule = /*#__PURE__*/ createUseReadContract({
+  abi: shopModuleAbi,
+  address: shopModuleAddress,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link shopModuleAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
+ *
+ *
+ */
+export const useReadShopModuleDefaultAdminRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: shopModuleAbi,
+    address: shopModuleAddress,
+    functionName: 'DEFAULT_ADMIN_ROLE',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link shopModuleAbi}__ and `functionName` set to `"dinoFactory"`
+ *
+ *
+ */
+export const useReadShopModuleDinoFactory = /*#__PURE__*/ createUseReadContract(
+  {
+    abi: shopModuleAbi,
+    address: shopModuleAddress,
+    functionName: 'dinoFactory',
+  },
+)
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link shopModuleAbi}__ and `functionName` set to `"emerald"`
+ *
+ *
+ */
+export const useReadShopModuleEmerald = /*#__PURE__*/ createUseReadContract({
+  abi: shopModuleAbi,
+  address: shopModuleAddress,
+  functionName: 'emerald',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link shopModuleAbi}__ and `functionName` set to `"getRoleAdmin"`
+ *
+ *
+ */
+export const useReadShopModuleGetRoleAdmin =
+  /*#__PURE__*/ createUseReadContract({
+    abi: shopModuleAbi,
+    address: shopModuleAddress,
+    functionName: 'getRoleAdmin',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link shopModuleAbi}__ and `functionName` set to `"hasRole"`
+ *
+ *
+ */
+export const useReadShopModuleHasRole = /*#__PURE__*/ createUseReadContract({
+  abi: shopModuleAbi,
+  address: shopModuleAddress,
+  functionName: 'hasRole',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link shopModuleAbi}__ and `functionName` set to `"items"`
+ *
+ *
+ */
+export const useReadShopModuleItems = /*#__PURE__*/ createUseReadContract({
+  abi: shopModuleAbi,
+  address: shopModuleAddress,
+  functionName: 'items',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link shopModuleAbi}__ and `functionName` set to `"supportsInterface"`
+ *
+ *
+ */
+export const useReadShopModuleSupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: shopModuleAbi,
+    address: shopModuleAddress,
+    functionName: 'supportsInterface',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link shopModuleAbi}__ and `functionName` set to `"treasury"`
+ *
+ *
+ */
+export const useReadShopModuleTreasury = /*#__PURE__*/ createUseReadContract({
+  abi: shopModuleAbi,
+  address: shopModuleAddress,
+  functionName: 'treasury',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link shopModuleAbi}__
+ *
+ *
+ */
+export const useWriteShopModule = /*#__PURE__*/ createUseWriteContract({
+  abi: shopModuleAbi,
+  address: shopModuleAddress,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link shopModuleAbi}__ and `functionName` set to `"buy"`
+ *
+ *
+ */
+export const useWriteShopModuleBuy = /*#__PURE__*/ createUseWriteContract({
+  abi: shopModuleAbi,
+  address: shopModuleAddress,
+  functionName: 'buy',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link shopModuleAbi}__ and `functionName` set to `"grantRole"`
+ *
+ *
+ */
+export const useWriteShopModuleGrantRole = /*#__PURE__*/ createUseWriteContract(
+  { abi: shopModuleAbi, address: shopModuleAddress, functionName: 'grantRole' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link shopModuleAbi}__ and `functionName` set to `"renounceRole"`
+ *
+ *
+ */
+export const useWriteShopModuleRenounceRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: shopModuleAbi,
+    address: shopModuleAddress,
+    functionName: 'renounceRole',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link shopModuleAbi}__ and `functionName` set to `"revokeRole"`
+ *
+ *
+ */
+export const useWriteShopModuleRevokeRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: shopModuleAbi,
+    address: shopModuleAddress,
+    functionName: 'revokeRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link shopModuleAbi}__
+ *
+ *
+ */
+export const useSimulateShopModule = /*#__PURE__*/ createUseSimulateContract({
+  abi: shopModuleAbi,
+  address: shopModuleAddress,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link shopModuleAbi}__ and `functionName` set to `"buy"`
+ *
+ *
+ */
+export const useSimulateShopModuleBuy = /*#__PURE__*/ createUseSimulateContract(
+  { abi: shopModuleAbi, address: shopModuleAddress, functionName: 'buy' },
+)
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link shopModuleAbi}__ and `functionName` set to `"grantRole"`
+ *
+ *
+ */
+export const useSimulateShopModuleGrantRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: shopModuleAbi,
+    address: shopModuleAddress,
+    functionName: 'grantRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link shopModuleAbi}__ and `functionName` set to `"renounceRole"`
+ *
+ *
+ */
+export const useSimulateShopModuleRenounceRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: shopModuleAbi,
+    address: shopModuleAddress,
+    functionName: 'renounceRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link shopModuleAbi}__ and `functionName` set to `"revokeRole"`
+ *
+ *
+ */
+export const useSimulateShopModuleRevokeRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: shopModuleAbi,
+    address: shopModuleAddress,
+    functionName: 'revokeRole',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link shopModuleAbi}__
+ *
+ *
+ */
+export const useWatchShopModuleEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: shopModuleAbi,
+    address: shopModuleAddress,
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link shopModuleAbi}__ and `eventName` set to `"ItemPurchased"`
+ *
+ *
+ */
+export const useWatchShopModuleItemPurchasedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: shopModuleAbi,
+    address: shopModuleAddress,
+    eventName: 'ItemPurchased',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link shopModuleAbi}__ and `eventName` set to `"RoleAdminChanged"`
+ *
+ *
+ */
+export const useWatchShopModuleRoleAdminChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: shopModuleAbi,
+    address: shopModuleAddress,
+    eventName: 'RoleAdminChanged',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link shopModuleAbi}__ and `eventName` set to `"RoleGranted"`
+ *
+ *
+ */
+export const useWatchShopModuleRoleGrantedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: shopModuleAbi,
+    address: shopModuleAddress,
+    eventName: 'RoleGranted',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link shopModuleAbi}__ and `eventName` set to `"RoleRevoked"`
+ *
+ *
+ */
+export const useWatchShopModuleRoleRevokedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: shopModuleAbi,
+    address: shopModuleAddress,
+    eventName: 'RoleRevoked',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link shopModuleAbi}__ and `eventName` set to `"TreasuryUpdated"`
+ *
+ *
+ */
+export const useWatchShopModuleTreasuryUpdatedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: shopModuleAbi,
+    address: shopModuleAddress,
+    eventName: 'TreasuryUpdated',
   })
 
 /**
