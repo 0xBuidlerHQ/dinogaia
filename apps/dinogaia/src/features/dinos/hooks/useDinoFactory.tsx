@@ -35,6 +35,7 @@ const useGetDinosOfOwner = (props: useDinosOfOwnerProps) => {
 
 	return { dinosOfOwner };
 };
+type Dino = NonNullable<ReturnType<typeof useGetDinosOfOwner>["dinosOfOwner"]["data"]>[number];
 
 const useDinoFactory = () => {
 	const { eoa } = useWeb3();
@@ -51,4 +52,4 @@ const DinoFactory = {
 	useDinoFactory,
 };
 
-export { DinoFactory };
+export { DinoFactory, type Dino };

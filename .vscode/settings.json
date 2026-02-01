@@ -28,4 +28,60 @@
 	 * Typescript
 	 */
 	"typescript.tsdk": "node_modules/typescript/lib"
+
+	// "editor.tokenColorCustomizations": {
+	// 	"textMateRules": [
+	// 		//
+	// 		// Enum.
+	// 		//
+	// 		{
+	// 			"scope": "storage.type.enum",
+	// 			"settings": {
+	// 				"fontStyle": "underline"
+	// 			}
+	// 		},
+	// 		{
+	// 			"scope": "entity.name.type.enum",
+	// 			"settings": {
+	// 				"foreground": "#a46bff",
+	// 				"fontStyle": "italic bold"
+	// 			}
+	// 		},
+	// 		{
+	// 			"scope": "variable.other.enummember",
+	// 			"settings": {
+	// 				"foreground": "#a46bffe0"
+	// 			}
+	// 		},
+	// 		//
+	// 		// Struct.
+	// 		//
+	// 		{
+	// 			"scope": "storage.type.struct",
+	// 			"settings": {
+	// 				"fontStyle": "underline"
+	// 			}
+	// 		},
+	// 		{
+	// 			"scope": "entity.name.type.struct",
+	// 			"settings": {
+	// 				"foreground": "#ffe185",
+	// 				"fontStyle": "italic bold"
+	// 			}
+	// 		},
+	// 		{
+	// 			"scope": "entity.name.type.event",
+	// 			"settings": {
+	// 				"foreground": "#74ffef"
+	// 			}
+	// 		},
+
+	// 		{
+	// 			"scope": "entity.name.type.error",
+	// 			"settings": {
+	// 				"foreground": "#FF6B6B"
+	// 			}
+	// 		}
+	// 	]
+	// }
 }

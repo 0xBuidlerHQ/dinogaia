@@ -9,10 +9,13 @@ import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 
 abstract contract ItemsSetBase is ERC6909Metadata, ERC6909TokenSupply, AccessControl {
     /**
-     * @dev
+     * @dev Constants.
      */
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
+    /**
+     * @dev Enum ItemBaseRarity.
+     */
     enum ItemBaseRarity {
         Common,
         Uncommon,
@@ -22,6 +25,9 @@ abstract contract ItemsSetBase is ERC6909Metadata, ERC6909TokenSupply, AccessCon
         Mythic
     }
 
+    /**
+     * @dev Enum ItemBaseType.
+     */
     enum ItemBaseType {
         Consumable,
         Equipment,
@@ -30,31 +36,67 @@ abstract contract ItemsSetBase is ERC6909Metadata, ERC6909TokenSupply, AccessCon
         Artifact
     }
 
+    /**
+     * @dev Enum EffectKind.
+     */
+    enum EffectKind {
+        Weight,
+        Health,
+        ClearHunger,
+        ClearThirst
+    }
+
+    /**
+     * @dev Struct Effect.
+     */
+    struct Effect {
+        EffectKind kind;
+        int256 magnitude;
+    }
+
+    /**
+     * @dev Struct ItemBaseMetadata.
+     */
     struct ItemBaseMetadata {
         string name;
         string symbol;
         uint8 decimals;
     }
 
+    /**
+     * @dev Struct ItemTrading.
+     */
     struct ItemTrading {
         bool tradable;
         bool sellable;
         uint256 price;
     }
 
+    /**
+     * @dev Struct ItemUsage.
+     */
     struct ItemUsage {
         bool destroyOnUse;
         bool soulbound;
     }
 
+    /**
+     * @dev Struct ItemRequirements.
+     */
     struct ItemRequirements {
         uint256 requiredLevel;
     }
 
+    /**
+     * @dev Struct ItemTags.
+     */
     struct ItemTags {
         string[] tags;
     }
 
+    /**
+     * @dev Struct ItemBase.
+     */
     struct ItemBase {
         ItemBaseRarity rarity;
         ItemBaseType itemType;
@@ -63,31 +105,31 @@ abstract contract ItemsSetBase is ERC6909Metadata, ERC6909TokenSupply, AccessCon
         ItemRequirements requirements;
         ItemBaseMetadata metadata;
         ItemTags tagging;
+        Effect[] effects;
     }
 
     /**
-     * @dev
+     * @dev Variables.
      */
     uint256 public itemIdsIndex;
 
     /**
-     * @dev
+     * @dev Mappings.
      */
     mapping(uint256 id => ItemBase itemBase) internal itemsSetBase;
 
     /**
-     * @dev
+     * @dev Events.
      */
     event ItemDefined(uint256 indexed id, ItemBase meta);
 
     /**
-     * @dev
+     * @dev Errors.
      */
     error InvalidItemId();
-    error InvalidItemType();
 
     /**
-     * @dev
+     * @dev Constructor.
      */
     constructor(address owner) {
         _grantRole(DEFAULT_ADMIN_ROLE, owner);
@@ -111,9 +153,6 @@ abstract contract ItemsSetBase is ERC6909Metadata, ERC6909TokenSupply, AccessCon
         _itemBase = itemsSetBase[_itemId];
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     /**
      * @dev
      */
@@ -129,8 +168,8 @@ abstract contract ItemsSetBase is ERC6909Metadata, ERC6909TokenSupply, AccessCon
         emit ItemDefined(id, _itemBase);
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * @dev

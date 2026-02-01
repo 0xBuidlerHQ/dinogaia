@@ -6,7 +6,6 @@ import {DinoERC721} from "@core/DinoERC721.sol";
 
 import {DinoGenesis} from "@dino/DinoGenesis.sol";
 import {DinoProfile} from "@dino/DinoProfile.sol";
-import {DinoStatus} from "@dino/DinoStatus.sol";
 
 /**
  * @dev Events.
@@ -22,7 +21,6 @@ contract DinoFactory {
         //
         DinoGenesis.Genesis dinoGenesis;
         DinoProfile.Profile dinoProfile;
-        DinoStatus.Status dinoStatus;
     }
 
     /**
@@ -32,7 +30,6 @@ contract DinoFactory {
     //
     DinoGenesis public immutable dinoGenesis;
     DinoProfile public immutable dinoProfile;
-    DinoStatus public immutable dinoStatus;
 
     /**
      * @dev Events.
@@ -42,13 +39,15 @@ contract DinoFactory {
     /**
      * @dev Constructor.
      */
-    constructor(DinoERC721 _dinoERC721, DinoGenesis _dinoGenesis, DinoProfile _dinoProfile, DinoStatus _dinoStatus) {
+    constructor(DinoERC721 _dinoERC721, DinoGenesis _dinoGenesis, DinoProfile _dinoProfile) {
         dinoERC721 = _dinoERC721;
         //
         dinoGenesis = _dinoGenesis;
         dinoProfile = _dinoProfile;
-        dinoStatus = _dinoStatus;
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * @dev
@@ -62,7 +61,6 @@ contract DinoFactory {
 
         dinoGenesis.initialize(dinoId, genesisDataParams);
         dinoProfile.initialize(dinoId);
-        dinoStatus.initialize(dinoId);
 
         emit DinoCreated(msg.sender, dinoId, dinoAccount);
     }
@@ -76,8 +74,7 @@ contract DinoFactory {
             //
             dinoAccount: _getDinoAccount(_dinoId),
             dinoGenesis: dinoGenesis.getGenesis(_dinoId),
-            dinoProfile: dinoProfile.getProfile(_dinoId),
-            dinoStatus: dinoStatus.getStatus(_dinoId)
+            dinoProfile: dinoProfile.getProfile(_dinoId)
         });
     }
 

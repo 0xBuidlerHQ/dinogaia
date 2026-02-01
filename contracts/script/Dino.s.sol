@@ -13,7 +13,6 @@ import {SpeciesRegistry} from "@registry/SpeciesRegistry.sol";
 import {DinoFactory} from "@dino/DinoFactory.sol";
 import {DinoGenesis} from "@dino/DinoGenesis.sol";
 import {DinoProfile} from "@dino/DinoProfile.sol";
-import {DinoStatus} from "@dino/DinoStatus.sol";
 
 import {JobsModule} from "@modules/jobs/JobsModule.sol";
 import {ShopModule} from "@modules/shop/ShopModule.sol";
@@ -57,12 +56,11 @@ contract Deploy is Actors, Packages {
          */
         DinoGenesis dinoGenesis = new DinoGenesis{salt: SALT}(deployer.addr, speciesRegistry);
         DinoProfile dinoProfile = new DinoProfile{salt: SALT}(deployer.addr);
-        DinoStatus dinoStatus = new DinoStatus{salt: SALT}(deployer.addr);
 
         /**
          * @dev Factories.
          */
-        DinoFactory dinoFactory = new DinoFactory{salt: SALT}(dinoERC721, dinoGenesis, dinoProfile, dinoStatus);
+        DinoFactory dinoFactory = new DinoFactory{salt: SALT}(dinoERC721, dinoGenesis, dinoProfile);
 
         /**
          * @dev Items Set.
@@ -93,7 +91,6 @@ contract Deploy is Actors, Packages {
 
         dinoGenesis.grantRole(dinoGenesis.FACTORY_ROLE(), address(dinoFactory));
         dinoProfile.grantRole(dinoProfile.FACTORY_ROLE(), address(dinoFactory));
-        dinoStatus.grantRole(dinoStatus.FACTORY_ROLE(), address(dinoFactory));
 
         itemsSet0.grantRole(itemsSet0.MINTER_ROLE(), address(shopModule));
         stop();
@@ -107,7 +104,6 @@ contract Deploy is Actors, Packages {
         addDeployment("SpeciesRegistry", address(speciesRegistry));
         addDeployment("DinoGenesis", address(dinoGenesis));
         addDeployment("DinoProfile", address(dinoProfile));
-        addDeployment("DinoStatus", address(dinoStatus));
         addDeployment("DinoFactory", address(dinoFactory));
         addDeployment("ItemsSet0", address(itemsSet0));
         addDeployment("JobsModule", address(jobsModule));

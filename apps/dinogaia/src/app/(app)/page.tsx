@@ -13,28 +13,18 @@ import { Container } from "@0xbuidlerhq/ui/system/base/container";
 import { H5, H6 } from "@0xbuidlerhq/ui/system/base/typography";
 import { ButtonBase } from "@0xbuidlerhq/ui/system/buttons/ButtonBase";
 import { useDinoActions } from "@features/dinos/hooks/useDinoActions";
-import { DinoFactory } from "@features/dinos/hooks/useDinoFactory";
+import { type Dino, DinoFactory } from "@features/dinos/hooks/useDinoFactory";
 import { JobsRegistry } from "@features/dinos/hooks/useDinoJobsRegistry";
 import { EmeraldERC20 } from "@features/dinos/hooks/useEmeraldERC20";
 import { jobsManager } from "@features/dinos/hooks/useJobsManager";
 import { SpeciesRegistry } from "@features/dinos/hooks/useSpeciesRegistry";
 import { useItems } from "@features/items/useItems";
 import React from "react";
-import { type Address, encodeFunctionData } from "viem";
+import { encodeFunctionData } from "viem";
 import { timestampToAge } from "../../utils";
 
-type Props = {
-	dinoId: bigint;
-	dinoAccount: Address;
-	dinoGenesis: {
-		name: string;
-		speciesId: bigint;
-		birthTimestamp: bigint;
-	};
-};
-
-const MyDino = (props: Props) => {
-	const { dinoId, dinoAccount, dinoGenesis } = props;
+const MyDino = (props: Dino) => {
+	const { dinoId, dinoAccount, dinoGenesis, dinoProfile, dinoStatus } = props;
 
 	const { sendTxsFromDinoAccount } = useDinoActions({ dinoAccount });
 	const { jobOf } = jobsManager.useJob({ dinoId });
@@ -62,6 +52,10 @@ const MyDino = (props: Props) => {
 					</H6>
 
 					<H6>{String(balanceOf.data)}</H6>
+				</Box>
+
+				<Box>
+					<Box>Health: {String(dinoStatus.health)}</Box>
 				</Box>
 
 				{e.items.map((item) => {
