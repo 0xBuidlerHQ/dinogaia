@@ -167,13 +167,6 @@ export const dinoAccountAbi = [
   {
     type: 'function',
     inputs: [],
-    name: 'dinoFactory',
-    outputs: [{ name: '', internalType: 'address', type: 'address' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [],
     name: 'dinoId',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'view',
@@ -911,7 +904,7 @@ export const dinoFactoryAbi = [
  *
  */
 export const dinoFactoryAddress = {
-  31337: '0x704712a90BF4Ba67A7AE986CC8eee68b4548F032',
+  31337: '0x5bB794cc06e23C7e19AE677Ad7ADDcf81e626f0f',
 } as const
 
 /**
@@ -1383,7 +1376,7 @@ export const dinoProfileAbi = [
  *
  */
 export const dinoProfileAddress = {
-  31337: '0xf82624b45112D44a1F47b4c841e9c935097185a1',
+  31337: '0x860032F25cA09e4b6D5Ec71F824Ae977Ad1D8191',
 } as const
 
 /**
@@ -1601,7 +1594,7 @@ export const dinoStatusAbi = [
  *
  */
 export const dinoStatusAddress = {
-  31337: '0x9DD6E2FCd3FB637ABFC63fa96Bf2e4DB39be03c4',
+  31337: '0xd87429F2D0402b6C24182B676575B48Bcb948A50',
 } as const
 
 /**
@@ -5116,7 +5109,6 @@ export const itemsSet0Abi = [
           { name: 'slot', internalType: 'string', type: 'string' },
           { name: 'defense', internalType: 'uint256', type: 'uint256' },
           { name: 'durability', internalType: 'uint256', type: 'uint256' },
-          { name: 'price', internalType: 'uint256', type: 'uint256' },
         ],
       },
     ],
@@ -5133,7 +5125,6 @@ export const itemsSet0Abi = [
         type: 'tuple',
         components: [
           { name: 'weight', internalType: 'uint256', type: 'uint256' },
-          { name: 'price', internalType: 'uint256', type: 'uint256' },
         ],
       },
     ],
@@ -5150,7 +5141,6 @@ export const itemsSet0Abi = [
         type: 'tuple',
         components: [
           { name: 'healAmount', internalType: 'uint256', type: 'uint256' },
-          { name: 'price', internalType: 'uint256', type: 'uint256' },
         ],
       },
     ],
@@ -5265,7 +5255,6 @@ export const itemsSet0Abi = [
         components: [
           { name: 'damage', internalType: 'uint256', type: 'uint256' },
           { name: 'durability', internalType: 'uint256', type: 'uint256' },
-          { name: 'price', internalType: 'uint256', type: 'uint256' },
         ],
       },
     ],
@@ -5712,7 +5701,7 @@ export const itemsSet0Abi = [
  *
  */
 export const itemsSet0Address = {
-  31337: '0xbA94cCa9bB4C661a6c98a0d8e0D849145A62fD91',
+  31337: '0xB9f76E8581F5A3e2c844896835CB91dE601E90a3',
 } as const
 
 /**
@@ -6584,7 +6573,7 @@ export const jobsModuleAbi = [
  *
  */
 export const jobsModuleAddress = {
-  31337: '0xD79D296e6F50D80a818542D98fc9600E5f19f05a',
+  31337: '0x1508Ff2960ecF376E3bc0Be0286F0d573Dc58335',
 } as const
 
 /**
@@ -7358,7 +7347,7 @@ export const shopModuleAbi = [
  *
  */
 export const shopModuleAddress = {
-  31337: '0xBA1B4883393fB695A9C27088a7252de8a9505635',
+  31337: '0xDC7aE6A1c003d290D305fCbCb1f0357AceF1b7af',
 } as const
 
 /**
@@ -7925,15 +7914,6 @@ export const useReadDinoAccount = /*#__PURE__*/ createUseReadContract({
 export const useReadDinoAccountDinoErc721 = /*#__PURE__*/ createUseReadContract(
   { abi: dinoAccountAbi, functionName: 'dinoERC721' },
 )
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoAccountAbi}__ and `functionName` set to `"dinoFactory"`
- */
-export const useReadDinoAccountDinoFactory =
-  /*#__PURE__*/ createUseReadContract({
-    abi: dinoAccountAbi,
-    functionName: 'dinoFactory',
-  })
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link dinoAccountAbi}__ and `functionName` set to `"dinoId"`

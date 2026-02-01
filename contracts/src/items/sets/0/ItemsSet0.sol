@@ -6,25 +6,21 @@ import {ItemsSetBase} from "@items/sets/ItemsSetBase.sol";
 contract ItemsSet0 is ItemsSetBase {
     struct FoodSpec {
         uint256 weight;
-        uint256 price;
     }
 
     struct HealSpec {
         uint256 healAmount;
-        uint256 price;
     }
 
     struct WeaponSpec {
         uint256 damage;
         uint256 durability;
-        uint256 price;
     }
 
     struct EquipmentSpec {
         string slot;
         uint256 defense;
         uint256 durability;
-        uint256 price;
     }
 
     struct QuestSpec {
@@ -66,11 +62,13 @@ contract ItemsSet0 is ItemsSetBase {
         return _questSpecs[_id];
     }
 
-    function _defineFood(string memory _name, FoodSpec memory _foodSpec, string[] memory _tags) internal {
+    function _defineFood(string memory _name, uint256 _price, FoodSpec memory _foodSpec, string[] memory _tags)
+        internal
+    {
         ItemsSetBase.ItemBase memory base = ItemsSetBase.ItemBase({
             rarity: ItemsSetBase.ItemBaseRarity.Common,
             itemType: ItemsSetBase.ItemBaseType.Consumable,
-            trading: ItemsSetBase.ItemTrading({tradable: true, sellable: true, price: _foodSpec.price}),
+            trading: ItemsSetBase.ItemTrading({tradable: true, sellable: true, price: _price}),
             usage: ItemsSetBase.ItemUsage({destroyOnUse: true, soulbound: false}),
             requirements: ItemsSetBase.ItemRequirements({requiredLevel: 0}),
             metadata: ItemsSetBase.ItemBaseMetadata({name: _name, symbol: "", decimals: 0}),
@@ -81,11 +79,13 @@ contract ItemsSet0 is ItemsSetBase {
         _foodSpecs[id] = _foodSpec;
     }
 
-    function _defineHeal(string memory _name, HealSpec memory _healSpec, string[] memory _tags) internal {
+    function _defineHeal(string memory _name, uint256 _price, HealSpec memory _healSpec, string[] memory _tags)
+        internal
+    {
         ItemsSetBase.ItemBase memory base = ItemsSetBase.ItemBase({
             rarity: ItemsSetBase.ItemBaseRarity.Common,
             itemType: ItemsSetBase.ItemBaseType.Consumable,
-            trading: ItemsSetBase.ItemTrading({tradable: true, sellable: true, price: _healSpec.price}),
+            trading: ItemsSetBase.ItemTrading({tradable: true, sellable: true, price: _price}),
             usage: ItemsSetBase.ItemUsage({destroyOnUse: true, soulbound: false}),
             requirements: ItemsSetBase.ItemRequirements({requiredLevel: 0}),
             metadata: ItemsSetBase.ItemBaseMetadata({name: _name, symbol: "", decimals: 0}),
@@ -96,11 +96,13 @@ contract ItemsSet0 is ItemsSetBase {
         _healSpecs[id] = _healSpec;
     }
 
-    function _defineWeapon(string memory _name, WeaponSpec memory _weaponSpec, string[] memory _tags) internal {
+    function _defineWeapon(string memory _name, uint256 _price, WeaponSpec memory _weaponSpec, string[] memory _tags)
+        internal
+    {
         ItemsSetBase.ItemBase memory base = ItemsSetBase.ItemBase({
             rarity: ItemsSetBase.ItemBaseRarity.Common,
             itemType: ItemsSetBase.ItemBaseType.Equipment,
-            trading: ItemsSetBase.ItemTrading({tradable: true, sellable: true, price: _weaponSpec.price}),
+            trading: ItemsSetBase.ItemTrading({tradable: true, sellable: true, price: _price}),
             usage: ItemsSetBase.ItemUsage({destroyOnUse: false, soulbound: false}),
             requirements: ItemsSetBase.ItemRequirements({requiredLevel: 0}),
             metadata: ItemsSetBase.ItemBaseMetadata({name: _name, symbol: "", decimals: 0}),
@@ -111,13 +113,16 @@ contract ItemsSet0 is ItemsSetBase {
         _weaponSpecs[id] = _weaponSpec;
     }
 
-    function _defineEquipment(string memory _name, EquipmentSpec memory _equipmentSpec, string[] memory _tags)
-        internal
-    {
+    function _defineEquipment(
+        string memory _name,
+        uint256 _price,
+        EquipmentSpec memory _equipmentSpec,
+        string[] memory _tags
+    ) internal {
         ItemsSetBase.ItemBase memory base = ItemsSetBase.ItemBase({
             rarity: ItemsSetBase.ItemBaseRarity.Common,
             itemType: ItemsSetBase.ItemBaseType.Equipment,
-            trading: ItemsSetBase.ItemTrading({tradable: true, sellable: true, price: _equipmentSpec.price}),
+            trading: ItemsSetBase.ItemTrading({tradable: true, sellable: true, price: _price}),
             usage: ItemsSetBase.ItemUsage({destroyOnUse: false, soulbound: false}),
             requirements: ItemsSetBase.ItemRequirements({requiredLevel: 0}),
             metadata: ItemsSetBase.ItemBaseMetadata({name: _name, symbol: "", decimals: 0}),
@@ -148,36 +153,34 @@ contract ItemsSet0 is ItemsSetBase {
         foodTag[0] = "consumable";
         foodTag[1] = "food";
 
-        _defineFood("apple", FoodSpec({weight: 50, price: 1}), foodTag);
-        _defineFood("bread", FoodSpec({weight: 120, price: 2}), foodTag);
-        _defineFood("cheese", FoodSpec({weight: 180, price: 3}), foodTag);
-        _defineFood("chicken", FoodSpec({weight: 350, price: 5}), foodTag);
-        _defineFood("salmon", FoodSpec({weight: 420, price: 7}), foodTag);
-        _defineFood("tuna", FoodSpec({weight: 600, price: 12}), foodTag);
+        _defineFood("apple", 1, FoodSpec({weight: 50}), foodTag);
+        _defineFood("bread", 2, FoodSpec({weight: 120}), foodTag);
+        _defineFood("cheese", 3, FoodSpec({weight: 180}), foodTag);
+        _defineFood("chicken", 5, FoodSpec({weight: 350}), foodTag);
+        _defineFood("salmon", 7, FoodSpec({weight: 420}), foodTag);
+        _defineFood("tuna", 12, FoodSpec({weight: 600}), foodTag);
 
         string[] memory medTags = new string[](2);
         medTags[0] = "consumable";
         medTags[1] = "medicine";
 
-        _defineHeal("small bandage", HealSpec({healAmount: 20, price: 3}), medTags);
-        _defineHeal("healing herb", HealSpec({healAmount: 40, price: 5}), medTags);
-        _defineHeal("first aid kit", HealSpec({healAmount: 80, price: 10}), medTags);
+        _defineHeal("small bandage", 3, HealSpec({healAmount: 20}), medTags);
+        _defineHeal("healing herb", 5, HealSpec({healAmount: 40}), medTags);
+        _defineHeal("first aid kit", 10, HealSpec({healAmount: 80}), medTags);
 
         string[] memory weaponTags = new string[](1);
         weaponTags[0] = "weapon";
 
-        _defineWeapon("wooden spear", WeaponSpec({damage: 8, durability: 50, price: 8}), weaponTags);
-        _defineWeapon("bronze sword", WeaponSpec({damage: 14, durability: 80, price: 15}), weaponTags);
-        _defineWeapon("longbow", WeaponSpec({damage: 12, durability: 70, price: 12}), weaponTags);
+        _defineWeapon("wooden spear", 8, WeaponSpec({damage: 8, durability: 50}), weaponTags);
+        _defineWeapon("bronze sword", 15, WeaponSpec({damage: 14, durability: 80}), weaponTags);
+        _defineWeapon("longbow", 12, WeaponSpec({damage: 12, durability: 70}), weaponTags);
 
         string[] memory equipTags = new string[](1);
         equipTags[0] = "equipment";
 
-        _defineEquipment(
-            "leather armor", EquipmentSpec({slot: "chest", defense: 6, durability: 80, price: 12}), equipTags
-        );
-        _defineEquipment("iron helmet", EquipmentSpec({slot: "head", defense: 4, durability: 60, price: 9}), equipTags);
-        _defineEquipment("travel boots", EquipmentSpec({slot: "feet", defense: 3, durability: 50, price: 7}), equipTags);
+        _defineEquipment("leather armor", 12, EquipmentSpec({slot: "chest", defense: 6, durability: 80}), equipTags);
+        _defineEquipment("iron helmet", 9, EquipmentSpec({slot: "head", defense: 4, durability: 60}), equipTags);
+        _defineEquipment("travel boots", 7, EquipmentSpec({slot: "feet", defense: 3, durability: 50}), equipTags);
 
         string[] memory questTags = new string[](1);
         questTags[0] = "quest";

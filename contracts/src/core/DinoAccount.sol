@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {IERC721} from "@openzeppelin/contracts/interfaces/IERC721.sol";
 
 /**
@@ -22,7 +21,6 @@ contract DinoAccount {
      */
     uint256 public immutable dinoId;
     address public immutable dinoERC721;
-    address public immutable dinoFactory;
 
     /**
      * @dev Errors.
@@ -56,10 +54,7 @@ contract DinoAccount {
      * @dev
      */
     function execute(Call calldata call_) external onlyOwner returns (bytes memory result) {
-        (bool ok, bytes memory ret) = call_.target.call{value: call_.value}(call_.data);
-        if (!ok) revert CallFailed(ret);
-        emit Executed(call_.target, call_.value, call_.data, ret);
-        return ret;
+        return _execute(call_);
     }
 
     /**
@@ -69,12 +64,23 @@ contract DinoAccount {
         uint256 n = calls.length;
         results = new bytes[](n);
         for (uint256 i = 0; i < n; i++) {
-            Call calldata c = calls[i];
-            (bool ok, bytes memory ret) = c.target.call{value: c.value}(c.data);
-            if (!ok) revert CallFailed(ret);
-            results[i] = ret;
-            emit Executed(c.target, c.value, c.data, ret);
+            results[i] = _execute(calls[i]);
         }
+    }
+
+    /**
+     * @dev
+     */
+    function _execute(Call calldata call_) internal returns (bytes memory result) {
+        (bool ok, bytes memory ret) = call_.target.call{value: call_.value}(call_.data);
+        if (!ok) {
+            if (ret.length == 0) revert CallFailed(ret);
+            assembly {
+                revert(add(ret, 0x20), mload(ret))
+            }
+        }
+        emit Executed(call_.target, call_.value, call_.data, ret);
+        return ret;
     }
 
     receive() external payable {}

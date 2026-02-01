@@ -1,6 +1,8 @@
 "use client";
 
 import {
+	emeraldErc20Abi,
+	emeraldErc20Address,
 	jobsModuleAbi,
 	jobsModuleAddress,
 	shopModuleAbi,
@@ -16,6 +18,7 @@ import { JobsRegistry } from "@features/dinos/hooks/useDinoJobsRegistry";
 import { EmeraldERC20 } from "@features/dinos/hooks/useEmeraldERC20";
 import { jobsManager } from "@features/dinos/hooks/useJobsManager";
 import { SpeciesRegistry } from "@features/dinos/hooks/useSpeciesRegistry";
+import { useItems } from "@features/items/useItems";
 import React from "react";
 import { type Address, encodeFunctionData } from "viem";
 import { timestampToAge } from "../../utils";
@@ -39,19 +42,9 @@ const MyDino = (props: Props) => {
 	const { job } = JobsRegistry.useJob({ jobId: jobOf.data! });
 	const { balanceOf } = EmeraldERC20.useEmeraldERC20({ dinoAccount: dinoAccount });
 
-	const data = encodeFunctionData({
-		abi: jobsModuleAbi,
-		functionName: "claimSalary",
-		args: [dinoId],
-	});
-
-	const data2 = encodeFunctionData({
-		abi: shopModuleAbi,
-		functionName: "buy",
-		args: [dinoId, 0n, 1n],
-	});
-
 	const { species } = SpeciesRegistry.useSpecies({ speciesId: dinoGenesis.speciesId });
+
+	const e = useItems({ owner: dinoAccount });
 
 	const a = timestampToAge(dinoGenesis.birthTimestamp);
 	return (
@@ -71,6 +64,15 @@ const MyDino = (props: Props) => {
 					<H6>{String(balanceOf.data)}</H6>
 				</Box>
 
+				{e.items.map((item) => {
+					return (
+						<Box key={item.id}>
+							<Box>{item.name}</Box>
+							<Box>{String(item.balance)}</Box>
+						</Box>
+					);
+				})}
+
 				<ButtonBase
 					className="bg-white text-black"
 					onClick={async () =>
@@ -78,7 +80,11 @@ const MyDino = (props: Props) => {
 							{
 								target: jobsModuleAddress["31337"],
 								value: 0n,
-								data: data,
+								data: encodeFunctionData({
+									abi: jobsModuleAbi,
+									functionName: "claimSalary",
+									args: [dinoId],
+								}),
 							},
 						])
 					}
@@ -89,33 +95,27 @@ const MyDino = (props: Props) => {
 				<ButtonBase
 					className="bg-white text-black"
 					onClick={async () => {
-						// try {
-						// 	await sendTxsFromDinoAccount([
-						// 		{
-						// 			target: emeraldErc20Address["31337"],
-						// 			value: 0n,
-						// 			data: encodeFunctionData({
-						// 				abi: emeraldErc20Abi,
-						// 				functionName: "approve",
-						// 				args: [shopModuleAddress["31337"], parseEther("1")],
-						// 			}),
-						// 		},
-						// 	]);
-						// } catch (e) {
-						// 	console.log(e);
-						// }
-
-						try {
-							await sendTxsFromDinoAccount([
-								{
-									target: shopModuleAddress["31337"],
-									value: 0n,
-									data: data2,
-								},
-							]);
-						} catch (e) {
-							console.log(e);
-						}
+						const chain = "31337";
+						await sendTxsFromDinoAccount([
+							{
+								target: emeraldErc20Address[chain],
+								value: 0n,
+								data: encodeFunctionData({
+									abi: emeraldErc20Abi,
+									functionName: "approve",
+									args: [shopModuleAddress[chain], 1n],
+								}),
+							},
+							{
+								target: shopModuleAddress[chain],
+								value: 0n,
+								data: encodeFunctionData({
+									abi: shopModuleAbi,
+									functionName: "buy",
+									args: [dinoId, 0n, 1n],
+								}),
+							},
+						]);
 					}}
 				>
 					<H5>Buy From Shop</H5>
