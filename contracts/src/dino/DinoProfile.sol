@@ -86,6 +86,10 @@ contract DinoProfile is AccessControl {
         profileOf[_dinoId].hungry = _hungry;
     }
 
+    function setThirsty(uint256 _dinoId, bool _thirsty) external onlyRole(STATUS_ROLE) {
+        profileOf[_dinoId].thirsty = _thirsty;
+    }
+
     function addWeight(uint256 _dinoId, uint256 _delta) external onlyRole(STATUS_ROLE) {
         profileOf[_dinoId].weight += _delta;
     }

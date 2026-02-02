@@ -16,6 +16,7 @@ import {DinoProfile} from "@dino/DinoProfile.sol";
 
 import {JobsModule} from "@modules/jobs/JobsModule.sol";
 import {ShopModule} from "@modules/shop/ShopModule.sol";
+import {ActionModule} from "@modules/actions/ActionModule.sol";
 
 import {ItemsSet0} from "@items/sets/0/ItemsSet0.sol";
 
@@ -73,6 +74,7 @@ contract Deploy is Actors, Packages {
         JobsModule jobsModule = new JobsModule{salt: SALT}(deployer.addr, emeraldERC20, dinoFactory, jobsRegistry);
         ShopModule shopModule =
             new ShopModule{salt: SALT}(deployer.addr, emeraldERC20, dinoFactory, itemsSet0, deployer.addr);
+        ActionModule actionModule = new ActionModule{salt: SALT}(deployer.addr, dinoFactory, dinoProfile);
 
         stop();
 
@@ -91,8 +93,11 @@ contract Deploy is Actors, Packages {
 
         dinoGenesis.grantRole(dinoGenesis.FACTORY_ROLE(), address(dinoFactory));
         dinoProfile.grantRole(dinoProfile.FACTORY_ROLE(), address(dinoFactory));
+        // Allow action module to update dino status fields when consuming items.
+        dinoProfile.grantRole(dinoProfile.STATUS_ROLE(), address(actionModule));
 
         itemsSet0.grantRole(itemsSet0.MINTER_ROLE(), address(shopModule));
+        itemsSet0.grantRole(itemsSet0.MINTER_ROLE(), address(actionModule));
         stop();
 
         /**
@@ -108,5 +113,6 @@ contract Deploy is Actors, Packages {
         addDeployment("ItemsSet0", address(itemsSet0));
         addDeployment("JobsModule", address(jobsModule));
         addDeployment("ShopModule", address(shopModule));
+        addDeployment("ActionModule", address(actionModule));
     }
 }

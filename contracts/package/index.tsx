@@ -146,13 +146,16 @@ export const accessControlAbi = [
 // ActionModule
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+ *
+ */
 export const actionModuleAbi = [
   {
     type: 'constructor',
     inputs: [
-      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: '_owner', internalType: 'address', type: 'address' },
       {
-        name: 'dinoFactory',
+        name: '_dinoFactory',
         internalType: 'contract DinoFactory',
         type: 'address',
       },
@@ -174,10 +177,12 @@ export const actionModuleAbi = [
   {
     type: 'function',
     inputs: [
+      { name: 'dinoId', internalType: 'uint256', type: 'uint256' },
       { name: 'itemSet', internalType: 'address', type: 'address' },
-      { name: 'allowed', internalType: 'bool', type: 'bool' },
+      { name: 'itemId', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
     ],
-    name: 'allowItemSet',
+    name: 'consume',
     outputs: [],
     stateMutability: 'nonpayable',
   },
@@ -228,13 +233,6 @@ export const actionModuleAbi = [
   },
   {
     type: 'function',
-    inputs: [{ name: '', internalType: 'address', type: 'address' }],
-    name: 'isItemSetAllowed',
-    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
     inputs: [
       { name: 'role', internalType: 'bytes32', type: 'bytes32' },
       { name: 'callerConfirmation', internalType: 'address', type: 'address' },
@@ -268,12 +266,6 @@ export const actionModuleAbi = [
         name: 'dinoId',
         internalType: 'uint256',
         type: 'uint256',
-        indexed: true,
-      },
-      {
-        name: 'itemSet',
-        internalType: 'address',
-        type: 'address',
         indexed: true,
       },
       {
@@ -365,6 +357,21 @@ export const actionModuleAbi = [
   { type: 'error', inputs: [], name: 'NotDinoAccount' },
   { type: 'error', inputs: [], name: 'ZeroAddress' },
 ] as const
+
+/**
+ *
+ */
+export const actionModuleAddress = {
+  31337: '0x27E9a09DD77d32C312f61031bF4f7a57618104e4',
+} as const
+
+/**
+ *
+ */
+export const actionModuleConfig = {
+  address: actionModuleAddress,
+  abi: actionModuleAbi,
+} as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // DinoAccount
@@ -880,7 +887,7 @@ export const dinoErc721Abi = [
  *
  */
 export const dinoErc721Address = {
-  31337: '0x12C67B9F0aE14dAAC4a28120F9a8b712c71CA90a',
+  31337: '0x5ae6152FB0c9B1fE4eCf10B524b3B24Bc39C6B8C',
 } as const
 
 /**
@@ -1102,7 +1109,7 @@ export const dinoFactoryAbi = [
  *
  */
 export const dinoFactoryAddress = {
-  31337: '0x16C2Ecc08adD24FC4A6D75b34A92Bf5F9150e600',
+  31337: '0xa837A43F8abc6821b4900284DFad16CC0B05E3d9',
 } as const
 
 /**
@@ -1360,7 +1367,7 @@ export const dinoGenesisAbi = [
  *
  */
 export const dinoGenesisAddress = {
-  31337: '0x2b6191192ad8759B848Ba1A7dFC32500aA32DeB3',
+  31337: '0xa819b5d87099B3f0c030976F1f93f38a1fe58e58',
 } as const
 
 /**
@@ -1528,6 +1535,16 @@ export const dinoProfileAbi = [
   },
   {
     type: 'function',
+    inputs: [
+      { name: '_dinoId', internalType: 'uint256', type: 'uint256' },
+      { name: '_thirsty', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'setThirsty',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
     inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
     name: 'supportsInterface',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
@@ -1621,7 +1638,7 @@ export const dinoProfileAbi = [
  *
  */
 export const dinoProfileAddress = {
-  31337: '0x45A9a6F7FBbFc8164818f0Fa0885c564E09eF6B6',
+  31337: '0x7ea1847A1e413832D43971441DC9f1e2F49f45ff',
 } as const
 
 /**
@@ -3313,7 +3330,7 @@ export const emeraldErc20Abi = [
  *
  */
 export const emeraldErc20Address = {
-  31337: '0x54c64d5EAD2F5bF6550f4be3aE7721F7422082BC',
+  31337: '0xc474F6f05BE0f4eAF013ed447E7f967eFFD0fc5A',
 } as const
 
 /**
@@ -5118,6 +5135,17 @@ export const itemsSet0Abi = [
   },
   {
     type: 'function',
+    inputs: [
+      { name: '_to', internalType: 'address', type: 'address' },
+      { name: '_id', internalType: 'uint256', type: 'uint256' },
+      { name: '_amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'burn',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
     inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
     name: 'decimals',
     outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
@@ -5182,14 +5210,6 @@ export const itemsSet0Abi = [
               { name: 'name', internalType: 'string', type: 'string' },
               { name: 'symbol', internalType: 'string', type: 'string' },
               { name: 'decimals', internalType: 'uint8', type: 'uint8' },
-            ],
-          },
-          {
-            name: 'tagging',
-            internalType: 'struct ItemsSetBase.ItemTags',
-            type: 'tuple',
-            components: [
-              { name: 'tags', internalType: 'string[]', type: 'string[]' },
             ],
           },
           {
@@ -5473,14 +5493,6 @@ export const itemsSet0Abi = [
               { name: 'name', internalType: 'string', type: 'string' },
               { name: 'symbol', internalType: 'string', type: 'string' },
               { name: 'decimals', internalType: 'uint8', type: 'uint8' },
-            ],
-          },
-          {
-            name: 'tagging',
-            internalType: 'struct ItemsSetBase.ItemTags',
-            type: 'tuple',
-            components: [
-              { name: 'tags', internalType: 'string[]', type: 'string[]' },
             ],
           },
           {
@@ -5670,7 +5682,7 @@ export const itemsSet0Abi = [
  *
  */
 export const itemsSet0Address = {
-  31337: '0x960045F7Ed16b506C0F553A5e69a80266604640F',
+  31337: '0xb5D8ABcD9477a431d58F9063724fa5cf48160aD0',
 } as const
 
 /**
@@ -5731,6 +5743,17 @@ export const itemsSetBaseAbi = [
     name: 'balanceOf',
     outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
     stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_to', internalType: 'address', type: 'address' },
+      { name: '_id', internalType: 'uint256', type: 'uint256' },
+      { name: '_amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'burn',
+    outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
     type: 'function',
@@ -5798,14 +5821,6 @@ export const itemsSetBaseAbi = [
               { name: 'name', internalType: 'string', type: 'string' },
               { name: 'symbol', internalType: 'string', type: 'string' },
               { name: 'decimals', internalType: 'uint8', type: 'uint8' },
-            ],
-          },
-          {
-            name: 'tagging',
-            internalType: 'struct ItemsSetBase.ItemTags',
-            type: 'tuple',
-            components: [
-              { name: 'tags', internalType: 'string[]', type: 'string[]' },
             ],
           },
           {
@@ -6089,14 +6104,6 @@ export const itemsSetBaseAbi = [
               { name: 'name', internalType: 'string', type: 'string' },
               { name: 'symbol', internalType: 'string', type: 'string' },
               { name: 'decimals', internalType: 'uint8', type: 'uint8' },
-            ],
-          },
-          {
-            name: 'tagging',
-            internalType: 'struct ItemsSetBase.ItemTags',
-            type: 'tuple',
-            components: [
-              { name: 'tags', internalType: 'string[]', type: 'string[]' },
             ],
           },
           {
@@ -6567,7 +6574,7 @@ export const jobsModuleAbi = [
  *
  */
 export const jobsModuleAddress = {
-  31337: '0xfCAd637EBF0Ee982349F28E31d41A84eeFE99571',
+  31337: '0x8E2C219A06692f7B68F248D8411D1cB8C947098f',
 } as const
 
 /**
@@ -7123,8 +7130,8 @@ export const shopModuleAbi = [
     type: 'function',
     inputs: [
       { name: '_dinoId', internalType: 'uint256', type: 'uint256' },
-      { name: 'itemId', internalType: 'uint256', type: 'uint256' },
-      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+      { name: '_itemId', internalType: 'uint256', type: 'uint256' },
+      { name: '_amount', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'buy',
     outputs: [],
@@ -7332,16 +7339,14 @@ export const shopModuleAbi = [
     name: 'AccessControlUnauthorizedAccount',
   },
   { type: 'error', inputs: [], name: 'InvalidAmount' },
-  { type: 'error', inputs: [], name: 'ItemNotPriced' },
   { type: 'error', inputs: [], name: 'NotDinoAccount' },
-  { type: 'error', inputs: [], name: 'ZeroAddress' },
 ] as const
 
 /**
  *
  */
 export const shopModuleAddress = {
-  31337: '0x24c46FdB5103F490975d2Cb012D781Bc2bBC9409',
+  31337: '0x720c5BC5B5cED376E81EABA8D50eC6999F2b41c8',
 } as const
 
 /**
@@ -7897,198 +7902,258 @@ export const useWatchAccessControlRoleRevokedEvent =
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link actionModuleAbi}__
+ *
+ *
  */
 export const useReadActionModule = /*#__PURE__*/ createUseReadContract({
   abi: actionModuleAbi,
+  address: actionModuleAddress,
 })
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
+ *
+ *
  */
 export const useReadActionModuleDefaultAdminRole =
   /*#__PURE__*/ createUseReadContract({
     abi: actionModuleAbi,
+    address: actionModuleAddress,
     functionName: 'DEFAULT_ADMIN_ROLE',
   })
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"dinoFactory"`
+ *
+ *
  */
 export const useReadActionModuleDinoFactory =
   /*#__PURE__*/ createUseReadContract({
     abi: actionModuleAbi,
+    address: actionModuleAddress,
     functionName: 'dinoFactory',
   })
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"dinoProfile"`
+ *
+ *
  */
 export const useReadActionModuleDinoProfile =
   /*#__PURE__*/ createUseReadContract({
     abi: actionModuleAbi,
+    address: actionModuleAddress,
     functionName: 'dinoProfile',
   })
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"getRoleAdmin"`
+ *
+ *
  */
 export const useReadActionModuleGetRoleAdmin =
   /*#__PURE__*/ createUseReadContract({
     abi: actionModuleAbi,
+    address: actionModuleAddress,
     functionName: 'getRoleAdmin',
   })
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"hasRole"`
+ *
+ *
  */
 export const useReadActionModuleHasRole = /*#__PURE__*/ createUseReadContract({
   abi: actionModuleAbi,
+  address: actionModuleAddress,
   functionName: 'hasRole',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"isItemSetAllowed"`
- */
-export const useReadActionModuleIsItemSetAllowed =
-  /*#__PURE__*/ createUseReadContract({
-    abi: actionModuleAbi,
-    functionName: 'isItemSetAllowed',
-  })
-
-/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"supportsInterface"`
+ *
+ *
  */
 export const useReadActionModuleSupportsInterface =
   /*#__PURE__*/ createUseReadContract({
     abi: actionModuleAbi,
+    address: actionModuleAddress,
     functionName: 'supportsInterface',
   })
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link actionModuleAbi}__
+ *
+ *
  */
 export const useWriteActionModule = /*#__PURE__*/ createUseWriteContract({
   abi: actionModuleAbi,
+  address: actionModuleAddress,
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"allowItemSet"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"consume"`
+ *
+ *
  */
-export const useWriteActionModuleAllowItemSet =
-  /*#__PURE__*/ createUseWriteContract({
+export const useWriteActionModuleConsume = /*#__PURE__*/ createUseWriteContract(
+  {
     abi: actionModuleAbi,
-    functionName: 'allowItemSet',
-  })
+    address: actionModuleAddress,
+    functionName: 'consume',
+  },
+)
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"grantRole"`
+ *
+ *
  */
 export const useWriteActionModuleGrantRole =
   /*#__PURE__*/ createUseWriteContract({
     abi: actionModuleAbi,
+    address: actionModuleAddress,
     functionName: 'grantRole',
   })
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"renounceRole"`
+ *
+ *
  */
 export const useWriteActionModuleRenounceRole =
   /*#__PURE__*/ createUseWriteContract({
     abi: actionModuleAbi,
+    address: actionModuleAddress,
     functionName: 'renounceRole',
   })
 
 /**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"revokeRole"`
+ *
+ *
  */
 export const useWriteActionModuleRevokeRole =
   /*#__PURE__*/ createUseWriteContract({
     abi: actionModuleAbi,
+    address: actionModuleAddress,
     functionName: 'revokeRole',
   })
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link actionModuleAbi}__
+ *
+ *
  */
 export const useSimulateActionModule = /*#__PURE__*/ createUseSimulateContract({
   abi: actionModuleAbi,
+  address: actionModuleAddress,
 })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"allowItemSet"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"consume"`
+ *
+ *
  */
-export const useSimulateActionModuleAllowItemSet =
+export const useSimulateActionModuleConsume =
   /*#__PURE__*/ createUseSimulateContract({
     abi: actionModuleAbi,
-    functionName: 'allowItemSet',
+    address: actionModuleAddress,
+    functionName: 'consume',
   })
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"grantRole"`
+ *
+ *
  */
 export const useSimulateActionModuleGrantRole =
   /*#__PURE__*/ createUseSimulateContract({
     abi: actionModuleAbi,
+    address: actionModuleAddress,
     functionName: 'grantRole',
   })
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"renounceRole"`
+ *
+ *
  */
 export const useSimulateActionModuleRenounceRole =
   /*#__PURE__*/ createUseSimulateContract({
     abi: actionModuleAbi,
+    address: actionModuleAddress,
     functionName: 'renounceRole',
   })
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"revokeRole"`
+ *
+ *
  */
 export const useSimulateActionModuleRevokeRole =
   /*#__PURE__*/ createUseSimulateContract({
     abi: actionModuleAbi,
+    address: actionModuleAddress,
     functionName: 'revokeRole',
   })
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link actionModuleAbi}__
+ *
+ *
  */
 export const useWatchActionModuleEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({ abi: actionModuleAbi })
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: actionModuleAbi,
+    address: actionModuleAddress,
+  })
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link actionModuleAbi}__ and `eventName` set to `"FoodConsumed"`
+ *
+ *
  */
 export const useWatchActionModuleFoodConsumedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
     abi: actionModuleAbi,
+    address: actionModuleAddress,
     eventName: 'FoodConsumed',
   })
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link actionModuleAbi}__ and `eventName` set to `"RoleAdminChanged"`
+ *
+ *
  */
 export const useWatchActionModuleRoleAdminChangedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
     abi: actionModuleAbi,
+    address: actionModuleAddress,
     eventName: 'RoleAdminChanged',
   })
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link actionModuleAbi}__ and `eventName` set to `"RoleGranted"`
+ *
+ *
  */
 export const useWatchActionModuleRoleGrantedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
     abi: actionModuleAbi,
+    address: actionModuleAddress,
     eventName: 'RoleGranted',
   })
 
 /**
  * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link actionModuleAbi}__ and `eventName` set to `"RoleRevoked"`
+ *
+ *
  */
 export const useWatchActionModuleRoleRevokedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
     abi: actionModuleAbi,
+    address: actionModuleAddress,
     eventName: 'RoleRevoked',
   })
 
@@ -9282,6 +9347,18 @@ export const useWriteDinoProfileSetHungry =
   })
 
 /**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoProfileAbi}__ and `functionName` set to `"setThirsty"`
+ *
+ *
+ */
+export const useWriteDinoProfileSetThirsty =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: dinoProfileAbi,
+    address: dinoProfileAddress,
+    functionName: 'setThirsty',
+  })
+
+/**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoProfileAbi}__
  *
  *
@@ -9373,6 +9450,18 @@ export const useSimulateDinoProfileSetHungry =
     abi: dinoProfileAbi,
     address: dinoProfileAddress,
     functionName: 'setHungry',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoProfileAbi}__ and `functionName` set to `"setThirsty"`
+ *
+ *
+ */
+export const useSimulateDinoProfileSetThirsty =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: dinoProfileAbi,
+    address: dinoProfileAddress,
+    functionName: 'setThirsty',
   })
 
 /**
@@ -12746,6 +12835,17 @@ export const useWriteItemsSet0Approve = /*#__PURE__*/ createUseWriteContract({
 })
 
 /**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"burn"`
+ *
+ *
+ */
+export const useWriteItemsSet0Burn = /*#__PURE__*/ createUseWriteContract({
+  abi: itemsSet0Abi,
+  address: itemsSet0Address,
+  functionName: 'burn',
+})
+
+/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"grantRole"`
  *
  *
@@ -12844,6 +12944,15 @@ export const useSimulateItemsSet0Approve =
     address: itemsSet0Address,
     functionName: 'approve',
   })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"burn"`
+ *
+ *
+ */
+export const useSimulateItemsSet0Burn = /*#__PURE__*/ createUseSimulateContract(
+  { abi: itemsSet0Abi, address: itemsSet0Address, functionName: 'burn' },
+)
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"grantRole"`
@@ -13194,6 +13303,14 @@ export const useWriteItemsSetBaseApprove = /*#__PURE__*/ createUseWriteContract(
 )
 
 /**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"burn"`
+ */
+export const useWriteItemsSetBaseBurn = /*#__PURE__*/ createUseWriteContract({
+  abi: itemsSetBaseAbi,
+  functionName: 'burn',
+})
+
+/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"grantRole"`
  */
 export const useWriteItemsSetBaseGrantRole =
@@ -13269,6 +13386,15 @@ export const useSimulateItemsSetBaseApprove =
   /*#__PURE__*/ createUseSimulateContract({
     abi: itemsSetBaseAbi,
     functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"burn"`
+ */
+export const useSimulateItemsSetBaseBurn =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: itemsSetBaseAbi,
+    functionName: 'burn',
   })
 
 /**

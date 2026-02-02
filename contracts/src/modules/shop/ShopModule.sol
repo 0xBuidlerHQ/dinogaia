@@ -47,16 +47,16 @@ contract ShopModule is ModuleBase {
     /**
      * @dev
      */
-    function buy(uint256 _dinoId, uint256 itemId, uint256 amount) external onlyDinoAccount(_dinoId) {
-        if (amount == 0) revert InvalidAmount();
+    function buy(uint256 _dinoId, uint256 _itemId, uint256 _amount) external onlyDinoAccount(_dinoId) {
+        if (_amount == 0) revert InvalidAmount();
 
-        ItemsSetBase.ItemBase memory meta = items.getItem(itemId);
-        uint256 total = meta.trading.price * amount;
+        ItemsSetBase.ItemBase memory meta = items.getItem(_itemId);
+        uint256 total = meta.trading.price * _amount;
 
         require(emerald.transferFrom(msg.sender, treasury, total), "PAY_FAIL");
 
-        items.mint(msg.sender, itemId, amount);
+        items.mint(msg.sender, _itemId, _amount);
 
-        emit ItemPurchased(msg.sender, itemId, amount, total);
+        emit ItemPurchased(msg.sender, _itemId, _amount, total);
     }
 }

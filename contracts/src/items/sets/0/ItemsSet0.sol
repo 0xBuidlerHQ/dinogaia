@@ -25,9 +25,6 @@ contract ItemsSet0 is ItemsSetBase {
      * @dev Food items.
      */
     function _initFoodItems() internal {
-        string[] memory foodTags = new string[](1);
-        foodTags[0] = "consumable";
-
         Effect[] memory foodEffects = new Effect[](2);
         foodEffects[0] = Effect({kind: EffectKind.ClearHunger, magnitude: 0});
         foodEffects[1] = Effect({kind: EffectKind.Weight, magnitude: 50});
@@ -40,7 +37,6 @@ contract ItemsSet0 is ItemsSetBase {
                 usage: ItemUsage({destroyOnUse: true, soulbound: false}),
                 requirements: ItemRequirements({requiredLevel: 0}),
                 metadata: ItemBaseMetadata({name: "apple", symbol: "", decimals: 0}),
-                tagging: ItemTags({tags: foodTags}),
                 effects: foodEffects
             })
         );
@@ -54,7 +50,6 @@ contract ItemsSet0 is ItemsSetBase {
                 usage: ItemUsage({destroyOnUse: true, soulbound: false}),
                 requirements: ItemRequirements({requiredLevel: 0}),
                 metadata: ItemBaseMetadata({name: "bread", symbol: "", decimals: 0}),
-                tagging: ItemTags({tags: foodTags}),
                 effects: foodEffects
             })
         );
@@ -68,7 +63,6 @@ contract ItemsSet0 is ItemsSetBase {
                 usage: ItemUsage({destroyOnUse: true, soulbound: false}),
                 requirements: ItemRequirements({requiredLevel: 0}),
                 metadata: ItemBaseMetadata({name: "cheese", symbol: "", decimals: 0}),
-                tagging: ItemTags({tags: foodTags}),
                 effects: foodEffects
             })
         );
@@ -82,7 +76,6 @@ contract ItemsSet0 is ItemsSetBase {
                 usage: ItemUsage({destroyOnUse: true, soulbound: false}),
                 requirements: ItemRequirements({requiredLevel: 0}),
                 metadata: ItemBaseMetadata({name: "chicken", symbol: "", decimals: 0}),
-                tagging: ItemTags({tags: foodTags}),
                 effects: foodEffects
             })
         );
@@ -96,7 +89,6 @@ contract ItemsSet0 is ItemsSetBase {
                 usage: ItemUsage({destroyOnUse: true, soulbound: false}),
                 requirements: ItemRequirements({requiredLevel: 0}),
                 metadata: ItemBaseMetadata({name: "salmon", symbol: "", decimals: 0}),
-                tagging: ItemTags({tags: foodTags}),
                 effects: foodEffects
             })
         );
@@ -110,7 +102,6 @@ contract ItemsSet0 is ItemsSetBase {
                 usage: ItemUsage({destroyOnUse: true, soulbound: false}),
                 requirements: ItemRequirements({requiredLevel: 0}),
                 metadata: ItemBaseMetadata({name: "tuna", symbol: "", decimals: 0}),
-                tagging: ItemTags({tags: foodTags}),
                 effects: foodEffects
             })
         );
@@ -120,9 +111,6 @@ contract ItemsSet0 is ItemsSetBase {
      * @dev Equipment items.
      */
     function _initEquipmentItems() internal {
-        string[] memory equipTags = new string[](1);
-        equipTags[0] = "equipment";
-
         _defineItem(
             ItemBase({
                 rarity: ItemBaseRarity.Common,
@@ -131,7 +119,6 @@ contract ItemsSet0 is ItemsSetBase {
                 usage: ItemUsage({destroyOnUse: true, soulbound: false}),
                 requirements: ItemRequirements({requiredLevel: 0}),
                 metadata: ItemBaseMetadata({name: "leather armor", symbol: "", decimals: 0}),
-                tagging: ItemTags({tags: equipTags}),
                 effects: new Effect[](0)
             })
         );
@@ -144,7 +131,6 @@ contract ItemsSet0 is ItemsSetBase {
                 usage: ItemUsage({destroyOnUse: true, soulbound: false}),
                 requirements: ItemRequirements({requiredLevel: 0}),
                 metadata: ItemBaseMetadata({name: "iron helmet", symbol: "", decimals: 0}),
-                tagging: ItemTags({tags: equipTags}),
                 effects: new Effect[](0)
             })
         );
@@ -157,7 +143,6 @@ contract ItemsSet0 is ItemsSetBase {
                 usage: ItemUsage({destroyOnUse: true, soulbound: false}),
                 requirements: ItemRequirements({requiredLevel: 0}),
                 metadata: ItemBaseMetadata({name: "travel boots", symbol: "", decimals: 0}),
-                tagging: ItemTags({tags: equipTags}),
                 effects: new Effect[](0)
             })
         );
@@ -167,9 +152,6 @@ contract ItemsSet0 is ItemsSetBase {
      * @dev Medicine items.
      */
     function _initMedecineItems() internal {
-        string[] memory medTags = new string[](1);
-        medTags[0] = "medicine";
-
         Effect[] memory healEffects = new Effect[](1);
         healEffects[0] = Effect({kind: EffectKind.Health, magnitude: 20});
 
@@ -181,7 +163,6 @@ contract ItemsSet0 is ItemsSetBase {
                 usage: ItemUsage({destroyOnUse: true, soulbound: false}),
                 requirements: ItemRequirements({requiredLevel: 0}),
                 metadata: ItemBaseMetadata({name: "small bandage", symbol: "", decimals: 0}),
-                tagging: ItemTags({tags: medTags}),
                 effects: healEffects
             })
         );
@@ -196,7 +177,6 @@ contract ItemsSet0 is ItemsSetBase {
                 usage: ItemUsage({destroyOnUse: true, soulbound: false}),
                 requirements: ItemRequirements({requiredLevel: 0}),
                 metadata: ItemBaseMetadata({name: "healing herb", symbol: "", decimals: 0}),
-                tagging: ItemTags({tags: medTags}),
                 effects: healEffects
             })
         );
@@ -210,7 +190,6 @@ contract ItemsSet0 is ItemsSetBase {
                 usage: ItemUsage({destroyOnUse: true, soulbound: false}),
                 requirements: ItemRequirements({requiredLevel: 0}),
                 metadata: ItemBaseMetadata({name: "first aid kit", symbol: "", decimals: 0}),
-                tagging: ItemTags({tags: medTags}),
                 effects: healEffects
             })
         );
@@ -231,7 +210,6 @@ contract ItemsSet0 is ItemsSetBase {
                 usage: ItemUsage({destroyOnUse: true, soulbound: false}),
                 requirements: ItemRequirements({requiredLevel: 0}),
                 metadata: ItemBaseMetadata({name: "ancient map", symbol: "", decimals: 0}),
-                tagging: ItemTags({tags: questTags}),
                 effects: new Effect[](0)
             })
         );
@@ -244,7 +222,6 @@ contract ItemsSet0 is ItemsSetBase {
                 usage: ItemUsage({destroyOnUse: true, soulbound: false}),
                 requirements: ItemRequirements({requiredLevel: 0}),
                 metadata: ItemBaseMetadata({name: "royal seal", symbol: "", decimals: 0}),
-                tagging: ItemTags({tags: questTags}),
                 effects: new Effect[](0)
             })
         );
@@ -265,7 +242,6 @@ contract ItemsSet0 is ItemsSetBase {
                 usage: ItemUsage({destroyOnUse: true, soulbound: false}),
                 requirements: ItemRequirements({requiredLevel: 0}),
                 metadata: ItemBaseMetadata({name: "wooden spear", symbol: "", decimals: 0}),
-                tagging: ItemTags({tags: weaponTags}),
                 effects: new Effect[](0)
             })
         );
@@ -278,7 +254,6 @@ contract ItemsSet0 is ItemsSetBase {
                 usage: ItemUsage({destroyOnUse: true, soulbound: false}),
                 requirements: ItemRequirements({requiredLevel: 0}),
                 metadata: ItemBaseMetadata({name: "bronze sword", symbol: "", decimals: 0}),
-                tagging: ItemTags({tags: weaponTags}),
                 effects: new Effect[](0)
             })
         );
@@ -291,7 +266,6 @@ contract ItemsSet0 is ItemsSetBase {
                 usage: ItemUsage({destroyOnUse: true, soulbound: false}),
                 requirements: ItemRequirements({requiredLevel: 0}),
                 metadata: ItemBaseMetadata({name: "longbow", symbol: "", decimals: 0}),
-                tagging: ItemTags({tags: weaponTags}),
                 effects: new Effect[](0)
             })
         );

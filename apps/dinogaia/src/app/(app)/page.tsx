@@ -1,8 +1,12 @@
 "use client";
 
 import {
+	actionModuleAbi,
+	actionModuleAddress,
 	emeraldErc20Abi,
 	emeraldErc20Address,
+	itemsSet0Abi,
+	itemsSet0Address,
 	jobsModuleAbi,
 	jobsModuleAddress,
 	shopModuleAbi,
@@ -24,7 +28,7 @@ import { encodeFunctionData } from "viem";
 import { timestampToAge } from "../../utils";
 
 const MyDino = (props: Dino) => {
-	const { dinoId, dinoAccount, dinoGenesis, dinoProfile, dinoStatus } = props;
+	const { dinoId, dinoAccount, dinoGenesis, dinoProfile } = props;
 
 	const { sendTxsFromDinoAccount } = useDinoActions({ dinoAccount });
 	const { jobOf } = jobsManager.useJob({ dinoId });
@@ -55,7 +59,8 @@ const MyDino = (props: Dino) => {
 				</Box>
 
 				<Box>
-					<Box>Health: {String(dinoStatus.health)}</Box>
+					<Box>Health: {String(dinoProfile.health)}</Box>
+					<Box>Weight: {String(dinoProfile.weight)}</Box>
 				</Box>
 
 				{e.items.map((item) => {
@@ -113,6 +118,35 @@ const MyDino = (props: Dino) => {
 					}}
 				>
 					<H5>Buy From Shop</H5>
+				</ButtonBase>
+
+				<ButtonBase
+					className="bg-white text-black"
+					onClick={async () => {
+						const chain = "31337";
+						await sendTxsFromDinoAccount([
+							{
+								target: itemsSet0Address[chain],
+								value: 0n,
+								data: encodeFunctionData({
+									abi: itemsSet0Abi,
+									functionName: "approve",
+									args: [actionModuleAddress[chain], 0n, 1n],
+								}),
+							},
+							{
+								target: actionModuleAddress[chain],
+								value: 0n,
+								data: encodeFunctionData({
+									abi: actionModuleAbi,
+									functionName: "consume",
+									args: [dinoId, itemsSet0Address[chain], 0n, 1n],
+								}),
+							},
+						]);
+					}}
+				>
+					<H5>Use Apple</H5>
 				</ButtonBase>
 			</Box>
 		</Box>

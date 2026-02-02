@@ -18,12 +18,11 @@ contract ActionModule is ModuleBase {
     /**
      * @dev Mappings.
      */
-    mapping(address => bool) public isItemSetAllowed;
 
     /**
      * @dev Events.
      */
-    event FoodConsumed(uint256 indexed dinoId, address indexed itemSet, uint256 indexed itemId, uint256 amount);
+    event FoodConsumed(uint256 indexed dinoId, uint256 indexed itemId, uint256 amount);
 
     /**
      * @dev Errors.
@@ -35,7 +34,7 @@ contract ActionModule is ModuleBase {
     /**
      * @dev Constructor.
      */
-    constructor(address owner, DinoFactory dinoFactory, DinoProfile _dinoProfile) ModuleBase(owner, dinoFactory) {
+    constructor(address _owner, DinoFactory _dinoFactory, DinoProfile _dinoProfile) ModuleBase(_owner, _dinoFactory) {
         dinoProfile = _dinoProfile;
     }
 
@@ -45,17 +44,8 @@ contract ActionModule is ModuleBase {
     /**
      * @dev
      */
-    function allowItemSet(address itemSet, bool allowed) external onlyRole(DEFAULT_ADMIN_ROLE) {
-        if (itemSet == address(0)) revert ZeroAddress();
-        isItemSetAllowed[itemSet] = allowed;
-    }
-
-    /**
-     * @dev
-     */
     function consume(uint256 dinoId, address itemSet, uint256 itemId, uint256 amount) external onlyDinoAccount(dinoId) {
         if (amount == 0) revert NoEffect();
-        if (!isItemSetAllowed[itemSet]) revert ItemSetNotAllowed();
 
         ItemsSetBase set = ItemsSetBase(itemSet);
         ItemsSetBase.ItemBase memory meta = set.getItem(itemId);
@@ -71,17 +61,18 @@ contract ActionModule is ModuleBase {
             } else if (eff.kind == ItemsSetBase.EffectKind.Health) {
                 if (eff.magnitude > 0) {
                     dinoProfile.addHealth(dinoId, uint256(eff.magnitude) * amount);
-                } else if (eff.magnitude < 0) {
-                    // negative health effects could be added later
-                    dinoProfile.addHealth(dinoId, 0); // no-op placeholder
+                } else {
+                    revert NoEffect();
                 }
             } else if (eff.kind == ItemsSetBase.EffectKind.ClearHunger) {
                 dinoProfile.setHungry(dinoId, false);
             } else if (eff.kind == ItemsSetBase.EffectKind.ClearThirst) {
-                // thirst not modeled yet; ignore
+                dinoProfile.setThirsty(dinoId, false);
+            } else {
+                revert NoEffect();
             }
         }
 
-        emit FoodConsumed(dinoId, itemSet, itemId, amount);
+        emit FoodConsumed(dinoId, itemId, amount);
     }
 }

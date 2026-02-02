@@ -33,7 +33,12 @@ abstract contract ItemsSetBase is ERC6909Metadata, ERC6909TokenSupply, AccessCon
         Equipment,
         Resource,
         Quest,
-        Artifact
+        Artifact,
+        Currency,
+        Container,
+        Key,
+        Blueprint,
+        Cosmetic
     }
 
     /**
@@ -88,13 +93,6 @@ abstract contract ItemsSetBase is ERC6909Metadata, ERC6909TokenSupply, AccessCon
     }
 
     /**
-     * @dev Struct ItemTags.
-     */
-    struct ItemTags {
-        string[] tags;
-    }
-
-    /**
      * @dev Struct ItemBase.
      */
     struct ItemBase {
@@ -104,7 +102,6 @@ abstract contract ItemsSetBase is ERC6909Metadata, ERC6909TokenSupply, AccessCon
         ItemUsage usage;
         ItemRequirements requirements;
         ItemBaseMetadata metadata;
-        ItemTags tagging;
         Effect[] effects;
     }
 
@@ -131,9 +128,16 @@ abstract contract ItemsSetBase is ERC6909Metadata, ERC6909TokenSupply, AccessCon
     /**
      * @dev Constructor.
      */
-    constructor(address owner) {
-        _grantRole(DEFAULT_ADMIN_ROLE, owner);
-        _grantRole(MINTER_ROLE, owner);
+    constructor(address _owner) {
+        /**
+         * @dev
+         */
+        _grantRole(DEFAULT_ADMIN_ROLE, _owner);
+
+        /**
+         * @dev
+         */
+        _grantRole(MINTER_ROLE, _owner);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -144,6 +148,13 @@ abstract contract ItemsSetBase is ERC6909Metadata, ERC6909TokenSupply, AccessCon
      */
     function mint(address _to, uint256 _id, uint256 _amount) external onlyRole(MINTER_ROLE) {
         _mint(_to, _id, _amount);
+    }
+
+    /**
+     * @dev
+     */
+    function burn(address _to, uint256 _id, uint256 _amount) external onlyRole(MINTER_ROLE) {
+        _burn(_to, _id, _amount);
     }
 
     /**
