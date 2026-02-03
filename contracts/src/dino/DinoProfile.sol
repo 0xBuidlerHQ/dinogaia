@@ -24,7 +24,7 @@ contract DinoProfile is AccessControl {
         //
         uint256 health;
         //
-        bool hungry;
+        bool hunger;
         bool thirsty;
         //
         uint256 weight;
@@ -77,13 +77,13 @@ contract DinoProfile is AccessControl {
      */
     function initialize(uint256 _dinoId) external onlyRole(FACTORY_ROLE) {
         profileOf[_dinoId] =
-            Profile({alive: true, health: 100, hungry: true, weight: 1, thirsty: true, level: 1, xp: 0});
+            Profile({alive: true, health: 100, hunger: true, weight: 1, thirsty: true, level: 1, xp: 0});
 
         emit InitializedProfile({dinoId: _dinoId});
     }
 
-    function setHungry(uint256 _dinoId, bool _hungry) external onlyRole(STATUS_ROLE) {
-        profileOf[_dinoId].hungry = _hungry;
+    function setHunger(uint256 _dinoId, bool _hunger) external onlyRole(STATUS_ROLE) {
+        profileOf[_dinoId].hunger = _hunger;
     }
 
     function setThirsty(uint256 _dinoId, bool _thirsty) external onlyRole(STATUS_ROLE) {

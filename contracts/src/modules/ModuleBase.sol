@@ -5,13 +5,22 @@ import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
 import {DinoFactory} from "@dino/DinoFactory.sol";
 
 /**
- * @dev Common base for modules that interact with Dino accounts.
+ * @dev
  */
 abstract contract ModuleBase is AccessControl {
+    /**
+     * @dev Immutables
+     */
     DinoFactory public immutable dinoFactory;
 
+    /**
+     * @dev Errors.
+     */
     error NotDinoAccount();
 
+    /**
+     * @dev Constructor.
+     */
     constructor(address _owner, DinoFactory _dinoFactory) {
         _grantRole(DEFAULT_ADMIN_ROLE, _owner);
         dinoFactory = _dinoFactory;
@@ -24,8 +33,16 @@ abstract contract ModuleBase is AccessControl {
      * @dev
      */
     modifier onlyDinoAccount(uint256 _dinoId) {
-        DinoFactory.Dino memory dino = dinoFactory.getDino(_dinoId);
-        if (address(dino.dinoAccount) != msg.sender) revert NotDinoAccount();
+        getAuthorizedDino(_dinoId);
+
         _;
+    }
+
+    /**
+     * @dev
+     */
+    function getAuthorizedDino(uint256 _dinoId) internal view returns (DinoFactory.Dino memory dino) {
+        dino = dinoFactory.getDino(_dinoId);
+        if (address(dino.dinoAccount) != msg.sender) revert NotDinoAccount();
     }
 }

@@ -30,9 +30,12 @@ abstract contract ItemsSetBase is ERC6909Metadata, ERC6909TokenSupply, AccessCon
      */
     enum ItemBaseType {
         Consumable,
+        Habitat,
+        Weapon,
         Equipment,
-        Resource,
         Quest,
+        //
+        Resource,
         Artifact,
         Currency,
         Container,
@@ -48,7 +51,10 @@ abstract contract ItemsSetBase is ERC6909Metadata, ERC6909TokenSupply, AccessCon
         Weight,
         Health,
         ClearHunger,
-        ClearThirst
+        ClearThirst,
+        SecurityBonus,
+        HygieneBonus,
+        ComfortBonus
     }
 
     /**

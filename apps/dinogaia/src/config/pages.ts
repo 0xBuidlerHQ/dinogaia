@@ -1,9 +1,9 @@
 const PAGES = {
-	homapage: "/",
-
+	homepage: "/",
+	cave: "/cave",
+	shop: "/shop",
+	//
 	myDino: "/my-dino",
-	myBase: "/my-base",
-
 	quests: "/quests",
 	hunt: "/hunt",
 	casino: "/casino",
@@ -13,8 +13,6 @@ const PAGES = {
 	bank: "/bank",
 
 	ranking: "/ranking",
-
-	shop: "/shop",
 } as const;
 const allPages = Object.values(PAGES);
 

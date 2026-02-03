@@ -1,8 +1,8 @@
 "use client";
 
 import {
-	actionModuleAbi,
-	actionModuleAddress,
+	caveModuleAbi,
+	caveModuleAddress,
 	emeraldErc20Abi,
 	emeraldErc20Address,
 	itemsSet0Abi,
@@ -23,11 +23,14 @@ import { EmeraldERC20 } from "@features/dinos/hooks/useEmeraldERC20";
 import { jobsManager } from "@features/dinos/hooks/useJobsManager";
 import { SpeciesRegistry } from "@features/dinos/hooks/useSpeciesRegistry";
 import { useItems } from "@features/items/useItems";
+import { useStore } from "@stores/useStore";
 import React from "react";
 import { encodeFunctionData } from "viem";
 import { timestampToAge } from "../../utils";
 
-const MyDino = (props: Dino) => {
+const chain = "31337";
+
+const ActiveDino = (props: Dino) => {
 	const { dinoId, dinoAccount, dinoGenesis, dinoProfile } = props;
 
 	const { sendTxsFromDinoAccount } = useDinoActions({ dinoAccount });
@@ -39,6 +42,7 @@ const MyDino = (props: Dino) => {
 	const { species } = SpeciesRegistry.useSpecies({ speciesId: dinoGenesis.speciesId });
 
 	const e = useItems({ owner: dinoAccount });
+	// const { cave, equipped } = useCave({ dinoId: BigInt(dinoId) });
 
 	const a = timestampToAge(dinoGenesis.birthTimestamp);
 	return (
@@ -60,17 +64,71 @@ const MyDino = (props: Dino) => {
 
 				<Box>
 					<Box>Health: {String(dinoProfile.health)}</Box>
+					<Box>Level: {String(dinoProfile.level)}</Box>
+					<Box>Xp: {String(dinoProfile.xp)}</Box>
 					<Box>Weight: {String(dinoProfile.weight)}</Box>
 				</Box>
 
-				{e.items.map((item) => {
+				<Box className="flex flex-col gap-1">
+					<H6 className="font-semibold">Cave</H6>
+					{/* <Box className="text-sm">Cleanliness: {cave?.cleanliness?.toString() ?? "—"} / 100</Box>
+					<Box className="text-sm">Security: {cave?.security?.toString() ?? "—"}</Box>
+					<Box className="text-sm">Hygiene: {cave?.hygiene?.toString() ?? "—"}</Box>
+					<Box className="text-sm">Comfort: {cave?.comfort?.toString() ?? "—"}</Box> */}
+					{/* {caveModuleAddress[chain] && (
+						<ButtonBase
+							className="bg-white text-black mt-1"
+							onClick={async () => {
+								await sendTxsFromDinoAccount([
+									{
+										target: caveModuleAddress[chain],
+										value: 0n,
+										data: encodeFunctionData({
+											abi: caveModuleAbi,
+											functionName: "clean",
+											args: [BigInt(dinoId)],
+										}),
+									},
+								]);
+							}}
+						>
+							Nettoyer la grotte
+						</ButtonBase>
+					)} */}
+				</Box>
+
+				{/* {e.items.map((item) => {
+					const isEq = equipped.has(Number(item.id));
 					return (
-						<Box key={item.id}>
-							<Box>{item.name}</Box>
-							<Box>{String(item.balance)}</Box>
+						<Box key={item.id} className="border border-dim p-1">
+							<Box className="flex justify-between">
+								<span>{item.name}</span>
+								<span>{String(item.balance)}</span>
+							</Box>
+							{caveModuleAddress[chain] && (
+								<ButtonBase
+									className="bg-white text-black mt-1"
+									disabled={isEq}
+									onClick={async () => {
+										await sendTxsFromDinoAccount([
+											{
+												target: caveModuleAddress[chain],
+												value: 0n,
+												data: encodeFunctionData({
+													abi: caveModuleAbi,
+													functionName: "install",
+													args: [BigInt(dinoId), item.id],
+												}),
+											},
+										]);
+									}}
+								>
+									{isEq ? "Équipé" : "Installer"}
+								</ButtonBase>
+							)}
 						</Box>
 					);
-				})}
+				})} */}
 
 				<ButtonBase
 					className="bg-white text-black"
@@ -131,15 +189,15 @@ const MyDino = (props: Dino) => {
 								data: encodeFunctionData({
 									abi: itemsSet0Abi,
 									functionName: "approve",
-									args: [actionModuleAddress[chain], 0n, 1n],
+									args: [caveModuleAddress[chain], 0n, 1n],
 								}),
 							},
 							{
-								target: actionModuleAddress[chain],
+								target: caveModuleAddress[chain],
 								value: 0n,
 								data: encodeFunctionData({
-									abi: actionModuleAbi,
-									functionName: "consume",
+									abi: caveModuleAbi,
+									functionName: "useConsumable",
 									args: [dinoId, itemsSet0Address[chain], 0n, 1n],
 								}),
 							},
@@ -149,18 +207,6 @@ const MyDino = (props: Dino) => {
 					<H5>Use Apple</H5>
 				</ButtonBase>
 			</Box>
-		</Box>
-	);
-};
-
-const MyDinos = () => {
-	const { dinosOfOwner } = DinoFactory.useDinoFactory();
-
-	return (
-		<Box className="flex gap-2">
-			{dinosOfOwner.data?.map((dino) => (
-				<MyDino key={dino.dinoId} {...dino} />
-			))}
 		</Box>
 	);
 };
@@ -230,10 +276,18 @@ const MintButton = () => {
 };
 
 const Page = () => {
+	const { dinosOfOwner } = DinoFactory.useDinoFactory();
+	const { activeDinoId } = useStore();
+	const activeDino = dinosOfOwner.data?.find((d) => d.dinoId === activeDinoId);
+
 	return (
 		<Container className="pt-10">
 			<Box>
-				<MyDinos />
+				{activeDino ? (
+					<ActiveDino {...activeDino} />
+				) : (
+					<Box className="text-sm text-gray-500">Select a dino to view details.</Box>
+				)}
 				<MintButton />
 			</Box>
 		</Container>

@@ -1,3 +1,5 @@
+"use client";
+
 import {
 	type dinoAccountAbi,
 	emeraldErc20Abi,
@@ -27,7 +29,7 @@ const transferEmeraldData = (args: [Address, bigint]) =>
 const useDinoActions = (props: Props) => {
 	const { dinoAccount } = props;
 
-	const { writeContractAsync: executeBatch } = useWriteDinoAccountExecuteBatch();
+	const { writeContractAsync: executeBatch } = useWriteDinoAccountExecuteBatch({});
 
 	const sendTxsFromDinoAccount = async (calls: Call[]) => {
 		await executeBatch({

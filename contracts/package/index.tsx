@@ -143,13 +143,10 @@ export const accessControlAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ActionModule
+// CaveBase
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/**
- *
- */
-export const actionModuleAbi = [
+export const caveBaseAbi = [
   {
     type: 'constructor',
     inputs: [
@@ -160,10 +157,21 @@ export const actionModuleAbi = [
         type: 'address',
       },
       {
+        name: '_emerald',
+        internalType: 'contract EmeraldERC20',
+        type: 'address',
+      },
+      {
+        name: '_items',
+        internalType: 'contract ItemsSetBase',
+        type: 'address',
+      },
+      {
         name: '_dinoProfile',
         internalType: 'contract DinoProfile',
         type: 'address',
       },
+      { name: '_treasury', internalType: 'address', type: 'address' },
     ],
     stateMutability: 'nonpayable',
   },
@@ -173,18 +181,6 @@ export const actionModuleAbi = [
     name: 'DEFAULT_ADMIN_ROLE',
     outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
     stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: 'dinoId', internalType: 'uint256', type: 'uint256' },
-      { name: 'itemSet', internalType: 'address', type: 'address' },
-      { name: 'itemId', internalType: 'uint256', type: 'uint256' },
-      { name: 'amount', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'consume',
-    outputs: [],
-    stateMutability: 'nonpayable',
   },
   {
     type: 'function',
@@ -201,6 +197,15 @@ export const actionModuleAbi = [
     name: 'dinoProfile',
     outputs: [
       { name: '', internalType: 'contract DinoProfile', type: 'address' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'emerald',
+    outputs: [
+      { name: '', internalType: 'contract EmeraldERC20', type: 'address' },
     ],
     stateMutability: 'view',
   },
@@ -233,6 +238,15 @@ export const actionModuleAbi = [
   },
   {
     type: 'function',
+    inputs: [],
+    name: 'items',
+    outputs: [
+      { name: '', internalType: 'contract ItemsSetBase', type: 'address' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
     inputs: [
       { name: 'role', internalType: 'bytes32', type: 'bytes32' },
       { name: 'callerConfirmation', internalType: 'address', type: 'address' },
@@ -259,29 +273,11 @@ export const actionModuleAbi = [
     stateMutability: 'view',
   },
   {
-    type: 'event',
-    anonymous: false,
-    inputs: [
-      {
-        name: 'dinoId',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: true,
-      },
-      {
-        name: 'itemId',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: true,
-      },
-      {
-        name: 'amount',
-        internalType: 'uint256',
-        type: 'uint256',
-        indexed: false,
-      },
-    ],
-    name: 'FoodConsumed',
+    type: 'function',
+    inputs: [],
+    name: 'treasury',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
   },
   {
     type: 'event',
@@ -352,25 +348,471 @@ export const actionModuleAbi = [
     ],
     name: 'AccessControlUnauthorizedAccount',
   },
-  { type: 'error', inputs: [], name: 'ItemSetNotAllowed' },
+  { type: 'error', inputs: [], name: 'NotDinoAccount' },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// CaveConsumeModule
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const caveConsumeModuleAbi = [
+  {
+    type: 'function',
+    inputs: [],
+    name: 'DEFAULT_ADMIN_ROLE',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'dinoFactory',
+    outputs: [
+      { name: '', internalType: 'contract DinoFactory', type: 'address' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'dinoProfile',
+    outputs: [
+      { name: '', internalType: 'contract DinoProfile', type: 'address' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'emerald',
+    outputs: [
+      { name: '', internalType: 'contract EmeraldERC20', type: 'address' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'role', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'getRoleAdmin',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'grantRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'hasRole',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'items',
+    outputs: [
+      { name: '', internalType: 'contract ItemsSetBase', type: 'address' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'callerConfirmation', internalType: 'address', type: 'address' },
+    ],
+    name: 'renounceRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'revokeRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
+    name: 'supportsInterface',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'treasury',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_dinoId', internalType: 'uint256', type: 'uint256' },
+      {
+        name: '_itemsSet',
+        internalType: 'contract ItemsSetBase',
+        type: 'address',
+      },
+      { name: '_itemId', internalType: 'uint256', type: 'uint256' },
+      { name: '_amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'useConsumable',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'previousAdminRole',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: true,
+      },
+      {
+        name: 'newAdminRole',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: true,
+      },
+    ],
+    name: 'RoleAdminChanged',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'RoleGranted',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'RoleRevoked',
+  },
+  { type: 'error', inputs: [], name: 'AccessControlBadConfirmation' },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'account', internalType: 'address', type: 'address' },
+      { name: 'neededRole', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'AccessControlUnauthorizedAccount',
+  },
+  { type: 'error', inputs: [], name: 'InvalidItemType' },
   { type: 'error', inputs: [], name: 'NoEffect' },
   { type: 'error', inputs: [], name: 'NotDinoAccount' },
-  { type: 'error', inputs: [], name: 'ZeroAddress' },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// CaveHabitatModule
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const caveHabitatModuleAbi = [
+  {
+    type: 'function',
+    inputs: [
+      { name: 'dinoId', internalType: 'uint256', type: 'uint256' },
+      { name: 'itemId', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'isEquipped',
+    outputs: [{ name: 'equipped', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  { type: 'error', inputs: [], name: 'AlreadyEquipped' },
+  { type: 'error', inputs: [], name: 'InvalidItemType' },
+  { type: 'error', inputs: [], name: 'NotEquipped' },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// CaveModule
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ *
+ */
+export const caveModuleAbi = [
+  {
+    type: 'constructor',
+    inputs: [
+      { name: '_owner', internalType: 'address', type: 'address' },
+      {
+        name: '_dinoFactory',
+        internalType: 'contract DinoFactory',
+        type: 'address',
+      },
+      {
+        name: '_emerald',
+        internalType: 'contract EmeraldERC20',
+        type: 'address',
+      },
+      {
+        name: '_items',
+        internalType: 'contract ItemsSetBase',
+        type: 'address',
+      },
+      {
+        name: '_dinoProfile',
+        internalType: 'contract DinoProfile',
+        type: 'address',
+      },
+      { name: '_treasury', internalType: 'address', type: 'address' },
+    ],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'DEFAULT_ADMIN_ROLE',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'dinoFactory',
+    outputs: [
+      { name: '', internalType: 'contract DinoFactory', type: 'address' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'dinoProfile',
+    outputs: [
+      { name: '', internalType: 'contract DinoProfile', type: 'address' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'emerald',
+    outputs: [
+      { name: '', internalType: 'contract EmeraldERC20', type: 'address' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'role', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'getRoleAdmin',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'grantRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'hasRole',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'items',
+    outputs: [
+      { name: '', internalType: 'contract ItemsSetBase', type: 'address' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'callerConfirmation', internalType: 'address', type: 'address' },
+    ],
+    name: 'renounceRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'revokeRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
+    name: 'supportsInterface',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'treasury',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_dinoId', internalType: 'uint256', type: 'uint256' },
+      {
+        name: '_itemsSet',
+        internalType: 'contract ItemsSetBase',
+        type: 'address',
+      },
+      { name: '_itemId', internalType: 'uint256', type: 'uint256' },
+      { name: '_amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'useConsumable',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'previousAdminRole',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: true,
+      },
+      {
+        name: 'newAdminRole',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: true,
+      },
+    ],
+    name: 'RoleAdminChanged',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'RoleGranted',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'RoleRevoked',
+  },
+  { type: 'error', inputs: [], name: 'AccessControlBadConfirmation' },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'account', internalType: 'address', type: 'address' },
+      { name: 'neededRole', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'AccessControlUnauthorizedAccount',
+  },
+  { type: 'error', inputs: [], name: 'InvalidItemType' },
+  { type: 'error', inputs: [], name: 'NoEffect' },
+  { type: 'error', inputs: [], name: 'NotDinoAccount' },
 ] as const
 
 /**
  *
  */
-export const actionModuleAddress = {
-  31337: '0x27E9a09DD77d32C312f61031bF4f7a57618104e4',
+export const caveModuleAddress = {
+  31337: '0x95A68B6C771045Fc3C82C7bd05C2b5B2e1703065',
 } as const
 
 /**
  *
  */
-export const actionModuleConfig = {
-  address: actionModuleAddress,
-  abi: actionModuleAbi,
+export const caveModuleConfig = {
+  address: caveModuleAddress,
+  abi: caveModuleAbi,
 } as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -992,7 +1434,7 @@ export const dinoFactoryAbi = [
             components: [
               { name: 'alive', internalType: 'bool', type: 'bool' },
               { name: 'health', internalType: 'uint256', type: 'uint256' },
-              { name: 'hungry', internalType: 'bool', type: 'bool' },
+              { name: 'hunger', internalType: 'bool', type: 'bool' },
               { name: 'thirsty', internalType: 'bool', type: 'bool' },
               { name: 'weight', internalType: 'uint256', type: 'uint256' },
               { name: 'level', internalType: 'uint256', type: 'uint256' },
@@ -1042,7 +1484,7 @@ export const dinoFactoryAbi = [
             components: [
               { name: 'alive', internalType: 'bool', type: 'bool' },
               { name: 'health', internalType: 'uint256', type: 'uint256' },
-              { name: 'hungry', internalType: 'bool', type: 'bool' },
+              { name: 'hunger', internalType: 'bool', type: 'bool' },
               { name: 'thirsty', internalType: 'bool', type: 'bool' },
               { name: 'weight', internalType: 'uint256', type: 'uint256' },
               { name: 'level', internalType: 'uint256', type: 'uint256' },
@@ -1109,7 +1551,7 @@ export const dinoFactoryAbi = [
  *
  */
 export const dinoFactoryAddress = {
-  31337: '0xa837A43F8abc6821b4900284DFad16CC0B05E3d9',
+  31337: '0x25eadD7220AED19a655f515a35c419615715AA87',
 } as const
 
 /**
@@ -1444,7 +1886,7 @@ export const dinoProfileAbi = [
         components: [
           { name: 'alive', internalType: 'bool', type: 'bool' },
           { name: 'health', internalType: 'uint256', type: 'uint256' },
-          { name: 'hungry', internalType: 'bool', type: 'bool' },
+          { name: 'hunger', internalType: 'bool', type: 'bool' },
           { name: 'thirsty', internalType: 'bool', type: 'bool' },
           { name: 'weight', internalType: 'uint256', type: 'uint256' },
           { name: 'level', internalType: 'uint256', type: 'uint256' },
@@ -1495,7 +1937,7 @@ export const dinoProfileAbi = [
     outputs: [
       { name: 'alive', internalType: 'bool', type: 'bool' },
       { name: 'health', internalType: 'uint256', type: 'uint256' },
-      { name: 'hungry', internalType: 'bool', type: 'bool' },
+      { name: 'hunger', internalType: 'bool', type: 'bool' },
       { name: 'thirsty', internalType: 'bool', type: 'bool' },
       { name: 'weight', internalType: 'uint256', type: 'uint256' },
       { name: 'level', internalType: 'uint256', type: 'uint256' },
@@ -1527,9 +1969,9 @@ export const dinoProfileAbi = [
     type: 'function',
     inputs: [
       { name: '_dinoId', internalType: 'uint256', type: 'uint256' },
-      { name: '_hungry', internalType: 'bool', type: 'bool' },
+      { name: '_hunger', internalType: 'bool', type: 'bool' },
     ],
-    name: 'setHungry',
+    name: 'setHunger',
     outputs: [],
     stateMutability: 'nonpayable',
   },
@@ -1638,7 +2080,7 @@ export const dinoProfileAbi = [
  *
  */
 export const dinoProfileAddress = {
-  31337: '0x7ea1847A1e413832D43971441DC9f1e2F49f45ff',
+  31337: '0x8Babe39DcB647364f63361910534B80907c9514a',
 } as const
 
 /**
@@ -5682,7 +6124,7 @@ export const itemsSet0Abi = [
  *
  */
 export const itemsSet0Address = {
-  31337: '0xb5D8ABcD9477a431d58F9063724fa5cf48160aD0',
+  31337: '0x2f72dfeb5028CC8F0770493fE1c8b85604deb638',
 } as const
 
 /**
@@ -6574,7 +7016,7 @@ export const jobsModuleAbi = [
  *
  */
 export const jobsModuleAddress = {
-  31337: '0x8E2C219A06692f7B68F248D8411D1cB8C947098f',
+  31337: '0x8DF9D96bac6768ebAD5d22550fF73e9bF2A2be07',
 } as const
 
 /**
@@ -7346,7 +7788,7 @@ export const shopModuleAbi = [
  *
  */
 export const shopModuleAddress = {
-  31337: '0x720c5BC5B5cED376E81EABA8D50eC6999F2b41c8',
+  31337: '0xf000Aa1bB6F1138d1120Eb2B4698598868781705',
 } as const
 
 /**
@@ -7901,259 +8343,681 @@ export const useWatchAccessControlRoleRevokedEvent =
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link actionModuleAbi}__
- *
- *
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveBaseAbi}__
  */
-export const useReadActionModule = /*#__PURE__*/ createUseReadContract({
-  abi: actionModuleAbi,
-  address: actionModuleAddress,
+export const useReadCaveBase = /*#__PURE__*/ createUseReadContract({
+  abi: caveBaseAbi,
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
- *
- *
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveBaseAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
  */
-export const useReadActionModuleDefaultAdminRole =
+export const useReadCaveBaseDefaultAdminRole =
   /*#__PURE__*/ createUseReadContract({
-    abi: actionModuleAbi,
-    address: actionModuleAddress,
+    abi: caveBaseAbi,
     functionName: 'DEFAULT_ADMIN_ROLE',
   })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"dinoFactory"`
- *
- *
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveBaseAbi}__ and `functionName` set to `"dinoFactory"`
  */
-export const useReadActionModuleDinoFactory =
-  /*#__PURE__*/ createUseReadContract({
-    abi: actionModuleAbi,
-    address: actionModuleAddress,
-    functionName: 'dinoFactory',
-  })
+export const useReadCaveBaseDinoFactory = /*#__PURE__*/ createUseReadContract({
+  abi: caveBaseAbi,
+  functionName: 'dinoFactory',
+})
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"dinoProfile"`
- *
- *
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveBaseAbi}__ and `functionName` set to `"dinoProfile"`
  */
-export const useReadActionModuleDinoProfile =
-  /*#__PURE__*/ createUseReadContract({
-    abi: actionModuleAbi,
-    address: actionModuleAddress,
-    functionName: 'dinoProfile',
-  })
+export const useReadCaveBaseDinoProfile = /*#__PURE__*/ createUseReadContract({
+  abi: caveBaseAbi,
+  functionName: 'dinoProfile',
+})
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"getRoleAdmin"`
- *
- *
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveBaseAbi}__ and `functionName` set to `"emerald"`
  */
-export const useReadActionModuleGetRoleAdmin =
-  /*#__PURE__*/ createUseReadContract({
-    abi: actionModuleAbi,
-    address: actionModuleAddress,
-    functionName: 'getRoleAdmin',
-  })
+export const useReadCaveBaseEmerald = /*#__PURE__*/ createUseReadContract({
+  abi: caveBaseAbi,
+  functionName: 'emerald',
+})
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"hasRole"`
- *
- *
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveBaseAbi}__ and `functionName` set to `"getRoleAdmin"`
  */
-export const useReadActionModuleHasRole = /*#__PURE__*/ createUseReadContract({
-  abi: actionModuleAbi,
-  address: actionModuleAddress,
+export const useReadCaveBaseGetRoleAdmin = /*#__PURE__*/ createUseReadContract({
+  abi: caveBaseAbi,
+  functionName: 'getRoleAdmin',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveBaseAbi}__ and `functionName` set to `"hasRole"`
+ */
+export const useReadCaveBaseHasRole = /*#__PURE__*/ createUseReadContract({
+  abi: caveBaseAbi,
   functionName: 'hasRole',
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"supportsInterface"`
- *
- *
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveBaseAbi}__ and `functionName` set to `"items"`
  */
-export const useReadActionModuleSupportsInterface =
+export const useReadCaveBaseItems = /*#__PURE__*/ createUseReadContract({
+  abi: caveBaseAbi,
+  functionName: 'items',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveBaseAbi}__ and `functionName` set to `"supportsInterface"`
+ */
+export const useReadCaveBaseSupportsInterface =
   /*#__PURE__*/ createUseReadContract({
-    abi: actionModuleAbi,
-    address: actionModuleAddress,
+    abi: caveBaseAbi,
     functionName: 'supportsInterface',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link actionModuleAbi}__
- *
- *
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveBaseAbi}__ and `functionName` set to `"treasury"`
  */
-export const useWriteActionModule = /*#__PURE__*/ createUseWriteContract({
-  abi: actionModuleAbi,
-  address: actionModuleAddress,
+export const useReadCaveBaseTreasury = /*#__PURE__*/ createUseReadContract({
+  abi: caveBaseAbi,
+  functionName: 'treasury',
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"consume"`
- *
- *
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveBaseAbi}__
  */
-export const useWriteActionModuleConsume = /*#__PURE__*/ createUseWriteContract(
-  {
-    abi: actionModuleAbi,
-    address: actionModuleAddress,
-    functionName: 'consume',
-  },
-)
+export const useWriteCaveBase = /*#__PURE__*/ createUseWriteContract({
+  abi: caveBaseAbi,
+})
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"grantRole"`
- *
- *
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveBaseAbi}__ and `functionName` set to `"grantRole"`
  */
-export const useWriteActionModuleGrantRole =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: actionModuleAbi,
-    address: actionModuleAddress,
-    functionName: 'grantRole',
-  })
+export const useWriteCaveBaseGrantRole = /*#__PURE__*/ createUseWriteContract({
+  abi: caveBaseAbi,
+  functionName: 'grantRole',
+})
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"renounceRole"`
- *
- *
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveBaseAbi}__ and `functionName` set to `"renounceRole"`
  */
-export const useWriteActionModuleRenounceRole =
+export const useWriteCaveBaseRenounceRole =
   /*#__PURE__*/ createUseWriteContract({
-    abi: actionModuleAbi,
-    address: actionModuleAddress,
+    abi: caveBaseAbi,
     functionName: 'renounceRole',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"revokeRole"`
- *
- *
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveBaseAbi}__ and `functionName` set to `"revokeRole"`
  */
-export const useWriteActionModuleRevokeRole =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: actionModuleAbi,
-    address: actionModuleAddress,
-    functionName: 'revokeRole',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link actionModuleAbi}__
- *
- *
- */
-export const useSimulateActionModule = /*#__PURE__*/ createUseSimulateContract({
-  abi: actionModuleAbi,
-  address: actionModuleAddress,
+export const useWriteCaveBaseRevokeRole = /*#__PURE__*/ createUseWriteContract({
+  abi: caveBaseAbi,
+  functionName: 'revokeRole',
 })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"consume"`
- *
- *
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveBaseAbi}__
  */
-export const useSimulateActionModuleConsume =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: actionModuleAbi,
-    address: actionModuleAddress,
-    functionName: 'consume',
-  })
+export const useSimulateCaveBase = /*#__PURE__*/ createUseSimulateContract({
+  abi: caveBaseAbi,
+})
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"grantRole"`
- *
- *
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveBaseAbi}__ and `functionName` set to `"grantRole"`
  */
-export const useSimulateActionModuleGrantRole =
+export const useSimulateCaveBaseGrantRole =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: actionModuleAbi,
-    address: actionModuleAddress,
+    abi: caveBaseAbi,
     functionName: 'grantRole',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"renounceRole"`
- *
- *
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveBaseAbi}__ and `functionName` set to `"renounceRole"`
  */
-export const useSimulateActionModuleRenounceRole =
+export const useSimulateCaveBaseRenounceRole =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: actionModuleAbi,
-    address: actionModuleAddress,
+    abi: caveBaseAbi,
     functionName: 'renounceRole',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link actionModuleAbi}__ and `functionName` set to `"revokeRole"`
- *
- *
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveBaseAbi}__ and `functionName` set to `"revokeRole"`
  */
-export const useSimulateActionModuleRevokeRole =
+export const useSimulateCaveBaseRevokeRole =
   /*#__PURE__*/ createUseSimulateContract({
-    abi: actionModuleAbi,
-    address: actionModuleAddress,
+    abi: caveBaseAbi,
     functionName: 'revokeRole',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link actionModuleAbi}__
- *
- *
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link caveBaseAbi}__
  */
-export const useWatchActionModuleEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: actionModuleAbi,
-    address: actionModuleAddress,
-  })
+export const useWatchCaveBaseEvent = /*#__PURE__*/ createUseWatchContractEvent({
+  abi: caveBaseAbi,
+})
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link actionModuleAbi}__ and `eventName` set to `"FoodConsumed"`
- *
- *
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link caveBaseAbi}__ and `eventName` set to `"RoleAdminChanged"`
  */
-export const useWatchActionModuleFoodConsumedEvent =
+export const useWatchCaveBaseRoleAdminChangedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: actionModuleAbi,
-    address: actionModuleAddress,
-    eventName: 'FoodConsumed',
-  })
-
-/**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link actionModuleAbi}__ and `eventName` set to `"RoleAdminChanged"`
- *
- *
- */
-export const useWatchActionModuleRoleAdminChangedEvent =
-  /*#__PURE__*/ createUseWatchContractEvent({
-    abi: actionModuleAbi,
-    address: actionModuleAddress,
+    abi: caveBaseAbi,
     eventName: 'RoleAdminChanged',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link actionModuleAbi}__ and `eventName` set to `"RoleGranted"`
- *
- *
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link caveBaseAbi}__ and `eventName` set to `"RoleGranted"`
  */
-export const useWatchActionModuleRoleGrantedEvent =
+export const useWatchCaveBaseRoleGrantedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: actionModuleAbi,
-    address: actionModuleAddress,
+    abi: caveBaseAbi,
     eventName: 'RoleGranted',
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link actionModuleAbi}__ and `eventName` set to `"RoleRevoked"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link caveBaseAbi}__ and `eventName` set to `"RoleRevoked"`
+ */
+export const useWatchCaveBaseRoleRevokedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: caveBaseAbi,
+    eventName: 'RoleRevoked',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveConsumeModuleAbi}__
+ */
+export const useReadCaveConsumeModule = /*#__PURE__*/ createUseReadContract({
+  abi: caveConsumeModuleAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveConsumeModuleAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
+ */
+export const useReadCaveConsumeModuleDefaultAdminRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveConsumeModuleAbi,
+    functionName: 'DEFAULT_ADMIN_ROLE',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveConsumeModuleAbi}__ and `functionName` set to `"dinoFactory"`
+ */
+export const useReadCaveConsumeModuleDinoFactory =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveConsumeModuleAbi,
+    functionName: 'dinoFactory',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveConsumeModuleAbi}__ and `functionName` set to `"dinoProfile"`
+ */
+export const useReadCaveConsumeModuleDinoProfile =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveConsumeModuleAbi,
+    functionName: 'dinoProfile',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveConsumeModuleAbi}__ and `functionName` set to `"emerald"`
+ */
+export const useReadCaveConsumeModuleEmerald =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveConsumeModuleAbi,
+    functionName: 'emerald',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveConsumeModuleAbi}__ and `functionName` set to `"getRoleAdmin"`
+ */
+export const useReadCaveConsumeModuleGetRoleAdmin =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveConsumeModuleAbi,
+    functionName: 'getRoleAdmin',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveConsumeModuleAbi}__ and `functionName` set to `"hasRole"`
+ */
+export const useReadCaveConsumeModuleHasRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveConsumeModuleAbi,
+    functionName: 'hasRole',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveConsumeModuleAbi}__ and `functionName` set to `"items"`
+ */
+export const useReadCaveConsumeModuleItems =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveConsumeModuleAbi,
+    functionName: 'items',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveConsumeModuleAbi}__ and `functionName` set to `"supportsInterface"`
+ */
+export const useReadCaveConsumeModuleSupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveConsumeModuleAbi,
+    functionName: 'supportsInterface',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveConsumeModuleAbi}__ and `functionName` set to `"treasury"`
+ */
+export const useReadCaveConsumeModuleTreasury =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveConsumeModuleAbi,
+    functionName: 'treasury',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveConsumeModuleAbi}__
+ */
+export const useWriteCaveConsumeModule = /*#__PURE__*/ createUseWriteContract({
+  abi: caveConsumeModuleAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveConsumeModuleAbi}__ and `functionName` set to `"grantRole"`
+ */
+export const useWriteCaveConsumeModuleGrantRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: caveConsumeModuleAbi,
+    functionName: 'grantRole',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveConsumeModuleAbi}__ and `functionName` set to `"renounceRole"`
+ */
+export const useWriteCaveConsumeModuleRenounceRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: caveConsumeModuleAbi,
+    functionName: 'renounceRole',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveConsumeModuleAbi}__ and `functionName` set to `"revokeRole"`
+ */
+export const useWriteCaveConsumeModuleRevokeRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: caveConsumeModuleAbi,
+    functionName: 'revokeRole',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveConsumeModuleAbi}__ and `functionName` set to `"useConsumable"`
+ */
+export const useWriteCaveConsumeModuleUseConsumable =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: caveConsumeModuleAbi,
+    functionName: 'useConsumable',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveConsumeModuleAbi}__
+ */
+export const useSimulateCaveConsumeModule =
+  /*#__PURE__*/ createUseSimulateContract({ abi: caveConsumeModuleAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveConsumeModuleAbi}__ and `functionName` set to `"grantRole"`
+ */
+export const useSimulateCaveConsumeModuleGrantRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: caveConsumeModuleAbi,
+    functionName: 'grantRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveConsumeModuleAbi}__ and `functionName` set to `"renounceRole"`
+ */
+export const useSimulateCaveConsumeModuleRenounceRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: caveConsumeModuleAbi,
+    functionName: 'renounceRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveConsumeModuleAbi}__ and `functionName` set to `"revokeRole"`
+ */
+export const useSimulateCaveConsumeModuleRevokeRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: caveConsumeModuleAbi,
+    functionName: 'revokeRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveConsumeModuleAbi}__ and `functionName` set to `"useConsumable"`
+ */
+export const useSimulateCaveConsumeModuleUseConsumable =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: caveConsumeModuleAbi,
+    functionName: 'useConsumable',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link caveConsumeModuleAbi}__
+ */
+export const useWatchCaveConsumeModuleEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: caveConsumeModuleAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link caveConsumeModuleAbi}__ and `eventName` set to `"RoleAdminChanged"`
+ */
+export const useWatchCaveConsumeModuleRoleAdminChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: caveConsumeModuleAbi,
+    eventName: 'RoleAdminChanged',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link caveConsumeModuleAbi}__ and `eventName` set to `"RoleGranted"`
+ */
+export const useWatchCaveConsumeModuleRoleGrantedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: caveConsumeModuleAbi,
+    eventName: 'RoleGranted',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link caveConsumeModuleAbi}__ and `eventName` set to `"RoleRevoked"`
+ */
+export const useWatchCaveConsumeModuleRoleRevokedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: caveConsumeModuleAbi,
+    eventName: 'RoleRevoked',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__
+ */
+export const useReadCaveHabitatModule = /*#__PURE__*/ createUseReadContract({
+  abi: caveHabitatModuleAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `functionName` set to `"isEquipped"`
+ */
+export const useReadCaveHabitatModuleIsEquipped =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveHabitatModuleAbi,
+    functionName: 'isEquipped',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveModuleAbi}__
  *
  *
  */
-export const useWatchActionModuleRoleRevokedEvent =
+export const useReadCaveModule = /*#__PURE__*/ createUseReadContract({
+  abi: caveModuleAbi,
+  address: caveModuleAddress,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveModuleAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
+ *
+ *
+ */
+export const useReadCaveModuleDefaultAdminRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveModuleAbi,
+    address: caveModuleAddress,
+    functionName: 'DEFAULT_ADMIN_ROLE',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveModuleAbi}__ and `functionName` set to `"dinoFactory"`
+ *
+ *
+ */
+export const useReadCaveModuleDinoFactory = /*#__PURE__*/ createUseReadContract(
+  {
+    abi: caveModuleAbi,
+    address: caveModuleAddress,
+    functionName: 'dinoFactory',
+  },
+)
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveModuleAbi}__ and `functionName` set to `"dinoProfile"`
+ *
+ *
+ */
+export const useReadCaveModuleDinoProfile = /*#__PURE__*/ createUseReadContract(
+  {
+    abi: caveModuleAbi,
+    address: caveModuleAddress,
+    functionName: 'dinoProfile',
+  },
+)
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveModuleAbi}__ and `functionName` set to `"emerald"`
+ *
+ *
+ */
+export const useReadCaveModuleEmerald = /*#__PURE__*/ createUseReadContract({
+  abi: caveModuleAbi,
+  address: caveModuleAddress,
+  functionName: 'emerald',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveModuleAbi}__ and `functionName` set to `"getRoleAdmin"`
+ *
+ *
+ */
+export const useReadCaveModuleGetRoleAdmin =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveModuleAbi,
+    address: caveModuleAddress,
+    functionName: 'getRoleAdmin',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveModuleAbi}__ and `functionName` set to `"hasRole"`
+ *
+ *
+ */
+export const useReadCaveModuleHasRole = /*#__PURE__*/ createUseReadContract({
+  abi: caveModuleAbi,
+  address: caveModuleAddress,
+  functionName: 'hasRole',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveModuleAbi}__ and `functionName` set to `"items"`
+ *
+ *
+ */
+export const useReadCaveModuleItems = /*#__PURE__*/ createUseReadContract({
+  abi: caveModuleAbi,
+  address: caveModuleAddress,
+  functionName: 'items',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveModuleAbi}__ and `functionName` set to `"supportsInterface"`
+ *
+ *
+ */
+export const useReadCaveModuleSupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveModuleAbi,
+    address: caveModuleAddress,
+    functionName: 'supportsInterface',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveModuleAbi}__ and `functionName` set to `"treasury"`
+ *
+ *
+ */
+export const useReadCaveModuleTreasury = /*#__PURE__*/ createUseReadContract({
+  abi: caveModuleAbi,
+  address: caveModuleAddress,
+  functionName: 'treasury',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveModuleAbi}__
+ *
+ *
+ */
+export const useWriteCaveModule = /*#__PURE__*/ createUseWriteContract({
+  abi: caveModuleAbi,
+  address: caveModuleAddress,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveModuleAbi}__ and `functionName` set to `"grantRole"`
+ *
+ *
+ */
+export const useWriteCaveModuleGrantRole = /*#__PURE__*/ createUseWriteContract(
+  { abi: caveModuleAbi, address: caveModuleAddress, functionName: 'grantRole' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveModuleAbi}__ and `functionName` set to `"renounceRole"`
+ *
+ *
+ */
+export const useWriteCaveModuleRenounceRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: caveModuleAbi,
+    address: caveModuleAddress,
+    functionName: 'renounceRole',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveModuleAbi}__ and `functionName` set to `"revokeRole"`
+ *
+ *
+ */
+export const useWriteCaveModuleRevokeRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: caveModuleAbi,
+    address: caveModuleAddress,
+    functionName: 'revokeRole',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveModuleAbi}__ and `functionName` set to `"useConsumable"`
+ *
+ *
+ */
+export const useWriteCaveModuleUseConsumable =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: caveModuleAbi,
+    address: caveModuleAddress,
+    functionName: 'useConsumable',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveModuleAbi}__
+ *
+ *
+ */
+export const useSimulateCaveModule = /*#__PURE__*/ createUseSimulateContract({
+  abi: caveModuleAbi,
+  address: caveModuleAddress,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveModuleAbi}__ and `functionName` set to `"grantRole"`
+ *
+ *
+ */
+export const useSimulateCaveModuleGrantRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: caveModuleAbi,
+    address: caveModuleAddress,
+    functionName: 'grantRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveModuleAbi}__ and `functionName` set to `"renounceRole"`
+ *
+ *
+ */
+export const useSimulateCaveModuleRenounceRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: caveModuleAbi,
+    address: caveModuleAddress,
+    functionName: 'renounceRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveModuleAbi}__ and `functionName` set to `"revokeRole"`
+ *
+ *
+ */
+export const useSimulateCaveModuleRevokeRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: caveModuleAbi,
+    address: caveModuleAddress,
+    functionName: 'revokeRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveModuleAbi}__ and `functionName` set to `"useConsumable"`
+ *
+ *
+ */
+export const useSimulateCaveModuleUseConsumable =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: caveModuleAbi,
+    address: caveModuleAddress,
+    functionName: 'useConsumable',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link caveModuleAbi}__
+ *
+ *
+ */
+export const useWatchCaveModuleEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
-    abi: actionModuleAbi,
-    address: actionModuleAddress,
+    abi: caveModuleAbi,
+    address: caveModuleAddress,
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link caveModuleAbi}__ and `eventName` set to `"RoleAdminChanged"`
+ *
+ *
+ */
+export const useWatchCaveModuleRoleAdminChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: caveModuleAbi,
+    address: caveModuleAddress,
+    eventName: 'RoleAdminChanged',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link caveModuleAbi}__ and `eventName` set to `"RoleGranted"`
+ *
+ *
+ */
+export const useWatchCaveModuleRoleGrantedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: caveModuleAbi,
+    address: caveModuleAddress,
+    eventName: 'RoleGranted',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link caveModuleAbi}__ and `eventName` set to `"RoleRevoked"`
+ *
+ *
+ */
+export const useWatchCaveModuleRoleRevokedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: caveModuleAbi,
+    address: caveModuleAddress,
     eventName: 'RoleRevoked',
   })
 
@@ -9335,15 +10199,15 @@ export const useWriteDinoProfileRevokeRole =
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoProfileAbi}__ and `functionName` set to `"setHungry"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoProfileAbi}__ and `functionName` set to `"setHunger"`
  *
  *
  */
-export const useWriteDinoProfileSetHungry =
+export const useWriteDinoProfileSetHunger =
   /*#__PURE__*/ createUseWriteContract({
     abi: dinoProfileAbi,
     address: dinoProfileAddress,
-    functionName: 'setHungry',
+    functionName: 'setHunger',
   })
 
 /**
@@ -9441,15 +10305,15 @@ export const useSimulateDinoProfileRevokeRole =
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoProfileAbi}__ and `functionName` set to `"setHungry"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoProfileAbi}__ and `functionName` set to `"setHunger"`
  *
  *
  */
-export const useSimulateDinoProfileSetHungry =
+export const useSimulateDinoProfileSetHunger =
   /*#__PURE__*/ createUseSimulateContract({
     abi: dinoProfileAbi,
     address: dinoProfileAddress,
-    functionName: 'setHungry',
+    functionName: 'setHunger',
   })
 
 /**
