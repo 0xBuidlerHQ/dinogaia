@@ -470,7 +470,7 @@ export const caveConsumeModuleAbi = [
         type: 'address',
       },
       { name: '_itemId', internalType: 'uint256', type: 'uint256' },
-      { name: '_amount', internalType: 'uint256', type: 'uint256' },
+      { name: '_amount', internalType: 'int256', type: 'int256' },
     ],
     name: 'useConsumable',
     outputs: [],
@@ -557,16 +557,224 @@ export const caveConsumeModuleAbi = [
 export const caveHabitatModuleAbi = [
   {
     type: 'function',
-    inputs: [
-      { name: 'dinoId', internalType: 'uint256', type: 'uint256' },
-      { name: 'itemId', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'isEquipped',
-    outputs: [{ name: 'equipped', internalType: 'bool', type: 'bool' }],
+    inputs: [],
+    name: 'DEFAULT_ADMIN_ROLE',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
     stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'FACTORY_ROLE',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'dinoFactory',
+    outputs: [
+      { name: '', internalType: 'contract DinoFactory', type: 'address' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'dinoProfile',
+    outputs: [
+      { name: '', internalType: 'contract DinoProfile', type: 'address' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'emerald',
+    outputs: [
+      { name: '', internalType: 'contract EmeraldERC20', type: 'address' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_dinoId', internalType: 'uint256', type: 'uint256' }],
+    name: 'getCave',
+    outputs: [
+      {
+        name: 'cave',
+        internalType: 'struct CaveStateModule.Cave',
+        type: 'tuple',
+        components: [
+          { name: 'cleanliness', internalType: 'uint256', type: 'uint256' },
+          { name: 'security', internalType: 'uint256', type: 'uint256' },
+          { name: 'hygiene', internalType: 'uint256', type: 'uint256' },
+          { name: 'comfort', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'role', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'getRoleAdmin',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'grantRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'hasRole',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_dinoId', internalType: 'uint256', type: 'uint256' }],
+    name: 'initialize',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'items',
+    outputs: [
+      { name: '', internalType: 'contract ItemsSetBase', type: 'address' },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'callerConfirmation', internalType: 'address', type: 'address' },
+    ],
+    name: 'renounceRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'revokeRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
+    name: 'supportsInterface',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'treasury',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_dinoId', internalType: 'uint256', type: 'uint256' },
+      { name: '_itemId', internalType: 'uint256', type: 'uint256' },
+      { name: 'installing', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'useHabitat',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'previousAdminRole',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: true,
+      },
+      {
+        name: 'newAdminRole',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: true,
+      },
+    ],
+    name: 'RoleAdminChanged',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'RoleGranted',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'RoleRevoked',
+  },
+  { type: 'error', inputs: [], name: 'AccessControlBadConfirmation' },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'account', internalType: 'address', type: 'address' },
+      { name: 'neededRole', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'AccessControlUnauthorizedAccount',
   },
   { type: 'error', inputs: [], name: 'AlreadyEquipped' },
   { type: 'error', inputs: [], name: 'InvalidItemType' },
+  { type: 'error', inputs: [], name: 'NotDinoAccount' },
   { type: 'error', inputs: [], name: 'NotEquipped' },
 ] as const
 
@@ -720,7 +928,7 @@ export const caveModuleAbi = [
         type: 'address',
       },
       { name: '_itemId', internalType: 'uint256', type: 'uint256' },
-      { name: '_amount', internalType: 'uint256', type: 'uint256' },
+      { name: '_amount', internalType: 'int256', type: 'int256' },
     ],
     name: 'useConsumable',
     outputs: [],
@@ -804,7 +1012,7 @@ export const caveModuleAbi = [
  *
  */
 export const caveModuleAddress = {
-  31337: '0x95A68B6C771045Fc3C82C7bd05C2b5B2e1703065',
+  31337: '0xd92A1f61b228DE9fD040ee3907d9DB77819Ee2b3',
 } as const
 
 /**
@@ -814,6 +1022,176 @@ export const caveModuleConfig = {
   address: caveModuleAddress,
   abi: caveModuleAbi,
 } as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// CaveStateModule
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const caveStateModuleAbi = [
+  {
+    type: 'function',
+    inputs: [],
+    name: 'DEFAULT_ADMIN_ROLE',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'FACTORY_ROLE',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_dinoId', internalType: 'uint256', type: 'uint256' }],
+    name: 'getCave',
+    outputs: [
+      {
+        name: 'cave',
+        internalType: 'struct CaveStateModule.Cave',
+        type: 'tuple',
+        components: [
+          { name: 'cleanliness', internalType: 'uint256', type: 'uint256' },
+          { name: 'security', internalType: 'uint256', type: 'uint256' },
+          { name: 'hygiene', internalType: 'uint256', type: 'uint256' },
+          { name: 'comfort', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'role', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'getRoleAdmin',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'grantRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'hasRole',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_dinoId', internalType: 'uint256', type: 'uint256' }],
+    name: 'initialize',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'callerConfirmation', internalType: 'address', type: 'address' },
+    ],
+    name: 'renounceRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'revokeRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
+    name: 'supportsInterface',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'previousAdminRole',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: true,
+      },
+      {
+        name: 'newAdminRole',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: true,
+      },
+    ],
+    name: 'RoleAdminChanged',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'RoleGranted',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'RoleRevoked',
+  },
+  { type: 'error', inputs: [], name: 'AccessControlBadConfirmation' },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'account', internalType: 'address', type: 'address' },
+      { name: 'neededRole', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'AccessControlUnauthorizedAccount',
+  },
+] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // DinoAccount
@@ -1435,7 +1813,7 @@ export const dinoFactoryAbi = [
               { name: 'alive', internalType: 'bool', type: 'bool' },
               { name: 'health', internalType: 'uint256', type: 'uint256' },
               { name: 'hunger', internalType: 'bool', type: 'bool' },
-              { name: 'thirsty', internalType: 'bool', type: 'bool' },
+              { name: 'thirst', internalType: 'bool', type: 'bool' },
               { name: 'weight', internalType: 'uint256', type: 'uint256' },
               { name: 'level', internalType: 'uint256', type: 'uint256' },
               { name: 'xp', internalType: 'uint256', type: 'uint256' },
@@ -1485,7 +1863,7 @@ export const dinoFactoryAbi = [
               { name: 'alive', internalType: 'bool', type: 'bool' },
               { name: 'health', internalType: 'uint256', type: 'uint256' },
               { name: 'hunger', internalType: 'bool', type: 'bool' },
-              { name: 'thirsty', internalType: 'bool', type: 'bool' },
+              { name: 'thirst', internalType: 'bool', type: 'bool' },
               { name: 'weight', internalType: 'uint256', type: 'uint256' },
               { name: 'level', internalType: 'uint256', type: 'uint256' },
               { name: 'xp', internalType: 'uint256', type: 'uint256' },
@@ -1551,7 +1929,7 @@ export const dinoFactoryAbi = [
  *
  */
 export const dinoFactoryAddress = {
-  31337: '0x25eadD7220AED19a655f515a35c419615715AA87',
+  31337: '0xF87a7ee29D14bCcE310216B73E14ca221671AC14',
 } as const
 
 /**
@@ -1856,26 +2234,6 @@ export const dinoProfileAbi = [
   },
   {
     type: 'function',
-    inputs: [
-      { name: '_dinoId', internalType: 'uint256', type: 'uint256' },
-      { name: '_delta', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'addHealth',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: '_dinoId', internalType: 'uint256', type: 'uint256' },
-      { name: '_delta', internalType: 'uint256', type: 'uint256' },
-    ],
-    name: 'addWeight',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
     inputs: [{ name: '_dinoId', internalType: 'uint256', type: 'uint256' }],
     name: 'getProfile',
     outputs: [
@@ -1887,7 +2245,7 @@ export const dinoProfileAbi = [
           { name: 'alive', internalType: 'bool', type: 'bool' },
           { name: 'health', internalType: 'uint256', type: 'uint256' },
           { name: 'hunger', internalType: 'bool', type: 'bool' },
-          { name: 'thirsty', internalType: 'bool', type: 'bool' },
+          { name: 'thirst', internalType: 'bool', type: 'bool' },
           { name: 'weight', internalType: 'uint256', type: 'uint256' },
           { name: 'level', internalType: 'uint256', type: 'uint256' },
           { name: 'xp', internalType: 'uint256', type: 'uint256' },
@@ -1938,7 +2296,7 @@ export const dinoProfileAbi = [
       { name: 'alive', internalType: 'bool', type: 'bool' },
       { name: 'health', internalType: 'uint256', type: 'uint256' },
       { name: 'hunger', internalType: 'bool', type: 'bool' },
-      { name: 'thirsty', internalType: 'bool', type: 'bool' },
+      { name: 'thirst', internalType: 'bool', type: 'bool' },
       { name: 'weight', internalType: 'uint256', type: 'uint256' },
       { name: 'level', internalType: 'uint256', type: 'uint256' },
       { name: 'xp', internalType: 'uint256', type: 'uint256' },
@@ -1967,30 +2325,50 @@ export const dinoProfileAbi = [
   },
   {
     type: 'function',
-    inputs: [
-      { name: '_dinoId', internalType: 'uint256', type: 'uint256' },
-      { name: '_hunger', internalType: 'bool', type: 'bool' },
-    ],
-    name: 'setHunger',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
-    inputs: [
-      { name: '_dinoId', internalType: 'uint256', type: 'uint256' },
-      { name: '_thirsty', internalType: 'bool', type: 'bool' },
-    ],
-    name: 'setThirsty',
-    outputs: [],
-    stateMutability: 'nonpayable',
-  },
-  {
-    type: 'function',
     inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
     name: 'supportsInterface',
     outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
     stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_dinoId', internalType: 'uint256', type: 'uint256' },
+      { name: '_delta', internalType: 'int256', type: 'int256' },
+    ],
+    name: 'updateHealth',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_dinoId', internalType: 'uint256', type: 'uint256' },
+      { name: '_hunger', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'updateHunger',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_dinoId', internalType: 'uint256', type: 'uint256' },
+      { name: '_thirst', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'updateThirst',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_dinoId', internalType: 'uint256', type: 'uint256' },
+      { name: '_delta', internalType: 'int256', type: 'int256' },
+    ],
+    name: 'updateWeight',
+    outputs: [],
+    stateMutability: 'nonpayable',
   },
   {
     type: 'event',
@@ -2080,7 +2458,7 @@ export const dinoProfileAbi = [
  *
  */
 export const dinoProfileAddress = {
-  31337: '0x8Babe39DcB647364f63361910534B80907c9514a',
+  31337: '0xdb33F664757BD442802Eae41A1197bf8dD973594',
 } as const
 
 /**
@@ -7016,7 +7394,7 @@ export const jobsModuleAbi = [
  *
  */
 export const jobsModuleAddress = {
-  31337: '0x8DF9D96bac6768ebAD5d22550fF73e9bF2A2be07',
+  31337: '0x80773314131CD089dDCfb3eE747bF6b4562D349C',
 } as const
 
 /**
@@ -7788,7 +8166,7 @@ export const shopModuleAbi = [
  *
  */
 export const shopModuleAddress = {
-  31337: '0xf000Aa1bB6F1138d1120Eb2B4698598868781705',
+  31337: '0xAFeBdebA1d439Fa36f30f7201f9f022435199a44',
 } as const
 
 /**
@@ -8737,12 +9115,238 @@ export const useReadCaveHabitatModule = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `functionName` set to `"isEquipped"`
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
  */
-export const useReadCaveHabitatModuleIsEquipped =
+export const useReadCaveHabitatModuleDefaultAdminRole =
   /*#__PURE__*/ createUseReadContract({
     abi: caveHabitatModuleAbi,
-    functionName: 'isEquipped',
+    functionName: 'DEFAULT_ADMIN_ROLE',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `functionName` set to `"FACTORY_ROLE"`
+ */
+export const useReadCaveHabitatModuleFactoryRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveHabitatModuleAbi,
+    functionName: 'FACTORY_ROLE',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `functionName` set to `"dinoFactory"`
+ */
+export const useReadCaveHabitatModuleDinoFactory =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveHabitatModuleAbi,
+    functionName: 'dinoFactory',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `functionName` set to `"dinoProfile"`
+ */
+export const useReadCaveHabitatModuleDinoProfile =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveHabitatModuleAbi,
+    functionName: 'dinoProfile',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `functionName` set to `"emerald"`
+ */
+export const useReadCaveHabitatModuleEmerald =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveHabitatModuleAbi,
+    functionName: 'emerald',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `functionName` set to `"getCave"`
+ */
+export const useReadCaveHabitatModuleGetCave =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveHabitatModuleAbi,
+    functionName: 'getCave',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `functionName` set to `"getRoleAdmin"`
+ */
+export const useReadCaveHabitatModuleGetRoleAdmin =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveHabitatModuleAbi,
+    functionName: 'getRoleAdmin',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `functionName` set to `"hasRole"`
+ */
+export const useReadCaveHabitatModuleHasRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveHabitatModuleAbi,
+    functionName: 'hasRole',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `functionName` set to `"items"`
+ */
+export const useReadCaveHabitatModuleItems =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveHabitatModuleAbi,
+    functionName: 'items',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `functionName` set to `"supportsInterface"`
+ */
+export const useReadCaveHabitatModuleSupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveHabitatModuleAbi,
+    functionName: 'supportsInterface',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `functionName` set to `"treasury"`
+ */
+export const useReadCaveHabitatModuleTreasury =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveHabitatModuleAbi,
+    functionName: 'treasury',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__
+ */
+export const useWriteCaveHabitatModule = /*#__PURE__*/ createUseWriteContract({
+  abi: caveHabitatModuleAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `functionName` set to `"grantRole"`
+ */
+export const useWriteCaveHabitatModuleGrantRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: caveHabitatModuleAbi,
+    functionName: 'grantRole',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `functionName` set to `"initialize"`
+ */
+export const useWriteCaveHabitatModuleInitialize =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: caveHabitatModuleAbi,
+    functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `functionName` set to `"renounceRole"`
+ */
+export const useWriteCaveHabitatModuleRenounceRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: caveHabitatModuleAbi,
+    functionName: 'renounceRole',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `functionName` set to `"revokeRole"`
+ */
+export const useWriteCaveHabitatModuleRevokeRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: caveHabitatModuleAbi,
+    functionName: 'revokeRole',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `functionName` set to `"useHabitat"`
+ */
+export const useWriteCaveHabitatModuleUseHabitat =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: caveHabitatModuleAbi,
+    functionName: 'useHabitat',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__
+ */
+export const useSimulateCaveHabitatModule =
+  /*#__PURE__*/ createUseSimulateContract({ abi: caveHabitatModuleAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `functionName` set to `"grantRole"`
+ */
+export const useSimulateCaveHabitatModuleGrantRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: caveHabitatModuleAbi,
+    functionName: 'grantRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `functionName` set to `"initialize"`
+ */
+export const useSimulateCaveHabitatModuleInitialize =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: caveHabitatModuleAbi,
+    functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `functionName` set to `"renounceRole"`
+ */
+export const useSimulateCaveHabitatModuleRenounceRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: caveHabitatModuleAbi,
+    functionName: 'renounceRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `functionName` set to `"revokeRole"`
+ */
+export const useSimulateCaveHabitatModuleRevokeRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: caveHabitatModuleAbi,
+    functionName: 'revokeRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `functionName` set to `"useHabitat"`
+ */
+export const useSimulateCaveHabitatModuleUseHabitat =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: caveHabitatModuleAbi,
+    functionName: 'useHabitat',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link caveHabitatModuleAbi}__
+ */
+export const useWatchCaveHabitatModuleEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: caveHabitatModuleAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `eventName` set to `"RoleAdminChanged"`
+ */
+export const useWatchCaveHabitatModuleRoleAdminChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: caveHabitatModuleAbi,
+    eventName: 'RoleAdminChanged',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `eventName` set to `"RoleGranted"`
+ */
+export const useWatchCaveHabitatModuleRoleGrantedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: caveHabitatModuleAbi,
+    eventName: 'RoleGranted',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link caveHabitatModuleAbi}__ and `eventName` set to `"RoleRevoked"`
+ */
+export const useWatchCaveHabitatModuleRoleRevokedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: caveHabitatModuleAbi,
+    eventName: 'RoleRevoked',
   })
 
 /**
@@ -9018,6 +9622,185 @@ export const useWatchCaveModuleRoleRevokedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
     abi: caveModuleAbi,
     address: caveModuleAddress,
+    eventName: 'RoleRevoked',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveStateModuleAbi}__
+ */
+export const useReadCaveStateModule = /*#__PURE__*/ createUseReadContract({
+  abi: caveStateModuleAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveStateModuleAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
+ */
+export const useReadCaveStateModuleDefaultAdminRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveStateModuleAbi,
+    functionName: 'DEFAULT_ADMIN_ROLE',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveStateModuleAbi}__ and `functionName` set to `"FACTORY_ROLE"`
+ */
+export const useReadCaveStateModuleFactoryRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveStateModuleAbi,
+    functionName: 'FACTORY_ROLE',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveStateModuleAbi}__ and `functionName` set to `"getCave"`
+ */
+export const useReadCaveStateModuleGetCave =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveStateModuleAbi,
+    functionName: 'getCave',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveStateModuleAbi}__ and `functionName` set to `"getRoleAdmin"`
+ */
+export const useReadCaveStateModuleGetRoleAdmin =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveStateModuleAbi,
+    functionName: 'getRoleAdmin',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveStateModuleAbi}__ and `functionName` set to `"hasRole"`
+ */
+export const useReadCaveStateModuleHasRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveStateModuleAbi,
+    functionName: 'hasRole',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link caveStateModuleAbi}__ and `functionName` set to `"supportsInterface"`
+ */
+export const useReadCaveStateModuleSupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: caveStateModuleAbi,
+    functionName: 'supportsInterface',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveStateModuleAbi}__
+ */
+export const useWriteCaveStateModule = /*#__PURE__*/ createUseWriteContract({
+  abi: caveStateModuleAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveStateModuleAbi}__ and `functionName` set to `"grantRole"`
+ */
+export const useWriteCaveStateModuleGrantRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: caveStateModuleAbi,
+    functionName: 'grantRole',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveStateModuleAbi}__ and `functionName` set to `"initialize"`
+ */
+export const useWriteCaveStateModuleInitialize =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: caveStateModuleAbi,
+    functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveStateModuleAbi}__ and `functionName` set to `"renounceRole"`
+ */
+export const useWriteCaveStateModuleRenounceRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: caveStateModuleAbi,
+    functionName: 'renounceRole',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link caveStateModuleAbi}__ and `functionName` set to `"revokeRole"`
+ */
+export const useWriteCaveStateModuleRevokeRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: caveStateModuleAbi,
+    functionName: 'revokeRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveStateModuleAbi}__
+ */
+export const useSimulateCaveStateModule =
+  /*#__PURE__*/ createUseSimulateContract({ abi: caveStateModuleAbi })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveStateModuleAbi}__ and `functionName` set to `"grantRole"`
+ */
+export const useSimulateCaveStateModuleGrantRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: caveStateModuleAbi,
+    functionName: 'grantRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveStateModuleAbi}__ and `functionName` set to `"initialize"`
+ */
+export const useSimulateCaveStateModuleInitialize =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: caveStateModuleAbi,
+    functionName: 'initialize',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveStateModuleAbi}__ and `functionName` set to `"renounceRole"`
+ */
+export const useSimulateCaveStateModuleRenounceRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: caveStateModuleAbi,
+    functionName: 'renounceRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link caveStateModuleAbi}__ and `functionName` set to `"revokeRole"`
+ */
+export const useSimulateCaveStateModuleRevokeRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: caveStateModuleAbi,
+    functionName: 'revokeRole',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link caveStateModuleAbi}__
+ */
+export const useWatchCaveStateModuleEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({ abi: caveStateModuleAbi })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link caveStateModuleAbi}__ and `eventName` set to `"RoleAdminChanged"`
+ */
+export const useWatchCaveStateModuleRoleAdminChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: caveStateModuleAbi,
+    eventName: 'RoleAdminChanged',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link caveStateModuleAbi}__ and `eventName` set to `"RoleGranted"`
+ */
+export const useWatchCaveStateModuleRoleGrantedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: caveStateModuleAbi,
+    eventName: 'RoleGranted',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link caveStateModuleAbi}__ and `eventName` set to `"RoleRevoked"`
+ */
+export const useWatchCaveStateModuleRoleRevokedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: caveStateModuleAbi,
     eventName: 'RoleRevoked',
   })
 
@@ -10127,30 +10910,6 @@ export const useWriteDinoProfile = /*#__PURE__*/ createUseWriteContract({
 })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoProfileAbi}__ and `functionName` set to `"addHealth"`
- *
- *
- */
-export const useWriteDinoProfileAddHealth =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: dinoProfileAbi,
-    address: dinoProfileAddress,
-    functionName: 'addHealth',
-  })
-
-/**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoProfileAbi}__ and `functionName` set to `"addWeight"`
- *
- *
- */
-export const useWriteDinoProfileAddWeight =
-  /*#__PURE__*/ createUseWriteContract({
-    abi: dinoProfileAbi,
-    address: dinoProfileAddress,
-    functionName: 'addWeight',
-  })
-
-/**
  * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoProfileAbi}__ and `functionName` set to `"grantRole"`
  *
  *
@@ -10199,27 +10958,51 @@ export const useWriteDinoProfileRevokeRole =
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoProfileAbi}__ and `functionName` set to `"setHunger"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoProfileAbi}__ and `functionName` set to `"updateHealth"`
  *
  *
  */
-export const useWriteDinoProfileSetHunger =
+export const useWriteDinoProfileUpdateHealth =
   /*#__PURE__*/ createUseWriteContract({
     abi: dinoProfileAbi,
     address: dinoProfileAddress,
-    functionName: 'setHunger',
+    functionName: 'updateHealth',
   })
 
 /**
- * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoProfileAbi}__ and `functionName` set to `"setThirsty"`
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoProfileAbi}__ and `functionName` set to `"updateHunger"`
  *
  *
  */
-export const useWriteDinoProfileSetThirsty =
+export const useWriteDinoProfileUpdateHunger =
   /*#__PURE__*/ createUseWriteContract({
     abi: dinoProfileAbi,
     address: dinoProfileAddress,
-    functionName: 'setThirsty',
+    functionName: 'updateHunger',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoProfileAbi}__ and `functionName` set to `"updateThirst"`
+ *
+ *
+ */
+export const useWriteDinoProfileUpdateThirst =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: dinoProfileAbi,
+    address: dinoProfileAddress,
+    functionName: 'updateThirst',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link dinoProfileAbi}__ and `functionName` set to `"updateWeight"`
+ *
+ *
+ */
+export const useWriteDinoProfileUpdateWeight =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: dinoProfileAbi,
+    address: dinoProfileAddress,
+    functionName: 'updateWeight',
   })
 
 /**
@@ -10231,30 +11014,6 @@ export const useSimulateDinoProfile = /*#__PURE__*/ createUseSimulateContract({
   abi: dinoProfileAbi,
   address: dinoProfileAddress,
 })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoProfileAbi}__ and `functionName` set to `"addHealth"`
- *
- *
- */
-export const useSimulateDinoProfileAddHealth =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: dinoProfileAbi,
-    address: dinoProfileAddress,
-    functionName: 'addHealth',
-  })
-
-/**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoProfileAbi}__ and `functionName` set to `"addWeight"`
- *
- *
- */
-export const useSimulateDinoProfileAddWeight =
-  /*#__PURE__*/ createUseSimulateContract({
-    abi: dinoProfileAbi,
-    address: dinoProfileAddress,
-    functionName: 'addWeight',
-  })
 
 /**
  * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoProfileAbi}__ and `functionName` set to `"grantRole"`
@@ -10305,27 +11064,51 @@ export const useSimulateDinoProfileRevokeRole =
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoProfileAbi}__ and `functionName` set to `"setHunger"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoProfileAbi}__ and `functionName` set to `"updateHealth"`
  *
  *
  */
-export const useSimulateDinoProfileSetHunger =
+export const useSimulateDinoProfileUpdateHealth =
   /*#__PURE__*/ createUseSimulateContract({
     abi: dinoProfileAbi,
     address: dinoProfileAddress,
-    functionName: 'setHunger',
+    functionName: 'updateHealth',
   })
 
 /**
- * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoProfileAbi}__ and `functionName` set to `"setThirsty"`
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoProfileAbi}__ and `functionName` set to `"updateHunger"`
  *
  *
  */
-export const useSimulateDinoProfileSetThirsty =
+export const useSimulateDinoProfileUpdateHunger =
   /*#__PURE__*/ createUseSimulateContract({
     abi: dinoProfileAbi,
     address: dinoProfileAddress,
-    functionName: 'setThirsty',
+    functionName: 'updateHunger',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoProfileAbi}__ and `functionName` set to `"updateThirst"`
+ *
+ *
+ */
+export const useSimulateDinoProfileUpdateThirst =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: dinoProfileAbi,
+    address: dinoProfileAddress,
+    functionName: 'updateThirst',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link dinoProfileAbi}__ and `functionName` set to `"updateWeight"`
+ *
+ *
+ */
+export const useSimulateDinoProfileUpdateWeight =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: dinoProfileAbi,
+    address: dinoProfileAddress,
+    functionName: 'updateWeight',
   })
 
 /**

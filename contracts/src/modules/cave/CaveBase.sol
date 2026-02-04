@@ -24,14 +24,6 @@ contract CaveBase is ModuleBase {
     address public treasury;
 
     /**
-     * @dev Events.
-     */
-
-    /**
-     * @dev Errors.
-     */
-
-    /**
      * @dev Constructor.
      */
     constructor(

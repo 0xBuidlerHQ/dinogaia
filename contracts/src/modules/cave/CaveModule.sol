@@ -17,12 +17,6 @@ import {CaveBase} from "@modules/cave/CaveBase.sol";
  */
 contract CaveModule is CaveBase, CaveConsumeModule {
     /**
-     * @dev Events.
-     */
-    /**
-     * @dev Errors.
-     */
-    /**
      * @dev Constructor.
      */
     constructor(

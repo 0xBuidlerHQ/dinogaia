@@ -25,7 +25,7 @@ contract DinoProfile is AccessControl {
         uint256 health;
         //
         bool hunger;
-        bool thirsty;
+        bool thirst;
         //
         uint256 weight;
         //
@@ -59,11 +59,46 @@ contract DinoProfile is AccessControl {
          * @dev Grant `DEFAULT_ADMIN_ROLE` to `_owner`.
          */
         _grantRole(DEFAULT_ADMIN_ROLE, _owner);
+
+        /**
+         * @dev Grant `STATUS_ROLE` to `_owner`.
+         */
         _grantRole(STATUS_ROLE, _owner);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * @dev TODO.
+     */
+    function addSigned(uint256 a, int256 b) internal pure returns (uint256) {
+        if (b >= 0) {
+            return a + uint256(b);
+        } else {
+            uint256 absB = uint256(-b);
+            require(a >= absB, "uint underflow");
+            return a - absB;
+        }
+    }
+
+    /**
+     * @dev
+     */
+    function initialize(uint256 _dinoId) external onlyRole(FACTORY_ROLE) {
+        profileOf[_dinoId] = Profile({
+            //
+            alive: true,
+            health: 100,
+            hunger: true,
+            weight: 1,
+            thirst: true,
+            level: 1,
+            xp: 0
+        });
+
+        emit InitializedProfile({dinoId: _dinoId});
+    }
 
     /**
      * @dev
@@ -72,29 +107,36 @@ contract DinoProfile is AccessControl {
         profile = profileOf[_dinoId];
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * @dev
      */
-    function initialize(uint256 _dinoId) external onlyRole(FACTORY_ROLE) {
-        profileOf[_dinoId] =
-            Profile({alive: true, health: 100, hunger: true, weight: 1, thirsty: true, level: 1, xp: 0});
-
-        emit InitializedProfile({dinoId: _dinoId});
+    function updateWeight(uint256 _dinoId, int256 _delta) external onlyRole(STATUS_ROLE) {
+        Profile memory profile = profileOf[_dinoId];
+        profileOf[_dinoId].weight = addSigned(profile.weight, _delta);
     }
 
-    function setHunger(uint256 _dinoId, bool _hunger) external onlyRole(STATUS_ROLE) {
+    /**
+     * @dev
+     */
+    function updateHealth(uint256 _dinoId, int256 _delta) external onlyRole(STATUS_ROLE) {
+        Profile memory profile = profileOf[_dinoId];
+        profileOf[_dinoId].health = addSigned(profile.health, _delta);
+    }
+
+    /**
+     * @dev
+     */
+    function updateHunger(uint256 _dinoId, bool _hunger) external onlyRole(STATUS_ROLE) {
         profileOf[_dinoId].hunger = _hunger;
     }
 
-    function setThirsty(uint256 _dinoId, bool _thirsty) external onlyRole(STATUS_ROLE) {
-        profileOf[_dinoId].thirsty = _thirsty;
-    }
-
-    function addWeight(uint256 _dinoId, uint256 _delta) external onlyRole(STATUS_ROLE) {
-        profileOf[_dinoId].weight += _delta;
-    }
-
-    function addHealth(uint256 _dinoId, uint256 _delta) external onlyRole(STATUS_ROLE) {
-        profileOf[_dinoId].health += _delta;
+    /**
+     * @dev
+     */
+    function updateThirst(uint256 _dinoId, bool _thirst) external onlyRole(STATUS_ROLE) {
+        profileOf[_dinoId].thirst = _thirst;
     }
 }
