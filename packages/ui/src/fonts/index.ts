@@ -7,6 +7,7 @@ import {
 	Noto_Sans_Mono,
 	Noto_Sans_Yi,
 	Noto_Serif,
+	Source_Code_Pro,
 	Space_Grotesk,
 	Syne,
 	Syne_Mono,
@@ -14,6 +15,15 @@ import {
 	TASA_Orbiter,
 	Work_Sans,
 } from "next/font/google";
+
+/**
+ * @dev Source_Code_Pro.
+ */
+const sourceCodePro = Source_Code_Pro({
+	subsets: ["latin"],
+	variable: "--font-source-code-pro",
+	display: "swap",
+});
 
 /**
  * @dev Inter.
@@ -149,4 +159,5 @@ export {
 	syneMono,
 	syneTactile,
 	azeretMono,
+	sourceCodePro,
 };

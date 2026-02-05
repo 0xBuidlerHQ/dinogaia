@@ -9,6 +9,32 @@ interface TypographyProps extends React.HTMLAttributes<HTMLElement> {}
  * - Smaller on mobile, larger on wide screens
  */
 
+const H1_8 = ({ children, className, ...props }: TypographyProps) => (
+	<h1
+		className={cn(
+			"text-7xl sm:text-8xl md:text-9xl lg:text-10xl xl:text-11xl 2xl:text-11xl",
+			// "overflow-hidden",
+			className,
+		)}
+		{...props}
+	>
+		{children}
+	</h1>
+);
+
+const H1_7 = ({ children, className, ...props }: TypographyProps) => (
+	<h1
+		className={cn(
+			"text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-10xl 2xl:text-10xl",
+			// "overflow-hidden",
+			className,
+		)}
+		{...props}
+	>
+		{children}
+	</h1>
+);
+
 const H1_6 = ({ children, className, ...props }: TypographyProps) => (
 	<h1
 		className={cn(
@@ -152,4 +178,4 @@ const P = ({ children, className, ...props }: TypographyProps) => (
 	</p>
 );
 
-export { H1_0, H1_1, H1_2, H1_3, H1_4, H1_5, H1_6, H1, H2, H3, H4, H5, H6, H7, P };
+export { H1_0, H1_1, H1_2, H1_3, H1_4, H1_5, H1_6, H1_7, H1_8, H1, H2, H3, H4, H5, H6, H7, P };

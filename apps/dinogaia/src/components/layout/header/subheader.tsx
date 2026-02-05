@@ -9,38 +9,46 @@ import { type Dino, DinoFactory } from "@features/dinos/hooks/useDinoFactory";
 import { MintButton } from "@features/dinos/mint/MintButton";
 import { useStore } from "@stores/useStore";
 
+/**
+ * @dev Constants.
+ */
+const SUBHEADER_HEIGHT = "h-[30px]";
+
 const MyDino = (props: Dino) => {
 	const { dinoId } = props;
 
 	const { activeDinoId, setActiveDinoId } = useStore();
 
 	return (
-		<Box className={cn("px-2 py-4", activeDinoId === dinoId ? "bg-red-500" : "")}>
+		<Box className={cn("px-2", activeDinoId === dinoId ? "bg-red-500" : "")}>
 			<ButtonBase onClick={() => setActiveDinoId(dinoId)}>
 				<H5>{props.dinoGenesis.name}</H5>
 			</ButtonBase>
 		</Box>
 	);
 };
-
+2;
 const SubHeader = () => {
 	const { dinosOfOwner } = DinoFactory.useDinoFactory();
 
 	return (
 		<HeaderPrimitive>
-			<Box className="pr-2">
-				<Box className="flex justify-between">
-					<Box className="flex gap-2">
-						{dinosOfOwner.data?.map((dino) => (
-							<Box key={dino.dinoId}>
-								<MyDino {...dino} />
-							</Box>
-						))}
-					</Box>
+			<Box
+				className={cn(
+					"border-x border-muted flex justify-between items-center px-4",
+					SUBHEADER_HEIGHT,
+				)}
+			>
+				<Box className="flex gap-2">
+					{dinosOfOwner.data?.map((dino) => (
+						<Box key={dino.dinoId}>
+							<MyDino {...dino} />
+						</Box>
+					))}
+				</Box>
 
-					<Box className="flex items-center justify-center">
-						<MintButton />
-					</Box>
+				<Box className="flex items-center justify-center">
+					<MintButton />
 				</Box>
 			</Box>
 		</HeaderPrimitive>

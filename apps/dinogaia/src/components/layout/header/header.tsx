@@ -14,7 +14,7 @@ const HEADER_HEIGHT = "h-[50px]";
 const Header = () => {
 	return (
 		<HeaderPrimitive>
-			<Box className={cn(HEADER_HEIGHT, "flex items-center border border-muted px-4")}>
+			<Box className={cn(HEADER_HEIGHT, "flex items-center border-x border-muted px-4")}>
 				<Box className="flex flex-1">
 					<H1>Dinogaia</H1>
 				</Box>

@@ -1,6 +1,6 @@
 import "./system.css";
 
-import { azeretMono } from "@0xbuidlerhq/ui/fonts";
+import { inter, montserrat, sourceCodePro, syne } from "@0xbuidlerhq/ui/fonts";
 import { cn } from "@0xbuidlerhq/ui/shadcn/lib/utils";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { Footer } from "@components/layout/footer";
@@ -19,9 +19,12 @@ const Layout = ({ children }: PropsWithChildren) => {
 					"antialiased",
 					"bg-background",
 					"text-foreground",
-					"font-azeret-mono",
+					"font-inter",
 					"tracking-tighter",
-					azeretMono.variable,
+					inter.variable,
+					montserrat.variable,
+					syne.variable,
+					sourceCodePro.variable,
 				)}
 			>
 				<Providers>
