@@ -4,12 +4,10 @@ import { cn } from "@0xbuidlerhq/ui/shadcn/lib/utils";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { H5 } from "@0xbuidlerhq/ui/system/base/typography";
 import { ButtonBase } from "@0xbuidlerhq/ui/system/buttons/ButtonBase";
+import { Header as HeaderPrimitive } from "@0xbuidlerhq/ui/system/layouts/header";
 import { type Dino, DinoFactory } from "@features/dinos/hooks/useDinoFactory";
+import { MintButton } from "@features/dinos/mint/MintButton";
 import { useStore } from "@stores/useStore";
-
-const CreateDino = () => {
-	return <Box>Create +</Box>;
-};
 
 const MyDino = (props: Dino) => {
 	const { dinoId } = props;
@@ -17,34 +15,39 @@ const MyDino = (props: Dino) => {
 	const { activeDinoId, setActiveDinoId } = useStore();
 
 	return (
-		<Box>
-			<ButtonBase
-				className={cn(activeDinoId === dinoId ? "bg-red-500" : "")}
-				onClick={() => setActiveDinoId(dinoId)}
-			>
+		<Box className={cn("px-2 py-4", activeDinoId === dinoId ? "bg-red-500" : "")}>
+			<ButtonBase onClick={() => setActiveDinoId(dinoId)}>
 				<H5>{props.dinoGenesis.name}</H5>
 			</ButtonBase>
 		</Box>
 	);
 };
 
-const MyDinos = () => {
+const SubHeader = () => {
 	const { dinosOfOwner } = DinoFactory.useDinoFactory();
 
 	return (
-		<Box className="flex gap-2">
-			{dinosOfOwner.data?.map((dino) => (
-				<Box key={dino.dinoId}>
-					<MyDino {...dino} />
-				</Box>
-			))}
+		<HeaderPrimitive>
+			<Box className="pr-2">
+				<Box className="flex justify-between">
+					<Box className="flex gap-2">
+						{dinosOfOwner.data?.map((dino) => (
+							<Box key={dino.dinoId}>
+								<MyDino {...dino} />
+							</Box>
+						))}
+					</Box>
 
-			<CreateDino />
-		</Box>
+					<Box className="flex items-center justify-center">
+						<MintButton />
+					</Box>
+				</Box>
+			</Box>
+		</HeaderPrimitive>
 	);
 };
 
-export { MyDinos };
+export { SubHeader };
 
 // const MintButton = () => {
 // 	const { mint } = DinoFactory.useMint();

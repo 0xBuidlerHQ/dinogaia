@@ -4,6 +4,10 @@ import { createJSONStorage, persist } from "zustand/middleware";
 type StoreState = {
 	activeDinoId: bigint | null;
 	setActiveDinoId: (id: bigint | null) => void;
+
+	mintModal: boolean;
+	openMintModal: () => void;
+	closeMintModal: () => void;
 };
 
 export const useStore = create<StoreState>()(
@@ -11,6 +15,10 @@ export const useStore = create<StoreState>()(
 		(set) => ({
 			activeDinoId: null,
 			setActiveDinoId: (id) => set({ activeDinoId: id }),
+
+			mintModal: false,
+			openMintModal: () => set({ mintModal: true }),
+			closeMintModal: () => set({ mintModal: false }),
 		}),
 		{
 			name: "dinogaia-store",

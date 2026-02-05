@@ -14,7 +14,7 @@ import {
 } from "@0xbuidlerhq/dinogaia.contracts";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { Container } from "@0xbuidlerhq/ui/system/base/container";
-import { H5, H6 } from "@0xbuidlerhq/ui/system/base/typography";
+import { H1, H4, H5, H6 } from "@0xbuidlerhq/ui/system/base/typography";
 import { ButtonBase } from "@0xbuidlerhq/ui/system/buttons/ButtonBase";
 import { useDinoActions } from "@features/dinos/hooks/useDinoActions";
 import { type Dino, DinoFactory } from "@features/dinos/hooks/useDinoFactory";
@@ -24,11 +24,8 @@ import { jobsManager } from "@features/dinos/hooks/useJobsManager";
 import { SpeciesRegistry } from "@features/dinos/hooks/useSpeciesRegistry";
 import { useItems } from "@features/items/useItems";
 import { useStore } from "@stores/useStore";
-import React from "react";
 import { encodeFunctionData } from "viem";
-import { timestampToAge } from "../../utils";
-
-const chain = "31337";
+import { type DinoAge, timestampToAge } from "../../utils";
 
 const ActiveDino = (props: Dino) => {
 	const { dinoId, dinoAccount, dinoGenesis, dinoProfile } = props;
@@ -47,7 +44,7 @@ const ActiveDino = (props: Dino) => {
 	const a = timestampToAge(dinoGenesis.birthTimestamp);
 	return (
 		<Box className="border border-accent p-2">
-			<Box className="flex flex-col gap-4 w-60">
+			<Box className="flex flex-col gap-4">
 				<Box className="flex justify-between items-center">
 					<H5 className="font-bold">{dinoGenesis.name}</H5>
 
@@ -68,67 +65,6 @@ const ActiveDino = (props: Dino) => {
 					<Box>Xp: {String(dinoProfile.xp)}</Box>
 					<Box>Weight: {String(dinoProfile.weight)}</Box>
 				</Box>
-
-				<Box className="flex flex-col gap-1">
-					<H6 className="font-semibold">Cave</H6>
-					{/* <Box className="text-sm">Cleanliness: {cave?.cleanliness?.toString() ?? "—"} / 100</Box>
-					<Box className="text-sm">Security: {cave?.security?.toString() ?? "—"}</Box>
-					<Box className="text-sm">Hygiene: {cave?.hygiene?.toString() ?? "—"}</Box>
-					<Box className="text-sm">Comfort: {cave?.comfort?.toString() ?? "—"}</Box> */}
-					{/* {caveModuleAddress[chain] && (
-						<ButtonBase
-							className="bg-white text-black mt-1"
-							onClick={async () => {
-								await sendTxsFromDinoAccount([
-									{
-										target: caveModuleAddress[chain],
-										value: 0n,
-										data: encodeFunctionData({
-											abi: caveModuleAbi,
-											functionName: "clean",
-											args: [BigInt(dinoId)],
-										}),
-									},
-								]);
-							}}
-						>
-							Nettoyer la grotte
-						</ButtonBase>
-					)} */}
-				</Box>
-
-				{/* {e.items.map((item) => {
-					const isEq = equipped.has(Number(item.id));
-					return (
-						<Box key={item.id} className="border border-dim p-1">
-							<Box className="flex justify-between">
-								<span>{item.name}</span>
-								<span>{String(item.balance)}</span>
-							</Box>
-							{caveModuleAddress[chain] && (
-								<ButtonBase
-									className="bg-white text-black mt-1"
-									disabled={isEq}
-									onClick={async () => {
-										await sendTxsFromDinoAccount([
-											{
-												target: caveModuleAddress[chain],
-												value: 0n,
-												data: encodeFunctionData({
-													abi: caveModuleAbi,
-													functionName: "install",
-													args: [BigInt(dinoId), item.id],
-												}),
-											},
-										]);
-									}}
-								>
-									{isEq ? "Équipé" : "Installer"}
-								</ButtonBase>
-							)}
-						</Box>
-					);
-				})} */}
 
 				<ButtonBase
 					className="bg-white text-black"
@@ -211,68 +147,79 @@ const ActiveDino = (props: Dino) => {
 	);
 };
 
-const MintButton = () => {
-	const { mint } = DinoFactory.useMint();
+type DinoStatsProps = {
+	name: string;
+	age: DinoAge;
+	species: string;
 
-	const { dinosOfOwner } = DinoFactory.useDinoFactory();
-	const { allSpecies } = SpeciesRegistry.useAllSpecies();
+	state: {
+		hungry: boolean;
+		thirsty: boolean;
+		sick: boolean;
+	};
 
-	const [dinoName, setDinoName] = React.useState("");
-	const [speciesId, setSpeciesId] = React.useState<bigint>(0n);
+	characteristics: {
+		force: number;
+		endurance: number;
+		agility: number;
+		intelligence: number;
+	};
+};
 
-	React.useEffect(() => {
-		if (
-			allSpecies.data &&
-			allSpecies.data.length > 0 &&
-			speciesId >= BigInt(allSpecies.data.length)
-		) {
-			setSpeciesId(0n);
-		}
-	}, [allSpecies.data, speciesId]);
-
-	const handleSpeciesChange = (id: number) => setSpeciesId(BigInt(id));
-
-	const canMint = dinoName.length > 0 && (allSpecies.data?.length ?? 0) > 0;
-
+type StatItemProps = {
+	title: string;
+	content: string;
+};
+const StatItem = (props: StatItemProps) => {
 	return (
-		<Box>
-			<Box className="flex flex-col gap-2">
-				<input
-					value={dinoName}
-					onChange={(e) => setDinoName(e.target.value)}
-					placeholder="Dino name"
-				/>
+		<Box className="flex flex-col gap-4">
+			<H4 className="">{props.title}</H4>
 
-				<Box className="flex flex-wrap gap-3">
-					{allSpecies.data?.map((species, idx) => (
-						<label key={idx} className="flex items-center gap-2 cursor-pointer">
-							<input
-								type="radio"
-								name="species"
-								checked={speciesId === BigInt(idx)}
-								onChange={() => handleSpeciesChange(idx)}
-							/>
-							<span>{species.name}</span>
-						</label>
-					))}
-					{!allSpecies.data?.length && (
-						<span className="text-sm text-gray-500">Loading species…</span>
-					)}
-				</Box>
+			<Box>
+				<H1>{props.content}</H1>
 			</Box>
-
-			<ButtonBase
-				className="px-2 py-1 bg-white text-black"
-				disabled={!canMint}
-				onClick={async () => {
-					await mint.writeContractAsync({ args: [{ name: dinoName, speciesId }] });
-					dinosOfOwner.refetch();
-				}}
-			>
-				Mint
-			</ButtonBase>
 		</Box>
 	);
+};
+
+const DinoStats = (props: DinoStatsProps) => {
+	return (
+		<Box className="border-l border-b border-muted grid grid-cols-12 items-stretch *:border-r *:border-muted *:border-t *:hover:bg-muted/50 *:p-4">
+			<Box className="col-span-4">
+				<StatItem title="Name" content={props.name} />
+			</Box>
+
+			<Box className="col-span-4">
+				<StatItem
+					title="Age"
+					content={`${props.age.days}d/${props.age.hours}h/${props.age.minutes}m`}
+				/>
+			</Box>
+
+			<Box className="col-span-4">
+				<StatItem title="Race" content={props.species} />
+			</Box>
+
+			<Box className="col-span-4"></Box>
+
+			<Box className="col-span-8">
+				<Box>{props.state.hungry ? "Your Dino is hungry" : "Your dino is full"}</Box>
+				<Box>{props.state.thirsty ? "Your Dino is thirsty" : "Your dino is ok"}</Box>
+				<Box>{props.state.sick ? "Your dino is sick" : "Your dino is ok"}</Box>
+			</Box>
+
+			<Box className="col-span-12">
+				<Box>Force: {props.characteristics.force}</Box>
+				<Box>Endurance: {props.characteristics.endurance}</Box>
+				<Box>Agility: {props.characteristics.agility}</Box>
+				<Box>Intelligence: {props.characteristics.intelligence}</Box>
+			</Box>
+		</Box>
+	);
+};
+
+const DinoScene = () => {
+	return <Box className="border border-r-0 border-muted h-full">Scene</Box>;
 };
 
 const Page = () => {
@@ -282,13 +229,29 @@ const Page = () => {
 
 	return (
 		<Container className="pt-10">
-			<Box>
-				{activeDino ? (
-					<ActiveDino {...activeDino} />
-				) : (
-					<Box className="text-sm text-gray-500">Select a dino to view details.</Box>
-				)}
-				<MintButton />
+			<Box className="grid grid-cols-12">
+				<Box className="col-span-6">
+					<DinoScene />
+				</Box>
+
+				<Box className="col-span-6">
+					<DinoStats
+						name={activeDino?.dinoGenesis.name}
+						age={timestampToAge(activeDino?.dinoGenesis.birthTimestamp ?? 0n)}
+						species="Pterodactyl"
+						state={{
+							hungry: true,
+							thirsty: true,
+							sick: true,
+						}}
+						characteristics={{
+							force: 100,
+							endurance: 100,
+							agility: 100,
+							intelligence: 100,
+						}}
+					/>
+				</Box>
 			</Box>
 		</Container>
 	);

@@ -1,6 +1,6 @@
 const timestampToAge = (timestamp: bigint) => {
 	const now = BigInt(Math.floor(Date.now() / 1000));
-	if (now <= timestamp) return { days: 0, hours: 0, minutes: 0 };
+	if (now <= timestamp) return { days: 0n, hours: 0n, minutes: 0n };
 
 	const delta = now - timestamp;
 	const day = 86_400n;
@@ -14,4 +14,6 @@ const timestampToAge = (timestamp: bigint) => {
 	return { days, hours, minutes };
 };
 
-export { timestampToAge };
+type DinoAge = ReturnType<typeof timestampToAge>;
+
+export { timestampToAge, type DinoAge };
