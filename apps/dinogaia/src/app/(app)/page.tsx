@@ -14,7 +14,7 @@ import {
 } from "@0xbuidlerhq/dinogaia.contracts";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { Container } from "@0xbuidlerhq/ui/system/base/container";
-import { H1, H1_8, H5, H6, H7 } from "@0xbuidlerhq/ui/system/base/typography";
+import { H1, H1_8, H4, H5, H6, H7 } from "@0xbuidlerhq/ui/system/base/typography";
 import { ButtonBase } from "@0xbuidlerhq/ui/system/buttons/ButtonBase";
 import ProgressBar from "@components/ProgressBar";
 import { useDinoActions } from "@features/dinos/hooks/useDinoActions";
@@ -31,6 +31,7 @@ import {
 	IconCampfire,
 	IconFountain,
 	IconMeat,
+	IconShare,
 } from "@tabler/icons-react";
 import type React from "react";
 import type { PropsWithChildren } from "react";
@@ -77,7 +78,7 @@ const ActiveDino = (props: Dino) => {
 				</Box>
 
 				<ButtonBase
-					className="bg-white text-black"
+					className="bg-[#ffffff] text-[#000000]"
 					onClick={async () =>
 						await sendTxsFromDinoAccount([
 							{
@@ -96,7 +97,7 @@ const ActiveDino = (props: Dino) => {
 				</ButtonBase>
 
 				<ButtonBase
-					className="bg-white text-black"
+					className="bg-[#ffffff] text-[#000000]"
 					onClick={async () => {
 						const chain = "31337";
 						await sendTxsFromDinoAccount([
@@ -125,7 +126,7 @@ const ActiveDino = (props: Dino) => {
 				</ButtonBase>
 
 				<ButtonBase
-					className="bg-white text-black"
+					className="bg-[#ffffff] text-[#000000]"
 					onClick={async () => {
 						const chain = "31337";
 						await sendTxsFromDinoAccount([
@@ -235,7 +236,7 @@ const DinoStats = (props: DinoStatsProps) => {
 			<Box className="col-span-4">
 				<StatItem title="Age">
 					<H1>
-						${props.age.days}d/${props.age.hours}h/${props.age.minutes}m
+						{props.age.days}d/{props.age.hours}h/{props.age.minutes}m
 					</H1>
 				</StatItem>
 			</Box>
@@ -265,35 +266,13 @@ const DinoStats = (props: DinoStatsProps) => {
 				</StatItem>
 			</Box>
 
-			<Box className="col-span-12">
+			{/* <Box className="col-span-12">
 				<StatItem title="Vitals">
 					<Box className="flex flex-col gap-2">
-						<ProgressBar
-							value={props.vitals.life}
-							max={props.vitals.lifeMax}
-							label="Life"
-							colors={{
-								track: "rgba(17, 24, 39, 0.4)",
-								fill: "linear-gradient(90deg, #ef4444 0%, #f97316 55%, #facc15 100%)",
-								sheen:
-									"linear-gradient(110deg, transparent 0%, rgba(255,255,255,0.5) 45%, transparent 55%)",
-							}}
-						/>
-
-						<ProgressBar
-							value={props.vitals.magic}
-							max={props.vitals.magicMax}
-							label="Magic"
-							colors={{
-								track: "rgba(17, 24, 39, 0.4)",
-								fill: "linear-gradient(90deg, #0ea5e9 0%, #38bdf8 55%, #22d3ee 100%)",
-								sheen:
-									"linear-gradient(110deg, transparent 0%, rgba(255,255,255,0.5) 45%, transparent 55%)",
-							}}
-						/>
+						
 					</Box>
 				</StatItem>
-			</Box>
+			</Box> */}
 
 			<Box className="col-span-12">
 				<StatItem title="Quick Actions">
@@ -321,14 +300,34 @@ const DinoStats = (props: DinoStatsProps) => {
 				<StatItem title="Characteristics">
 					<Box className="flex flex-col gap-2">
 						<ProgressBar
+							value={props.vitals.life}
+							max={props.vitals.lifeMax}
+							label="Life"
+							colors={{
+								track: "#11182766",
+								fill: "linear-gradient(90deg, #16a34a 0%, #16a34a 50%, #16a34a 100%)",
+							}}
+						/>
+
+						<ProgressBar
+							value={props.vitals.magic}
+							max={props.vitals.magicMax}
+							label="Magic"
+							colors={{
+								track: "#11182766",
+								fill: "linear-gradient(90deg, #3b82f6 0%, #3b82f6 50%, #3b82f6 100%)",
+							}}
+						/>
+
+						<Box className="h-[1px] bg-muted my-4" />
+
+						<ProgressBar
 							value={props.characteristics.force}
 							max={100}
 							label="Force"
 							colors={{
-								track: "rgba(17, 24, 39, 0.4)",
-								fill: "linear-gradient(90deg, white 0%, white 50%, white 100%)",
-								sheen:
-									"linear-gradient(110deg, transparent 0%, rgba(255,255,255,0.5) 45%, transparent 55%)",
+								track: "#11182766",
+								fill: "linear-gradient(90deg, #f97316 0%, #f97316 50%, #f97316 100%)",
 							}}
 						/>
 
@@ -337,10 +336,8 @@ const DinoStats = (props: DinoStatsProps) => {
 							max={100}
 							label="Endurance"
 							colors={{
-								track: "rgba(17, 24, 39, 0.4)",
-								fill: "linear-gradient(90deg, white 0%, white 50%, white 100%)",
-								sheen:
-									"linear-gradient(110deg, transparent 0%, rgba(255,255,255,0.5) 45%, transparent 55%)",
+								track: "#11182766",
+								fill: "linear-gradient(90deg, #f97316 0%, #f97316 50%, #f97316 100%)",
 							}}
 						/>
 
@@ -349,10 +346,8 @@ const DinoStats = (props: DinoStatsProps) => {
 							max={100}
 							label="Agility"
 							colors={{
-								track: "rgba(17, 24, 39, 0.4)",
-								fill: "linear-gradient(90deg, white 0%, white 50%, white 100%)",
-								sheen:
-									"linear-gradient(110deg, transparent 0%, rgba(255,255,255,0.5) 45%, transparent 55%)",
+								track: "#11182766",
+								fill: "linear-gradient(90deg, #f97316 0%, #f97316 50%, #f97316 100%)",
 							}}
 						/>
 
@@ -361,10 +356,20 @@ const DinoStats = (props: DinoStatsProps) => {
 							max={100}
 							label="Intelligence"
 							colors={{
-								track: "rgba(17, 24, 39, 0.4)",
-								fill: "linear-gradient(90deg, white 0%, white 50%, white 100%)",
-								sheen:
-									"linear-gradient(110deg, transparent 0%, rgba(255,255,255,0.5) 45%, transparent 55%)",
+								track: "#11182766",
+								fill: "linear-gradient(90deg, #f97316 0%, #f97316 50%, #f97316 100%)",
+							}}
+						/>
+
+						<Box className="h-[1px] bg-muted my-4" />
+
+						<ProgressBar
+							value={props.characteristics.intelligence}
+							max={100}
+							label="XP"
+							colors={{
+								track: "#11182766",
+								fill: "linear-gradient(90deg, #a855f7 0%, #a855f7 50%, #a855f7 100%)",
 							}}
 						/>
 					</Box>
@@ -374,12 +379,49 @@ const DinoStats = (props: DinoStatsProps) => {
 	);
 };
 
+type InfoProps = {
+	label: string;
+	value: string;
+};
+const Info = (props: InfoProps) => {
+	return (
+		<Box className="flex gap-2 items-center">
+			<H5 className="font-montserrat text-muted-foreground font-medium">{props.label}:</H5>
+			<H5 className="font-mono">{props.value}</H5>
+		</Box>
+	);
+};
+
 const DinoScene = () => {
 	return (
 		<Box className="border-y border-muted h-full relative">
-			<Box className="absolute top-0 left-0">
+			<Box className="absolute top-0 right-0">
 				<StatItem title="Level">
 					<H1_8>1</H1_8>
+				</StatItem>
+			</Box>
+
+			<Box className="absolute top-0 left-0">
+				<StatItem
+					title="Informations"
+					addon={
+						<ButtonBase>
+							<Box className="bg-muted px-2 flex items-center gap-2">
+								<IconShare className="size-4" />
+								<H4 className="font-syne">Share</H4>
+							</Box>
+						</ButtonBase>
+					}
+				>
+					<Box className="flex flex-col -space-y-[2px]">
+						<Info label="Name" value="Maxime" />
+						<Info label="Clan" value="The Great Counsel" />
+						<Info label="Born" value="Sun, Aug 21, 2004 at 04:56" />
+						<Info label="Age" value="2000 days, 4 hours, 34 min" />
+						<Info label="Weight" value="129Kg" />
+						<Info label="Height" value="4m11" />
+						<Info label="Points" value="233444" />
+					</Box>
 				</StatItem>
 			</Box>
 		</Box>
@@ -408,7 +450,7 @@ const Page = () => {
 							vitals={{
 								life: Number(activeDino?.dinoProfile.health ?? 0n),
 								lifeMax: 100,
-								magic: 0,
+								magic: 100,
 								magicMax: 100,
 							}}
 							state={{
