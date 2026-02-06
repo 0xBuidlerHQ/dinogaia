@@ -14,7 +14,7 @@ import {
 } from "@0xbuidlerhq/dinogaia.contracts";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { Container } from "@0xbuidlerhq/ui/system/base/container";
-import { H1, H1_8, H5, H6 } from "@0xbuidlerhq/ui/system/base/typography";
+import { H1, H1_8, H5, H6, H7 } from "@0xbuidlerhq/ui/system/base/typography";
 import { ButtonBase } from "@0xbuidlerhq/ui/system/buttons/ButtonBase";
 import ProgressBar from "@components/ProgressBar";
 import { useDinoActions } from "@features/dinos/hooks/useDinoActions";
@@ -25,6 +25,14 @@ import { jobsManager } from "@features/dinos/hooks/useJobsManager";
 import { SpeciesRegistry } from "@features/dinos/hooks/useSpeciesRegistry";
 import { useItems } from "@features/items/useItems";
 import { useStore } from "@stores/useStore";
+import {
+	IconBow,
+	IconBuildingStore,
+	IconCampfire,
+	IconFountain,
+	IconMeat,
+} from "@tabler/icons-react";
+import type React from "react";
 import type { PropsWithChildren } from "react";
 import { encodeFunctionData } from "viem";
 import { type DinoAge, timestampToAge } from "../../utils";
@@ -153,6 +161,12 @@ type DinoStatsProps = {
 	name: string;
 	age: DinoAge;
 	species: string;
+	vitals: {
+		life: number;
+		lifeMax: number;
+		magic: number;
+		magicMax: number;
+	};
 
 	state: {
 		hungry: boolean;
@@ -170,20 +184,48 @@ type DinoStatsProps = {
 
 type StatItemProps = PropsWithChildren & {
 	title: string;
+	addon?: React.ReactElement;
 };
 const StatItem = (props: StatItemProps) => {
 	return (
-		<Box className="flex flex-col gap-4 p-4">
-			<H6 className="font-montserrat uppercase font-bold tracking-tighter">{props.title}</H6>
+		<Box className="flex flex-col gap-4 p-4 group hover:bg-muted/50 border border-transparent hover:border hover:border-[#a3e635]/25">
+			<Box className="flex items-center gap-1 group-hover:text-[#a3e635]">
+				<H7 className="font-montserrat tracking-widest mr-[2px] group-hover:mr-[1px] transition-all duration-500">
+					{"//"}
+				</H7>
+				<H6 className="font-montserrat uppercase font-extrabold tracking-tighter transition-all duration-500">
+					{props.title}
+				</H6>
+
+				<Box className="grow" />
+
+				{props.addon}
+			</Box>
 
 			<Box>{props.children}</Box>
 		</Box>
 	);
 };
 
+type QuickActionProps = {
+	label: string;
+	icon: React.ReactElement;
+};
+const QuickAction = (props: QuickActionProps) => {
+	return (
+		<ButtonBase>
+			<Box className="h-8 px-2 border-accent border flex gap-2 items-center justify-center rounded-xs bg-muted hover:bg-accent/50">
+				<H6 className="uppercase font-montserrat tracking-tighter font-bold">{props.label}</H6>
+
+				{props.icon}
+			</Box>
+		</ButtonBase>
+	);
+};
+
 const DinoStats = (props: DinoStatsProps) => {
 	return (
-		<Box className="border-l border-b border-muted grid grid-cols-12 items-stretch *:border-r *:border-muted *:border-t *:hover:bg-muted/50 ">
+		<Box className="grid grid-cols-12 items-stretch *:border-l *:border-muted *:border-b border-t border-muted">
 			<Box className="col-span-4">
 				<StatItem title="Name">
 					<H1>{props.name}</H1>
@@ -199,24 +241,85 @@ const DinoStats = (props: DinoStatsProps) => {
 			</Box>
 
 			<Box className="col-span-4">
+				<StatItem title="Wallet">
+					<H1>{100}</H1>
+				</StatItem>
+			</Box>
+
+			<Box className="col-span-6">
+				<StatItem
+					title="Job"
+					addon={
+						<Box className="text-[#a3e635]">
+							<H6>100 Emerald / day</H6>
+						</Box>
+					}
+				>
+					<H1>Umemployed</H1>
+				</StatItem>
+			</Box>
+
+			<Box className="col-span-6">
 				<StatItem title="Race">
 					<H1>{props.species}</H1>
 				</StatItem>
 			</Box>
 
-			<Box className="col-span-8">
-				<StatItem title="Status">
-					<Box>{props.state.hungry ? "Your Dino is hungry" : "Your dino is full"}</Box>
-					<Box>{props.state.thirsty ? "Your Dino is thirsty" : "Your dino is ok"}</Box>
-					<Box>{props.state.sick ? "Your dino is sick" : "Your dino is ok"}</Box>{" "}
+			<Box className="col-span-12">
+				<StatItem title="Vitals">
+					<Box className="flex flex-col gap-2">
+						<ProgressBar
+							value={props.vitals.life}
+							max={props.vitals.lifeMax}
+							label="Life"
+							colors={{
+								track: "rgba(17, 24, 39, 0.4)",
+								fill: "linear-gradient(90deg, #ef4444 0%, #f97316 55%, #facc15 100%)",
+								sheen:
+									"linear-gradient(110deg, transparent 0%, rgba(255,255,255,0.5) 45%, transparent 55%)",
+							}}
+						/>
+
+						<ProgressBar
+							value={props.vitals.magic}
+							max={props.vitals.magicMax}
+							label="Magic"
+							colors={{
+								track: "rgba(17, 24, 39, 0.4)",
+								fill: "linear-gradient(90deg, #0ea5e9 0%, #38bdf8 55%, #22d3ee 100%)",
+								sheen:
+									"linear-gradient(110deg, transparent 0%, rgba(255,255,255,0.5) 45%, transparent 55%)",
+							}}
+						/>
+					</Box>
 				</StatItem>
 			</Box>
 
-			<Box className="col-span-4"></Box>
+			<Box className="col-span-12">
+				<StatItem title="Quick Actions">
+					<Box className="flex flex-wrap gap-2">
+						<QuickAction label="Eat" icon={<IconMeat className="size-4" />} />
+						<QuickAction label="Drink" icon={<IconFountain className="size-4" />} />
+						<QuickAction label="Hunt" icon={<IconBow className="size-4" />} />
+						<QuickAction label="Job" icon={<IconBuildingStore className="size-4" />} />
+						<QuickAction label="Camp" icon={<IconCampfire className="size-4" />} />
+					</Box>
+				</StatItem>
+			</Box>
 
-			<Box className="col-span-12 ">
+			<Box className="col-span-12">
+				<StatItem title="Status">
+					<Box className="flex gap-2 *:bg-accent">
+						<Box>{props.state.hungry ? "Your Dino is hungry" : "Your dino is full"}</Box>
+						<Box>{props.state.thirsty ? "Your Dino is thirsty" : "Your dino is ok"}</Box>
+						<Box>{props.state.sick ? "Your dino is sick" : "Your dino is ok"}</Box>{" "}
+					</Box>
+				</StatItem>
+			</Box>
+
+			<Box className="col-span-12">
 				<StatItem title="Characteristics">
-					<Box className="flex flex-col gap-4">
+					<Box className="flex flex-col gap-2">
 						<ProgressBar
 							value={props.characteristics.force}
 							max={100}
@@ -273,7 +376,7 @@ const DinoStats = (props: DinoStatsProps) => {
 
 const DinoScene = () => {
 	return (
-		<Box className="border border-r-0 border-muted h-full relative">
+		<Box className="border-y border-muted h-full relative">
 			<Box className="absolute top-0 left-0">
 				<StatItem title="Level">
 					<H1_8>1</H1_8>
@@ -289,29 +392,38 @@ const Page = () => {
 	const activeDino = dinosOfOwner.data?.find((d) => d.dinoId === activeDinoId);
 
 	return (
-		<Container className="pt-10">
-			<Box className="grid grid-cols-12">
-				<Box className="col-span-6">
-					<DinoScene />
-				</Box>
+		<Container className="">
+			<Box className="border-x border-muted">
+				<Box className="grid grid-cols-12 pt-10">
+					{/*  */}
+					<Box className="col-span-6">
+						<DinoScene />
+					</Box>
 
-				<Box className="col-span-6">
-					<DinoStats
-						name={activeDino?.dinoGenesis.name}
-						age={timestampToAge(activeDino?.dinoGenesis.birthTimestamp ?? 0n)}
-						species="Pterodactyl"
-						state={{
-							hungry: true,
-							thirsty: true,
-							sick: true,
-						}}
-						characteristics={{
-							force: 10,
-							endurance: 50,
-							agility: 20,
-							intelligence: 67,
-						}}
-					/>
+					<Box className="col-span-6">
+						<DinoStats
+							name={activeDino?.dinoGenesis.name}
+							age={timestampToAge(activeDino?.dinoGenesis.birthTimestamp ?? 0n)}
+							species="Pterodactyl"
+							vitals={{
+								life: Number(activeDino?.dinoProfile.health ?? 0n),
+								lifeMax: 100,
+								magic: 0,
+								magicMax: 100,
+							}}
+							state={{
+								hungry: true,
+								thirsty: true,
+								sick: true,
+							}}
+							characteristics={{
+								force: 10,
+								endurance: 50,
+								agility: 20,
+								intelligence: 67,
+							}}
+						/>
+					</Box>
 				</Box>
 			</Box>
 		</Container>

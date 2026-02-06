@@ -20,4 +20,5 @@
 .dark,
 [data-theme="dark"],
 :root[class~="dark"] {
+	--background: oklch(0.16 0 0);
 }

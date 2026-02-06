@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@0xbuidlerhq/ui/shadcn/lib/utils";
-import { H4, H5 } from "@0xbuidlerhq/ui/system/base/typography";
+import { H5 } from "@0xbuidlerhq/ui/system/base/typography";
 
 type ProgressBarProps = {
 	value: number;
@@ -40,7 +40,7 @@ const ProgressBar = ({
 		<div className={cn("w-full", className)}>
 			{(label || showValue) && (
 				<div className="mb-1 flex items-center justify-between tracking-tighter opacity-50">
-					<H4 className="tracking-tight font-syne font-semibold">{label}</H4>
+					<H5 className="tracking-tight font-syne font-semibold">{label}</H5>
 
 					{showValue && (
 						<H5 className="tracking-tight">
