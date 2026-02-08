@@ -1012,7 +1012,7 @@ export const caveModuleAbi = [
  *
  */
 export const caveModuleAddress = {
-  31337: '0xd92A1f61b228DE9fD040ee3907d9DB77819Ee2b3',
+  31337: '0x10bB6728C062a1BC0bb1BCA461D6FF7400434C61',
 } as const
 
 /**
@@ -6052,6 +6052,85 @@ export const itemsSet0Abi = [
   },
   {
     type: 'function',
+    inputs: [],
+    name: 'getItems',
+    outputs: [
+      {
+        name: '_itemsBase',
+        internalType: 'struct ItemsSetBase.ItemBase[]',
+        type: 'tuple[]',
+        components: [
+          {
+            name: 'rarity',
+            internalType: 'enum ItemsSetBase.ItemBaseRarity',
+            type: 'uint8',
+          },
+          {
+            name: 'itemType',
+            internalType: 'enum ItemsSetBase.ItemBaseType',
+            type: 'uint8',
+          },
+          {
+            name: 'trading',
+            internalType: 'struct ItemsSetBase.ItemTrading',
+            type: 'tuple',
+            components: [
+              { name: 'tradable', internalType: 'bool', type: 'bool' },
+              { name: 'sellable', internalType: 'bool', type: 'bool' },
+              { name: 'price', internalType: 'uint256', type: 'uint256' },
+            ],
+          },
+          {
+            name: 'usage',
+            internalType: 'struct ItemsSetBase.ItemUsage',
+            type: 'tuple',
+            components: [
+              { name: 'destroyOnUse', internalType: 'bool', type: 'bool' },
+              { name: 'soulbound', internalType: 'bool', type: 'bool' },
+            ],
+          },
+          {
+            name: 'requirements',
+            internalType: 'struct ItemsSetBase.ItemRequirements',
+            type: 'tuple',
+            components: [
+              {
+                name: 'requiredLevel',
+                internalType: 'uint256',
+                type: 'uint256',
+              },
+            ],
+          },
+          {
+            name: 'metadata',
+            internalType: 'struct ItemsSetBase.ItemBaseMetadata',
+            type: 'tuple',
+            components: [
+              { name: 'name', internalType: 'string', type: 'string' },
+              { name: 'symbol', internalType: 'string', type: 'string' },
+              { name: 'decimals', internalType: 'uint8', type: 'uint8' },
+            ],
+          },
+          {
+            name: 'effects',
+            internalType: 'struct ItemsSetBase.Effect[]',
+            type: 'tuple[]',
+            components: [
+              {
+                name: 'kind',
+                internalType: 'enum ItemsSetBase.EffectKind',
+                type: 'uint8',
+              },
+              { name: 'magnitude', internalType: 'int256', type: 'int256' },
+            ],
+          },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
     inputs: [{ name: 'role', internalType: 'bytes32', type: 'bytes32' }],
     name: 'getRoleAdmin',
     outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
@@ -6502,7 +6581,7 @@ export const itemsSet0Abi = [
  *
  */
 export const itemsSet0Address = {
-  31337: '0x2f72dfeb5028CC8F0770493fE1c8b85604deb638',
+  31337: '0x6e87584dc10934E11b20954DC610ba30af9Afcb0',
 } as const
 
 /**
@@ -6591,6 +6670,85 @@ export const itemsSetBaseAbi = [
         name: '_itemBase',
         internalType: 'struct ItemsSetBase.ItemBase',
         type: 'tuple',
+        components: [
+          {
+            name: 'rarity',
+            internalType: 'enum ItemsSetBase.ItemBaseRarity',
+            type: 'uint8',
+          },
+          {
+            name: 'itemType',
+            internalType: 'enum ItemsSetBase.ItemBaseType',
+            type: 'uint8',
+          },
+          {
+            name: 'trading',
+            internalType: 'struct ItemsSetBase.ItemTrading',
+            type: 'tuple',
+            components: [
+              { name: 'tradable', internalType: 'bool', type: 'bool' },
+              { name: 'sellable', internalType: 'bool', type: 'bool' },
+              { name: 'price', internalType: 'uint256', type: 'uint256' },
+            ],
+          },
+          {
+            name: 'usage',
+            internalType: 'struct ItemsSetBase.ItemUsage',
+            type: 'tuple',
+            components: [
+              { name: 'destroyOnUse', internalType: 'bool', type: 'bool' },
+              { name: 'soulbound', internalType: 'bool', type: 'bool' },
+            ],
+          },
+          {
+            name: 'requirements',
+            internalType: 'struct ItemsSetBase.ItemRequirements',
+            type: 'tuple',
+            components: [
+              {
+                name: 'requiredLevel',
+                internalType: 'uint256',
+                type: 'uint256',
+              },
+            ],
+          },
+          {
+            name: 'metadata',
+            internalType: 'struct ItemsSetBase.ItemBaseMetadata',
+            type: 'tuple',
+            components: [
+              { name: 'name', internalType: 'string', type: 'string' },
+              { name: 'symbol', internalType: 'string', type: 'string' },
+              { name: 'decimals', internalType: 'uint8', type: 'uint8' },
+            ],
+          },
+          {
+            name: 'effects',
+            internalType: 'struct ItemsSetBase.Effect[]',
+            type: 'tuple[]',
+            components: [
+              {
+                name: 'kind',
+                internalType: 'enum ItemsSetBase.EffectKind',
+                type: 'uint8',
+              },
+              { name: 'magnitude', internalType: 'int256', type: 'int256' },
+            ],
+          },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getItems',
+    outputs: [
+      {
+        name: '_itemsBase',
+        internalType: 'struct ItemsSetBase.ItemBase[]',
+        type: 'tuple[]',
         components: [
           {
             name: 'rarity',
@@ -7977,6 +8135,85 @@ export const shopModuleAbi = [
   },
   {
     type: 'function',
+    inputs: [],
+    name: 'getItems',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct ItemsSetBase.ItemBase[]',
+        type: 'tuple[]',
+        components: [
+          {
+            name: 'rarity',
+            internalType: 'enum ItemsSetBase.ItemBaseRarity',
+            type: 'uint8',
+          },
+          {
+            name: 'itemType',
+            internalType: 'enum ItemsSetBase.ItemBaseType',
+            type: 'uint8',
+          },
+          {
+            name: 'trading',
+            internalType: 'struct ItemsSetBase.ItemTrading',
+            type: 'tuple',
+            components: [
+              { name: 'tradable', internalType: 'bool', type: 'bool' },
+              { name: 'sellable', internalType: 'bool', type: 'bool' },
+              { name: 'price', internalType: 'uint256', type: 'uint256' },
+            ],
+          },
+          {
+            name: 'usage',
+            internalType: 'struct ItemsSetBase.ItemUsage',
+            type: 'tuple',
+            components: [
+              { name: 'destroyOnUse', internalType: 'bool', type: 'bool' },
+              { name: 'soulbound', internalType: 'bool', type: 'bool' },
+            ],
+          },
+          {
+            name: 'requirements',
+            internalType: 'struct ItemsSetBase.ItemRequirements',
+            type: 'tuple',
+            components: [
+              {
+                name: 'requiredLevel',
+                internalType: 'uint256',
+                type: 'uint256',
+              },
+            ],
+          },
+          {
+            name: 'metadata',
+            internalType: 'struct ItemsSetBase.ItemBaseMetadata',
+            type: 'tuple',
+            components: [
+              { name: 'name', internalType: 'string', type: 'string' },
+              { name: 'symbol', internalType: 'string', type: 'string' },
+              { name: 'decimals', internalType: 'uint8', type: 'uint8' },
+            ],
+          },
+          {
+            name: 'effects',
+            internalType: 'struct ItemsSetBase.Effect[]',
+            type: 'tuple[]',
+            components: [
+              {
+                name: 'kind',
+                internalType: 'enum ItemsSetBase.EffectKind',
+                type: 'uint8',
+              },
+              { name: 'magnitude', internalType: 'int256', type: 'int256' },
+            ],
+          },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
     inputs: [{ name: 'role', internalType: 'bytes32', type: 'bytes32' }],
     name: 'getRoleAdmin',
     outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
@@ -8166,7 +8403,7 @@ export const shopModuleAbi = [
  *
  */
 export const shopModuleAddress = {
-  31337: '0xAFeBdebA1d439Fa36f30f7201f9f022435199a44',
+  31337: '0x0214F29d8ba5D2d676D447C5751FBB773CB52c8c',
 } as const
 
 /**
@@ -14368,6 +14605,17 @@ export const useReadItemsSet0GetItem = /*#__PURE__*/ createUseReadContract({
 })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"getItems"`
+ *
+ *
+ */
+export const useReadItemsSet0GetItems = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSet0Abi,
+  address: itemsSet0Address,
+  functionName: 'getItems',
+})
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSet0Abi}__ and `functionName` set to `"getRoleAdmin"`
  *
  *
@@ -14864,6 +15112,14 @@ export const useReadItemsSetBaseDecimals = /*#__PURE__*/ createUseReadContract({
 export const useReadItemsSetBaseGetItem = /*#__PURE__*/ createUseReadContract({
   abi: itemsSetBaseAbi,
   functionName: 'getItem',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetBaseAbi}__ and `functionName` set to `"getItems"`
+ */
+export const useReadItemsSetBaseGetItems = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSetBaseAbi,
+  functionName: 'getItems',
 })
 
 /**
@@ -16054,6 +16310,17 @@ export const useReadShopModuleEmerald = /*#__PURE__*/ createUseReadContract({
   abi: shopModuleAbi,
   address: shopModuleAddress,
   functionName: 'emerald',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link shopModuleAbi}__ and `functionName` set to `"getItems"`
+ *
+ *
+ */
+export const useReadShopModuleGetItems = /*#__PURE__*/ createUseReadContract({
+  abi: shopModuleAbi,
+  address: shopModuleAddress,
+  functionName: 'getItems',
 })
 
 /**

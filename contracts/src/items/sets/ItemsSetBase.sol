@@ -173,6 +173,17 @@ abstract contract ItemsSetBase is ERC6909Metadata, ERC6909TokenSupply, AccessCon
     /**
      * @dev
      */
+    function getItems() external view returns (ItemBase[] memory _itemsBase) {
+        _itemsBase = new ItemBase[](itemIdsIndex);
+
+        for (uint256 i = 0; i < itemIdsIndex; i++) {
+            _itemsBase[i] = itemsSetBase[i];
+        }
+    }
+
+    /**
+     * @dev
+     */
     function _defineItem(ItemBase memory _itemBase) internal returns (uint256 id) {
         id = itemIdsIndex++;
 

@@ -1,0 +1,3 @@
+const useShop = () => {};
+
+export { useShop };

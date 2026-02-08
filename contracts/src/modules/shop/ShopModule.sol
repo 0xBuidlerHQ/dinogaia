@@ -59,4 +59,11 @@ contract ShopModule is ModuleBase {
 
         emit ItemPurchased(msg.sender, _itemId, _amount, total);
     }
+
+    /**
+     * @dev
+     */
+    function getItems() external view returns (ItemsSetBase.ItemBase[] memory) {
+        return items.getItems();
+    }
 }
