@@ -35,4 +35,4 @@ build-contracts:
 
 .PHONY: build
 build:
-	forge build
+	forge build --ast

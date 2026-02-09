@@ -5,7 +5,9 @@
 	"main": "./package/index.tsx",
 	"types": "./package/index.tsx",
 	"exports": {
-		".": "./package/index.tsx"
+		".": "./package/index.tsx",
+		"./types.user": "./package/types.user.ts",
+		"./types.libs": "./package/types.libs.ts"
 	},
 	"scripts": {
 		"build-contracts": "pnpm wagmi generate"
@@ -14,7 +16,8 @@
 		"wagmi": "catalog:react19"
 	},
 	"devDependencies": {
-		"@wagmi/cli": "catalog:react19"
+		"@wagmi/cli": "catalog:react19",
+		"tsx": "^4.21.0"
 	},
 	"packageManager": "pnpm@10.13.1",
 	"engines": {
