@@ -10,7 +10,8 @@
 		"./types.libs": "./package/types.libs.ts"
 	},
 	"scripts": {
-		"build-contracts": "pnpm wagmi generate"
+		"build-contracts": "pnpm wagmi generate",
+		"build-types": "pnpm tsx ts/script.ts"
 	},
 	"dependencies": {
 		"wagmi": "catalog:react19"
