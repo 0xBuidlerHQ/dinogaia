@@ -18,13 +18,13 @@ import { H1, H1_8, H4, H5, H6, H7 } from "@0xbuidlerhq/ui/system/base/typography
 import { ButtonBase } from "@0xbuidlerhq/ui/system/buttons/ButtonBase";
 import ProgressBar from "@components/ProgressBar";
 import { useDinoActions } from "@features/dinos/hooks/useDinoActions";
-import { type Dino, DinoFactory } from "@features/dinos/hooks/useDinoFactory";
+import type { Dino } from "@features/dinos/hooks/useDinoFactory";
 import { JobsRegistry } from "@features/dinos/hooks/useDinoJobsRegistry";
 import { EmeraldERC20 } from "@features/dinos/hooks/useEmeraldERC20";
 import { jobsManager } from "@features/dinos/hooks/useJobsManager";
 import { SpeciesRegistry } from "@features/dinos/hooks/useSpeciesRegistry";
 import { useItems } from "@features/items/useItems";
-import { useStore } from "@stores/useStore";
+import { useDino } from "@hooks/useDino";
 import {
 	IconBow,
 	IconBuildingStore,
@@ -429,9 +429,7 @@ const DinoScene = () => {
 };
 
 const Page = () => {
-	const { dinosOfOwner } = DinoFactory.useDinoFactory();
-	const { activeDinoId } = useStore();
-	const activeDino = dinosOfOwner.data?.find((d) => d.dinoId === activeDinoId);
+	const { dino, dinoSpecies } = useDino();
 
 	return (
 		<Container className="">
@@ -444,11 +442,11 @@ const Page = () => {
 
 					<Box className="col-span-6">
 						<DinoStats
-							name={activeDino?.dinoGenesis.name}
-							age={timestampToAge(activeDino?.dinoGenesis.birthTimestamp ?? 0n)}
-							species="Pterodactyl"
+							name={dino?.dinoGenesis.name}
+							age={timestampToAge(dino?.dinoGenesis.birthTimestamp ?? 0n)}
+							species={dinoSpecies?.name}
 							vitals={{
-								life: Number(activeDino?.dinoProfile.health ?? 0n),
+								life: Number(dino?.dinoProfile.health ?? 0n),
 								lifeMax: 100,
 								magic: 100,
 								magicMax: 100,

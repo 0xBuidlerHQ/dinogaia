@@ -3,6 +3,7 @@ import {
 	useReadEmeraldErc20BalanceOf,
 	useReadJobsModuleJobOf,
 	useReadJobsRegistryGetJob,
+	useReadSpeciesRegistryGetAllSpecies,
 } from "@0xbuidlerhq/dinogaia.contracts";
 import { useWeb3 } from "@config/providers/web3";
 import { useStore } from "@stores/useStore";
@@ -32,7 +33,12 @@ const useDino = () => {
 		query: { enabled: queryEnabled },
 	});
 
-	return { dino, dinoEmeraldBalance, dinoJob };
+	const allDinoSpecies = useReadSpeciesRegistryGetAllSpecies({});
+	const dinoSpecies = allDinoSpecies.data?.find(
+		(_, index) => dino?.dinoGenesis.speciesId === BigInt(index),
+	);
+
+	return { dino, dinoSpecies, dinoEmeraldBalance, dinoJob };
 };
 
 export { useDino };
