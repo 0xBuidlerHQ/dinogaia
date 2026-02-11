@@ -3,8 +3,8 @@
 import type { ItemsSetBase } from "@0xbuidlerhq/dinogaia.contracts/types.user";
 import { cn } from "@0xbuidlerhq/ui/shadcn/lib/utils";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
-import { H3, H4, H6 } from "@0xbuidlerhq/ui/system/base/typography";
-import { items, rarities } from "../../assets/assets";
+import { H3, H4, H7 } from "@0xbuidlerhq/ui/system/base/typography";
+import { images, items, rarities } from "../../assets/assets";
 import { EthereumLogo } from "../../assets/emerald";
 
 type Props = {
@@ -20,7 +20,7 @@ const ItemType = (props: Props) => {
 		<Box
 			className={cn(itemType.backgroundColor, itemType.borderColor, "border px-1 py-[1px] w-fit ")}
 		>
-			<H6 className={itemType.color}>{itemType?.name}</H6>
+			<H7 className={itemType.color}>{itemType?.name}</H7>
 		</Box>
 	);
 };
@@ -38,7 +38,19 @@ const ItemRarity = (props: Props) => {
 				"border px-1 py-[1px] w-fit ",
 			)}
 		>
-			<H6 className={itemRarity.color}>{itemRarity?.name}</H6>
+			<H7 className={itemRarity.color}>{itemRarity?.name}</H7>
+		</Box>
+	);
+};
+
+const ItemImage = (props: Props) => {
+	const { item } = props;
+
+	const image = images[item.metadata.name];
+
+	return (
+		<Box className="h-full w-full">
+			<img src={image} alt={item.metadata.name} className="block h-full w-full object-contain" />
 		</Box>
 	);
 };
@@ -50,16 +62,18 @@ const ShopItem = (props: Props) => {
 		<Box key={item.metadata.name} className="border border-muted">
 			<Box className="aspect-square h-full w-full">
 				<Box className="flex flex-col h-full">
-					<Box className="grow relative">
-						<Box className="absolute top-0 left-0 p-[10px] gap-1 flex">
+					<Box className="grow relative min-h-0">
+						<Box className="h-full w-full">
+							<ItemImage item={item} />
+						</Box>
+					</Box>
+
+					<Box className="h-20 border-t border-muted p-2 flex flex-col gap-2">
+						<Box className="flex gap-1">
 							<ItemRarity item={item} />
 							<ItemType item={item} />
 						</Box>
 
-						<Box>la</Box>
-					</Box>
-
-					<Box className="h-20 border-t border-muted p-2">
 						<Box className="flex">
 							<Box className="grow flex flex-col">
 								<H3 className="font-source-code-pro tracking-tighter">{item.metadata.name}</H3>

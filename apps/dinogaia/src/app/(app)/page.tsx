@@ -436,7 +436,7 @@ const Page = () => {
 	return (
 		<Container className="">
 			<Box className="border-x border-muted">
-				<Box className="grid grid-cols-12 pt-10">
+				<Box className="grid grid-cols-12">
 					{/*  */}
 					<Box className="col-span-6">
 						<DinoScene />

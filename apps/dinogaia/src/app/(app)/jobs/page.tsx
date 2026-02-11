@@ -2,21 +2,19 @@
 
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { Container } from "@0xbuidlerhq/ui/system/base/container";
-import { ShopItem } from "@features/shop/ShopItem";
-import { useShop } from "@features/shop/useShop";
+import { JobItem } from "@features/jobs/JobItem";
+import { useJobs } from "@features/jobs/useJobs";
 
 const Page = () => {
-	const { items } = useShop();
+	const { jobs } = useJobs();
 
 	return (
 		<Container>
 			<Box className="grid grid-cols-12 gap-2">
-				{items.data?.map((item) => {
-					if (!item.trading.sellable) return;
-
+				{jobs.data?.map((job) => {
 					return (
-						<Box key={item.metadata.name} className="col-span-2">
-							<ShopItem item={item} />
+						<Box key={job.name} className="col-span-3">
+							<JobItem job={job} />
 						</Box>
 					);
 				})}

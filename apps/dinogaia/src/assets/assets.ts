@@ -1,4 +1,26 @@
 import { ItemsSetBase } from "@0xbuidlerhq/dinogaia.contracts/types.user";
+import airPurifier from "./src/air purifier.png";
+import alarmSystem from "./src/alarm system.png";
+import ancientMap from "./src/ancient map.png";
+import apple from "./src/apple.png";
+import bread from "./src/bread.png";
+import bronzeSword from "./src/bronze sword.png";
+import cheese from "./src/cheese.png";
+import chicken from "./src/chicken.png";
+import cozyBed from "./src/cozy bed.png";
+import firstAidKit from "./src/first aid kit.png";
+import healingHerb from "./src/healing herb.png";
+import ironHelmet from "./src/iron helmet.png";
+import leatherArmor from "./src/leather armor.png";
+import longBow from "./src/long bow.png";
+import royalSeal from "./src/royal seal.png";
+import salmon from "./src/salmon.png";
+import securityArtifact from "./src/security artifact.png";
+import smallBandage from "./src/small bandage.png";
+import travelBoots from "./src/travel boots.png";
+import tuna from "./src/tuna.png";
+import woodenDoor from "./src/wooden door.png";
+import woodenSpear from "./src/wooden spear.png";
 
 type ItemAssets = {
 	name: string;
@@ -155,4 +177,29 @@ const rarities: Record<ItemBaseRarity, RarityAssets> = {
 	},
 };
 
-export { items, rarities };
+const images: Record<string, string> = {
+	apple: apple.src,
+	"alarm system": alarmSystem.src,
+	bread: bread.src,
+	cheese: cheese.src,
+	chicken: chicken.src,
+	"wooden door": woodenDoor.src,
+	"first aid kit": firstAidKit.src,
+	"healing herb": healingHerb.src,
+	salmon: salmon.src,
+	"small bandage": smallBandage.src,
+	"air purifier": airPurifier.src,
+	"cozy bed": cozyBed.src,
+	tuna: tuna.src,
+	"wooden spear": woodenSpear.src,
+	"bronze sword": bronzeSword.src,
+	"leather armor": leatherArmor.src,
+	longbow: longBow.src,
+	"iron helmet": ironHelmet.src,
+	"ancient map": ancientMap.src,
+	"travel boots": travelBoots.src,
+	"security artifact": securityArtifact.src,
+	"royal seal": royalSeal.src,
+};
+
+export { items, rarities, images };

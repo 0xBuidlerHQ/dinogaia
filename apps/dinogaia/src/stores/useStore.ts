@@ -8,6 +8,10 @@ type StoreState = {
 	mintModal: boolean;
 	openMintModal: () => void;
 	closeMintModal: () => void;
+
+	selectModal: boolean;
+	openSelectModal: () => void;
+	closeSelectModal: () => void;
 };
 
 export const useStore = create<StoreState>()(
@@ -19,6 +23,10 @@ export const useStore = create<StoreState>()(
 			mintModal: false,
 			openMintModal: () => set({ mintModal: true }),
 			closeMintModal: () => set({ mintModal: false }),
+
+			selectModal: false,
+			openSelectModal: () => set({ selectModal: true }),
+			closeSelectModal: () => set({ selectModal: false }),
 		}),
 		{
 			name: "dinogaia-store",

@@ -23,6 +23,10 @@ const pages = [
 		title: "Shop",
 		href: PAGES.shop,
 	},
+	{
+		title: "Jobs",
+		href: PAGES.jobs,
+	},
 ];
 
 const Navigation = () => {
