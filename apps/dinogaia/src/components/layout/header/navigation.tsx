@@ -27,6 +27,14 @@ const pages = [
 		title: "Jobs",
 		href: PAGES.jobs,
 	},
+	{
+		title: "Hunt",
+		href: PAGES.hunt,
+	},
+	{
+		title: "Casino",
+		href: PAGES.casino,
+	},
 ];
 
 const Navigation = () => {
