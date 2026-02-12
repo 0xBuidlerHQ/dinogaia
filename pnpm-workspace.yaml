@@ -3,6 +3,7 @@ packages:
   - configs/**/*
   - packages/**/*
   - libraries/**/*
+  - server/**/*
   - contracts/
 
 catalogs:
