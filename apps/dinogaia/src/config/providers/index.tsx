@@ -1,4 +1,5 @@
 import { BlockchainProvider } from "@config/providers/blockchain";
+import { PonderProvider } from "@config/providers/ponder";
 import { QueryProvider } from "@config/providers/query";
 import { ThemeProvider } from "@config/providers/theme";
 import { Web3Provider } from "@config/providers/web3";
@@ -17,11 +18,13 @@ const LayoutProviders = ({ children }: PropsWithChildren) => {
  */
 const LogicProviders = ({ children }: PropsWithChildren) => {
 	return (
-		<QueryProvider>
-			<BlockchainProvider>
-				<Web3Provider>{children}</Web3Provider>
-			</BlockchainProvider>
-		</QueryProvider>
+		<PonderProvider>
+			<QueryProvider>
+				<BlockchainProvider>
+					<Web3Provider>{children}</Web3Provider>
+				</BlockchainProvider>
+			</QueryProvider>
+		</PonderProvider>
 	);
 };
 

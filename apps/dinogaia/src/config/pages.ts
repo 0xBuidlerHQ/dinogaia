@@ -11,6 +11,7 @@ const PAGES = {
 	jobs: "/jobs",
 	auctions: "/auctions",
 	bank: "/bank",
+	stats: "/stats",
 
 	ranking: "/ranking",
 } as const;

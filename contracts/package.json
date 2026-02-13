@@ -11,7 +11,7 @@
 	},
 	"scripts": {
 		"dev": "(sleep 5 && make deploy && pnpm build-all) & make dev",
-		"build-all": "pnpm build-contract && pnpm build-wagmi && pnpm build-types",
+		"build-all": "pnpm build-wagmi && pnpm build-types",
 		"build-contract": "make build",
 		"build-wagmi": "pnpm wagmi generate",
 		"build-types": "pnpm tsx ts/script.ts"

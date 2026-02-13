@@ -1,9 +1,14 @@
 {
-	"name": "subgraph",
+	"name": "@0xbuidlerhq/dinogaia.subgraph",
 	"private": true,
 	"type": "module",
+	"main": "./ponder.schema.ts",
+	"types": "./ponder.schema.ts",
+	"exports": {
+		".": "./ponder.schema.ts"
+	},
 	"scripts": {
-		"dev": "sleep 10 && ponder dev",
+		"dev": "PORT=8000 ponder dev",
 		"start": "ponder start",
 		"db": "ponder db",
 		"codegen": "ponder codegen",

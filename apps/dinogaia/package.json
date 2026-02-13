@@ -10,8 +10,11 @@
 	},
 	"dependencies": {
 		"@0xbuidlerhq/dinogaia.contracts": "workspace:*",
+		"@0xbuidlerhq/dinogaia.subgraph": "workspace:*",
 		"@0xbuidlerhq/ui": "workspace:*",
 		"@icons-pack/react-simple-icons": "^13.7.0",
+		"@ponder/client": "^0.16.3",
+		"@ponder/react": "^0.16.3",
 		"@react-spring/web": "10.0.1",
 		"@react-three/drei": "^10.7.7",
 		"@react-three/fiber": "^9.5.0",

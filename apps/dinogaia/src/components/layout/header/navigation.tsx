@@ -35,6 +35,10 @@ const pages = [
 		title: "Casino",
 		href: PAGES.casino,
 	},
+	{
+		title: "Stats",
+		href: PAGES.stats,
+	},
 ];
 
 const Navigation = () => {

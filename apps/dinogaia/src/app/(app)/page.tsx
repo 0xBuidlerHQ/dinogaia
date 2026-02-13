@@ -17,6 +17,7 @@ import { Container } from "@0xbuidlerhq/ui/system/base/container";
 import { H1, H1_8, H4, H5, H6, H7 } from "@0xbuidlerhq/ui/system/base/typography";
 import { ButtonBase } from "@0xbuidlerhq/ui/system/buttons/ButtonBase";
 import ProgressBar from "@components/ProgressBar";
+import { schema } from "@config/providers/ponder";
 import { useDinoActions } from "@features/dinos/hooks/useDinoActions";
 import type { Dino } from "@features/dinos/hooks/useDinoFactory";
 import { JobsRegistry } from "@features/dinos/hooks/useDinoJobsRegistry";
@@ -25,6 +26,7 @@ import { jobsManager } from "@features/dinos/hooks/useJobsManager";
 import { SpeciesRegistry } from "@features/dinos/hooks/useSpeciesRegistry";
 import { useItems } from "@features/items/useItems";
 import { useDino } from "@hooks/useDino";
+import { usePonderQuery } from "@ponder/react";
 import {
 	IconBow,
 	IconBuildingStore,
@@ -431,11 +433,18 @@ const DinoScene = () => {
 const Page = () => {
 	const { dino, dinoSpecies } = useDino();
 
+	console.log("ici");
+
+	const { data, isLoading, error } = usePonderQuery({
+		queryFn: (db) => db.select().from(schema.dinoCreatedEvent).limit(10),
+	});
+
+	console.log(data);
+
 	return (
 		<Container className="">
 			<Box className="border-x border-muted">
 				<Box className="grid grid-cols-12">
-					{/*  */}
 					<Box className="col-span-6">
 						<DinoScene />
 					</Box>
@@ -466,6 +475,10 @@ const Page = () => {
 					</Box>
 				</Box>
 			</Box>
+
+			{data?.map((item) => {
+				return <Box key={item.dinoId}>{String(item.dinoId)}</Box>;
+			})}
 		</Container>
 	);
 };
