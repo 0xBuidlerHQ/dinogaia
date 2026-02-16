@@ -37,5 +37,10 @@ ponder.on("DinoFactory:DinoCreated", async ({ event, context }) => {
 		weight: dinoProfile.weight,
 		level: dinoProfile.level,
 		xp: dinoProfile.xp,
+		//
+		force: dinoProfile.stats.force,
+		endurance: dinoProfile.stats.endurance,
+		agility: dinoProfile.stats.agility,
+		intelligence: dinoProfile.stats.intelligence,
 	});
 });

@@ -20,4 +20,9 @@ export const dino = onchainTable("dino", (t) => ({
 	weight: t.bigint(),
 	level: t.bigint(),
 	xp: t.bigint(),
+	//
+	force: t.integer(),
+	endurance: t.integer(),
+	agility: t.integer(),
+	intelligence: t.integer(),
 }));

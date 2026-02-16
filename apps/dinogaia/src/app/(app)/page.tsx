@@ -436,10 +436,10 @@ const Page = () => {
 	console.log("ici");
 
 	const { data, isLoading, error } = usePonderQuery({
-		queryFn: (db) => db.select().from(schema.dinoCreatedEvent).limit(10),
+		queryFn: (db) => db.select().from(schema.dino),
 	});
 
-	console.log(data);
+	const alpha = data?.[0];
 
 	return (
 		<Container className="">
@@ -451,25 +451,25 @@ const Page = () => {
 
 					<Box className="col-span-6">
 						<DinoStats
-							name={dino?.dinoGenesis.name}
-							age={timestampToAge(dino?.dinoGenesis.birthTimestamp ?? 0n)}
-							species={dinoSpecies?.name}
+							name={alpha?.name}
+							age={timestampToAge(alpha?.birthTimestamp ?? 0n)}
+							species={alpha?.speciesId}
 							vitals={{
-								life: Number(dino?.dinoProfile.health ?? 0n),
+								life: Number(alpha?.health ?? 0n),
 								lifeMax: 100,
 								magic: 100,
 								magicMax: 100,
 							}}
 							state={{
-								hungry: true,
-								thirsty: true,
-								sick: true,
+								hunger: alpha?.hunger,
+								thirsty: alpha?.thirst,
+								sick: false,
 							}}
 							characteristics={{
-								force: 10,
-								endurance: 50,
-								agility: 20,
-								intelligence: 67,
+								force: alpha?.force,
+								endurance: alpha?.endurance,
+								agility: alpha?.agility,
+								intelligence: alpha?.intelligence,
 							}}
 						/>
 					</Box>

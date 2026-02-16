@@ -19,15 +19,6 @@ export namespace DinoAccount {
 	};
 }
 
-export namespace DinoFactory {
-	export type Dino = {
-		dinoId: bigint;
-		dinoAccount: Address;
-		dinoGenesis: DinoGenesis.Genesis;
-		dinoProfile: DinoProfile.Profile;
-	};
-}
-
 export namespace DinoGenesis {
 	export type Genesis = {
 		_initialized: boolean;
@@ -38,18 +29,6 @@ export namespace DinoGenesis {
 	export type GenesisParams = {
 		name: string;
 		speciesId: bigint;
-	};
-}
-
-export namespace DinoProfile {
-	export type Profile = {
-		alive: boolean;
-		health: bigint;
-		hunger: boolean;
-		thirst: boolean;
-		weight: bigint;
-		level: bigint;
-		xp: bigint;
 	};
 }
 

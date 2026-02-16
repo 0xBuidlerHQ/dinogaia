@@ -31,6 +31,8 @@ contract DinoProfile is AccessControl {
         //
         uint256 level;
         uint256 xp;
+        //
+        SpeciesRegistry.Stats stats;
     }
 
     /**
@@ -94,7 +96,14 @@ contract DinoProfile is AccessControl {
             weight: 1,
             thirst: true,
             level: 1,
-            xp: 0
+            xp: 0,
+            stats: SpeciesRegistry.Stats({
+                //
+                force: 0,
+                endurance: 0,
+                agility: 0,
+                intelligence: 0
+            })
         });
 
         emit InitializedProfile({dinoId: _dinoId});

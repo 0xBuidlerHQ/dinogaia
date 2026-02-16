@@ -1012,7 +1012,7 @@ export const caveModuleAbi = [
  *
  */
 export const caveModuleAddress = {
-  31337: '0x10bB6728C062a1BC0bb1BCA461D6FF7400434C61',
+  31337: '0xF10C4766A8f916d1c95B10E68b61dBe8f10BC17a',
 } as const
 
 /**
@@ -1817,6 +1817,21 @@ export const dinoFactoryAbi = [
               { name: 'weight', internalType: 'uint256', type: 'uint256' },
               { name: 'level', internalType: 'uint256', type: 'uint256' },
               { name: 'xp', internalType: 'uint256', type: 'uint256' },
+              {
+                name: 'stats',
+                internalType: 'struct SpeciesRegistry.Stats',
+                type: 'tuple',
+                components: [
+                  { name: 'force', internalType: 'uint8', type: 'uint8' },
+                  { name: 'endurance', internalType: 'uint8', type: 'uint8' },
+                  { name: 'agility', internalType: 'uint8', type: 'uint8' },
+                  {
+                    name: 'intelligence',
+                    internalType: 'uint8',
+                    type: 'uint8',
+                  },
+                ],
+              },
             ],
           },
         ],
@@ -1867,6 +1882,21 @@ export const dinoFactoryAbi = [
               { name: 'weight', internalType: 'uint256', type: 'uint256' },
               { name: 'level', internalType: 'uint256', type: 'uint256' },
               { name: 'xp', internalType: 'uint256', type: 'uint256' },
+              {
+                name: 'stats',
+                internalType: 'struct SpeciesRegistry.Stats',
+                type: 'tuple',
+                components: [
+                  { name: 'force', internalType: 'uint8', type: 'uint8' },
+                  { name: 'endurance', internalType: 'uint8', type: 'uint8' },
+                  { name: 'agility', internalType: 'uint8', type: 'uint8' },
+                  {
+                    name: 'intelligence',
+                    internalType: 'uint8',
+                    type: 'uint8',
+                  },
+                ],
+              },
             ],
           },
         ],
@@ -1929,7 +1959,7 @@ export const dinoFactoryAbi = [
  *
  */
 export const dinoFactoryAddress = {
-  31337: '0xF87a7ee29D14bCcE310216B73E14ca221671AC14',
+  31337: '0xf200184a573B2dA9d52dF7768a3DE2DEA888665d',
 } as const
 
 /**
@@ -2249,6 +2279,17 @@ export const dinoProfileAbi = [
           { name: 'weight', internalType: 'uint256', type: 'uint256' },
           { name: 'level', internalType: 'uint256', type: 'uint256' },
           { name: 'xp', internalType: 'uint256', type: 'uint256' },
+          {
+            name: 'stats',
+            internalType: 'struct SpeciesRegistry.Stats',
+            type: 'tuple',
+            components: [
+              { name: 'force', internalType: 'uint8', type: 'uint8' },
+              { name: 'endurance', internalType: 'uint8', type: 'uint8' },
+              { name: 'agility', internalType: 'uint8', type: 'uint8' },
+              { name: 'intelligence', internalType: 'uint8', type: 'uint8' },
+            ],
+          },
         ],
       },
     ],
@@ -2300,6 +2341,17 @@ export const dinoProfileAbi = [
       { name: 'weight', internalType: 'uint256', type: 'uint256' },
       { name: 'level', internalType: 'uint256', type: 'uint256' },
       { name: 'xp', internalType: 'uint256', type: 'uint256' },
+      {
+        name: 'stats',
+        internalType: 'struct SpeciesRegistry.Stats',
+        type: 'tuple',
+        components: [
+          { name: 'force', internalType: 'uint8', type: 'uint8' },
+          { name: 'endurance', internalType: 'uint8', type: 'uint8' },
+          { name: 'agility', internalType: 'uint8', type: 'uint8' },
+          { name: 'intelligence', internalType: 'uint8', type: 'uint8' },
+        ],
+      },
     ],
     stateMutability: 'view',
   },
@@ -2458,7 +2510,7 @@ export const dinoProfileAbi = [
  *
  */
 export const dinoProfileAddress = {
-  31337: '0xdb33F664757BD442802Eae41A1197bf8dD973594',
+  31337: '0x6FC766dCC0E42064ed1dE4D2479930A3e0a0928D',
 } as const
 
 /**
@@ -7552,7 +7604,7 @@ export const jobsModuleAbi = [
  *
  */
 export const jobsModuleAddress = {
-  31337: '0x80773314131CD089dDCfb3eE747bF6b4562D349C',
+  31337: '0x198005CcF8AE61e2c3960C1820601Be16B4d69FB',
 } as const
 
 /**
@@ -8403,7 +8455,7 @@ export const shopModuleAbi = [
  *
  */
 export const shopModuleAddress = {
-  31337: '0x0214F29d8ba5D2d676D447C5751FBB773CB52c8c',
+  31337: '0xdA68E42200EDc37dA334724D0f28C933dfCE4221',
 } as const
 
 /**
