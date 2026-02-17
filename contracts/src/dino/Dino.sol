@@ -14,9 +14,9 @@ contract Dino is AccessControl {
     bytes32 public constant FACTORY_ROLE = keccak256("FACTORY_ROLE");
 
     /**
-     * @dev Struct GenesisParams.
+     * @dev Struct Params.
      */
-    struct s_GenesisParams {
+    struct Params {
         string name;
         uint256 speciesId;
     }
@@ -24,7 +24,7 @@ contract Dino is AccessControl {
     /**
      * @dev Struct Genesis.
      */
-    struct s_Genesis {
+    struct Genesis {
         bool _initialized;
         //
         string name;
@@ -33,28 +33,59 @@ contract Dino is AccessControl {
     }
 
     /**
-     * @dev Struct Dino.
+     * @dev Struct Stats.
      */
-    struct s_Dino {
+    struct Stats {
+        uint8 force;
+        uint8 endurance;
+        uint8 agility;
+        uint8 intelligence;
+    }
+
+    /**
+     * @dev Struct Status.
+     */
+    struct Status {
         bool alive;
-        //
-        uint256 health;
-        //
         bool hunger;
         bool thirst;
-        //
-        uint256 weight;
-        //
-        uint256 level;
+    }
+
+    /**
+     * @dev Struct Progress.
+     */
+    struct Progress {
         uint256 xp;
+        uint256 weight;
+        uint256 health;
+        uint256 level;
+    }
+
+    /**
+     * @dev Struct Dino.
+     */
+    struct DinoData {
+        Genesis genesis;
         //
-        SpeciesRegistry.Stats stats;
+        Progress progress;
+        Status status;
+        Stats stats;
     }
 
     /**
      * @dev Mappings.
      */
-    mapping(uint256 => s_Dino) public dinos;
+    mapping(uint256 => DinoData) public dinos;
+
+    /**
+     * @dev Events.
+     */
+    event DinoInitialized(uint256 indexed dinoId, DinoData indexed dino);
+
+    /**
+     * @dev Errors.
+     */
+    error DinoAlreadyInitialized();
 
     /**
      * @dev Constructor.
@@ -72,22 +103,49 @@ contract Dino is AccessControl {
     /**
      * @dev
      */
-    function getDino(uint256 _dinoId) external view returns (s_Dino memory dino) {
+    function getDino(uint256 _dinoId) external view returns (DinoData memory dino) {
         dino = dinos[_dinoId];
     }
 
     /**
      * @dev
      */
-    function initialize(uint256 _dinoId, GenesisParams calldata _dino) external onlyRole(FACTORY_ROLE) {
-        if (dinos[_dinoId]._initialized) revert GenesisAlreadyInitialized();
+    function initialize(uint256 _dinoId, Params calldata _params) external onlyRole(FACTORY_ROLE) {
+        DinoData memory dino = dinos[_dinoId];
 
-        _setName(_dinoId, _genesisParams.name);
-        _setSpeciesId(_dinoId, _genesisParams.speciesId);
-        _setBirth(_dinoId, block.timestamp);
+        if (dino.genesis._initialized) revert DinoAlreadyInitialized();
 
-        genesisOf[_dinoId]._initialized = true;
+        dino.genesis = Genesis({
+            //
+            _initialized: true,
+            name: _params.name,
+            speciesId: _params.speciesId,
+            birthTimestamp: block.timestamp
+        });
 
-        emit InitializedGenesis({dinoId: _dinoId, genesis: genesisOf[_dinoId]});
+        dino.progress = Progress({
+            //
+            xp: 1,
+            weight: 1,
+            health: 100,
+            level: 1
+        });
+
+        dino.status = Status({
+            //
+            alive: true,
+            hunger: true,
+            thirst: true
+        });
+
+        dino.stats = Stats({
+            //
+            force: 0,
+            endurance: 0,
+            agility: 0,
+            intelligence: 0
+        });
+
+        emit DinoInitialized({dinoId: _dinoId, dino: dino});
     }
 }
