@@ -11,8 +11,7 @@ import {JobsRegistry} from "@registry/JobsRegistry.sol";
 import {SpeciesRegistry} from "@registry/SpeciesRegistry.sol";
 
 import {DinoFactory} from "@dino/DinoFactory.sol";
-import {DinoGenesis} from "@dino/DinoGenesis.sol";
-import {DinoProfile} from "@dino/DinoProfile.sol";
+import {Dino} from "@dino/Dino.sol";
 
 import {JobsModule} from "@modules/jobs/JobsModule.sol";
 import {ShopModule} from "@modules/shop/ShopModule.sol";
@@ -55,13 +54,12 @@ contract Deploy is Actors, Packages {
         /**
          * @dev Dino Basis.
          */
-        DinoGenesis dinoGenesis = new DinoGenesis{salt: SALT}(deployer.addr, speciesRegistry);
-        DinoProfile dinoProfile = new DinoProfile{salt: SALT}(deployer.addr);
+        Dino dino = new Dino{salt: SALT}(deployer.addr, speciesRegistry);
 
         /**
          * @dev Factories.
          */
-        DinoFactory dinoFactory = new DinoFactory{salt: SALT}(dinoERC721, dinoGenesis, dinoProfile);
+        DinoFactory dinoFactory = new DinoFactory{salt: SALT}(dinoERC721, dino);
 
         /**
          * @dev Items Set.
@@ -75,7 +73,7 @@ contract Deploy is Actors, Packages {
         ShopModule shopModule =
             new ShopModule{salt: SALT}(deployer.addr, emeraldERC20, dinoFactory, itemsSet0, deployer.addr);
         CaveModule caveModule =
-            new CaveModule{salt: SALT}(deployer.addr, dinoFactory, emeraldERC20, itemsSet0, dinoProfile, deployer.addr);
+            new CaveModule{salt: SALT}(deployer.addr, dinoFactory, emeraldERC20, itemsSet0, dino, deployer.addr);
 
         stop();
 
@@ -93,9 +91,8 @@ contract Deploy is Actors, Packages {
         emeraldERC20.grantRole(emeraldERC20.TRANSFER_ROLE(), address(shopModule));
         emeraldERC20.grantRole(emeraldERC20.TRANSFER_ROLE(), address(caveModule));
 
-        dinoGenesis.grantRole(dinoGenesis.FACTORY_ROLE(), address(dinoFactory));
-        dinoProfile.grantRole(dinoProfile.FACTORY_ROLE(), address(dinoFactory));
-        dinoProfile.grantRole(dinoProfile.STATUS_ROLE(), address(caveModule));
+        dino.grantRole(dino.FACTORY_ROLE(), address(dinoFactory));
+        dino.grantRole(dino.STATUS_ROLE(), address(caveModule));
 
         itemsSet0.grantRole(itemsSet0.MINTER_ROLE(), address(shopModule));
         itemsSet0.grantRole(itemsSet0.MINTER_ROLE(), address(caveModule));
@@ -108,8 +105,7 @@ contract Deploy is Actors, Packages {
         addDeployment("EmeraldERC20", address(emeraldERC20));
         addDeployment("JobsRegistry", address(jobsRegistry));
         addDeployment("SpeciesRegistry", address(speciesRegistry));
-        addDeployment("DinoGenesis", address(dinoGenesis));
-        addDeployment("DinoProfile", address(dinoProfile));
+        addDeployment("Dino", address(dino));
         addDeployment("DinoFactory", address(dinoFactory));
         addDeployment("ItemsSet0", address(itemsSet0));
         addDeployment("JobsModule", address(jobsModule));

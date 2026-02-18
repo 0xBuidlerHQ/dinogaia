@@ -12,6 +12,7 @@ contract Dino is AccessControl {
      * @dev Constants.
      */
     bytes32 public constant FACTORY_ROLE = keccak256("FACTORY_ROLE");
+    bytes32 public constant STATUS_ROLE = keccak256("STATUS_ROLE");
 
     /**
      * @dev Struct Params.
@@ -36,6 +37,8 @@ contract Dino is AccessControl {
      * @dev Struct Stats.
      */
     struct Stats {
+        uint256 health;
+        //
         uint8 force;
         uint8 endurance;
         uint8 agility;
@@ -57,7 +60,6 @@ contract Dino is AccessControl {
     struct Progress {
         uint256 xp;
         uint256 weight;
-        uint256 health;
         uint256 level;
     }
 
@@ -127,7 +129,6 @@ contract Dino is AccessControl {
             //
             xp: 1,
             weight: 1,
-            health: 100,
             level: 1
         });
 
@@ -140,6 +141,7 @@ contract Dino is AccessControl {
 
         dino.stats = Stats({
             //
+            health: 100,
             force: 0,
             endurance: 0,
             agility: 0,
@@ -147,5 +149,50 @@ contract Dino is AccessControl {
         });
 
         emit DinoInitialized({dinoId: _dinoId, dino: dino});
+    }
+
+    /**
+     * @dev TODO.
+     */
+    function addSigned(uint256 a, int256 b) internal pure returns (uint256) {
+        if (b >= 0) {
+            return a + uint256(b);
+        } else {
+            uint256 absB = uint256(-b);
+            require(a >= absB, "uint underflow");
+            return a - absB;
+        }
+    }
+
+    /**
+     * @dev
+     */
+    function updateWeight(uint256 _dinoId, int256 _delta) external onlyRole(STATUS_ROLE) {
+        DinoData storage dinoData = dinos[_dinoId];
+        dinoData.progress.weight = addSigned(dinoData.progress.weight, _delta);
+    }
+
+    /**
+     * @dev
+     */
+    function updateHealth(uint256 _dinoId, int256 _delta) external onlyRole(STATUS_ROLE) {
+        DinoData storage dinoData = dinos[_dinoId];
+        dinoData.stats.health = addSigned(dinoData.stats.health, _delta);
+    }
+
+    /**
+     * @dev
+     */
+    function updateHunger(uint256 _dinoId, bool _hunger) external onlyRole(STATUS_ROLE) {
+        DinoData storage dinoData = dinos[_dinoId];
+        dinoData.status.hunger = _hunger;
+    }
+
+    /**
+     * @dev
+     */
+    function updateThirst(uint256 _dinoId, bool _thirst) external onlyRole(STATUS_ROLE) {
+        DinoData storage dinoData = dinos[_dinoId];
+        dinoData.status.thirst = _thirst;
     }
 }

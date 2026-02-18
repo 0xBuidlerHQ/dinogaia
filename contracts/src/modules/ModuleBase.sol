@@ -41,8 +41,8 @@ abstract contract ModuleBase is AccessControl {
     /**
      * @dev
      */
-    function getAuthorizedDino(uint256 _dinoId) internal view returns (DinoFactory.Dino memory dino) {
-        dino = dinoFactory.getDino(_dinoId);
-        if (address(dino.dinoAccount) != msg.sender) revert NotDinoAccount();
+    function getAuthorizedDino(uint256 _dinoId) internal view returns (DinoFactory.DinoContext memory dinoContext) {
+        dinoContext = dinoFactory.getDinoContext(_dinoId);
+        if (address(dinoContext.dinoAccount) != msg.sender) revert NotDinoAccount();
     }
 }

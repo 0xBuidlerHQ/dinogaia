@@ -3,7 +3,7 @@ pragma solidity ^0.8.20;
 
 import {EmeraldERC20} from "@economy/tokens/EmeraldERC20.sol";
 import {ItemsSetBase} from "@items/sets/ItemsSetBase.sol";
-import {DinoProfile} from "@dino/DinoProfile.sol";
+import {Dino} from "@dino/Dino.sol";
 import {DinoFactory} from "@dino/DinoFactory.sol";
 import {ModuleBase} from "@modules/ModuleBase.sol";
 
@@ -16,7 +16,7 @@ contract CaveBase is ModuleBase {
      */
     EmeraldERC20 public immutable emerald;
     ItemsSetBase public immutable items;
-    DinoProfile public immutable dinoProfile;
+    Dino public immutable dino;
 
     /**
      * @dev Variables.
@@ -32,12 +32,12 @@ contract CaveBase is ModuleBase {
         //
         EmeraldERC20 _emerald,
         ItemsSetBase _items,
-        DinoProfile _dinoProfile,
+        Dino _dino,
         address _treasury
     ) ModuleBase(_owner, _dinoFactory) {
         emerald = _emerald;
         items = _items;
-        dinoProfile = _dinoProfile;
+        dino = _dino;
         treasury = _treasury;
     }
 

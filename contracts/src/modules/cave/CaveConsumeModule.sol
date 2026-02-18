@@ -2,7 +2,7 @@
 pragma solidity ^0.8.20;
 
 import {ItemsSetBase} from "@items/sets/ItemsSetBase.sol";
-import {DinoProfile} from "@dino/DinoProfile.sol";
+import {Dino} from "@dino/Dino.sol";
 import {DinoFactory} from "@dino/DinoFactory.sol";
 import {ModuleBase} from "@modules/ModuleBase.sol";
 import {CaveBase} from "@modules/cave/CaveBase.sol";
@@ -32,7 +32,7 @@ abstract contract CaveConsumeModule is ModuleBase, CaveBase {
     {
         if (_amount <= 0) revert NoEffect();
 
-        DinoFactory.Dino memory dino = getAuthorizedDino(_dinoId);
+        DinoFactory.DinoContext memory dinoContext = getAuthorizedDino(_dinoId);
 
         ItemsSetBase.ItemBase memory item = _itemsSet.getItem(_itemId);
         if (item.itemType != ItemsSetBase.ItemBaseType.Consumable) revert NoEffect();
@@ -53,7 +53,7 @@ abstract contract CaveConsumeModule is ModuleBase, CaveBase {
              * @dev EffectKind Weight.
              */
             if (effect.kind == ItemsSetBase.EffectKind.Weight) {
-                dinoProfile.updateWeight(_dinoId, effect.magnitude * _amount);
+                dino.updateWeight(_dinoId, effect.magnitude * _amount);
                 break;
             }
 
@@ -61,7 +61,7 @@ abstract contract CaveConsumeModule is ModuleBase, CaveBase {
              * @dev EffectKind Health.
              */
             if (effect.kind == ItemsSetBase.EffectKind.Health) {
-                dinoProfile.updateHealth(_dinoId, effect.magnitude * _amount);
+                dino.updateHealth(_dinoId, effect.magnitude * _amount);
                 break;
             }
 
@@ -69,14 +69,14 @@ abstract contract CaveConsumeModule is ModuleBase, CaveBase {
              * @dev EffectKind ClearHunger.
              */
             if (effect.kind == ItemsSetBase.EffectKind.ClearHunger) {
-                dinoProfile.updateHunger(_dinoId, false);
+                dino.updateHunger(_dinoId, false);
             }
 
             /**
              * @dev EffectKind ClearThirst.
              */
             if (effect.kind == ItemsSetBase.EffectKind.ClearThirst) {
-                dinoProfile.updateThirst(_dinoId, false);
+                dino.updateThirst(_dinoId, false);
                 break;
             }
         }

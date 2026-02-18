@@ -11,12 +11,13 @@ import {Dino} from "@dino/Dino.sol";
  */
 contract DinoFactory {
     /**
-     * @dev Struct Dino.
+     * @dev Struct DinoContext.
      */
-    struct Dino {
+    struct DinoContext {
         uint256 dinoId;
+        //
         DinoAccount dinoAccount;
-        Dino dino;
+        Dino.DinoData dino;
     }
 
     /**
@@ -28,7 +29,7 @@ contract DinoFactory {
     /**
      * @dev Events.
      */
-    event DinoCreated(address indexed owner, uint256 indexed dinoId, DinoAccount indexed account);
+    event DinoCreated(address indexed owner, DinoContext dinoContext);
 
     /**
      * @dev Constructor.
@@ -44,40 +45,33 @@ contract DinoFactory {
     /**
      * @dev
      */
-    function mint(Dino.Params calldata params) external returns (uint256 dinoId, DinoAccount dinoAccount) {
+    function mint(Dino.Params calldata _params) external returns (uint256 dinoId, DinoAccount dinoAccount) {
         dinoId = dinoERC721.mint(msg.sender);
         dinoAccount = new DinoAccount{salt: _generateSalt(dinoId)}(dinoId, address(dinoERC721));
 
-        dinoGenesis.initialize(dinoId, genesisDataParams);
-        dinoProfile.initialize(dinoId);
+        dino.initialize(dinoId, _params);
 
-        emit DinoCreated(msg.sender, dinoId, dinoAccount);
+        emit DinoCreated(
+            msg.sender,
+            DinoContext({
+                dinoId: dinoId,
+                //
+                dinoAccount: dinoAccount,
+                dino: dino.getDino(dinoId)
+            })
+        );
     }
 
     /**
      * @dev
      */
-    function getDino(uint256 _dinoId) public view returns (Dino memory dino) {
-        dino = Dino({
+    function getDinoContext(uint256 _dinoId) public view returns (DinoContext memory dinoContext) {
+        dinoContext = DinoContext({
             dinoId: _dinoId,
             //
             dinoAccount: _getDinoAccount(_dinoId),
-            dinoGenesis: dinoGenesis.getGenesis(_dinoId),
-            dinoProfile: dinoProfile.getProfile(_dinoId)
+            dino: dino.getDino(_dinoId)
         });
-    }
-
-    /**
-     * @dev
-     */
-    function getDinosOfOwner(address owner) external view returns (Dino[] memory dinosOfOwner) {
-        uint256 balance = dinoERC721.balanceOf(owner);
-        dinosOfOwner = new Dino[](balance);
-
-        for (uint256 i = 0; i < balance; i++) {
-            uint256 dinoId = dinoERC721.tokenOfOwnerByIndex(owner, i);
-            dinosOfOwner[i] = getDino(dinoId);
-        }
     }
 
     /**
