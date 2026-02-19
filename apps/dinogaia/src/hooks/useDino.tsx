@@ -1,44 +1,44 @@
 import {
-	useReadDinoFactoryGetDinosOfOwner,
 	useReadEmeraldErc20BalanceOf,
 	useReadJobsModuleJobOf,
 	useReadJobsRegistryGetJob,
-	useReadSpeciesRegistryGetAllSpecies,
 } from "@0xbuidlerhq/dinogaia.contracts";
+import { schema } from "@config/providers/ponder";
 import { useWeb3 } from "@config/providers/web3";
+import { eq } from "@ponder/client";
+import { usePonderQuery } from "@ponder/react";
 import { useStore } from "@stores/useStore";
 
-const useDino = () => {
+const useDinogaia = () => {
 	const { eoa } = useWeb3();
 
 	const { activeDinoId } = useStore();
 
-	const dinosOfOwner = useReadDinoFactoryGetDinosOfOwner({ args: [eoa.address!] });
+	const enabled = !!eoa.address;
 
-	const dino = dinosOfOwner.data?.find((d) => d.dinoId === activeDinoId);
-	const queryEnabled = !!dino;
+	const queryMyDinos = usePonderQuery({
+		queryFn: (db) => db.select().from(schema.dino).where(eq(schema.dino.owner, eoa.address!)),
+		enabled,
+	});
+
+	const dino = queryMyDinos.data?.find((d) => d.dinoId === activeDinoId);
 
 	const dinoEmeraldBalance = useReadEmeraldErc20BalanceOf({
-		args: [dino?.dinoAccount!],
-		query: { enabled: queryEnabled },
+		args: [dino?.account!],
+		query: { enabled },
 	});
 
 	const dinoJobId = useReadJobsModuleJobOf({
 		args: [activeDinoId!],
-		query: { enabled: queryEnabled },
+		query: { enabled },
 	});
 
 	const dinoJob = useReadJobsRegistryGetJob({
 		args: [dinoJobId.data!],
-		query: { enabled: queryEnabled },
+		query: { enabled },
 	});
 
-	const allDinoSpecies = useReadSpeciesRegistryGetAllSpecies({});
-	const dinoSpecies = allDinoSpecies.data?.find(
-		(_, index) => dino?.dinoGenesis.speciesId === BigInt(index),
-	);
-
-	return { dino, dinoSpecies, dinoEmeraldBalance, dinoJob };
+	return { dino, dinoEmeraldBalance, dinoJob };
 };
 
-export { useDino };
+export { useDinogaia };

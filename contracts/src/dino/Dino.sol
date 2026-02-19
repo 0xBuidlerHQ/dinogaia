@@ -90,13 +90,20 @@ contract Dino is AccessControl {
     error DinoAlreadyInitialized();
 
     /**
+     * @dev Immutables.
+     */
+    SpeciesRegistry immutable speciesRegistry;
+
+    /**
      * @dev Constructor.
      */
-    constructor(address _owner) {
+    constructor(address _owner, SpeciesRegistry _speciesRegistry) {
         /**
          * @dev Grant `DEFAULT_ADMIN_ROLE` to `owner`.
          */
         _grantRole(DEFAULT_ADMIN_ROLE, _owner);
+
+        speciesRegistry = _speciesRegistry;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -107,13 +114,20 @@ contract Dino is AccessControl {
      */
     function getDino(uint256 _dinoId) external view returns (DinoData memory dino) {
         dino = dinos[_dinoId];
+
+        SpeciesRegistry.Species memory species = speciesRegistry.getSpecies(dino.genesis.speciesId);
+
+        dino.stats.agility = dino.stats.agility += species.stats.agility;
+        dino.stats.endurance = dino.stats.endurance += species.stats.endurance;
+        dino.stats.force = dino.stats.force += species.stats.force;
+        dino.stats.intelligence = dino.stats.intelligence += species.stats.intelligence;
     }
 
     /**
      * @dev
      */
     function initialize(uint256 _dinoId, Params calldata _params) external onlyRole(FACTORY_ROLE) {
-        DinoData memory dino = dinos[_dinoId];
+        DinoData storage dino = dinos[_dinoId];
 
         if (dino.genesis._initialized) revert DinoAlreadyInitialized();
 

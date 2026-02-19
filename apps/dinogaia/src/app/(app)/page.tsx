@@ -17,7 +17,6 @@ import { Container } from "@0xbuidlerhq/ui/system/base/container";
 import { H1, H1_8, H4, H5, H6, H7 } from "@0xbuidlerhq/ui/system/base/typography";
 import { ButtonBase } from "@0xbuidlerhq/ui/system/buttons/ButtonBase";
 import ProgressBar from "@components/ProgressBar";
-import { schema } from "@config/providers/ponder";
 import { useDinoActions } from "@features/dinos/hooks/useDinoActions";
 import type { Dino } from "@features/dinos/hooks/useDinoFactory";
 import { JobsRegistry } from "@features/dinos/hooks/useDinoJobsRegistry";
@@ -25,8 +24,7 @@ import { EmeraldERC20 } from "@features/dinos/hooks/useEmeraldERC20";
 import { jobsManager } from "@features/dinos/hooks/useJobsManager";
 import { SpeciesRegistry } from "@features/dinos/hooks/useSpeciesRegistry";
 import { useItems } from "@features/items/useItems";
-import { useDino } from "@hooks/useDino";
-import { usePonderQuery } from "@ponder/react";
+import { useDinogaia } from "@hooks/useDino";
 import {
 	IconBow,
 	IconBuildingStore,
@@ -431,15 +429,9 @@ const DinoScene = () => {
 };
 
 const Page = () => {
-	const { dino, dinoSpecies } = useDino();
+	const a = useDinogaia();
 
-	console.log("ici");
-
-	const { data, isLoading, error } = usePonderQuery({
-		queryFn: (db) => db.select().from(schema.dino),
-	});
-
-	const alpha = data?.[0];
+	const alpha = a.dino;
 
 	return (
 		<Container className="">

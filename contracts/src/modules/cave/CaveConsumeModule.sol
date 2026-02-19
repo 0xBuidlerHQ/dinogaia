@@ -37,9 +37,9 @@ abstract contract CaveConsumeModule is ModuleBase, CaveBase {
         ItemsSetBase.ItemBase memory item = _itemsSet.getItem(_itemId);
         if (item.itemType != ItemsSetBase.ItemBaseType.Consumable) revert NoEffect();
 
-        _itemsSet.burn(address(dino.dinoAccount), _itemId, 1);
+        _itemsSet.burn(address(dinoContext.dinoAccount), _itemId, 1);
 
-        _applyConsumableEffects(dino.dinoId, item.effects, _amount);
+        _applyConsumableEffects(dinoContext.dinoId, item.effects, _amount);
     }
 
     /**
