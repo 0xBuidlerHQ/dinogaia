@@ -5,7 +5,8 @@ import { cn } from "@0xbuidlerhq/ui/shadcn/lib/utils";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { Footer } from "@components/layout/footer";
 import { Header } from "@components/layout/header";
-import { Providers } from "@config/providers";
+import { Providers } from "@providers/index";
+
 import type { PropsWithChildren } from "react";
 
 export { metadata } from "./metadata";

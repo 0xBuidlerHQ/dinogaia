@@ -2,8 +2,8 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 type StoreState = {
-	activeDinoId: bigint | null;
-	setActiveDinoId: (id: bigint | null) => void;
+	activeDinoId: bigint | undefined;
+	setActiveDinoId: (id: bigint | undefined) => void;
 
 	mintModal: boolean;
 	openMintModal: () => void;
@@ -17,7 +17,7 @@ type StoreState = {
 export const useStore = create<StoreState>()(
 	persist(
 		(set) => ({
-			activeDinoId: null,
+			activeDinoId: undefined,
 			setActiveDinoId: (id) => set({ activeDinoId: id }),
 
 			mintModal: false,

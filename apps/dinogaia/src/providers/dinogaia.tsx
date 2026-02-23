@@ -1,0 +1,120 @@
+"use client";
+
+import {
+	useReadDinoGetDino,
+	useReadEmeraldErc20BalanceOf,
+	useReadJobsModuleJobOf,
+	useReadJobsRegistryGetJob,
+} from "@0xbuidlerhq/dinogaia.contracts";
+import { SubgraphQueries } from "@hooks/subgraph";
+import { useWeb3 } from "@providers/web3";
+import { useStore } from "@stores/useStore";
+import React from "react";
+
+/**
+ * @dev useDinogaia hook.
+ */
+const useDinogaiaPrimitive = () => {
+	const { eoa } = useWeb3();
+	const { activeDinoId, setActiveDinoId } = useStore();
+
+	const enabled = !!eoa.address;
+
+	/**
+	 * @dev Global Subgraph Queries.
+	 */
+	const qJobs = SubgraphQueries.useJobs({});
+	const jobs = qJobs.data;
+
+	const qSpecies = SubgraphQueries.useSpecies({});
+	const species = qSpecies.data;
+
+	/**
+	 * @dev Subgraph Queries.
+	 */
+	const qMyDinos = SubgraphQueries.useDinosOfOwner({
+		owner: eoa.address,
+	});
+	const myDinos = qMyDinos.data;
+
+	const currentDinoContext = (() => {
+		if (myDinos) {
+			if (activeDinoId !== undefined && myDinos.length > 0) {
+				let dino = myDinos?.find((d) => d.dinoId === activeDinoId);
+				if (dino) return dino;
+
+				dino = myDinos[0];
+				setActiveDinoId(dino.dinoId);
+				return dino;
+			}
+		}
+	})();
+
+	/**
+	 * @dev OnChain Queries.
+	 */
+	const dinoData = useReadDinoGetDino({
+		args: [currentDinoContext?.dinoId!],
+		query: { enabled },
+	});
+
+	const dinoEmeraldBalance = useReadEmeraldErc20BalanceOf({
+		args: [currentDinoContext?.account!],
+		query: { enabled },
+	});
+
+	const dinoJobId = useReadJobsModuleJobOf({
+		args: [activeDinoId!],
+		query: { enabled },
+	});
+
+	const dinoJob = useReadJobsRegistryGetJob({
+		args: [dinoJobId.data!],
+		query: { enabled },
+	});
+
+	const currentDino = {
+		data: dinoData.data,
+		job: dinoJob.data,
+		emeraldBalance: dinoEmeraldBalance.data,
+	};
+
+	return {
+		jobs,
+		species,
+		//
+		currentDino,
+		myDinos,
+		//
+		q: {
+			qJobs,
+			qSpecies,
+			qMyDinos,
+		},
+	};
+};
+
+/**
+ * @dev useDinogaia context.
+ */
+const DinogaiaContext = React.createContext<ReturnType<typeof useDinogaiaPrimitive> | undefined>(
+	undefined,
+);
+const DinogaiaProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+	const dinogaia = useDinogaiaPrimitive();
+
+	return <DinogaiaContext.Provider value={dinogaia}>{children}</DinogaiaContext.Provider>;
+};
+
+/**
+ * @dev useDinogaia context hook.
+ */
+const useDinogaia = () => {
+	const context = React.useContext(DinogaiaContext);
+	if (context === undefined) {
+		throw new Error("useDinogaia must be used within a DinogaiaProvider");
+	}
+	return context;
+};
+
+export { DinogaiaProvider, useDinogaia };

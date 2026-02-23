@@ -1,34 +1,22 @@
 import { Dialog, DialogContent, DialogTitle } from "@0xbuidlerhq/ui/shadcn/components/dialog";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { ButtonBase } from "@0xbuidlerhq/ui/system/buttons/ButtonBase";
-import { DinoFactory } from "@features/dinos/hooks/useDinoFactory";
-import { SpeciesRegistry } from "@features/dinos/hooks/useSpeciesRegistry";
 import { useMint } from "@features/dinos/mint/useMint";
+import { useDinogaia } from "@providers/dinogaia";
 import { useStore } from "@stores/useStore";
 import React from "react";
 
 const MintModal = () => {
 	const { mint } = useMint();
 
-	const { dinosOfOwner } = DinoFactory.useDinoFactory();
-	const { allSpecies } = SpeciesRegistry.useAllSpecies();
+	const { q, species } = useDinogaia();
 
 	const [dinoName, setDinoName] = React.useState("");
 	const [speciesId, setSpeciesId] = React.useState<bigint>(0n);
 
-	React.useEffect(() => {
-		if (
-			allSpecies.data &&
-			allSpecies.data.length > 0 &&
-			speciesId >= BigInt(allSpecies.data.length)
-		) {
-			setSpeciesId(0n);
-		}
-	}, [allSpecies.data, speciesId]);
-
 	const handleSpeciesChange = (id: number) => setSpeciesId(BigInt(id));
 
-	const canMint = dinoName.length > 0 && (allSpecies.data?.length ?? 0) > 0;
+	const canMint = dinoName.length > 0;
 
 	const { mintModal, closeMintModal } = useStore();
 
@@ -45,7 +33,7 @@ const MintModal = () => {
 					/>
 
 					<Box className="flex flex-wrap gap-3">
-						{allSpecies.data?.map((species, idx) => (
+						{species?.map((species, idx) => (
 							<label key={idx} className="flex items-center gap-2 cursor-pointer">
 								<input
 									type="radio"
@@ -56,9 +44,7 @@ const MintModal = () => {
 								<span>{species.name}</span>
 							</label>
 						))}
-						{!allSpecies.data?.length && (
-							<span className="text-sm text-gray-500">Loading species…</span>
-						)}
+						{!species?.length && <span className="text-sm text-gray-500">Loading species…</span>}
 					</Box>
 				</Box>
 
@@ -67,7 +53,7 @@ const MintModal = () => {
 					disabled={!canMint}
 					onClick={async () => {
 						await mint.writeContractAsync({ args: [{ name: dinoName, speciesId }] });
-						dinosOfOwner.refetch();
+						q.qMyDinos.refetch();
 
 						closeMintModal();
 					}}

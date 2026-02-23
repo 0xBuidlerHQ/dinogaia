@@ -1,10 +1,10 @@
 import {
 	dinoFactoryAbi,
 	dinoFactoryAddress,
-	dinoGenesisAbi,
-	dinoGenesisAddress,
-	dinoProfileAbi,
-	dinoProfileAddress,
+	jobsRegistryAbi,
+	jobsRegistryAddress,
+	speciesRegistryAbi,
+	speciesRegistryAddress,
 } from "@0xbuidlerhq/dinogaia.contracts";
 import { createConfig } from "ponder";
 
@@ -33,22 +33,22 @@ export default createConfig({
 		},
 
 		/**
-		 * @dev DinoGenesis.
+		 * @dev JobsRegistry.
 		 */
-		DinoGenesis: {
+		JobsRegistry: {
 			chain: "anvil",
-			abi: dinoGenesisAbi,
-			address: dinoGenesisAddress[CHAIN_ID],
+			abi: jobsRegistryAbi,
+			address: jobsRegistryAddress[CHAIN_ID],
 			startBlock: "latest",
 		},
 
 		/**
-		 * @dev DinoProfile.
+		 * @dev SpeciesRegistry.
 		 */
-		DinoProfile: {
+		SpeciesRegistry: {
 			chain: "anvil",
-			abi: dinoProfileAbi,
-			address: dinoProfileAddress[CHAIN_ID],
+			abi: speciesRegistryAbi,
+			address: speciesRegistryAddress[CHAIN_ID],
 			startBlock: "latest",
 		},
 	},

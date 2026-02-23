@@ -6,15 +6,15 @@ import { H1 } from "@0xbuidlerhq/ui/system/base/typography";
 import { Header as HeaderPrimitive } from "@0xbuidlerhq/ui/system/layouts/header";
 import { ConnectButton } from "@components/layout/header/connectButton";
 
-/**
- * @dev Constants.
- */
-const HEADER_HEIGHT = "h-[50px]";
+const HEAD_HEIGHT = "h-[50px]";
 
-const Header = () => {
+/**
+ * @dev Head component.
+ */
+const Head = () => {
 	return (
 		<HeaderPrimitive>
-			<Box className={cn(HEADER_HEIGHT, "flex items-center border-x border-muted px-4")}>
+			<Box className={cn(HEAD_HEIGHT, "flex items-center border-x border-muted px-4")}>
 				<Box className="flex flex-1">
 					<H1>Dinogaia</H1>
 				</Box>
@@ -27,4 +27,4 @@ const Header = () => {
 	);
 };
 
-export { Header };
+export { Head };

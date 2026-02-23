@@ -1,30 +1,11 @@
 "use client";
 
-import {
-	caveModuleAbi,
-	caveModuleAddress,
-	emeraldErc20Abi,
-	emeraldErc20Address,
-	itemsSet0Abi,
-	itemsSet0Address,
-	jobsModuleAbi,
-	jobsModuleAddress,
-	shopModuleAbi,
-	shopModuleAddress,
-} from "@0xbuidlerhq/dinogaia.contracts";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { Container } from "@0xbuidlerhq/ui/system/base/container";
 import { H1, H1_8, H4, H5, H6, H7 } from "@0xbuidlerhq/ui/system/base/typography";
 import { ButtonBase } from "@0xbuidlerhq/ui/system/buttons/ButtonBase";
 import ProgressBar from "@components/ProgressBar";
-import { useDinoActions } from "@features/dinos/hooks/useDinoActions";
-import type { Dino } from "@features/dinos/hooks/useDinoFactory";
-import { JobsRegistry } from "@features/dinos/hooks/useDinoJobsRegistry";
-import { EmeraldERC20 } from "@features/dinos/hooks/useEmeraldERC20";
-import { jobsManager } from "@features/dinos/hooks/useJobsManager";
-import { SpeciesRegistry } from "@features/dinos/hooks/useSpeciesRegistry";
-import { useItems } from "@features/items/useItems";
-import { useDinogaia } from "@hooks/useDino";
+import { useDinogaia } from "@providers/dinogaia";
 import {
 	IconBow,
 	IconBuildingStore,
@@ -35,128 +16,7 @@ import {
 } from "@tabler/icons-react";
 import type React from "react";
 import type { PropsWithChildren } from "react";
-import { encodeFunctionData } from "viem";
 import { type DinoAge, timestampToAge } from "../../utils";
-
-const ActiveDino = (props: Dino) => {
-	const { dinoId, dinoAccount, dinoGenesis, dinoProfile } = props;
-
-	const { sendTxsFromDinoAccount } = useDinoActions({ dinoAccount });
-	const { jobOf } = jobsManager.useJob({ dinoId });
-
-	const { job } = JobsRegistry.useJob({ jobId: jobOf.data! });
-	const { balanceOf } = EmeraldERC20.useEmeraldERC20({ dinoAccount: dinoAccount });
-
-	const { species } = SpeciesRegistry.useSpecies({ speciesId: dinoGenesis.speciesId });
-
-	const e = useItems({ owner: dinoAccount });
-	// const { cave, equipped } = useCave({ dinoId: BigInt(dinoId) });
-
-	const a = timestampToAge(dinoGenesis.birthTimestamp);
-	return (
-		<Box className="border border-accent p-2">
-			<Box className="flex flex-col gap-4">
-				<Box className="flex justify-between items-center">
-					<H5 className="font-bold">{dinoGenesis.name}</H5>
-
-					<H6>{species.data?.name}</H6>
-				</Box>
-
-				<Box className="flex justify-between items-center">
-					<H6 className="font-light">
-						{a.days}d{a.hours}h{a.minutes}m
-					</H6>
-
-					<H6>{String(balanceOf.data)}</H6>
-				</Box>
-
-				<Box>
-					<Box>Health: {String(dinoProfile.health)}</Box>
-					<Box>Level: {String(dinoProfile.level)}</Box>
-					<Box>Xp: {String(dinoProfile.xp)}</Box>
-					<Box>Weight: {String(dinoProfile.weight)}</Box>
-				</Box>
-
-				<ButtonBase
-					className="bg-[#ffffff] text-[#000000]"
-					onClick={async () =>
-						await sendTxsFromDinoAccount([
-							{
-								target: jobsModuleAddress["31337"],
-								value: 0n,
-								data: encodeFunctionData({
-									abi: jobsModuleAbi,
-									functionName: "claimSalary",
-									args: [dinoId],
-								}),
-							},
-						])
-					}
-				>
-					<H5>Claim Salary</H5>
-				</ButtonBase>
-
-				<ButtonBase
-					className="bg-[#ffffff] text-[#000000]"
-					onClick={async () => {
-						const chain = "31337";
-						await sendTxsFromDinoAccount([
-							{
-								target: emeraldErc20Address[chain],
-								value: 0n,
-								data: encodeFunctionData({
-									abi: emeraldErc20Abi,
-									functionName: "approve",
-									args: [shopModuleAddress[chain], 1n],
-								}),
-							},
-							{
-								target: shopModuleAddress[chain],
-								value: 0n,
-								data: encodeFunctionData({
-									abi: shopModuleAbi,
-									functionName: "buy",
-									args: [dinoId, 0n, 1n],
-								}),
-							},
-						]);
-					}}
-				>
-					<H5>Buy From Shop</H5>
-				</ButtonBase>
-
-				<ButtonBase
-					className="bg-[#ffffff] text-[#000000]"
-					onClick={async () => {
-						const chain = "31337";
-						await sendTxsFromDinoAccount([
-							{
-								target: itemsSet0Address[chain],
-								value: 0n,
-								data: encodeFunctionData({
-									abi: itemsSet0Abi,
-									functionName: "approve",
-									args: [caveModuleAddress[chain], 0n, 1n],
-								}),
-							},
-							{
-								target: caveModuleAddress[chain],
-								value: 0n,
-								data: encodeFunctionData({
-									abi: caveModuleAbi,
-									functionName: "useConsumable",
-									args: [dinoId, itemsSet0Address[chain], 0n, 1n],
-								}),
-							},
-						]);
-					}}
-				>
-					<H5>Use Apple</H5>
-				</ButtonBase>
-			</Box>
-		</Box>
-	);
-};
 
 type DinoStatsProps = {
 	name: string;
@@ -170,7 +30,8 @@ type DinoStatsProps = {
 	};
 
 	state: {
-		hungry: boolean;
+		alive: boolean;
+		hunger: boolean;
 		thirsty: boolean;
 		sick: boolean;
 	};
@@ -429,9 +290,7 @@ const DinoScene = () => {
 };
 
 const Page = () => {
-	const a = useDinogaia();
-
-	const alpha = a.dino;
+	const { currentDino } = useDinogaia();
 
 	return (
 		<Container className="">
@@ -443,34 +302,31 @@ const Page = () => {
 
 					<Box className="col-span-6">
 						<DinoStats
-							name={alpha?.name}
-							age={timestampToAge(alpha?.birthTimestamp ?? 0n)}
-							species={alpha?.speciesId}
+							name={currentDino?.data?.genesis.name!}
+							age={timestampToAge(currentDino?.data?.genesis.birthTimestamp ?? 0n)}
+							species={currentDino?.data?.genesis.speciesId!}
 							vitals={{
-								life: Number(alpha?.health ?? 0n),
+								life: Number(currentDino?.data?.stats.health ?? 0n),
 								lifeMax: 100,
 								magic: 100,
 								magicMax: 100,
 							}}
 							state={{
-								hunger: alpha?.hunger,
-								thirsty: alpha?.thirst,
-								sick: false,
+								hunger: currentDino?.data?.status.hunger!,
+								thirsty: currentDino?.data?.status.thirst!,
+								sick: currentDino?.data?.status.alive!,
+								alive: currentDino?.data?.status.alive!,
 							}}
 							characteristics={{
-								force: alpha?.force,
-								endurance: alpha?.endurance,
-								agility: alpha?.agility,
-								intelligence: alpha?.intelligence,
+								force: currentDino?.data?.stats.force!,
+								endurance: currentDino?.data?.stats.endurance!,
+								agility: currentDino?.data?.stats.agility!,
+								intelligence: currentDino?.data?.stats.intelligence!,
 							}}
 						/>
 					</Box>
 				</Box>
 			</Box>
-
-			{data?.map((item) => {
-				return <Box key={item.dinoId}>{String(item.dinoId)}</Box>;
-			})}
 		</Container>
 	);
 };

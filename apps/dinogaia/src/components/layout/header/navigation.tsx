@@ -41,6 +41,9 @@ const pages = [
 	},
 ];
 
+/**
+ * @dev Navigation component.
+ */
 const Navigation = () => {
 	return (
 		<HeaderPrimitive>

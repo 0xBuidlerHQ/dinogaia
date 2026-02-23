@@ -1,28 +1,29 @@
 import { onchainTable } from "ponder";
 
-export const dino = onchainTable("dino", (t) => ({
-	// Dino Account
+const dinos = onchainTable("dinos", (t) => ({
 	dinoId: t.bigint().primaryKey(),
+	//
 	owner: t.hex(),
 	account: t.hex(),
-
-	// Dino Genesis
-	_initialized: t.boolean(),
-	name: t.text(),
-	speciesId: t.bigint(),
-	birthTimestamp: t.bigint(),
-
-	// Dino Profile
-	alive: t.boolean(),
-	health: t.bigint(),
-	hunger: t.boolean(),
-	thirst: t.boolean(),
-	weight: t.bigint(),
-	level: t.bigint(),
-	xp: t.bigint(),
-	//
-	force: t.integer(),
-	endurance: t.integer(),
-	agility: t.integer(),
-	intelligence: t.integer(),
 }));
+
+const species = onchainTable("species", (t) => ({
+	speciesId: t.bigint().primaryKey(),
+	//
+	name: t.text(),
+	stats_force: t.integer(),
+	stats_endurance: t.integer(),
+	stats_agility: t.integer(),
+	stats_intelligence: t.integer(),
+}));
+
+const jobs = onchainTable("jobs", (t) => ({
+	jobId: t.bigint().primaryKey(),
+	//
+	name: t.text(),
+	dailyPay: t.bigint(),
+	trainingCost: t.bigint(),
+	requiredLevel: t.integer(),
+}));
+
+export { dinos, species, jobs };

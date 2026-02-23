@@ -4,9 +4,9 @@ import { cn } from "@0xbuidlerhq/ui/shadcn/lib/utils";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { Container } from "@0xbuidlerhq/ui/system/base/container";
 import { H1, H4 } from "@0xbuidlerhq/ui/system/base/typography";
-import { schema } from "@config/providers/ponder";
 import { count } from "@ponder/client";
 import { usePonderQuery } from "@ponder/react";
+import { schema } from "@providers/ponder";
 import type { PropsWithChildren } from "react";
 
 type StatsItemProps = PropsWithChildren & { title: string; className: string };

@@ -2,9 +2,9 @@
 
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { Header as LayoutHeader } from "@0xbuidlerhq/ui/system/layouts/header";
-import { Header as HeaderPrimitive } from "@components/layout/header/header";
+import { Head } from "@components/layout/header/head";
 import { Navigation } from "@components/layout/header/navigation";
-import { SubHeader } from "@components/layout/header/subheader";
+import { QuickViewActions } from "@components/layout/header/quickViewActions";
 
 const Seperator = () => {
 	return (
@@ -14,26 +14,20 @@ const Seperator = () => {
 	);
 };
 
+/**
+ * @dev Header component.
+ */
 const Header = () => {
 	return (
 		<Box className="flex flex-col">
-			<Box>
-				<HeaderPrimitive />
-			</Box>
-
-			<Seperator />
-
-			<Box>
-				<Navigation />
-			</Box>
-
-			<Seperator />
-
-			<Box>
-				<SubHeader />
-			</Box>
-
-			<Seperator />
+			{[Head, Navigation, QuickViewActions].map((item) => {
+				return (
+					<Box key={item.name}>
+						{item()}
+						<Seperator />
+					</Box>
+				);
+			})}
 		</Box>
 	);
 };

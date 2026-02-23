@@ -5,15 +5,15 @@ import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { Header as HeaderPrimitive } from "@0xbuidlerhq/ui/system/layouts/header";
 import { MintButton } from "@features/dinos/mint/MintButton";
 import { SelectButton } from "@features/dinos/select/SelectButton";
-import { useDino } from "@hooks/useDino";
+import { useDinogaia } from "@providers/dinogaia";
 
-/**
- * @dev Constants.
- */
 const SUBHEADER_HEIGHT = "h-[40px]";
 
-const SubHeader = () => {
-	const { dino, dinoEmeraldBalance } = useDino();
+/**
+ * @dev QuickViewActions component.
+ */
+const QuickViewActions = () => {
+	const { currentDino } = useDinogaia();
 
 	return (
 		<HeaderPrimitive>
@@ -24,11 +24,11 @@ const SubHeader = () => {
 				)}
 			>
 				<Box className="flex items-center gap-4">
-					<Box className="flex gap-2">{dino?.dinoGenesis.name}</Box>
+					<Box className="flex gap-2">{currentDino.data?.genesis.name}</Box>
 					<Box className="h-4 w-[1px] bg-accent" />
-					<Box>{String(dinoEmeraldBalance.data)} Emerald</Box>
+					<Box>{String(currentDino.emeraldBalance)} Emerald</Box>
 					<Box className="h-4 w-[1px] bg-accent" />
-					<Box>{String(dino?.dinoProfile.weight)} Kg</Box>
+					<Box>{String(currentDino.data?.progress.weight)} Kg</Box>
 					<Box className="h-4 w-[1px] bg-accent" />
 				</Box>
 
@@ -41,4 +41,4 @@ const SubHeader = () => {
 	);
 };
 
-export { SubHeader };
+export { QuickViewActions };

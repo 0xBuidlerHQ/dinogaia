@@ -1,7 +1,7 @@
 import {
 	caveModuleAbi,
 	caveModuleAddress,
-	useReadCaveModuleGetCave,
+	useReadCaveStateModuleGetCave,
 	useReadItemsSet0ItemIdsIndex,
 } from "@0xbuidlerhq/dinogaia.contracts";
 import type { Address } from "viem";
@@ -13,7 +13,7 @@ const chain = "31337";
 const caveAddress = caveModuleAddress[chain] as Address | undefined;
 
 export const useCave = ({ dinoId }: UseCaveProps) => {
-	const { data: cave, isLoading: loadingCave } = useReadCaveModuleGetCave({
+	const { data: cave, isLoading: loadingCave } = useReadCaveStateModuleGetCave({
 		args: [dinoId],
 		query: { enabled: Boolean(caveAddress) },
 	});
