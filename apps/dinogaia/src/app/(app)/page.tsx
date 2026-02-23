@@ -2,7 +2,7 @@
 
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { Container } from "@0xbuidlerhq/ui/system/base/container";
-import { H1, H1_8, H4, H5, H6, H7 } from "@0xbuidlerhq/ui/system/base/typography";
+import { H1, H1_8, H4, H5, H6 } from "@0xbuidlerhq/ui/system/base/typography";
 import { ButtonBase } from "@0xbuidlerhq/ui/system/buttons/ButtonBase";
 import ProgressBar from "@components/ProgressBar";
 import { useDinogaia } from "@providers/dinogaia";
@@ -51,13 +51,14 @@ type StatItemProps = PropsWithChildren & {
 const StatItem = (props: StatItemProps) => {
 	return (
 		<Box className="flex flex-col gap-4 p-4 group hover:bg-muted/50 border border-transparent hover:border hover:border-[#a3e635]/25">
-			<Box className="flex items-center gap-1 group-hover:text-[#a3e635]">
-				<H7 className="font-montserrat tracking-widest mr-[2px] group-hover:mr-[1px] transition-all duration-500">
+			<Box className="flex items-center gap-1 text-[#a3e635]">
+				<H6 className="font-tronica-mono mr-[2px] group-hover:mr-[1px] transition-all duration-500 tracking-[-2px]">
 					{"//"}
-				</H7>
-				<H6 className="font-montserrat uppercase font-extrabold tracking-tighter transition-all duration-500">
-					{props.title}
 				</H6>
+
+				<H5 className="font-tronica-mono uppercase font-extrabold transition-all duration-500">
+					{props.title}
+				</H5>
 
 				<Box className="grow" />
 
@@ -90,7 +91,7 @@ const DinoStats = (props: DinoStatsProps) => {
 		<Box className="grid grid-cols-12 items-stretch *:border-l *:border-muted *:border-b border-t border-muted">
 			<Box className="col-span-4">
 				<StatItem title="Name">
-					<H1>{props.name}</H1>
+					<H1 className="font-azeret-mono">{props.name}</H1>
 				</StatItem>
 			</Box>
 
@@ -150,7 +151,7 @@ const DinoStats = (props: DinoStatsProps) => {
 			<Box className="col-span-12">
 				<StatItem title="Status">
 					<Box className="flex gap-2 *:bg-accent">
-						<Box>{props.state.hungry ? "Your Dino is hungry" : "Your dino is full"}</Box>
+						<Box>{props.state.hunger ? "Your Dino is hungry" : "Your dino is full"}</Box>
 						<Box>{props.state.thirsty ? "Your Dino is thirsty" : "Your dino is ok"}</Box>
 						<Box>{props.state.sick ? "Your dino is sick" : "Your dino is ok"}</Box>{" "}
 					</Box>

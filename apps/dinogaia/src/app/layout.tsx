@@ -5,6 +5,7 @@ import { cn } from "@0xbuidlerhq/ui/shadcn/lib/utils";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { Footer } from "@components/layout/footer";
 import { Header } from "@components/layout/header";
+import { tronicaMono } from "@config/fonts";
 import { Providers } from "@providers/index";
 
 import type { PropsWithChildren } from "react";
@@ -26,6 +27,7 @@ const Layout = ({ children }: PropsWithChildren) => {
 					montserrat.variable,
 					syne.variable,
 					sourceCodePro.variable,
+					tronicaMono.variable,
 				)}
 			>
 				<Providers>

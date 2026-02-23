@@ -161,6 +161,7 @@
 	--font-syne-tactile: var(--font-syne-tactile);
 	--font-azeret-mono: var(--font-azeret-mono);
 	--font-source-code-pro: var(--font-source-code-pro);
+	--font-tronica-mono: var(--font-tronica-mono);
 }
 
 @theme inline {

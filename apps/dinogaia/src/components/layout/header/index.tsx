@@ -20,14 +20,14 @@ const Seperator = () => {
 const Header = () => {
 	return (
 		<Box className="flex flex-col">
-			{[Head, Navigation, QuickViewActions].map((item) => {
-				return (
-					<Box key={item.name}>
-						{item()}
-						<Seperator />
-					</Box>
-				);
-			})}
+			<Head />
+			<Seperator />
+
+			<Navigation />
+			<Seperator />
+
+			<QuickViewActions />
+			<Seperator />
 		</Box>
 	);
 };
