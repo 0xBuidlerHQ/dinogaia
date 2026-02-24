@@ -7,6 +7,7 @@ import { ButtonBase } from "@0xbuidlerhq/ui/system/buttons/ButtonBase";
 import { Header as HeaderPrimitive } from "@0xbuidlerhq/ui/system/layouts/header";
 import { PAGES } from "@config/pages";
 import { usePathname } from "next/navigation";
+import { navigation } from "../../../assets/assets";
 
 /**
  * @dev Constants.
@@ -17,30 +18,47 @@ const pages = [
 	{
 		title: "My Dino",
 		href: PAGES.homepage,
+		icon: navigation.dino,
 	},
 	{
 		title: "Cave",
 		href: PAGES.cave,
+		icon: navigation.cave,
 	},
 	{
 		title: "Shop",
 		href: PAGES.shop,
+		icon: navigation.shop,
 	},
 	{
 		title: "Jobs",
 		href: PAGES.jobs,
+		icon: navigation.jobs,
 	},
 	{
 		title: "Hunt",
 		href: PAGES.hunt,
+		icon: navigation.hunt,
+	},
+	{
+		title: "Fight",
+		href: PAGES.fight,
+		icon: navigation.fight,
+	},
+	{
+		title: "Quest",
+		href: PAGES.quests,
+		icon: navigation.quest,
 	},
 	{
 		title: "Casino",
 		href: PAGES.casino,
+		icon: navigation.casino,
 	},
 	{
 		title: "Stats",
 		href: PAGES.stats,
+		icon: navigation.cave,
 	},
 ];
 
@@ -57,17 +75,26 @@ const Navigation = () => {
 					const isCurrentPage = item.href === "/" ? path === "/" : path.includes(item.href);
 
 					return (
-						<ButtonBase key={item.href} href={item.href} className="group h-full">
-							<Box className="border-r border-muted h-full flex items-center px-4">
+						<ButtonBase
+							key={item.href}
+							href={item.href}
+							className={cn(
+								"group h-full flex border-r border-muted px-2 gap-2 items-center border-b border-b-transparent transition-all",
+								isCurrentPage && "border-b-[#a3e635]",
+							)}
+						>
+							<Box className="h-full flex items-center">
 								<H5
 									className={cn(
-										"font-tronica-mono group-hover:font-black group-hover:text-[#a3e635] transition-all",
+										"font-tronica-mono group-hover:font-black group-hover:text-[#a3e635] transition-all whitespace-nowrap",
 										isCurrentPage && "text-[#a3e635] font-black",
 									)}
 								>
 									{item.title}
 								</H5>
 							</Box>
+
+							<img src={item.icon} alt="" className="aspect-square size-full" />
 						</ButtonBase>
 					);
 				})}

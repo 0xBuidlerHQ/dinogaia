@@ -23,12 +23,12 @@ const StatsItem = (props: StatsItemProps) => {
 
 const StatsPage = () => {
 	const { data: countResult } = usePonderQuery({
-		queryFn: (db) => db.select({ total: count() }).from(schema.dino),
+		queryFn: (db) => db.select({ total: count() }).from(schema.dinos),
 	});
 	const alpha = countResult?.[0].total;
 
 	const { data: dinos } = usePonderQuery({
-		queryFn: (db) => db.select().from(schema.dino),
+		queryFn: (db) => db.select().from(schema.dinos),
 	});
 
 	return (

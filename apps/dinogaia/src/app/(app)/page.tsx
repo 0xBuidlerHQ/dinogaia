@@ -51,12 +51,12 @@ type StatItemProps = PropsWithChildren & {
 const StatItem = (props: StatItemProps) => {
 	return (
 		<Box className="flex flex-col gap-4 p-4 group hover:bg-muted/50 border border-transparent hover:border hover:border-[#a3e635]/25">
-			<Box className="flex items-center gap-1 text-[#a3e635]">
-				<H6 className="font-tronica-mono mr-[2px] group-hover:mr-[1px] transition-all duration-500 tracking-[-2px]">
+			<Box className="flex items-center gap-1 text-muted-foreground">
+				<H6 className="font-tronica-mono mr-[2px] group-hover:mr-[1px] transition-all duration-300 tracking-[-2px] group-hover:text-[#a3e635]">
 					{"//"}
 				</H6>
 
-				<H5 className="font-tronica-mono uppercase font-extrabold transition-all duration-500">
+				<H5 className="font-tronica-mono uppercase font-extrabold transition-all duration-300 group-hover:text-[#a3e635]">
 					{props.title}
 				</H5>
 

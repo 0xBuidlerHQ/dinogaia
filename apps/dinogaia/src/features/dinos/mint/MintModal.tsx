@@ -44,6 +44,7 @@ const MintModal = () => {
 								<span>{species.name}</span>
 							</label>
 						))}
+
 						{!species?.length && <span className="text-sm text-gray-500">Loading species…</span>}
 					</Box>
 				</Box>

@@ -6,7 +6,7 @@ import { useDinogaia } from "@providers/dinogaia";
 import { useStore } from "@stores/useStore";
 
 const SelectModal = () => {
-	const { dinos } = useDinogaia();
+	const { myDinos } = useDinogaia();
 
 	const { selectModal, closeSelectModal } = useStore();
 	const { activeDinoId, setActiveDinoId } = useStore();
@@ -23,7 +23,7 @@ const SelectModal = () => {
 				<DialogTitle />
 
 				<Box>
-					{dinos?.map((item) => {
+					{myDinos?.map((item) => {
 						const isDinoSelected = item.dinoId === activeDinoId;
 
 						return (

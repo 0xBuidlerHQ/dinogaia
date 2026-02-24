@@ -13,6 +13,14 @@ import healingHerb from "./src/healing herb.png";
 import ironHelmet from "./src/iron helmet.png";
 import leatherArmor from "./src/leather armor.png";
 import longBow from "./src/long bow.png";
+import casino from "./src/navigation/casino.png";
+import cave from "./src/navigation/cave.png";
+import dino from "./src/navigation/dino.png";
+import fight from "./src/navigation/fight.png";
+import hunt from "./src/navigation/hunt.png";
+import jobs from "./src/navigation/jobs.png";
+import quest from "./src/navigation/quest.png";
+import shop from "./src/navigation/shop.png";
 import royalSeal from "./src/royal seal.png";
 import salmon from "./src/salmon.png";
 import securityArtifact from "./src/security artifact.png";
@@ -200,6 +208,17 @@ const images: Record<string, string> = {
 	"travel boots": travelBoots.src,
 	"security artifact": securityArtifact.src,
 	"royal seal": royalSeal.src,
-};
+} as const;
 
-export { items, rarities, images };
+const navigation = {
+	cave: cave.src,
+	shop: shop.src,
+	hunt: hunt.src,
+	fight: fight.src,
+	quest: quest.src,
+	casino: casino.src,
+	jobs: jobs.src,
+	dino: dino.src,
+} as const satisfies Record<string, string>;
+
+export { items, rarities, images, navigation };
