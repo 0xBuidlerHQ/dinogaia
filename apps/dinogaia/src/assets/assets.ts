@@ -20,6 +20,7 @@ import fight from "./src/navigation/fight.png";
 import hunt from "./src/navigation/hunt.png";
 import jobs from "./src/navigation/jobs.png";
 import quest from "./src/navigation/quest.png";
+import ranking from "./src/navigation/ranking.png";
 import shop from "./src/navigation/shop.png";
 import royalSeal from "./src/royal seal.png";
 import salmon from "./src/salmon.png";
@@ -219,6 +220,7 @@ const navigation = {
 	casino: casino.src,
 	jobs: jobs.src,
 	dino: dino.src,
+	ranking: ranking.src,
 } as const satisfies Record<string, string>;
 
 export { items, rarities, images, navigation };

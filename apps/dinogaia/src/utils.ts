@@ -1,6 +1,8 @@
 import { ItemsSetBase } from "@0xbuidlerhq/dinogaia.contracts/types.user";
 
 const timestampToAge = (timestamp: bigint) => {
+	if (!timestamp) return { days: 0n, hours: 0n, minutes: 0n };
+
 	const now = BigInt(Math.floor(Date.now() / 1000));
 	if (now <= timestamp) return { days: 0n, hours: 0n, minutes: 0n };
 

@@ -46,7 +46,7 @@ const pages = [
 		icon: navigation.fight,
 	},
 	{
-		title: "Quest",
+		title: "Quests",
 		href: PAGES.quests,
 		icon: navigation.quest,
 	},
@@ -56,9 +56,9 @@ const pages = [
 		icon: navigation.casino,
 	},
 	{
-		title: "Stats",
-		href: PAGES.stats,
-		icon: navigation.cave,
+		title: "Ranking",
+		href: PAGES.ranking,
+		icon: navigation.ranking,
 	},
 ];
 
@@ -79,8 +79,8 @@ const Navigation = () => {
 							key={item.href}
 							href={item.href}
 							className={cn(
-								"group h-full flex border-r border-muted px-2 gap-2 items-center border-b border-b-transparent transition-all",
-								isCurrentPage && "border-b-[#a3e635]",
+								"group h-full flex border-r border-muted hover:bg-[#a3e635]/2 px-2 gap-2 items-center border-b border-b-transparent transition-all",
+								isCurrentPage && "border-b-[#a3e635] bg-[#a3e635]/5 hover:bg-[#a3e635]/5",
 							)}
 						>
 							<Box className="h-full flex items-center">
@@ -94,7 +94,14 @@ const Navigation = () => {
 								</H5>
 							</Box>
 
-							<img src={item.icon} alt="" className="aspect-square size-full" />
+							<img
+								src={item.icon}
+								alt=""
+								className={cn(
+									"aspect-square size-full grayscale-50 transition-all group-hover:grayscale-25",
+									isCurrentPage && "grayscale-0",
+								)}
+							/>
 						</ButtonBase>
 					);
 				})}
