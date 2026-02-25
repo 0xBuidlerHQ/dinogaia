@@ -2,7 +2,7 @@
 
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { Container } from "@0xbuidlerhq/ui/system/base/container";
-import { H1, H1_8, H4, H5, H6 } from "@0xbuidlerhq/ui/system/base/typography";
+import { H1, H1_7, H4, H5, H6 } from "@0xbuidlerhq/ui/system/base/typography";
 import { ButtonBase } from "@0xbuidlerhq/ui/system/buttons/ButtonBase";
 import ProgressBar from "@components/ProgressBar";
 import { useDinogaia } from "@providers/dinogaia";
@@ -50,15 +50,15 @@ type StatItemProps = PropsWithChildren & {
 };
 const StatItem = (props: StatItemProps) => {
 	return (
-		<Box className="flex flex-col gap-4 p-4 group hover:bg-muted/50 border border-transparent hover:border hover:border-[#a3e635]/25">
+		<Box className="h-full flex flex-col gap-4 p-4 group hover:bg-olive-600/50 border border-transparent hover:border hover:border-[#a3e635]/25">
 			<Box className="flex items-center gap-1 text-muted-foreground">
-				<H6 className="font-tronica-mono mr-[2px] group-hover:mr-[1px] transition-all duration-300 tracking-[-2px] group-hover:text-[#a3e635]">
+				<H6 className="mr-0.5 group-hover:mr-px transition-all duration-300 tracking-[-2px] group-hover:text-[#a3e635]">
 					{"//"}
 				</H6>
 
-				<H5 className="font-tronica-mono uppercase font-extrabold transition-all duration-300 group-hover:text-[#a3e635]">
+				<H6 className="uppercase font-black transition-all duration-300 group-hover:text-[#a3e635] tracking-tighter">
 					{props.title}
-				</H5>
+				</H6>
 
 				<Box className="grow" />
 
@@ -89,23 +89,17 @@ const QuickAction = (props: QuickActionProps) => {
 const DinoStats = (props: DinoStatsProps) => {
 	return (
 		<Box className="grid grid-cols-12 items-stretch *:border-l *:border-muted *:border-b border-t border-muted">
-			<Box className="col-span-4">
+			<Box className="col-span-6">
 				<StatItem title="Name">
-					<H1 className="font-azeret-mono">{props.name}</H1>
+					<H1 className="text-olive-50">{"Lewis Oh Yeahhhhhhh"}</H1>
 				</StatItem>
 			</Box>
 
-			<Box className="col-span-4">
+			<Box className="col-span-6">
 				<StatItem title="Age">
 					<H1>
 						{props.age.days}d/{props.age.hours}h/{props.age.minutes}m
 					</H1>
-				</StatItem>
-			</Box>
-
-			<Box className="col-span-4">
-				<StatItem title="Wallet">
-					<H1>{100}</H1>
 				</StatItem>
 			</Box>
 
@@ -123,7 +117,7 @@ const DinoStats = (props: DinoStatsProps) => {
 			</Box>
 
 			<Box className="col-span-6">
-				<StatItem title="Race">
+				<StatItem title="Species">
 					<H1>{props.species}</H1>
 				</StatItem>
 			</Box>
@@ -259,7 +253,7 @@ const DinoScene = () => {
 		<Box className="border-y border-muted h-full relative">
 			<Box className="absolute top-0 right-0">
 				<StatItem title="Level">
-					<H1_8>1</H1_8>
+					<H1_7>1</H1_7>
 				</StatItem>
 			</Box>
 
@@ -275,7 +269,7 @@ const DinoScene = () => {
 						</ButtonBase>
 					}
 				>
-					<Box className="flex flex-col -space-y-[2px]">
+					<Box className="flex flex-col -space-y-0.5">
 						<Info label="Name" value="Maxime" />
 						<Info label="Clan" value="The Great Counsel" />
 						<Info label="Born" value="Sun, Aug 21, 2004 at 04:56" />

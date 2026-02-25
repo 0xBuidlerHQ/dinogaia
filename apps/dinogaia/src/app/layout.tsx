@@ -1,6 +1,6 @@
 import "./system.css";
 
-import { inter, montserrat, sourceCodePro, syne } from "@0xbuidlerhq/ui/fonts";
+import { inter, montserrat, sourceCodePro, spaceGrotesk, syne } from "@0xbuidlerhq/ui/fonts";
 import { cn } from "@0xbuidlerhq/ui/shadcn/lib/utils";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { Footer } from "@components/layout/footer";
@@ -21,17 +21,18 @@ const Layout = ({ children }: PropsWithChildren) => {
 					"antialiased",
 					"bg-background",
 					"text-foreground",
-					"font-inter",
+					"font-tronica-mono",
 					"tracking-tighter",
 					inter.variable,
 					montserrat.variable,
 					syne.variable,
 					sourceCodePro.variable,
 					tronicaMono.variable,
+					spaceGrotesk.variable,
 				)}
 			>
 				<Providers>
-					<main className="grow flex flex-col min-h-[100dvh]">
+					<main className="grow flex flex-col min-h-dvh">
 						<Header />
 
 						<Box className="flex grow min-h-0">
