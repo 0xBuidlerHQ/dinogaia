@@ -91,7 +91,7 @@ const DinoStats = (props: DinoStatsProps) => {
 		<Box className="grid grid-cols-12 items-stretch *:border-l *:border-muted *:border-b border-t border-muted">
 			<Box className="col-span-6">
 				<StatItem title="Name">
-					<H1 className="text-olive-50">{"Lewis Oh Yeahhhhhhh"}</H1>
+					<H1 className="text-[#a3e635]">{props.name}</H1>
 				</StatItem>
 			</Box>
 

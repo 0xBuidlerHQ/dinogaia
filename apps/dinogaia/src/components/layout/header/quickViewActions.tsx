@@ -87,9 +87,7 @@ const QuickViewActions = () => {
 						<Seperator />
 
 						<QuickViewActionsItem title="Name" className="px-2">
-							<H4 className="uppercase font-tronica-mono text-[#a3e635]">
-								{currentDino.data?.genesis.name}dd
-							</H4>
+							<H4 className="font-tronica-mono text-[#a3e635]">{currentDino.data?.genesis.name}</H4>
 						</QuickViewActionsItem>
 
 						<Seperator />
