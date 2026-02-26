@@ -11,6 +11,42 @@ export namespace CaveStateModule {
 	};
 }
 
+export namespace Dino {
+	export type DinoData = {
+		genesis: Dino.Genesis;
+		progress: Dino.Progress;
+		status: Dino.Status;
+		stats: Dino.Stats;
+	};
+	export type Genesis = {
+		_initialized: boolean;
+		name: string;
+		speciesId: bigint;
+		birthTimestamp: bigint;
+	};
+	export type Params = {
+		name: string;
+		speciesId: bigint;
+	};
+	export type Progress = {
+		xp: bigint;
+		weight: bigint;
+		level: bigint;
+	};
+	export type Stats = {
+		health: bigint;
+		force: bigint;
+		endurance: bigint;
+		agility: bigint;
+		intelligence: bigint;
+	};
+	export type Status = {
+		alive: boolean;
+		hunger: boolean;
+		thirst: boolean;
+	};
+}
+
 export namespace DinoAccount {
 	export type Call = {
 		target: Address;
@@ -19,20 +55,15 @@ export namespace DinoAccount {
 	};
 }
 
-export namespace DinoGenesis {
-	export type Genesis = {
-		_initialized: boolean;
-		name: string;
-		speciesId: bigint;
-		birthTimestamp: bigint;
-	};
-	export type GenesisParams = {
-		name: string;
-		speciesId: bigint;
+export namespace DinoFactory {
+	export type DinoContext = {
+		dinoId: bigint;
+		dinoAccount: Address;
+		dino: Dino.DinoData;
 	};
 }
 
-export namespace ItemsSetBase {
+export namespace ItemsSet {
 	export enum EffectKind {
 		Weight = 0,
 		Health = 1,
@@ -42,7 +73,7 @@ export namespace ItemsSetBase {
 		HygieneBonus = 5,
 		ComfortBonus = 6,
 	}
-	export enum ItemBaseRarity {
+	export enum ItemRarity {
 		Common = 0,
 		Uncommon = 1,
 		Rare = 2,
@@ -50,7 +81,7 @@ export namespace ItemsSetBase {
 		Legendary = 4,
 		Mythic = 5,
 	}
-	export enum ItemBaseType {
+	export enum ItemType {
 		Consumable = 0,
 		Habitat = 1,
 		Weapon = 2,
@@ -65,20 +96,20 @@ export namespace ItemsSetBase {
 		Cosmetic = 11,
 	}
 	export type Effect = {
-		kind: ItemsSetBase.EffectKind;
+		kind: ItemsSet.EffectKind;
 		magnitude: bigint;
 	};
-	export type ItemBase = {
-		rarity: ItemsSetBase.ItemBaseRarity;
-		itemType: ItemsSetBase.ItemBaseType;
-		trading: ItemsSetBase.ItemTrading;
-		usage: ItemsSetBase.ItemUsage;
-		requirements: ItemsSetBase.ItemRequirements;
-		metadata: ItemsSetBase.ItemBaseMetadata;
-		effects: Array<ItemsSetBase.Effect>;
-	};
-	export type ItemBaseMetadata = {
+	export type Item = {
 		name: string;
+		rarity: ItemsSet.ItemRarity;
+		itemType: ItemsSet.ItemType;
+		trading: ItemsSet.ItemTrading;
+		usage: ItemsSet.ItemUsage;
+		requirements: ItemsSet.ItemRequirements;
+		metadata: ItemsSet.ItemMetadata;
+		effects: Array<ItemsSet.Effect>;
+	};
+	export type ItemMetadata = {
 		symbol: string;
 		decimals: bigint;
 	};
@@ -93,5 +124,27 @@ export namespace ItemsSetBase {
 	export type ItemUsage = {
 		destroyOnUse: boolean;
 		soulbound: boolean;
+	};
+}
+
+export namespace JobsRegistry {
+	export type Job = {
+		name: string;
+		dailyPay: bigint;
+		trainingCost: bigint;
+		requiredLevel: bigint;
+	};
+}
+
+export namespace SpeciesRegistry {
+	export type Species = {
+		name: string;
+		stats: SpeciesRegistry.Stats;
+	};
+	export type Stats = {
+		force: bigint;
+		endurance: bigint;
+		agility: bigint;
+		intelligence: bigint;
 	};
 }
