@@ -9,6 +9,7 @@ contract JobsRegistry is AccessControl {
      */
     struct Job {
         string name;
+        //
         uint256 dailyPay;
         uint256 trainingCost;
         uint16 requiredLevel;

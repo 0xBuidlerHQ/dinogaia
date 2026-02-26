@@ -19,6 +19,7 @@ contract SpeciesRegistry is AccessControl {
      */
     struct Species {
         string name;
+        //
         Stats stats;
     }
 

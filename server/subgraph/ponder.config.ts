@@ -1,6 +1,8 @@
 import {
 	dinoFactoryAbi,
 	dinoFactoryAddress,
+	itemsSet0Abi,
+	itemsSet0Address,
 	jobsRegistryAbi,
 	jobsRegistryAddress,
 	speciesRegistryAbi,
@@ -49,6 +51,16 @@ export default createConfig({
 			chain: "anvil",
 			abi: speciesRegistryAbi,
 			address: speciesRegistryAddress[CHAIN_ID],
+			startBlock: "latest",
+		},
+
+		/**
+		 * @dev ItemsSet0.
+		 */
+		ItemsSet0: {
+			chain: "anvil",
+			abi: itemsSet0Abi,
+			address: itemsSet0Address[CHAIN_ID],
 			startBlock: "latest",
 		},
 	},

@@ -7,16 +7,16 @@ import {ERC6909Metadata} from "@openzeppelin/contracts/token/ERC6909/extensions/
 import {ERC6909TokenSupply} from "@openzeppelin/contracts/token/ERC6909/extensions/ERC6909TokenSupply.sol";
 import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 
-abstract contract ItemsSetBase is ERC6909Metadata, ERC6909TokenSupply, AccessControl {
+abstract contract ItemsSet is ERC6909Metadata, ERC6909TokenSupply, AccessControl {
     /**
      * @dev Constants.
      */
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
     /**
-     * @dev Enum ItemBaseRarity.
+     * @dev Enum ItemRarity.
      */
-    enum ItemBaseRarity {
+    enum ItemRarity {
         Common,
         Uncommon,
         Rare,
@@ -26,9 +26,9 @@ abstract contract ItemsSetBase is ERC6909Metadata, ERC6909TokenSupply, AccessCon
     }
 
     /**
-     * @dev Enum ItemBaseType.
+     * @dev Enum ItemType.
      */
-    enum ItemBaseType {
+    enum ItemType {
         Consumable,
         Habitat,
         Weapon,
@@ -66,10 +66,9 @@ abstract contract ItemsSetBase is ERC6909Metadata, ERC6909TokenSupply, AccessCon
     }
 
     /**
-     * @dev Struct ItemBaseMetadata.
+     * @dev Struct ItemMetadata.
      */
-    struct ItemBaseMetadata {
-        string name;
+    struct ItemMetadata {
         string symbol;
         uint8 decimals;
     }
@@ -99,15 +98,17 @@ abstract contract ItemsSetBase is ERC6909Metadata, ERC6909TokenSupply, AccessCon
     }
 
     /**
-     * @dev Struct ItemBase.
+     * @dev Struct Item.
      */
-    struct ItemBase {
-        ItemBaseRarity rarity;
-        ItemBaseType itemType;
+    struct Item {
+        string name;
+
+        ItemRarity rarity;
+        ItemType itemType;
         ItemTrading trading;
         ItemUsage usage;
         ItemRequirements requirements;
-        ItemBaseMetadata metadata;
+        ItemMetadata metadata;
         Effect[] effects;
     }
 
@@ -119,12 +120,12 @@ abstract contract ItemsSetBase is ERC6909Metadata, ERC6909TokenSupply, AccessCon
     /**
      * @dev Mappings.
      */
-    mapping(uint256 id => ItemBase itemBase) internal itemsSetBase;
+    mapping(uint256 id => Item item) internal itemsSet;
 
     /**
      * @dev Events.
      */
-    event ItemDefined(uint256 indexed id, ItemBase meta);
+    event ItemCreated(uint256 indexed id, Item meta);
 
     /**
      * @dev Errors.
@@ -166,34 +167,35 @@ abstract contract ItemsSetBase is ERC6909Metadata, ERC6909TokenSupply, AccessCon
     /**
      * @dev
      */
-    function getItem(uint256 _itemId) external view returns (ItemBase memory _itemBase) {
-        _itemBase = itemsSetBase[_itemId];
+    function getItem(uint256 _itemId) external view returns (Item memory _itemBase) {
+        _itemBase = itemsSet[_itemId];
     }
 
     /**
      * @dev
      */
-    function getItems() external view returns (ItemBase[] memory _itemsBase) {
-        _itemsBase = new ItemBase[](itemIdsIndex);
+    function getItems() external view returns (Item[] memory _itemsBase) {
+        _itemsBase = new Item[](itemIdsIndex);
 
         for (uint256 i = 0; i < itemIdsIndex; i++) {
-            _itemsBase[i] = itemsSetBase[i];
+            _itemsBase[i] = itemsSet[i];
         }
     }
 
     /**
      * @dev
      */
-    function _defineItem(ItemBase memory _itemBase) internal returns (uint256 id) {
+    function _createItem(Item memory _itemBase) internal returns (uint256 id) {
         id = itemIdsIndex++;
 
-        _setName(id, _itemBase.metadata.name);
+        _setName(id, _itemBase.name);
+
         _setSymbol(id, _itemBase.metadata.symbol);
         _setDecimals(id, _itemBase.metadata.decimals);
 
-        itemsSetBase[id] = _itemBase;
+        itemsSet[id] = _itemBase;
 
-        emit ItemDefined(id, _itemBase);
+        emit ItemCreated(id, _itemBase);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////

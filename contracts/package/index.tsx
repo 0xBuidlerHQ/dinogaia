@@ -161,11 +161,7 @@ export const caveBaseAbi = [
         internalType: 'contract EmeraldERC20',
         type: 'address',
       },
-      {
-        name: '_items',
-        internalType: 'contract ItemsSetBase',
-        type: 'address',
-      },
+      { name: '_items', internalType: 'contract ItemsSet', type: 'address' },
       { name: '_dino', internalType: 'contract Dino', type: 'address' },
       { name: '_treasury', internalType: 'address', type: 'address' },
     ],
@@ -234,9 +230,7 @@ export const caveBaseAbi = [
     type: 'function',
     inputs: [],
     name: 'items',
-    outputs: [
-      { name: '', internalType: 'contract ItemsSetBase', type: 'address' },
-    ],
+    outputs: [{ name: '', internalType: 'contract ItemsSet', type: 'address' }],
     stateMutability: 'view',
   },
   {
@@ -413,9 +407,7 @@ export const caveConsumeModuleAbi = [
     type: 'function',
     inputs: [],
     name: 'items',
-    outputs: [
-      { name: '', internalType: 'contract ItemsSetBase', type: 'address' },
-    ],
+    outputs: [{ name: '', internalType: 'contract ItemsSet', type: 'address' }],
     stateMutability: 'view',
   },
   {
@@ -456,11 +448,7 @@ export const caveConsumeModuleAbi = [
     type: 'function',
     inputs: [
       { name: '_dinoId', internalType: 'uint256', type: 'uint256' },
-      {
-        name: '_itemsSet',
-        internalType: 'contract ItemsSetBase',
-        type: 'address',
-      },
+      { name: '_itemsSet', internalType: 'contract ItemsSet', type: 'address' },
       { name: '_itemId', internalType: 'uint256', type: 'uint256' },
       { name: '_amount', internalType: 'int256', type: 'int256' },
     ],
@@ -643,9 +631,7 @@ export const caveHabitatModuleAbi = [
     type: 'function',
     inputs: [],
     name: 'items',
-    outputs: [
-      { name: '', internalType: 'contract ItemsSetBase', type: 'address' },
-    ],
+    outputs: [{ name: '', internalType: 'contract ItemsSet', type: 'address' }],
     stateMutability: 'view',
   },
   {
@@ -790,11 +776,7 @@ export const caveModuleAbi = [
         internalType: 'contract EmeraldERC20',
         type: 'address',
       },
-      {
-        name: '_items',
-        internalType: 'contract ItemsSetBase',
-        type: 'address',
-      },
+      { name: '_items', internalType: 'contract ItemsSet', type: 'address' },
       { name: '_dino', internalType: 'contract Dino', type: 'address' },
       { name: '_treasury', internalType: 'address', type: 'address' },
     ],
@@ -863,9 +845,7 @@ export const caveModuleAbi = [
     type: 'function',
     inputs: [],
     name: 'items',
-    outputs: [
-      { name: '', internalType: 'contract ItemsSetBase', type: 'address' },
-    ],
+    outputs: [{ name: '', internalType: 'contract ItemsSet', type: 'address' }],
     stateMutability: 'view',
   },
   {
@@ -906,11 +886,7 @@ export const caveModuleAbi = [
     type: 'function',
     inputs: [
       { name: '_dinoId', internalType: 'uint256', type: 'uint256' },
-      {
-        name: '_itemsSet',
-        internalType: 'contract ItemsSetBase',
-        type: 'address',
-      },
+      { name: '_itemsSet', internalType: 'contract ItemsSet', type: 'address' },
       { name: '_itemId', internalType: 'uint256', type: 'uint256' },
       { name: '_amount', internalType: 'int256', type: 'int256' },
     ],
@@ -996,7 +972,7 @@ export const caveModuleAbi = [
  *
  */
 export const caveModuleAddress = {
-  31337: '0xd3A84a6A311D3E189f57236bF52a782114d1F092',
+  31337: '0xec2058962F97ccCbd9b204F58aDFD3A3F57eB89C',
 } as const
 
 /**
@@ -1587,7 +1563,7 @@ export const dinoAbi = [
  *
  */
 export const dinoAddress = {
-  31337: '0x3332Db0d2C0Cccc551DaEAE54020a40ff2E3313B',
+  31337: '0xe629aFebC35c0B2693652E2CC945A6955F2756cE',
 } as const
 
 /**
@@ -2358,7 +2334,7 @@ export const dinoFactoryAbi = [
  *
  */
 export const dinoFactoryAddress = {
-  31337: '0x92C796946e22ac10942cA98b622332e80699CDCC',
+  31337: '0xDaCB9019b28fB9cB83F62604fD75506C3C9F49eA',
 } as const
 
 /**
@@ -6346,18 +6322,10 @@ export const iMulticall3Abi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ItemsSet0
+// ItemsSet
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/**
- *
- */
-export const itemsSet0Abi = [
-  {
-    type: 'constructor',
-    inputs: [{ name: '_owner', internalType: 'address', type: 'address' }],
-    stateMutability: 'nonpayable',
-  },
+export const itemsSetAbi = [
   {
     type: 'function',
     inputs: [],
@@ -6429,22 +6397,23 @@ export const itemsSet0Abi = [
     outputs: [
       {
         name: '_itemBase',
-        internalType: 'struct ItemsSetBase.ItemBase',
+        internalType: 'struct ItemsSet.Item',
         type: 'tuple',
         components: [
+          { name: 'name', internalType: 'string', type: 'string' },
           {
             name: 'rarity',
-            internalType: 'enum ItemsSetBase.ItemBaseRarity',
+            internalType: 'enum ItemsSet.ItemRarity',
             type: 'uint8',
           },
           {
             name: 'itemType',
-            internalType: 'enum ItemsSetBase.ItemBaseType',
+            internalType: 'enum ItemsSet.ItemType',
             type: 'uint8',
           },
           {
             name: 'trading',
-            internalType: 'struct ItemsSetBase.ItemTrading',
+            internalType: 'struct ItemsSet.ItemTrading',
             type: 'tuple',
             components: [
               { name: 'tradable', internalType: 'bool', type: 'bool' },
@@ -6454,7 +6423,7 @@ export const itemsSet0Abi = [
           },
           {
             name: 'usage',
-            internalType: 'struct ItemsSetBase.ItemUsage',
+            internalType: 'struct ItemsSet.ItemUsage',
             type: 'tuple',
             components: [
               { name: 'destroyOnUse', internalType: 'bool', type: 'bool' },
@@ -6463,7 +6432,7 @@ export const itemsSet0Abi = [
           },
           {
             name: 'requirements',
-            internalType: 'struct ItemsSetBase.ItemRequirements',
+            internalType: 'struct ItemsSet.ItemRequirements',
             type: 'tuple',
             components: [
               {
@@ -6475,22 +6444,21 @@ export const itemsSet0Abi = [
           },
           {
             name: 'metadata',
-            internalType: 'struct ItemsSetBase.ItemBaseMetadata',
+            internalType: 'struct ItemsSet.ItemMetadata',
             type: 'tuple',
             components: [
-              { name: 'name', internalType: 'string', type: 'string' },
               { name: 'symbol', internalType: 'string', type: 'string' },
               { name: 'decimals', internalType: 'uint8', type: 'uint8' },
             ],
           },
           {
             name: 'effects',
-            internalType: 'struct ItemsSetBase.Effect[]',
+            internalType: 'struct ItemsSet.Effect[]',
             type: 'tuple[]',
             components: [
               {
                 name: 'kind',
-                internalType: 'enum ItemsSetBase.EffectKind',
+                internalType: 'enum ItemsSet.EffectKind',
                 type: 'uint8',
               },
               { name: 'magnitude', internalType: 'int256', type: 'int256' },
@@ -6508,22 +6476,23 @@ export const itemsSet0Abi = [
     outputs: [
       {
         name: '_itemsBase',
-        internalType: 'struct ItemsSetBase.ItemBase[]',
+        internalType: 'struct ItemsSet.Item[]',
         type: 'tuple[]',
         components: [
+          { name: 'name', internalType: 'string', type: 'string' },
           {
             name: 'rarity',
-            internalType: 'enum ItemsSetBase.ItemBaseRarity',
+            internalType: 'enum ItemsSet.ItemRarity',
             type: 'uint8',
           },
           {
             name: 'itemType',
-            internalType: 'enum ItemsSetBase.ItemBaseType',
+            internalType: 'enum ItemsSet.ItemType',
             type: 'uint8',
           },
           {
             name: 'trading',
-            internalType: 'struct ItemsSetBase.ItemTrading',
+            internalType: 'struct ItemsSet.ItemTrading',
             type: 'tuple',
             components: [
               { name: 'tradable', internalType: 'bool', type: 'bool' },
@@ -6533,7 +6502,7 @@ export const itemsSet0Abi = [
           },
           {
             name: 'usage',
-            internalType: 'struct ItemsSetBase.ItemUsage',
+            internalType: 'struct ItemsSet.ItemUsage',
             type: 'tuple',
             components: [
               { name: 'destroyOnUse', internalType: 'bool', type: 'bool' },
@@ -6542,7 +6511,7 @@ export const itemsSet0Abi = [
           },
           {
             name: 'requirements',
-            internalType: 'struct ItemsSetBase.ItemRequirements',
+            internalType: 'struct ItemsSet.ItemRequirements',
             type: 'tuple',
             components: [
               {
@@ -6554,22 +6523,21 @@ export const itemsSet0Abi = [
           },
           {
             name: 'metadata',
-            internalType: 'struct ItemsSetBase.ItemBaseMetadata',
+            internalType: 'struct ItemsSet.ItemMetadata',
             type: 'tuple',
             components: [
-              { name: 'name', internalType: 'string', type: 'string' },
               { name: 'symbol', internalType: 'string', type: 'string' },
               { name: 'decimals', internalType: 'uint8', type: 'uint8' },
             ],
           },
           {
             name: 'effects',
-            internalType: 'struct ItemsSetBase.Effect[]',
+            internalType: 'struct ItemsSet.Effect[]',
             type: 'tuple[]',
             components: [
               {
                 name: 'kind',
-                internalType: 'enum ItemsSetBase.EffectKind',
+                internalType: 'enum ItemsSet.EffectKind',
                 type: 'uint8',
               },
               { name: 'magnitude', internalType: 'int256', type: 'int256' },
@@ -6791,22 +6759,23 @@ export const itemsSet0Abi = [
       { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
       {
         name: 'meta',
-        internalType: 'struct ItemsSetBase.ItemBase',
+        internalType: 'struct ItemsSet.Item',
         type: 'tuple',
         components: [
+          { name: 'name', internalType: 'string', type: 'string' },
           {
             name: 'rarity',
-            internalType: 'enum ItemsSetBase.ItemBaseRarity',
+            internalType: 'enum ItemsSet.ItemRarity',
             type: 'uint8',
           },
           {
             name: 'itemType',
-            internalType: 'enum ItemsSetBase.ItemBaseType',
+            internalType: 'enum ItemsSet.ItemType',
             type: 'uint8',
           },
           {
             name: 'trading',
-            internalType: 'struct ItemsSetBase.ItemTrading',
+            internalType: 'struct ItemsSet.ItemTrading',
             type: 'tuple',
             components: [
               { name: 'tradable', internalType: 'bool', type: 'bool' },
@@ -6816,7 +6785,7 @@ export const itemsSet0Abi = [
           },
           {
             name: 'usage',
-            internalType: 'struct ItemsSetBase.ItemUsage',
+            internalType: 'struct ItemsSet.ItemUsage',
             type: 'tuple',
             components: [
               { name: 'destroyOnUse', internalType: 'bool', type: 'bool' },
@@ -6825,7 +6794,7 @@ export const itemsSet0Abi = [
           },
           {
             name: 'requirements',
-            internalType: 'struct ItemsSetBase.ItemRequirements',
+            internalType: 'struct ItemsSet.ItemRequirements',
             type: 'tuple',
             components: [
               {
@@ -6837,22 +6806,21 @@ export const itemsSet0Abi = [
           },
           {
             name: 'metadata',
-            internalType: 'struct ItemsSetBase.ItemBaseMetadata',
+            internalType: 'struct ItemsSet.ItemMetadata',
             type: 'tuple',
             components: [
-              { name: 'name', internalType: 'string', type: 'string' },
               { name: 'symbol', internalType: 'string', type: 'string' },
               { name: 'decimals', internalType: 'uint8', type: 'uint8' },
             ],
           },
           {
             name: 'effects',
-            internalType: 'struct ItemsSetBase.Effect[]',
+            internalType: 'struct ItemsSet.Effect[]',
             type: 'tuple[]',
             components: [
               {
                 name: 'kind',
-                internalType: 'enum ItemsSetBase.EffectKind',
+                internalType: 'enum ItemsSet.EffectKind',
                 type: 'uint8',
               },
               { name: 'magnitude', internalType: 'int256', type: 'int256' },
@@ -6862,7 +6830,690 @@ export const itemsSet0Abi = [
         indexed: false,
       },
     ],
-    name: 'ItemDefined',
+    name: 'ItemCreated',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'approved', internalType: 'bool', type: 'bool', indexed: false },
+    ],
+    name: 'OperatorSet',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'previousAdminRole',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: true,
+      },
+      {
+        name: 'newAdminRole',
+        internalType: 'bytes32',
+        type: 'bytes32',
+        indexed: true,
+      },
+    ],
+    name: 'RoleAdminChanged',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'RoleGranted',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32', indexed: true },
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'RoleRevoked',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'caller',
+        internalType: 'address',
+        type: 'address',
+        indexed: false,
+      },
+      {
+        name: 'sender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'receiver',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Transfer',
+  },
+  { type: 'error', inputs: [], name: 'AccessControlBadConfirmation' },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'account', internalType: 'address', type: 'address' },
+      { name: 'neededRole', internalType: 'bytes32', type: 'bytes32' },
+    ],
+    name: 'AccessControlUnauthorizedAccount',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'allowance', internalType: 'uint256', type: 'uint256' },
+      { name: 'needed', internalType: 'uint256', type: 'uint256' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'ERC6909InsufficientAllowance',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'sender', internalType: 'address', type: 'address' },
+      { name: 'balance', internalType: 'uint256', type: 'uint256' },
+      { name: 'needed', internalType: 'uint256', type: 'uint256' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'ERC6909InsufficientBalance',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'approver', internalType: 'address', type: 'address' }],
+    name: 'ERC6909InvalidApprover',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'receiver', internalType: 'address', type: 'address' }],
+    name: 'ERC6909InvalidReceiver',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'sender', internalType: 'address', type: 'address' }],
+    name: 'ERC6909InvalidSender',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'spender', internalType: 'address', type: 'address' }],
+    name: 'ERC6909InvalidSpender',
+  },
+  { type: 'error', inputs: [], name: 'InvalidItemId' },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ItemsSet0
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ *
+ */
+export const itemsSet0Abi = [
+  {
+    type: 'constructor',
+    inputs: [{ name: '_owner', internalType: 'address', type: 'address' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'DEFAULT_ADMIN_ROLE',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'MINTER_ROLE',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'allowance',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'approve',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'balanceOf',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_to', internalType: 'address', type: 'address' },
+      { name: '_id', internalType: 'uint256', type: 'uint256' },
+      { name: '_amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'burn',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
+    name: 'decimals',
+    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: '_itemId', internalType: 'uint256', type: 'uint256' }],
+    name: 'getItem',
+    outputs: [
+      {
+        name: '_itemBase',
+        internalType: 'struct ItemsSet.Item',
+        type: 'tuple',
+        components: [
+          { name: 'name', internalType: 'string', type: 'string' },
+          {
+            name: 'rarity',
+            internalType: 'enum ItemsSet.ItemRarity',
+            type: 'uint8',
+          },
+          {
+            name: 'itemType',
+            internalType: 'enum ItemsSet.ItemType',
+            type: 'uint8',
+          },
+          {
+            name: 'trading',
+            internalType: 'struct ItemsSet.ItemTrading',
+            type: 'tuple',
+            components: [
+              { name: 'tradable', internalType: 'bool', type: 'bool' },
+              { name: 'sellable', internalType: 'bool', type: 'bool' },
+              { name: 'price', internalType: 'uint256', type: 'uint256' },
+            ],
+          },
+          {
+            name: 'usage',
+            internalType: 'struct ItemsSet.ItemUsage',
+            type: 'tuple',
+            components: [
+              { name: 'destroyOnUse', internalType: 'bool', type: 'bool' },
+              { name: 'soulbound', internalType: 'bool', type: 'bool' },
+            ],
+          },
+          {
+            name: 'requirements',
+            internalType: 'struct ItemsSet.ItemRequirements',
+            type: 'tuple',
+            components: [
+              {
+                name: 'requiredLevel',
+                internalType: 'uint256',
+                type: 'uint256',
+              },
+            ],
+          },
+          {
+            name: 'metadata',
+            internalType: 'struct ItemsSet.ItemMetadata',
+            type: 'tuple',
+            components: [
+              { name: 'symbol', internalType: 'string', type: 'string' },
+              { name: 'decimals', internalType: 'uint8', type: 'uint8' },
+            ],
+          },
+          {
+            name: 'effects',
+            internalType: 'struct ItemsSet.Effect[]',
+            type: 'tuple[]',
+            components: [
+              {
+                name: 'kind',
+                internalType: 'enum ItemsSet.EffectKind',
+                type: 'uint8',
+              },
+              { name: 'magnitude', internalType: 'int256', type: 'int256' },
+            ],
+          },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getItems',
+    outputs: [
+      {
+        name: '_itemsBase',
+        internalType: 'struct ItemsSet.Item[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'name', internalType: 'string', type: 'string' },
+          {
+            name: 'rarity',
+            internalType: 'enum ItemsSet.ItemRarity',
+            type: 'uint8',
+          },
+          {
+            name: 'itemType',
+            internalType: 'enum ItemsSet.ItemType',
+            type: 'uint8',
+          },
+          {
+            name: 'trading',
+            internalType: 'struct ItemsSet.ItemTrading',
+            type: 'tuple',
+            components: [
+              { name: 'tradable', internalType: 'bool', type: 'bool' },
+              { name: 'sellable', internalType: 'bool', type: 'bool' },
+              { name: 'price', internalType: 'uint256', type: 'uint256' },
+            ],
+          },
+          {
+            name: 'usage',
+            internalType: 'struct ItemsSet.ItemUsage',
+            type: 'tuple',
+            components: [
+              { name: 'destroyOnUse', internalType: 'bool', type: 'bool' },
+              { name: 'soulbound', internalType: 'bool', type: 'bool' },
+            ],
+          },
+          {
+            name: 'requirements',
+            internalType: 'struct ItemsSet.ItemRequirements',
+            type: 'tuple',
+            components: [
+              {
+                name: 'requiredLevel',
+                internalType: 'uint256',
+                type: 'uint256',
+              },
+            ],
+          },
+          {
+            name: 'metadata',
+            internalType: 'struct ItemsSet.ItemMetadata',
+            type: 'tuple',
+            components: [
+              { name: 'symbol', internalType: 'string', type: 'string' },
+              { name: 'decimals', internalType: 'uint8', type: 'uint8' },
+            ],
+          },
+          {
+            name: 'effects',
+            internalType: 'struct ItemsSet.Effect[]',
+            type: 'tuple[]',
+            components: [
+              {
+                name: 'kind',
+                internalType: 'enum ItemsSet.EffectKind',
+                type: 'uint8',
+              },
+              { name: 'magnitude', internalType: 'int256', type: 'int256' },
+            ],
+          },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'role', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'getRoleAdmin',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'grantRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'hasRole',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'owner', internalType: 'address', type: 'address' },
+      { name: 'spender', internalType: 'address', type: 'address' },
+    ],
+    name: 'isOperator',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'itemIdsIndex',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: '_to', internalType: 'address', type: 'address' },
+      { name: '_id', internalType: 'uint256', type: 'uint256' },
+      { name: '_amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'mint',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
+    name: 'name',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'callerConfirmation', internalType: 'address', type: 'address' },
+    ],
+    name: 'renounceRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'role', internalType: 'bytes32', type: 'bytes32' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'revokeRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'spender', internalType: 'address', type: 'address' },
+      { name: 'approved', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'setOperator',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'interfaceId', internalType: 'bytes4', type: 'bytes4' }],
+    name: 'supportsInterface',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
+    name: 'symbol',
+    outputs: [{ name: '', internalType: 'string', type: 'string' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'id', internalType: 'uint256', type: 'uint256' }],
+    name: 'totalSupply',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'receiver', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'sender', internalType: 'address', type: 'address' },
+      { name: 'receiver', internalType: 'address', type: 'address' },
+      { name: 'id', internalType: 'uint256', type: 'uint256' },
+      { name: 'amount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'transferFrom',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'owner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'spender',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Approval',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'newDecimals',
+        internalType: 'uint8',
+        type: 'uint8',
+        indexed: false,
+      },
+    ],
+    name: 'ERC6909DecimalsUpdated',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'newName',
+        internalType: 'string',
+        type: 'string',
+        indexed: false,
+      },
+    ],
+    name: 'ERC6909NameUpdated',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'newSymbol',
+        internalType: 'string',
+        type: 'string',
+        indexed: false,
+      },
+    ],
+    name: 'ERC6909SymbolUpdated',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'id', internalType: 'uint256', type: 'uint256', indexed: true },
+      {
+        name: 'meta',
+        internalType: 'struct ItemsSet.Item',
+        type: 'tuple',
+        components: [
+          { name: 'name', internalType: 'string', type: 'string' },
+          {
+            name: 'rarity',
+            internalType: 'enum ItemsSet.ItemRarity',
+            type: 'uint8',
+          },
+          {
+            name: 'itemType',
+            internalType: 'enum ItemsSet.ItemType',
+            type: 'uint8',
+          },
+          {
+            name: 'trading',
+            internalType: 'struct ItemsSet.ItemTrading',
+            type: 'tuple',
+            components: [
+              { name: 'tradable', internalType: 'bool', type: 'bool' },
+              { name: 'sellable', internalType: 'bool', type: 'bool' },
+              { name: 'price', internalType: 'uint256', type: 'uint256' },
+            ],
+          },
+          {
+            name: 'usage',
+            internalType: 'struct ItemsSet.ItemUsage',
+            type: 'tuple',
+            components: [
+              { name: 'destroyOnUse', internalType: 'bool', type: 'bool' },
+              { name: 'soulbound', internalType: 'bool', type: 'bool' },
+            ],
+          },
+          {
+            name: 'requirements',
+            internalType: 'struct ItemsSet.ItemRequirements',
+            type: 'tuple',
+            components: [
+              {
+                name: 'requiredLevel',
+                internalType: 'uint256',
+                type: 'uint256',
+              },
+            ],
+          },
+          {
+            name: 'metadata',
+            internalType: 'struct ItemsSet.ItemMetadata',
+            type: 'tuple',
+            components: [
+              { name: 'symbol', internalType: 'string', type: 'string' },
+              { name: 'decimals', internalType: 'uint8', type: 'uint8' },
+            ],
+          },
+          {
+            name: 'effects',
+            internalType: 'struct ItemsSet.Effect[]',
+            type: 'tuple[]',
+            components: [
+              {
+                name: 'kind',
+                internalType: 'enum ItemsSet.EffectKind',
+                type: 'uint8',
+              },
+              { name: 'magnitude', internalType: 'int256', type: 'int256' },
+            ],
+          },
+        ],
+        indexed: false,
+      },
+    ],
+    name: 'ItemCreated',
   },
   {
     type: 'event',
@@ -7032,7 +7683,7 @@ export const itemsSet0Abi = [
  *
  */
 export const itemsSet0Address = {
-  31337: '0x6e87584dc10934E11b20954DC610ba30af9Afcb0',
+  31337: '0x2029e9a94202949269Af7af0f703097C1A16C0Ce',
 } as const
 
 /**
@@ -8003,7 +8654,7 @@ export const jobsModuleAbi = [
  *
  */
 export const jobsModuleAddress = {
-  31337: '0xD124841A9e8d50240B290341eBe53Beca8621EC9',
+  31337: '0x20b6Bd01bffbc7758ac8b29f81d6FeB9bbA9611A',
 } as const
 
 /**
@@ -8326,7 +8977,7 @@ export const jobsRegistryAbi = [
  *
  */
 export const jobsRegistryAddress = {
-  31337: '0x3DF7F550DCAC80892feF3E4930eDCa53A4a96b82',
+  31337: '0x24D54770f03730e2f46EB7C0c0207bFfB14E501F',
 } as const
 
 /**
@@ -8539,11 +9190,7 @@ export const shopModuleAbi = [
         internalType: 'contract DinoFactory',
         type: 'address',
       },
-      {
-        name: '_items',
-        internalType: 'contract ItemsSetBase',
-        type: 'address',
-      },
+      { name: '_items', internalType: 'contract ItemsSet', type: 'address' },
       { name: '_treasury', internalType: 'address', type: 'address' },
     ],
     stateMutability: 'nonpayable',
@@ -8591,22 +9238,23 @@ export const shopModuleAbi = [
     outputs: [
       {
         name: '',
-        internalType: 'struct ItemsSetBase.ItemBase[]',
+        internalType: 'struct ItemsSet.Item[]',
         type: 'tuple[]',
         components: [
+          { name: 'name', internalType: 'string', type: 'string' },
           {
             name: 'rarity',
-            internalType: 'enum ItemsSetBase.ItemBaseRarity',
+            internalType: 'enum ItemsSet.ItemRarity',
             type: 'uint8',
           },
           {
             name: 'itemType',
-            internalType: 'enum ItemsSetBase.ItemBaseType',
+            internalType: 'enum ItemsSet.ItemType',
             type: 'uint8',
           },
           {
             name: 'trading',
-            internalType: 'struct ItemsSetBase.ItemTrading',
+            internalType: 'struct ItemsSet.ItemTrading',
             type: 'tuple',
             components: [
               { name: 'tradable', internalType: 'bool', type: 'bool' },
@@ -8616,7 +9264,7 @@ export const shopModuleAbi = [
           },
           {
             name: 'usage',
-            internalType: 'struct ItemsSetBase.ItemUsage',
+            internalType: 'struct ItemsSet.ItemUsage',
             type: 'tuple',
             components: [
               { name: 'destroyOnUse', internalType: 'bool', type: 'bool' },
@@ -8625,7 +9273,7 @@ export const shopModuleAbi = [
           },
           {
             name: 'requirements',
-            internalType: 'struct ItemsSetBase.ItemRequirements',
+            internalType: 'struct ItemsSet.ItemRequirements',
             type: 'tuple',
             components: [
               {
@@ -8637,22 +9285,21 @@ export const shopModuleAbi = [
           },
           {
             name: 'metadata',
-            internalType: 'struct ItemsSetBase.ItemBaseMetadata',
+            internalType: 'struct ItemsSet.ItemMetadata',
             type: 'tuple',
             components: [
-              { name: 'name', internalType: 'string', type: 'string' },
               { name: 'symbol', internalType: 'string', type: 'string' },
               { name: 'decimals', internalType: 'uint8', type: 'uint8' },
             ],
           },
           {
             name: 'effects',
-            internalType: 'struct ItemsSetBase.Effect[]',
+            internalType: 'struct ItemsSet.Effect[]',
             type: 'tuple[]',
             components: [
               {
                 name: 'kind',
-                internalType: 'enum ItemsSetBase.EffectKind',
+                internalType: 'enum ItemsSet.EffectKind',
                 type: 'uint8',
               },
               { name: 'magnitude', internalType: 'int256', type: 'int256' },
@@ -8694,9 +9341,7 @@ export const shopModuleAbi = [
     type: 'function',
     inputs: [],
     name: 'items',
-    outputs: [
-      { name: '', internalType: 'contract ItemsSetBase', type: 'address' },
-    ],
+    outputs: [{ name: '', internalType: 'contract ItemsSet', type: 'address' }],
     stateMutability: 'view',
   },
   {
@@ -8854,7 +9499,7 @@ export const shopModuleAbi = [
  *
  */
 export const shopModuleAddress = {
-  31337: '0x3e6eA0752b75d29b37c1f87137f10b86a2788e69',
+  31337: '0xE195d793c030eD79DA7f47b3e84d2Cb345B90F78',
 } as const
 
 /**
@@ -9233,7 +9878,7 @@ export const speciesRegistryAbi = [
  *
  */
 export const speciesRegistryAddress = {
-  31337: '0x92a53dB9AD485269Dd7bd3e6FfA1f9AC637c1F65',
+  31337: '0xb429b4bEE07eD0A5E431A14710F5F36005D54769',
 } as const
 
 /**
@@ -15304,6 +15949,398 @@ export const useSimulateIMulticall3TryBlockAndAggregate =
   })
 
 /**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetAbi}__
+ */
+export const useReadItemsSet = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSetAbi,
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"DEFAULT_ADMIN_ROLE"`
+ */
+export const useReadItemsSetDefaultAdminRole =
+  /*#__PURE__*/ createUseReadContract({
+    abi: itemsSetAbi,
+    functionName: 'DEFAULT_ADMIN_ROLE',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"MINTER_ROLE"`
+ */
+export const useReadItemsSetMinterRole = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSetAbi,
+  functionName: 'MINTER_ROLE',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"allowance"`
+ */
+export const useReadItemsSetAllowance = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSetAbi,
+  functionName: 'allowance',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"balanceOf"`
+ */
+export const useReadItemsSetBalanceOf = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSetAbi,
+  functionName: 'balanceOf',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"decimals"`
+ */
+export const useReadItemsSetDecimals = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSetAbi,
+  functionName: 'decimals',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"getItem"`
+ */
+export const useReadItemsSetGetItem = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSetAbi,
+  functionName: 'getItem',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"getItems"`
+ */
+export const useReadItemsSetGetItems = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSetAbi,
+  functionName: 'getItems',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"getRoleAdmin"`
+ */
+export const useReadItemsSetGetRoleAdmin = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSetAbi,
+  functionName: 'getRoleAdmin',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"hasRole"`
+ */
+export const useReadItemsSetHasRole = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSetAbi,
+  functionName: 'hasRole',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"isOperator"`
+ */
+export const useReadItemsSetIsOperator = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSetAbi,
+  functionName: 'isOperator',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"itemIdsIndex"`
+ */
+export const useReadItemsSetItemIdsIndex = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSetAbi,
+  functionName: 'itemIdsIndex',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"name"`
+ */
+export const useReadItemsSetName = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSetAbi,
+  functionName: 'name',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"supportsInterface"`
+ */
+export const useReadItemsSetSupportsInterface =
+  /*#__PURE__*/ createUseReadContract({
+    abi: itemsSetAbi,
+    functionName: 'supportsInterface',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"symbol"`
+ */
+export const useReadItemsSetSymbol = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSetAbi,
+  functionName: 'symbol',
+})
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"totalSupply"`
+ */
+export const useReadItemsSetTotalSupply = /*#__PURE__*/ createUseReadContract({
+  abi: itemsSetAbi,
+  functionName: 'totalSupply',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSetAbi}__
+ */
+export const useWriteItemsSet = /*#__PURE__*/ createUseWriteContract({
+  abi: itemsSetAbi,
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"approve"`
+ */
+export const useWriteItemsSetApprove = /*#__PURE__*/ createUseWriteContract({
+  abi: itemsSetAbi,
+  functionName: 'approve',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"burn"`
+ */
+export const useWriteItemsSetBurn = /*#__PURE__*/ createUseWriteContract({
+  abi: itemsSetAbi,
+  functionName: 'burn',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"grantRole"`
+ */
+export const useWriteItemsSetGrantRole = /*#__PURE__*/ createUseWriteContract({
+  abi: itemsSetAbi,
+  functionName: 'grantRole',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"mint"`
+ */
+export const useWriteItemsSetMint = /*#__PURE__*/ createUseWriteContract({
+  abi: itemsSetAbi,
+  functionName: 'mint',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"renounceRole"`
+ */
+export const useWriteItemsSetRenounceRole =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: itemsSetAbi,
+    functionName: 'renounceRole',
+  })
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"revokeRole"`
+ */
+export const useWriteItemsSetRevokeRole = /*#__PURE__*/ createUseWriteContract({
+  abi: itemsSetAbi,
+  functionName: 'revokeRole',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"setOperator"`
+ */
+export const useWriteItemsSetSetOperator = /*#__PURE__*/ createUseWriteContract(
+  { abi: itemsSetAbi, functionName: 'setOperator' },
+)
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"transfer"`
+ */
+export const useWriteItemsSetTransfer = /*#__PURE__*/ createUseWriteContract({
+  abi: itemsSetAbi,
+  functionName: 'transfer',
+})
+
+/**
+ * Wraps __{@link useWriteContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useWriteItemsSetTransferFrom =
+  /*#__PURE__*/ createUseWriteContract({
+    abi: itemsSetAbi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSetAbi}__
+ */
+export const useSimulateItemsSet = /*#__PURE__*/ createUseSimulateContract({
+  abi: itemsSetAbi,
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"approve"`
+ */
+export const useSimulateItemsSetApprove =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: itemsSetAbi,
+    functionName: 'approve',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"burn"`
+ */
+export const useSimulateItemsSetBurn = /*#__PURE__*/ createUseSimulateContract({
+  abi: itemsSetAbi,
+  functionName: 'burn',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"grantRole"`
+ */
+export const useSimulateItemsSetGrantRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: itemsSetAbi,
+    functionName: 'grantRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"mint"`
+ */
+export const useSimulateItemsSetMint = /*#__PURE__*/ createUseSimulateContract({
+  abi: itemsSetAbi,
+  functionName: 'mint',
+})
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"renounceRole"`
+ */
+export const useSimulateItemsSetRenounceRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: itemsSetAbi,
+    functionName: 'renounceRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"revokeRole"`
+ */
+export const useSimulateItemsSetRevokeRole =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: itemsSetAbi,
+    functionName: 'revokeRole',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"setOperator"`
+ */
+export const useSimulateItemsSetSetOperator =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: itemsSetAbi,
+    functionName: 'setOperator',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"transfer"`
+ */
+export const useSimulateItemsSetTransfer =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: itemsSetAbi,
+    functionName: 'transfer',
+  })
+
+/**
+ * Wraps __{@link useSimulateContract}__ with `abi` set to __{@link itemsSetAbi}__ and `functionName` set to `"transferFrom"`
+ */
+export const useSimulateItemsSetTransferFrom =
+  /*#__PURE__*/ createUseSimulateContract({
+    abi: itemsSetAbi,
+    functionName: 'transferFrom',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSetAbi}__
+ */
+export const useWatchItemsSetEvent = /*#__PURE__*/ createUseWatchContractEvent({
+  abi: itemsSetAbi,
+})
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSetAbi}__ and `eventName` set to `"Approval"`
+ */
+export const useWatchItemsSetApprovalEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSetAbi,
+    eventName: 'Approval',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSetAbi}__ and `eventName` set to `"ERC6909DecimalsUpdated"`
+ */
+export const useWatchItemsSetErc6909DecimalsUpdatedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSetAbi,
+    eventName: 'ERC6909DecimalsUpdated',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSetAbi}__ and `eventName` set to `"ERC6909NameUpdated"`
+ */
+export const useWatchItemsSetErc6909NameUpdatedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSetAbi,
+    eventName: 'ERC6909NameUpdated',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSetAbi}__ and `eventName` set to `"ERC6909SymbolUpdated"`
+ */
+export const useWatchItemsSetErc6909SymbolUpdatedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSetAbi,
+    eventName: 'ERC6909SymbolUpdated',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSetAbi}__ and `eventName` set to `"ItemCreated"`
+ */
+export const useWatchItemsSetItemCreatedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSetAbi,
+    eventName: 'ItemCreated',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSetAbi}__ and `eventName` set to `"OperatorSet"`
+ */
+export const useWatchItemsSetOperatorSetEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSetAbi,
+    eventName: 'OperatorSet',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSetAbi}__ and `eventName` set to `"RoleAdminChanged"`
+ */
+export const useWatchItemsSetRoleAdminChangedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSetAbi,
+    eventName: 'RoleAdminChanged',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSetAbi}__ and `eventName` set to `"RoleGranted"`
+ */
+export const useWatchItemsSetRoleGrantedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSetAbi,
+    eventName: 'RoleGranted',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSetAbi}__ and `eventName` set to `"RoleRevoked"`
+ */
+export const useWatchItemsSetRoleRevokedEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSetAbi,
+    eventName: 'RoleRevoked',
+  })
+
+/**
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSetAbi}__ and `eventName` set to `"Transfer"`
+ */
+export const useWatchItemsSetTransferEvent =
+  /*#__PURE__*/ createUseWatchContractEvent({
+    abi: itemsSetAbi,
+    eventName: 'Transfer',
+  })
+
+/**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link itemsSet0Abi}__
  *
  *
@@ -15764,15 +16801,15 @@ export const useWatchItemsSet0Erc6909SymbolUpdatedEvent =
   })
 
 /**
- * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSet0Abi}__ and `eventName` set to `"ItemDefined"`
+ * Wraps __{@link useWatchContractEvent}__ with `abi` set to __{@link itemsSet0Abi}__ and `eventName` set to `"ItemCreated"`
  *
  *
  */
-export const useWatchItemsSet0ItemDefinedEvent =
+export const useWatchItemsSet0ItemCreatedEvent =
   /*#__PURE__*/ createUseWatchContractEvent({
     abi: itemsSet0Abi,
     address: itemsSet0Address,
-    eventName: 'ItemDefined',
+    eventName: 'ItemCreated',
   })
 
 /**

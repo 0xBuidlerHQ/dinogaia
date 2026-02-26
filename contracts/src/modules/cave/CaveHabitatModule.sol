@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import {ItemsSetBase} from "@items/sets/ItemsSetBase.sol";
+import {ItemsSet} from "@items/sets/ItemsSet.sol";
 import {ModuleBase} from "@modules/ModuleBase.sol";
 import {CaveBase} from "@modules/cave/CaveBase.sol";
 import {CaveStateModule} from "@modules/cave/CaveStateModule.sol";
@@ -21,7 +21,7 @@ abstract contract CaveHabitatModule is ModuleBase, CaveBase, CaveStateModule {
      * @dev
      */
     function useHabitat(uint256 _dinoId, uint256 _itemId, bool installing) external onlyDinoAccount(_dinoId) {
-        ItemsSetBase.ItemBase memory item = items.getItem(_itemId);
+        ItemsSet.Item memory item = items.getItem(_itemId);
         _checkHabitatType(item);
 
         if (installing) {
@@ -38,17 +38,17 @@ abstract contract CaveHabitatModule is ModuleBase, CaveBase, CaveStateModule {
     /**
      * @dev
      */
-    function _applyHabitatEffects(uint256 _dinoId, ItemsSetBase.Effect[] memory effects, bool installing) internal {
+    function _applyHabitatEffects(uint256 _dinoId, ItemsSet.Effect[] memory effects, bool installing) internal {
         int256 sign = installing ? int256(1) : int256(-1);
 
         for (uint256 i = 0; i < effects.length; i++) {
-            ItemsSetBase.Effect memory eff = effects[i];
+            ItemsSet.Effect memory eff = effects[i];
 
-            if (eff.kind == ItemsSetBase.EffectKind.SecurityBonus) {
+            if (eff.kind == ItemsSet.EffectKind.SecurityBonus) {
                 updateSecurity(_dinoId, sign * eff.magnitude);
-            } else if (eff.kind == ItemsSetBase.EffectKind.HygieneBonus) {
+            } else if (eff.kind == ItemsSet.EffectKind.HygieneBonus) {
                 updateHygiene(_dinoId, sign * eff.magnitude);
-            } else if (eff.kind == ItemsSetBase.EffectKind.ComfortBonus) {
+            } else if (eff.kind == ItemsSet.EffectKind.ComfortBonus) {
                 updateComfort(_dinoId, sign * eff.magnitude);
             }
         }
@@ -57,7 +57,7 @@ abstract contract CaveHabitatModule is ModuleBase, CaveBase, CaveStateModule {
     /**
      * @dev
      */
-    function _checkHabitatType(ItemsSetBase.ItemBase memory meta) internal pure {
-        if (meta.itemType != ItemsSetBase.ItemBaseType.Habitat) revert InvalidItemType();
+    function _checkHabitatType(ItemsSet.Item memory meta) internal pure {
+        if (meta.itemType != ItemsSet.ItemType.Habitat) revert InvalidItemType();
     }
 }

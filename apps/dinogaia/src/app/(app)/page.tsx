@@ -107,8 +107,8 @@ const DinoStats = (props: DinoStatsProps) => {
 				<StatItem
 					title="Job"
 					addon={
-						<Box className="text-[#a3e635]">
-							<H6>100 Emerald / day</H6>
+						<Box className="text-[#a3e635] tracking-tighter">
+							<H6>100 Emerald /day</H6>
 						</Box>
 					}
 				>

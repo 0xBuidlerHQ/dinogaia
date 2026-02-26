@@ -95,25 +95,3 @@ export namespace ItemsSetBase {
 		soulbound: boolean;
 	};
 }
-
-export namespace JobsRegistry {
-	export type Job = {
-		name: string;
-		dailyPay: bigint;
-		trainingCost: bigint;
-		requiredLevel: bigint;
-	};
-}
-
-export namespace SpeciesRegistry {
-	export type Species = {
-		name: string;
-		stats: SpeciesRegistry.Stats;
-	};
-	export type Stats = {
-		force: bigint;
-		endurance: bigint;
-		agility: bigint;
-		intelligence: bigint;
-	};
-}

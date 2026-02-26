@@ -1,4 +1,4 @@
-import { onchainTable } from "ponder";
+import { jsonb, onchainTable } from "ponder";
 
 const dinos = onchainTable("dinos", (t) => ({
 	dinoId: t.bigint().primaryKey(),
@@ -11,19 +11,30 @@ const species = onchainTable("species", (t) => ({
 	speciesId: t.bigint().primaryKey(),
 	//
 	name: t.text(),
-	stats_force: t.integer(),
-	stats_endurance: t.integer(),
-	stats_agility: t.integer(),
-	stats_intelligence: t.integer(),
+	//
+	stats: jsonb("stats").$type<{
+		force?: number;
+		endurance?: number;
+		agility?: number;
+		intelliger?: number;
+	}>(),
 }));
 
 const jobs = onchainTable("jobs", (t) => ({
 	jobId: t.bigint().primaryKey(),
 	//
 	name: t.text(),
+	//
 	dailyPay: t.bigint(),
 	trainingCost: t.bigint(),
 	requiredLevel: t.integer(),
 }));
 
-export { dinos, species, jobs };
+const items = onchainTable("items", (t) => ({
+	itemId: t.bigint().primaryKey(),
+	//
+	name: t.text(),
+	//
+}));
+
+export { dinos, species, jobs, items };

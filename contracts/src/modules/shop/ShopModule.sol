@@ -2,7 +2,7 @@
 pragma solidity ^0.8.20;
 
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import {ItemsSetBase} from "@items/sets/ItemsSetBase.sol";
+import {ItemsSet} from "@items/sets/ItemsSet.sol";
 import {ModuleBase} from "@modules/ModuleBase.sol";
 import {DinoFactory} from "@dino/DinoFactory.sol";
 import {EmeraldERC20} from "@economy/tokens/EmeraldERC20.sol";
@@ -12,7 +12,7 @@ contract ShopModule is ModuleBase {
      * @dev Immutables.
      */
     EmeraldERC20 public immutable emerald;
-    ItemsSetBase public immutable items;
+    ItemsSet public immutable items;
 
     /**
      * @dev Variables.
@@ -33,7 +33,7 @@ contract ShopModule is ModuleBase {
     /**
      * @dev Constructor.
      */
-    constructor(address owner, EmeraldERC20 _emerald, DinoFactory _dinoFactory, ItemsSetBase _items, address _treasury)
+    constructor(address owner, EmeraldERC20 _emerald, DinoFactory _dinoFactory, ItemsSet _items, address _treasury)
         ModuleBase(owner, _dinoFactory)
     {
         emerald = _emerald;
@@ -50,7 +50,7 @@ contract ShopModule is ModuleBase {
     function buy(uint256 _dinoId, uint256 _itemId, uint256 _amount) external onlyDinoAccount(_dinoId) {
         if (_amount == 0) revert InvalidAmount();
 
-        ItemsSetBase.ItemBase memory meta = items.getItem(_itemId);
+        ItemsSet.Item memory meta = items.getItem(_itemId);
         uint256 total = meta.trading.price * _amount;
 
         require(emerald.transferFrom(msg.sender, treasury, total), "PAY_FAIL");
@@ -63,7 +63,7 @@ contract ShopModule is ModuleBase {
     /**
      * @dev
      */
-    function getItems() external view returns (ItemsSetBase.ItemBase[] memory) {
+    function getItems() external view returns (ItemsSet.Item[] memory) {
         return items.getItems();
     }
 }

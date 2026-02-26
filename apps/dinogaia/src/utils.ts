@@ -1,4 +1,4 @@
-import { ItemsSetBase } from "@0xbuidlerhq/dinogaia.contracts/types.user";
+import { ItemsSet } from "@0xbuidlerhq/dinogaia.contracts/types.user";
 
 const timestampToAge = (timestamp: bigint) => {
 	if (!timestamp) return { days: 0n, hours: 0n, minutes: 0n };
@@ -20,86 +20,86 @@ const timestampToAge = (timestamp: bigint) => {
 
 type DinoAge = ReturnType<typeof timestampToAge>;
 
-const itemBaseType = (item: ItemsSetBase.ItemBaseType) => {
+const itemBaseType = (item: ItemsSet.ItemType) => {
 	switch (item) {
-		case ItemsSetBase.ItemBaseType.Artifact:
+		case ItemsSet.ItemType.Artifact:
 			return {
 				name: "Artifact",
 				color: "text-purple-400",
 				backgroundColor: "bg-purple-500/15",
 				borderColor: "border-purple-400/40",
 			};
-		case ItemsSetBase.ItemBaseType.Consumable:
+		case ItemsSet.ItemType.Consumable:
 			return {
 				name: "Consumable",
 				color: "text-emerald-400",
 				backgroundColor: "bg-emerald-500/15",
 				borderColor: "border-emerald-400/40",
 			};
-		case ItemsSetBase.ItemBaseType.Blueprint:
+		case ItemsSet.ItemType.Blueprint:
 			return {
 				name: "Blueprint",
 				color: "text-sky-400",
 				backgroundColor: "bg-sky-500/15",
 				borderColor: "border-sky-400/40",
 			};
-		case ItemsSetBase.ItemBaseType.Container:
+		case ItemsSet.ItemType.Container:
 			return {
 				name: "Container",
 				color: "text-amber-400",
 				backgroundColor: "bg-amber-500/15",
 				borderColor: "border-amber-400/40",
 			};
-		case ItemsSetBase.ItemBaseType.Cosmetic:
+		case ItemsSet.ItemType.Cosmetic:
 			return {
 				name: "Cosmetic",
 				color: "text-pink-400",
 				backgroundColor: "bg-pink-500/15",
 				borderColor: "border-pink-400/40",
 			};
-		case ItemsSetBase.ItemBaseType.Currency:
+		case ItemsSet.ItemType.Currency:
 			return {
 				name: "Currency",
 				color: "text-yellow-400",
 				backgroundColor: "bg-yellow-500/15",
 				borderColor: "border-yellow-400/40",
 			};
-		case ItemsSetBase.ItemBaseType.Equipment:
+		case ItemsSet.ItemType.Equipment:
 			return {
 				name: "Equipment",
 				color: "text-blue-400",
 				backgroundColor: "bg-blue-500/15",
 				borderColor: "border-blue-400/40",
 			};
-		case ItemsSetBase.ItemBaseType.Habitat:
+		case ItemsSet.ItemType.Habitat:
 			return {
 				name: "Habitat",
 				color: "text-lime-400",
 				backgroundColor: "bg-lime-500/15",
 				borderColor: "border-lime-400/40",
 			};
-		case ItemsSetBase.ItemBaseType.Key:
+		case ItemsSet.ItemType.Key:
 			return {
 				name: "Key",
 				color: "text-orange-400",
 				backgroundColor: "bg-orange-500/15",
 				borderColor: "border-orange-400/40",
 			};
-		case ItemsSetBase.ItemBaseType.Quest:
+		case ItemsSet.ItemType.Quest:
 			return {
 				name: "Quest",
 				color: "text-rose-400",
 				backgroundColor: "bg-rose-500/15",
 				borderColor: "border-rose-400/40",
 			};
-		case ItemsSetBase.ItemBaseType.Resource:
+		case ItemsSet.ItemType.Resource:
 			return {
 				name: "Resource",
 				color: "text-amber-700",
 				backgroundColor: "bg-amber-700/15",
 				borderColor: "border-amber-700/40",
 			};
-		case ItemsSetBase.ItemBaseType.Weapon:
+		case ItemsSet.ItemType.Weapon:
 			return {
 				name: "Weapon",
 				color: "text-red-400",

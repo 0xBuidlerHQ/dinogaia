@@ -1,6 +1,6 @@
 "use client";
 
-import type { ItemsSetBase } from "@0xbuidlerhq/dinogaia.contracts/types.user";
+import type { ItemsSet } from "@0xbuidlerhq/dinogaia.contracts/types.user";
 import { cn } from "@0xbuidlerhq/ui/shadcn/lib/utils";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { H3, H4, H7 } from "@0xbuidlerhq/ui/system/base/typography";
@@ -8,7 +8,7 @@ import { images, items, rarities } from "../../assets/assets";
 import { EthereumLogo } from "../../assets/emerald";
 
 type Props = {
-	item: ItemsSetBase.ItemBase;
+	item: ItemsSet.Item;
 };
 
 const ItemType = (props: Props) => {

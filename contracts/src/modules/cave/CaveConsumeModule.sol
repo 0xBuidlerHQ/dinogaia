@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import {ItemsSetBase} from "@items/sets/ItemsSetBase.sol";
+import {ItemsSet} from "@items/sets/ItemsSet.sol";
 import {Dino} from "@dino/Dino.sol";
 import {DinoFactory} from "@dino/DinoFactory.sol";
 import {ModuleBase} from "@modules/ModuleBase.sol";
@@ -23,7 +23,7 @@ abstract contract CaveConsumeModule is ModuleBase, CaveBase {
     function useConsumable(
         uint256 _dinoId,
         //
-        ItemsSetBase _itemsSet,
+        ItemsSet _itemsSet,
         uint256 _itemId,
         //
         int256 _amount
@@ -34,8 +34,8 @@ abstract contract CaveConsumeModule is ModuleBase, CaveBase {
 
         DinoFactory.DinoContext memory dinoContext = getAuthorizedDino(_dinoId);
 
-        ItemsSetBase.ItemBase memory item = _itemsSet.getItem(_itemId);
-        if (item.itemType != ItemsSetBase.ItemBaseType.Consumable) revert NoEffect();
+        ItemsSet.Item memory item = _itemsSet.getItem(_itemId);
+        if (item.itemType != ItemsSet.ItemType.Consumable) revert NoEffect();
 
         _itemsSet.burn(address(dinoContext.dinoAccount), _itemId, 1);
 
@@ -45,14 +45,14 @@ abstract contract CaveConsumeModule is ModuleBase, CaveBase {
     /**
      * @dev
      */
-    function _applyConsumableEffects(uint256 _dinoId, ItemsSetBase.Effect[] memory effects, int256 _amount) internal {
+    function _applyConsumableEffects(uint256 _dinoId, ItemsSet.Effect[] memory effects, int256 _amount) internal {
         for (uint256 i = 0; i < effects.length; i++) {
-            ItemsSetBase.Effect memory effect = effects[i];
+            ItemsSet.Effect memory effect = effects[i];
 
             /**
              * @dev EffectKind Weight.
              */
-            if (effect.kind == ItemsSetBase.EffectKind.Weight) {
+            if (effect.kind == ItemsSet.EffectKind.Weight) {
                 dino.updateWeight(_dinoId, effect.magnitude * _amount);
                 break;
             }
@@ -60,7 +60,7 @@ abstract contract CaveConsumeModule is ModuleBase, CaveBase {
             /**
              * @dev EffectKind Health.
              */
-            if (effect.kind == ItemsSetBase.EffectKind.Health) {
+            if (effect.kind == ItemsSet.EffectKind.Health) {
                 dino.updateHealth(_dinoId, effect.magnitude * _amount);
                 break;
             }
@@ -68,14 +68,14 @@ abstract contract CaveConsumeModule is ModuleBase, CaveBase {
             /**
              * @dev EffectKind ClearHunger.
              */
-            if (effect.kind == ItemsSetBase.EffectKind.ClearHunger) {
+            if (effect.kind == ItemsSet.EffectKind.ClearHunger) {
                 dino.updateHunger(_dinoId, false);
             }
 
             /**
              * @dev EffectKind ClearThirst.
              */
-            if (effect.kind == ItemsSetBase.EffectKind.ClearThirst) {
+            if (effect.kind == ItemsSet.EffectKind.ClearThirst) {
                 dino.updateThirst(_dinoId, false);
                 break;
             }
@@ -85,7 +85,7 @@ abstract contract CaveConsumeModule is ModuleBase, CaveBase {
     /**
      * @dev
      */
-    function _checkConsumableType(ItemsSetBase.ItemBase memory meta) internal pure {
-        if (meta.itemType != ItemsSetBase.ItemBaseType.Consumable) revert InvalidItemType();
+    function _checkConsumableType(ItemsSet.Item memory meta) internal pure {
+        if (meta.itemType != ItemsSet.ItemType.Consumable) revert InvalidItemType();
     }
 }

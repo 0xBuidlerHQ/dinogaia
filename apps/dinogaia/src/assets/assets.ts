@@ -1,4 +1,4 @@
-import { ItemsSetBase } from "@0xbuidlerhq/dinogaia.contracts/types.user";
+import { ItemsSet } from "@0xbuidlerhq/dinogaia.contracts/types.user";
 import airPurifier from "./src/air purifier.png";
 import alarmSystem from "./src/alarm system.png";
 import ancientMap from "./src/ancient map.png";
@@ -47,99 +47,99 @@ type RarityAssets = {
 };
 
 const ITEM_BASE_TYPES = [
-	ItemsSetBase.ItemBaseType.Consumable,
-	ItemsSetBase.ItemBaseType.Habitat,
-	ItemsSetBase.ItemBaseType.Weapon,
-	ItemsSetBase.ItemBaseType.Equipment,
-	ItemsSetBase.ItemBaseType.Quest,
-	ItemsSetBase.ItemBaseType.Resource,
-	ItemsSetBase.ItemBaseType.Artifact,
-	ItemsSetBase.ItemBaseType.Currency,
-	ItemsSetBase.ItemBaseType.Container,
-	ItemsSetBase.ItemBaseType.Key,
-	ItemsSetBase.ItemBaseType.Blueprint,
-	ItemsSetBase.ItemBaseType.Cosmetic,
+	ItemsSet.ItemType.Consumable,
+	ItemsSet.ItemType.Habitat,
+	ItemsSet.ItemType.Weapon,
+	ItemsSet.ItemType.Equipment,
+	ItemsSet.ItemType.Quest,
+	ItemsSet.ItemType.Resource,
+	ItemsSet.ItemType.Artifact,
+	ItemsSet.ItemType.Currency,
+	ItemsSet.ItemType.Container,
+	ItemsSet.ItemType.Key,
+	ItemsSet.ItemType.Blueprint,
+	ItemsSet.ItemType.Cosmetic,
 ] as const;
-type ItemBaseType = (typeof ITEM_BASE_TYPES)[number];
+type ItemType = (typeof ITEM_BASE_TYPES)[number];
 
 const ITEM_BASE_RARITIES = [
-	ItemsSetBase.ItemBaseRarity.Common,
-	ItemsSetBase.ItemBaseRarity.Uncommon,
-	ItemsSetBase.ItemBaseRarity.Rare,
-	ItemsSetBase.ItemBaseRarity.Epic,
-	ItemsSetBase.ItemBaseRarity.Legendary,
-	ItemsSetBase.ItemBaseRarity.Mythic,
+	ItemsSet.ItemRarity.Common,
+	ItemsSet.ItemRarity.Uncommon,
+	ItemsSet.ItemRarity.Rare,
+	ItemsSet.ItemRarity.Epic,
+	ItemsSet.ItemRarity.Legendary,
+	ItemsSet.ItemRarity.Mythic,
 ] as const;
-type ItemBaseRarity = (typeof ITEM_BASE_RARITIES)[number];
+type ItemRarity = (typeof ITEM_BASE_RARITIES)[number];
 
-const items: Record<ItemBaseType, ItemAssets> = {
-	[ItemsSetBase.ItemBaseType.Artifact]: {
+const items: Record<ItemType, ItemAssets> = {
+	[ItemsSet.ItemType.Artifact]: {
 		name: "Artifact",
 		color: "text-purple-400",
 		backgroundColor: "bg-purple-500/15",
 		borderColor: "border-purple-400/40",
 	},
-	[ItemsSetBase.ItemBaseType.Consumable]: {
+	[ItemsSet.ItemType.Consumable]: {
 		name: "Consumable",
 		color: "text-emerald-400",
 		backgroundColor: "bg-emerald-500/15",
 		borderColor: "border-emerald-400/40",
 	},
-	[ItemsSetBase.ItemBaseType.Blueprint]: {
+	[ItemsSet.ItemType.Blueprint]: {
 		name: "Blueprint",
 		color: "text-sky-400",
 		backgroundColor: "bg-sky-500/15",
 		borderColor: "border-sky-400/40",
 	},
-	[ItemsSetBase.ItemBaseType.Container]: {
+	[ItemsSet.ItemType.Container]: {
 		name: "Container",
 		color: "text-amber-400",
 		backgroundColor: "bg-amber-500/15",
 		borderColor: "border-amber-400/40",
 	},
-	[ItemsSetBase.ItemBaseType.Cosmetic]: {
+	[ItemsSet.ItemType.Cosmetic]: {
 		name: "Cosmetic",
 		color: "text-pink-400",
 		backgroundColor: "bg-pink-500/15",
 		borderColor: "border-pink-400/40",
 	},
-	[ItemsSetBase.ItemBaseType.Currency]: {
+	[ItemsSet.ItemType.Currency]: {
 		name: "Currency",
 		color: "text-yellow-400",
 		backgroundColor: "bg-yellow-500/15",
 		borderColor: "border-yellow-400/40",
 	},
-	[ItemsSetBase.ItemBaseType.Equipment]: {
+	[ItemsSet.ItemType.Equipment]: {
 		name: "Equipment",
 		color: "text-blue-400",
 		backgroundColor: "bg-blue-500/15",
 		borderColor: "border-blue-400/40",
 	},
-	[ItemsSetBase.ItemBaseType.Habitat]: {
+	[ItemsSet.ItemType.Habitat]: {
 		name: "Habitat",
 		color: "text-lime-400",
 		backgroundColor: "bg-lime-500/15",
 		borderColor: "border-lime-400/40",
 	},
-	[ItemsSetBase.ItemBaseType.Key]: {
+	[ItemsSet.ItemType.Key]: {
 		name: "Key",
 		color: "text-orange-400",
 		backgroundColor: "bg-orange-500/15",
 		borderColor: "border-orange-400/40",
 	},
-	[ItemsSetBase.ItemBaseType.Quest]: {
+	[ItemsSet.ItemType.Quest]: {
 		name: "Quest",
 		color: "text-rose-400",
 		backgroundColor: "bg-rose-500/15",
 		borderColor: "border-rose-400/40",
 	},
-	[ItemsSetBase.ItemBaseType.Resource]: {
+	[ItemsSet.ItemType.Resource]: {
 		name: "Resource",
 		color: "text-amber-700",
 		backgroundColor: "bg-amber-700/15",
 		borderColor: "border-amber-700/40",
 	},
-	[ItemsSetBase.ItemBaseType.Weapon]: {
+	[ItemsSet.ItemType.Weapon]: {
 		name: "Weapon",
 		color: "text-red-400",
 		backgroundColor: "bg-red-500/15",
@@ -147,38 +147,38 @@ const items: Record<ItemBaseType, ItemAssets> = {
 	},
 };
 
-const rarities: Record<ItemBaseRarity, RarityAssets> = {
-	[ItemsSetBase.ItemBaseRarity.Common]: {
+const rarities: Record<ItemRarity, RarityAssets> = {
+	[ItemsSet.ItemRarity.Common]: {
 		name: "Common",
 		color: "text-slate-300",
 		backgroundColor: "bg-slate-500/10",
 		borderColor: "border-slate-300/40",
 	},
-	[ItemsSetBase.ItemBaseRarity.Uncommon]: {
+	[ItemsSet.ItemRarity.Uncommon]: {
 		name: "Uncommon",
 		color: "text-emerald-400",
 		backgroundColor: "bg-emerald-500/15",
 		borderColor: "border-emerald-400/40",
 	},
-	[ItemsSetBase.ItemBaseRarity.Rare]: {
+	[ItemsSet.ItemRarity.Rare]: {
 		name: "Rare",
 		color: "text-sky-400",
 		backgroundColor: "bg-sky-500/15",
 		borderColor: "border-sky-400/40",
 	},
-	[ItemsSetBase.ItemBaseRarity.Epic]: {
+	[ItemsSet.ItemRarity.Epic]: {
 		name: "Epic",
 		color: "text-violet-400",
 		backgroundColor: "bg-violet-500/15",
 		borderColor: "border-violet-400/40",
 	},
-	[ItemsSetBase.ItemBaseRarity.Legendary]: {
+	[ItemsSet.ItemRarity.Legendary]: {
 		name: "Legendary",
 		color: "text-amber-400",
 		backgroundColor: "bg-amber-500/15",
 		borderColor: "border-amber-400/40",
 	},
-	[ItemsSetBase.ItemBaseRarity.Mythic]: {
+	[ItemsSet.ItemRarity.Mythic]: {
 		name: "Mythic",
 		color: "text-fuchsia-400",
 		backgroundColor: "bg-fuchsia-500/15",
