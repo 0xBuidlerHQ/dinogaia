@@ -2,6 +2,8 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 type StoreState = {
+	isLoaded: boolean;
+
 	activeDinoId: bigint | undefined;
 	setActiveDinoId: (id: bigint | undefined) => void;
 
@@ -17,6 +19,8 @@ type StoreState = {
 export const useStore = create<StoreState>()(
 	persist(
 		(set) => ({
+			isLoaded: false,
+
 			activeDinoId: undefined,
 			setActiveDinoId: (id) => set({ activeDinoId: id }),
 
@@ -38,3 +42,15 @@ export const useStore = create<StoreState>()(
 		},
 	),
 );
+
+type LoaderState = {
+	isLoading: boolean;
+	setIsLoading: (loading: boolean) => void;
+};
+
+const useLoader = create<LoaderState>()((set) => ({
+	isLoading: true,
+	setIsLoading: (isLoading) => set({ isLoading }),
+}));
+
+export { useLoader };

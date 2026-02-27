@@ -7,7 +7,8 @@
 	"exports": {
 		".": "./package/index.tsx",
 		"./types.user": "./package/types.user.ts",
-		"./types.libs": "./package/types.libs.ts"
+		"./types.libs": "./package/types.libs.ts",
+		"./config.json": "./deployment-config.json"
 	},
 	"scripts": {
 		"dev": "(sleep 5 && make deploy && pnpm build-all) & make dev",

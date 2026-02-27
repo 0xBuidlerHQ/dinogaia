@@ -16,7 +16,7 @@ import {
 } from "@tabler/icons-react";
 import type React from "react";
 import type { PropsWithChildren } from "react";
-import { type DinoAge, timestampToAge } from "../../utils";
+import { type DinoAge, timestampToAge } from "../../../utils";
 
 type DinoStatsProps = {
 	name: string;

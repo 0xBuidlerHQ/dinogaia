@@ -8,6 +8,7 @@ import {
 	speciesRegistryAbi,
 	speciesRegistryAddress,
 } from "@0xbuidlerhq/dinogaia.contracts";
+
 import { createConfig } from "ponder";
 
 const CHAIN_ID = "31337";

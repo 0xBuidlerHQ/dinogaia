@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+
 import {
 	injected,
 	useChains,
@@ -50,7 +51,7 @@ const useWeb3Primitive = () => {
 	 */
 	const chains = useChains();
 	const chain = eoa.chain;
-	const switchChain = useSwitchChain().switchChain;
+	const switchChain = useSwitchChain().mutate;
 	const [isNetworkUnsupported, setIsNetworkUnsupported] = React.useState<boolean | undefined>(
 		undefined,
 	);
