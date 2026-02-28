@@ -3,13 +3,12 @@
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { H4 } from "@0xbuidlerhq/ui/system/base/typography";
 import { ButtonBase } from "@0xbuidlerhq/ui/system/buttons/ButtonBase";
+import { PAGES } from "@config/pages";
 import { useWeb3 } from "@providers/web3";
 
 const Connect = () => {
-	const { connect } = useWeb3();
-
 	return (
-		<ButtonBase onClick={connect}>
+		<ButtonBase href={PAGES.login}>
 			<H4>Connect</H4>
 		</ButtonBase>
 	);

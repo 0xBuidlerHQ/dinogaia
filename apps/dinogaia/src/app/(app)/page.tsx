@@ -4,6 +4,7 @@ import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { Container } from "@0xbuidlerhq/ui/system/base/container";
 import { H1, H1_7, H4, H5, H6 } from "@0xbuidlerhq/ui/system/base/typography";
 import { ButtonBase } from "@0xbuidlerhq/ui/system/buttons/ButtonBase";
+import { withAuth } from "@components/AuthComponent";
 import ProgressBar from "@components/ProgressBar";
 import { useDinogaia } from "@providers/dinogaia";
 import {
@@ -16,7 +17,7 @@ import {
 } from "@tabler/icons-react";
 import type React from "react";
 import type { PropsWithChildren } from "react";
-import { type DinoAge, timestampToAge } from "../../../utils";
+import { type DinoAge, timestampToAge } from "../../utils";
 
 type DinoStatsProps = {
 	name: string;
@@ -326,4 +327,4 @@ const Page = () => {
 	);
 };
 
-export default Page;
+export default withAuth(Page);

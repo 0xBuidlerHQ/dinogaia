@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React from "react";
 
 import {
@@ -18,6 +19,8 @@ import {
  * @dev useWeb3 hook.
  */
 const useWeb3Primitive = () => {
+	const router = useRouter();
+
 	/**
 	 *
 	 * @dev Viem.
@@ -56,7 +59,14 @@ const useWeb3Primitive = () => {
 		undefined,
 	);
 
-	const switchToDefaultChain = () => switchChain({ chainId: chains[0].id });
+	const switchToDefaultChain = () =>
+		switchChain(
+			{ chainId: chains[0].id },
+			{
+				onError: (e) => console.log(e),
+				onSuccess: (e) => console.log(e),
+			},
+		);
 
 	/**
 	 * @dev When the chain connected to the app change, verify if it's supported.
@@ -84,12 +94,18 @@ const useWeb3Primitive = () => {
 	const isConnecting = eoa.isConnecting || eoa.isReconnecting;
 	const isDisconnected = eoa.isDisconnected;
 
-	const status: "connected" | "connecting" | "disconnected" = (() => {
-		if (isConnected) return "connected";
-		if (isConnecting) return "connecting";
-		if (isDisconnected) return "disconnected";
-		return "disconnected";
-	})();
+	const status = eoa.status;
+
+	const [hasSeenConnecting, setHasSeenConnecting] = React.useState(status === "connecting");
+	React.useEffect(
+		() => (status === "connecting" ? setHasSeenConnecting(status === "connecting") : () => {}),
+		[status],
+	);
+
+	const [isMounted, setIsMounted] = React.useState(false);
+	React.useEffect(() => setIsMounted(true), []);
+
+	const ready = isMounted && hasSeenConnecting;
 
 	/**
 	 *
@@ -134,6 +150,7 @@ const useWeb3Primitive = () => {
 		switchChain,
 		provider,
 		portoConnector,
+		ready,
 	};
 };
 

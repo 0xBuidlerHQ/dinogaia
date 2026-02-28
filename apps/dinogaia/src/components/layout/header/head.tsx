@@ -18,8 +18,8 @@ const Head = () => {
 	const { isConnected } = useWeb3();
 
 	const logoLink = (() => {
-		if (isConnected) return "#";
-		return PAGES.homepage;
+		if (isConnected) return PAGES.homepage;
+		return PAGES.login;
 	})();
 
 	return (

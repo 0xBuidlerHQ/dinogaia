@@ -3,7 +3,7 @@ const PAGES = {
 	cave: "/cave",
 	shop: "/shop",
 	//
-	myDino: "/my-dino",
+	myDino: "/",
 	quests: "/quests",
 	hunt: "/hunt",
 	casino: "/casino",
@@ -14,6 +14,9 @@ const PAGES = {
 	stats: "/stats",
 
 	ranking: "/ranking",
+
+	login: "/login",
+	setup: "/setup",
 } as const;
 const allPages = Object.values(PAGES);
 

@@ -4,6 +4,7 @@ import { cn } from "@0xbuidlerhq/ui/shadcn/lib/utils";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { Container } from "@0xbuidlerhq/ui/system/base/container";
 import { H1, H4 } from "@0xbuidlerhq/ui/system/base/typography";
+import { withAuth } from "@components/AuthComponent";
 import { count } from "@ponder/client";
 import { usePonderQuery } from "@ponder/react";
 import { schema } from "@providers/ponder";
@@ -53,4 +54,4 @@ const StatsPage = () => {
 	);
 };
 
-export default StatsPage;
+export default withAuth(StatsPage);

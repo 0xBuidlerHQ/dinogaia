@@ -2,6 +2,7 @@
 
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { Container } from "@0xbuidlerhq/ui/system/base/container";
+import { withAuth } from "@components/AuthComponent";
 import { JobItem } from "@features/jobs/JobItem";
 import { useJobs } from "@features/jobs/useJobs";
 
@@ -23,4 +24,4 @@ const Page = () => {
 	);
 };
 
-export default Page;
+export default withAuth(Page);

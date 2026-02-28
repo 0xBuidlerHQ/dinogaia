@@ -3,19 +3,32 @@
 import { PAGES } from "@config/pages";
 import { useWeb3 } from "@providers/web3";
 import { useRouter } from "next/navigation";
-import { type PropsWithChildren, useEffect } from "react";
+import React, { type PropsWithChildren, useEffect } from "react";
 
-type Props = PropsWithChildren;
-const AuthComponent = (props: Props) => {
-	const { isConnected, isDisconnected } = useWeb3();
+type AuthComponentProps = PropsWithChildren;
+const AuthComponent = (props: AuthComponentProps) => {
+	const { isConnected, ready, isDisconnected } = useWeb3();
 	const router = useRouter();
 
 	useEffect(() => {
-		return router.push(PAGES.homepage);
-	}, [isDisconnected]);
+		if (!ready) return;
+		if (isDisconnected) return router.push(PAGES.homepage);
+	}, [ready, isDisconnected]);
 
-	if (isConnected) return props.children;
+	if (isConnected && ready) return props.children;
 	return null;
 };
 
-export { AuthComponent };
+const withAuth = <P extends Record<string, unknown>>(
+	Component: (props: P) => React.JSX.Element,
+) => {
+	const Wrapped = (props: P) => (
+		<AuthComponent>
+			<Component {...props} />
+		</AuthComponent>
+	);
+	Wrapped.displayName = `withAuth(${Component.name ?? "Component"})`;
+	return Wrapped;
+};
+
+export { AuthComponent, withAuth };
