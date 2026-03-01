@@ -10,7 +10,7 @@ const MintButton = () => {
 	const { openMintModal } = useStore();
 
 	return (
-		<Box className="bg-muted/50 px-2 py-[1px] border border-muted rounded">
+		<Box className="bg-muted/50 px-2 py-px border border-muted rounded">
 			<ButtonBase onClick={openMintModal}>
 				<H4>New</H4>
 			</ButtonBase>

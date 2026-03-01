@@ -12,11 +12,9 @@ const MintModal = () => {
 	const { q, species } = useDinogaia();
 
 	const [dinoName, setDinoName] = React.useState("");
-	const [speciesId, setSpeciesId] = React.useState<bigint>(0n);
+	const [speciesId, setSpeciesId] = React.useState(0n);
 
-	const handleSpeciesChange = (id: number) => setSpeciesId(BigInt(id));
-
-	const canMint = dinoName.length > 0;
+	const canMint = dinoName.length > 0 && Boolean(speciesId);
 
 	const { mintModal, closeMintModal } = useStore();
 
@@ -33,17 +31,19 @@ const MintModal = () => {
 					/>
 
 					<Box className="flex flex-wrap gap-3">
-						{species?.map((species, idx) => (
-							<label key={idx} className="flex items-center gap-2 cursor-pointer">
-								<input
-									type="radio"
-									name="species"
-									checked={speciesId === BigInt(idx)}
-									onChange={() => handleSpeciesChange(idx)}
-								/>
-								<span>{species.name}</span>
-							</label>
-						))}
+						{species?.map((spec) => {
+							return (
+								<label key={spec.speciesId} className="flex items-center gap-2 cursor-pointer">
+									<input
+										type="radio"
+										value={spec.speciesId.toString()}
+										checked={speciesId === spec.speciesId}
+										onChange={() => setSpeciesId(spec.speciesId)}
+									/>
+									<span>{spec.name}</span>
+								</label>
+							);
+						})}
 
 						{!species?.length && <span className="text-sm text-gray-500">Loading species…</span>}
 					</Box>
@@ -53,7 +53,9 @@ const MintModal = () => {
 					className="px-2 py-1 bg-white text-black"
 					disabled={!canMint}
 					onClick={async () => {
-						await mint.writeContractAsync({ args: [{ name: dinoName, speciesId }] });
+						await mint.writeContractAsync({
+							args: [{ name: dinoName, speciesId: BigInt(speciesId) }],
+						});
 						q.qMyDinos.refetch();
 
 						closeMintModal();

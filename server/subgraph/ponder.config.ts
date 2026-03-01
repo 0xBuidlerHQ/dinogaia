@@ -12,6 +12,7 @@ import {
 import { createConfig } from "ponder";
 
 const CHAIN_ID = "31337";
+const STARTBLOCK = 42_805_537;
 
 export default createConfig({
 	chains: {
@@ -28,7 +29,7 @@ export default createConfig({
 			chain: "anvil",
 			abi: dinoFactoryAbi,
 			address: dinoFactoryAddress[CHAIN_ID],
-			startBlock: "latest",
+			startBlock: STARTBLOCK,
 			filter: {
 				event: "DinoCreated",
 				args: {},
@@ -42,7 +43,7 @@ export default createConfig({
 			chain: "anvil",
 			abi: jobsRegistryAbi,
 			address: jobsRegistryAddress[CHAIN_ID],
-			startBlock: "latest",
+			startBlock: STARTBLOCK,
 		},
 
 		/**
@@ -52,7 +53,7 @@ export default createConfig({
 			chain: "anvil",
 			abi: speciesRegistryAbi,
 			address: speciesRegistryAddress[CHAIN_ID],
-			startBlock: "latest",
+			startBlock: STARTBLOCK,
 		},
 
 		/**
@@ -62,7 +63,7 @@ export default createConfig({
 			chain: "anvil",
 			abi: itemsSet0Abi,
 			address: itemsSet0Address[CHAIN_ID],
-			startBlock: "latest",
+			startBlock: STARTBLOCK,
 		},
 	},
 });

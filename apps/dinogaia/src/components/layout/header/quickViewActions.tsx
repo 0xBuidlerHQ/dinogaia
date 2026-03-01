@@ -97,7 +97,7 @@ const QuickViewActions = () => {
 
 						<Seperator />
 					</Box>
-					p
+
 					<Box className="basis-1 grow flex items-center justify-end gap-2">
 						<Box className="flex items-center gap-1">
 							<H1_0 className="font-tronica-mono leading-none relative top-0.5">
