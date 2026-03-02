@@ -12,7 +12,10 @@ const AuthComponent = (props: AuthComponentProps) => {
 
 	useEffect(() => {
 		if (!ready) return;
-		if (isDisconnected) return router.push(PAGES.homepage);
+		if (isDisconnected) {
+			console.log("User disconnected: Go to login");
+			return router.push(PAGES.login);
+		}
 	}, [ready, isDisconnected]);
 
 	if (isConnected && ready) return props.children;

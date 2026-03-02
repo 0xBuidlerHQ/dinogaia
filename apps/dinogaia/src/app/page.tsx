@@ -14,7 +14,7 @@ const Page = () => {
 
 	useEffect(() => {
 		if (ready && isConnected) {
-			return router.push(PAGES.app.homepage);
+			return router.push(PAGES.app.dino);
 		}
 	}, [ready, isConnected]);
 

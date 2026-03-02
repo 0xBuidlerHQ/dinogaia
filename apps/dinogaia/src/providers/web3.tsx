@@ -1,7 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 
 import {
 	injected,
@@ -19,8 +18,6 @@ import {
  * @dev useWeb3 hook.
  */
 const useWeb3Primitive = () => {
-	const router = useRouter();
-
 	/**
 	 *
 	 * @dev Viem.
@@ -106,6 +103,12 @@ const useWeb3Primitive = () => {
 	React.useEffect(() => setIsMounted(true), []);
 
 	const ready = isMounted && hasSeenConnecting;
+
+	useEffect(() => {
+		if (ready && isConnected && !chain) {
+			switchToDefaultChain();
+		}
+	}, [ready, isConnected, chain]);
 
 	/**
 	 *

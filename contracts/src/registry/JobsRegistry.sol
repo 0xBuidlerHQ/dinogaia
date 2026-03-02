@@ -102,39 +102,39 @@ contract JobsRegistry is AccessControl {
      */
     function _initJobsRegistry() internal {
         // Starter
-        _createJob(Job({name: "Unemployed", dailyPay: 1, trainingCost: 0, requiredLevel: 0}));
+        _createJob(Job({name: "unemployed", dailyPay: 1, trainingCost: 0, requiredLevel: 0}));
 
         // Crime / Work path
-        _createJob(Job({name: "Swindler", dailyPay: 3, trainingCost: 75, requiredLevel: 0}));
-        _createJob(Job({name: "Worker", dailyPay: 6, trainingCost: 150, requiredLevel: 0}));
-        _createJob(Job({name: "Thief", dailyPay: 8, trainingCost: 200, requiredLevel: 0}));
+        _createJob(Job({name: "swindler", dailyPay: 3, trainingCost: 75, requiredLevel: 0}));
+        _createJob(Job({name: "worker", dailyPay: 6, trainingCost: 150, requiredLevel: 0}));
+        _createJob(Job({name: "thief", dailyPay: 8, trainingCost: 200, requiredLevel: 0}));
 
         // Public services
-        _createJob(Job({name: "Police Officer", dailyPay: 10, trainingCost: 250, requiredLevel: 0}));
-        _createJob(Job({name: "Firefighter", dailyPay: 12, trainingCost: 300, requiredLevel: 0}));
-        _createJob(Job({name: "Royal Guard", dailyPay: 14, trainingCost: 350, requiredLevel: 0}));
+        _createJob(Job({name: "police officer", dailyPay: 10, trainingCost: 250, requiredLevel: 0}));
+        _createJob(Job({name: "firefighter", dailyPay: 12, trainingCost: 300, requiredLevel: 0}));
+        _createJob(Job({name: "royal guard", dailyPay: 14, trainingCost: 350, requiredLevel: 0}));
 
         // Knowledge / social
-        _createJob(Job({name: "Seer", dailyPay: 16, trainingCost: 425, requiredLevel: 0}));
-        _createJob(Job({name: "Teacher", dailyPay: 18, trainingCost: 500, requiredLevel: 0}));
+        _createJob(Job({name: "seer", dailyPay: 16, trainingCost: 425, requiredLevel: 0}));
+        _createJob(Job({name: "teacher", dailyPay: 18, trainingCost: 500, requiredLevel: 0}));
 
         // Magic / combat progression
-        _createJob(Job({name: "Mage", dailyPay: 21, trainingCost: 575, requiredLevel: 0}));
-        _createJob(Job({name: "Professional Hunter", dailyPay: 24, trainingCost: 650, requiredLevel: 0}));
-        _createJob(Job({name: "Sorcerer", dailyPay: 27, trainingCost: 750, requiredLevel: 0}));
+        _createJob(Job({name: "mage", dailyPay: 21, trainingCost: 575, requiredLevel: 0}));
+        _createJob(Job({name: "professional hunter", dailyPay: 24, trainingCost: 650, requiredLevel: 0}));
+        _createJob(Job({name: "sorcerer", dailyPay: 27, trainingCost: 750, requiredLevel: 0}));
 
         // Authority / corruption
-        _createJob(Job({name: "Royal Guard Captain", dailyPay: 29, trainingCost: 800, requiredLevel: 0}));
-        _createJob(Job({name: "Vendor", dailyPay: 33, trainingCost: 900, requiredLevel: 0}));
-        _createJob(Job({name: "Indigenous Hunter", dailyPay: 35, trainingCost: 1000, requiredLevel: 0}));
+        _createJob(Job({name: "royal guard captain", dailyPay: 29, trainingCost: 800, requiredLevel: 0}));
+        _createJob(Job({name: "vendor", dailyPay: 33, trainingCost: 900, requiredLevel: 0}));
+        _createJob(Job({name: "indigenous hunter", dailyPay: 35, trainingCost: 1000, requiredLevel: 0}));
 
         // Alchemy ladder
-        _createJob(Job({name: "Apprentice Chemist", dailyPay: 43, trainingCost: 1200, requiredLevel: 0}));
-        _createJob(Job({name: "Chemist", dailyPay: 53, trainingCost: 1500, requiredLevel: 0}));
+        _createJob(Job({name: "apprentice chemist", dailyPay: 43, trainingCost: 1200, requiredLevel: 0}));
+        _createJob(Job({name: "chemist", dailyPay: 53, trainingCost: 1500, requiredLevel: 0}));
 
         // Endgame authority
-        _createJob(Job({name: "General of the Royal Brigades", dailyPay: 64, trainingCost: 1800, requiredLevel: 0}));
-        _createJob(Job({name: "General of the Royal Armies", dailyPay: 85, trainingCost: 2500, requiredLevel: 0}));
+        _createJob(Job({name: "general of the royal brigades", dailyPay: 64, trainingCost: 1800, requiredLevel: 0}));
+        _createJob(Job({name: "general of the royal armies", dailyPay: 85, trainingCost: 2500, requiredLevel: 0}));
     }
 
     /**

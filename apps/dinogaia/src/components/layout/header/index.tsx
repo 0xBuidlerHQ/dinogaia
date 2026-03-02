@@ -5,7 +5,6 @@ import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { Header as LayoutHeader } from "@0xbuidlerhq/ui/system/layouts/header";
 import { Head } from "@components/layout/header/head";
 import { Navigation } from "@components/layout/header/navigation";
-import { QuickViewActions } from "@components/layout/header/quickViewActions";
 import { PAGES } from "@config/pages";
 import { useWeb3 } from "@providers/web3";
 import { usePathname } from "next/navigation";
@@ -22,17 +21,15 @@ const Seperator = () => {
  * @dev Header component.
  */
 const Header = () => {
-	const { isConnected, isNetworkUnsupported } = useWeb3();
+	const { isConnected } = useWeb3();
 	const pathname = usePathname();
 
-	const isDiff = pathname !== PAGES.login && pathname !== PAGES.setup;
+	const isDiff = pathname !== PAGES.login && pathname !== PAGES.new;
 
 	return (
 		<Box className="flex flex-col">
 			<Head />
 			<Seperator />
-
-			{isNetworkUnsupported ? "unsupp" : "supp"}
 
 			<Box
 				className={cn(
@@ -41,16 +38,6 @@ const Header = () => {
 				)}
 			>
 				<Navigation />
-				<Seperator />
-			</Box>
-
-			<Box
-				className={cn(
-					"pointer-events-none opacity-25",
-					isDiff && isConnected && "pointer-events-auto opacity-100",
-				)}
-			>
-				<QuickViewActions />
 				<Seperator />
 			</Box>
 		</Box>

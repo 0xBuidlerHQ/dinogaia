@@ -21,4 +21,4 @@ const BlockchainProvider = ({ children }: PropsWithChildren) => (
 	<WagmiProvider config={wagmiConfig}>{children}</WagmiProvider>
 );
 
-export { BlockchainProvider };
+export { BlockchainProvider, wagmiConfig };

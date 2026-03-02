@@ -18,49 +18,54 @@ const NAVIGATION_HEIGHT = "h-[40px]";
 
 const pages = [
 	{
-		title: "My Dino",
-		href: PAGES.myDino,
+		title: "Dino",
+		href: PAGES.app.homepage,
 		icon: navigation.dino,
 	},
 	{
 		title: "Cave",
-		href: PAGES.cave,
+		href: PAGES.app.cave,
 		icon: navigation.cave,
 	},
 	{
 		title: "Shop",
-		href: PAGES.shop,
+		href: PAGES.app.shop,
 		icon: navigation.shop,
 	},
 	{
 		title: "Jobs",
-		href: PAGES.jobs,
+		href: PAGES.app.jobs,
 		icon: navigation.jobs,
 	},
 	{
 		title: "Hunt",
-		href: PAGES.hunt,
+		href: PAGES.app.hunt,
 		icon: navigation.hunt,
+		disabled: true,
 	},
 	{
 		title: "Fight",
-		href: PAGES.fight,
+		href: PAGES.app.fight,
 		icon: navigation.fight,
+		disabled: true,
 	},
 	{
 		title: "Quests",
-		href: PAGES.quests,
+		href: PAGES.app.quests,
 		icon: navigation.quest,
+		disabled: true,
 	},
 	{
 		title: "Casino",
-		href: PAGES.casino,
+		href: PAGES.app.casino,
 		icon: navigation.casino,
+		disabled: true,
 	},
 	{
 		title: "Ranking",
-		href: PAGES.ranking,
+		href: PAGES.app.ranking,
 		icon: navigation.ranking,
+		disabled: true,
 	},
 ];
 
@@ -81,6 +86,7 @@ const Navigation = () => {
 							<ButtonBase
 								key={item.href}
 								href={item.href}
+								disabled={item.disabled}
 								className={cn(
 									"group h-full flex border-r border-muted hover:bg-[#a3e635]/2 px-2 gap-2 items-center border-b border-b-transparent transition-all",
 									isCurrentPage && "border-b-[#a3e635] bg-[#a3e635]/5 hover:bg-[#a3e635]/5",

@@ -14,7 +14,7 @@ const MintModal = () => {
 	const [dinoName, setDinoName] = React.useState("");
 	const [speciesId, setSpeciesId] = React.useState(0n);
 
-	const canMint = dinoName.length > 0 && Boolean(speciesId);
+	const canMint = dinoName.length > 0;
 
 	const { mintModal, closeMintModal } = useStore();
 
@@ -40,6 +40,7 @@ const MintModal = () => {
 										checked={speciesId === spec.speciesId}
 										onChange={() => setSpeciesId(spec.speciesId)}
 									/>
+
 									<span>{spec.name}</span>
 								</label>
 							);

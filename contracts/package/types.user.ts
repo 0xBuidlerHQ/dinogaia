@@ -127,15 +127,6 @@ export namespace ItemsSet {
 	};
 }
 
-export namespace JobsRegistry {
-	export type Job = {
-		name: string;
-		dailyPay: bigint;
-		trainingCost: bigint;
-		requiredLevel: bigint;
-	};
-}
-
 export namespace SpeciesRegistry {
 	export type Species = {
 		name: string;

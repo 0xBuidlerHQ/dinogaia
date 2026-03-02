@@ -1,22 +1,28 @@
+const APP = "/app/";
+
 const PAGES = {
 	homepage: "/",
-	cave: "/cave",
-	shop: "/shop",
-	//
-	myDino: "/",
-	quests: "/quests",
-	hunt: "/hunt",
-	casino: "/casino",
-	fight: "/fight",
-	jobs: "/jobs",
-	auctions: "/auctions",
-	bank: "/bank",
-	stats: "/stats",
 
-	ranking: "/ranking",
+	app: {
+		homepage: APP,
+		cave: `${APP}/cave`,
+		shop: `${APP}/shop`,
+		//
+		dino: `${APP}/dino`,
+		quests: `${APP}/quests`,
+		hunt: `${APP}/hunt`,
+		casino: `${APP}/casino`,
+		fight: `${APP}/fight`,
+		jobs: `${APP}/jobs`,
+		auctions: `${APP}/auction`,
+		bank: `${APP}/bank`,
+		stats: `${APP}/stats`,
+
+		ranking: `${APP}/ranking`,
+	},
 
 	login: "/login",
-	setup: "/setup",
+	new: "/new",
 } as const;
 const allPages = Object.values(PAGES);
 

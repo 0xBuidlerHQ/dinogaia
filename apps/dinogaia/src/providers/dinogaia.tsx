@@ -35,7 +35,7 @@ const useDinogaiaPrimitive = () => {
 	const qMyDinos = SubgraphQueries.useDinosOfOwner({
 		owner: eoa.address,
 	});
-	const myDinos = qMyDinos.data;
+	const myDinos = qMyDinos.data || [];
 
 	const currentDinoContext = (() => {
 		if (myDinos) {

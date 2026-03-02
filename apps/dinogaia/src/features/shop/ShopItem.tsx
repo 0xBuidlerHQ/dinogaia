@@ -46,11 +46,11 @@ const ItemRarity = (props: Props) => {
 const ItemImage = (props: Props) => {
 	const { item } = props;
 
-	const image = images[item.metadata.name];
+	const image = images[item.name];
 
 	return (
 		<Box className="h-full w-full">
-			<img src={image} alt={item.metadata.name} className="block h-full w-full object-contain" />
+			<img src={image} alt={item.name} className="block h-full w-full object-contain" />
 		</Box>
 	);
 };
@@ -59,7 +59,7 @@ const ShopItem = (props: Props) => {
 	const { item } = props;
 
 	return (
-		<Box key={item.metadata.name} className="border border-muted">
+		<Box key={item.name} className="border border-muted">
 			<Box className="aspect-square h-full w-full">
 				<Box className="flex flex-col h-full">
 					<Box className="grow relative min-h-0">
@@ -76,7 +76,7 @@ const ShopItem = (props: Props) => {
 
 						<Box className="flex">
 							<Box className="grow flex flex-col">
-								<H3 className="font-source-code-pro tracking-tighter">{item.metadata.name}</H3>
+								<H3 className="font-source-code-pro tracking-tighter">{item.name}</H3>
 							</Box>
 
 							<Box className="flex gap-2 items-center">

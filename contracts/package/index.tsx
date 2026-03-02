@@ -7428,7 +7428,7 @@ export const jobsModuleAbi = [
  *
  */
 export const jobsModuleAddress = {
-  31337: '0x20b6Bd01bffbc7758ac8b29f81d6FeB9bbA9611A',
+  31337: '0x1a1c85666B780F179998e7ab5b1EAC0337acbEbf',
 } as const
 
 /**
@@ -7751,7 +7751,7 @@ export const jobsRegistryAbi = [
  *
  */
 export const jobsRegistryAddress = {
-  31337: '0x24D54770f03730e2f46EB7C0c0207bFfB14E501F',
+  31337: '0xe4375299653116Ad83aa29b507C0835eB8D369F9',
 } as const
 
 /**

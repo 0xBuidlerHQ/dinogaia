@@ -3,10 +3,23 @@
 import type { JobsRegistry } from "@0xbuidlerhq/dinogaia.contracts/types.user";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { H3, H4 } from "@0xbuidlerhq/ui/system/base/typography";
+import { jobImages } from "../../assets/assets";
 import { EthereumLogo } from "../../assets/emerald";
 
 type Props = {
 	job: JobsRegistry.Job;
+};
+
+const ItemImage = (props: Props) => {
+	const { job } = props;
+
+	const image = jobImages[job.name];
+
+	return (
+		<Box className="h-full w-full">
+			<img src={image} alt={job.name} className="block h-full w-full object-contain" />
+		</Box>
+	);
 };
 
 const JobItem = (props: Props) => {
@@ -25,7 +38,9 @@ const JobItem = (props: Props) => {
 							<H4>Requiered Level: {job.requiredLevel}</H4>
 						</Box>
 
-						<Box className="h-full w-full">{/* <ItemImage item={item} /> */}</Box>
+						<Box className="h-full w-full">
+							<ItemImage job={job} />
+						</Box>
 					</Box>
 
 					<Box className="h-20 border-t border-muted p-2 flex flex-col gap-2">

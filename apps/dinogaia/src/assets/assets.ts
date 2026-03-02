@@ -11,6 +11,7 @@ import cozyBed from "./src/cozy bed.png";
 import firstAidKit from "./src/first aid kit.png";
 import healingHerb from "./src/healing herb.png";
 import ironHelmet from "./src/iron helmet.png";
+import unemployed from "./src/jobs/unemployed.png";
 import leatherArmor from "./src/leather armor.png";
 import longBow from "./src/long bow.png";
 import casino from "./src/navigation/casino.png";
@@ -211,6 +212,10 @@ const images: Record<string, string> = {
 	"royal seal": royalSeal.src,
 } as const;
 
+const jobImages: Record<string, string> = {
+	unemployed: unemployed.src,
+};
+
 const navigation = {
 	cave: cave.src,
 	shop: shop.src,
@@ -223,4 +228,4 @@ const navigation = {
 	ranking: ranking.src,
 } as const satisfies Record<string, string>;
 
-export { items, rarities, images, navigation };
+export { items, rarities, images, navigation, jobImages };

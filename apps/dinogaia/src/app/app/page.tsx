@@ -1,8 +1,7 @@
 "use client";
 
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
-import { Container } from "@0xbuidlerhq/ui/system/base/container";
-import { H1, H1_7, H4, H5, H6 } from "@0xbuidlerhq/ui/system/base/typography";
+import { H1, H6 } from "@0xbuidlerhq/ui/system/base/typography";
 import { ButtonBase } from "@0xbuidlerhq/ui/system/buttons/ButtonBase";
 import { withAuth } from "@components/AuthComponent";
 import ProgressBar from "@components/ProgressBar";
@@ -13,7 +12,6 @@ import {
 	IconCampfire,
 	IconFountain,
 	IconMeat,
-	IconShare,
 } from "@tabler/icons-react";
 import type React from "react";
 import type { PropsWithChildren } from "react";
@@ -236,95 +234,38 @@ const DinoStats = (props: DinoStatsProps) => {
 	);
 };
 
-type InfoProps = {
-	label: string;
-	value: string;
-};
-const Info = (props: InfoProps) => {
-	return (
-		<Box className="flex gap-2 items-center">
-			<H5 className="font-montserrat text-muted-foreground font-medium">{props.label}:</H5>
-			<H5 className="font-mono">{props.value}</H5>
-		</Box>
-	);
-};
-
-const DinoScene = () => {
-	return (
-		<Box className="border-y border-muted h-full relative">
-			<Box className="absolute top-0 right-0">
-				<StatItem title="Level">
-					<H1_7>1</H1_7>
-				</StatItem>
-			</Box>
-
-			<Box className="absolute top-0 left-0">
-				<StatItem
-					title="Informations"
-					addon={
-						<ButtonBase>
-							<Box className="bg-muted px-2 flex items-center gap-2">
-								<IconShare className="size-4" />
-								<H4 className="font-syne">Share</H4>
-							</Box>
-						</ButtonBase>
-					}
-				>
-					<Box className="flex flex-col -space-y-0.5">
-						<Info label="Name" value="Maxime" />
-						<Info label="Clan" value="The Great Counsel" />
-						<Info label="Born" value="Sun, Aug 21, 2004 at 04:56" />
-						<Info label="Age" value="2000 days, 4 hours, 34 min" />
-						<Info label="Weight" value="129Kg" />
-						<Info label="Height" value="4m11" />
-						<Info label="Points" value="233444" />
-					</Box>
-				</StatItem>
-			</Box>
-		</Box>
-	);
-};
-
 const Page = () => {
 	const { currentDino } = useDinogaia();
 
 	return (
-		<Container className="">
-			<Box className="border-x border-muted">
-				<Box className="grid grid-cols-12">
-					<Box className="col-span-6">
-						<DinoScene />
-					</Box>
-
-					<Box className="col-span-6">
-						<DinoStats
-							name={currentDino?.data?.genesis.name!}
-							age={timestampToAge(currentDino?.data?.genesis.birthTimestamp ?? 0n)}
-							species={currentDino?.data?.genesis.speciesId!}
-							vitals={{
-								life: Number(currentDino?.data?.stats.health ?? 0n),
-								lifeMax: 100,
-								magic: 100,
-								magicMax: 100,
-							}}
-							state={{
-								hunger: currentDino?.data?.status.hunger!,
-								thirsty: currentDino?.data?.status.thirst!,
-								sick: currentDino?.data?.status.alive!,
-								alive: currentDino?.data?.status.alive!,
-							}}
-							characteristics={{
-								force: currentDino?.data?.stats.force!,
-								endurance: currentDino?.data?.stats.endurance!,
-								agility: currentDino?.data?.stats.agility!,
-								intelligence: currentDino?.data?.stats.intelligence!,
-							}}
-						/>
-					</Box>
-				</Box>
-			</Box>
-		</Container>
+		<Box className="col-span-6">
+			<DinoStats
+				name={currentDino?.data?.genesis.name!}
+				age={timestampToAge(currentDino?.data?.genesis.birthTimestamp ?? 0n)}
+				species={currentDino?.data?.genesis.speciesId!}
+				vitals={{
+					life: Number(currentDino?.data?.stats.health ?? 0n),
+					lifeMax: 100,
+					magic: 100,
+					magicMax: 100,
+				}}
+				state={{
+					hunger: currentDino?.data?.status.hunger!,
+					thirsty: currentDino?.data?.status.thirst!,
+					sick: currentDino?.data?.status.alive!,
+					alive: currentDino?.data?.status.alive!,
+				}}
+				characteristics={{
+					force: currentDino?.data?.stats.force!,
+					endurance: currentDino?.data?.stats.endurance!,
+					agility: currentDino?.data?.stats.agility!,
+					intelligence: currentDino?.data?.stats.intelligence!,
+				}}
+			/>
+		</Box>
 	);
 };
 
 export default withAuth(Page);
+
+export { StatItem };

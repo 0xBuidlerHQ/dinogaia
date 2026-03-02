@@ -12,7 +12,7 @@ import {
 import { createConfig } from "ponder";
 
 const CHAIN_ID = "31337";
-const STARTBLOCK = 42_805_537;
+const STARTBLOCK = 42_829_297;
 
 export default createConfig({
 	chains: {
