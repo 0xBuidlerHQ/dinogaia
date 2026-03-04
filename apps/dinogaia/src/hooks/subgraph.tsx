@@ -18,7 +18,7 @@ const useDinosOfOwner = (props: useDinosOfOwnerProps) => {
 	const dinosOfOwner = usePonderQuery({
 		queryFn: (db) => db.select().from(schema.dinos).where(eq(schema.dinos.owner, owner)),
 		enabled: props.isEnabled,
-		live: false,
+		live: true,
 	});
 
 	return dinosOfOwner;
@@ -34,7 +34,7 @@ const useJobs = (props: useJobsProps) => {
 	const jobs = usePonderQuery({
 		queryFn: (db) => db.select().from(schema.jobs),
 		enabled: props.isEnabled,
-		live: false,
+		live: true,
 	});
 
 	return jobs;
@@ -56,10 +56,27 @@ const useSpecies = (props: useSpeciesProps) => {
 	return species;
 };
 
+/**
+ * @dev useItems.
+ */
+type useItemsProps = {
+	isEnabled?: boolean;
+};
+const useItems = (props: useItemsProps) => {
+	const species = usePonderQuery({
+		queryFn: (db) => db.select().from(schema.items),
+		enabled: props.isEnabled,
+		live: false,
+	});
+
+	return species;
+};
+
 const SubgraphQueries = {
 	useDinosOfOwner,
 	useJobs,
 	useSpecies,
+	useItems,
 };
 
 export { SubgraphQueries };

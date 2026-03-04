@@ -4,10 +4,11 @@ import { cn } from "@0xbuidlerhq/ui/shadcn/lib/utils";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { H1 } from "@0xbuidlerhq/ui/system/base/typography";
 import { PAGES } from "@config/pages";
+import { useRouter } from "@hooks/useRouter";
 import { useDinogaia } from "@providers/dinogaia";
 import { useWeb3 } from "@providers/web3";
 import { useLoader } from "@stores/useStore";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { type PropsWithChildren, useEffect } from "react";
 
 type LoaderProps = PropsWithChildren;
@@ -40,7 +41,7 @@ const LoaderContent = () => {
 						// - New user, go to new.
 						if (myDinos.length === 0) {
 							setIsLoading(false);
-							return router.push(PAGES.new);
+							return router.push(PAGES.app.new);
 						}
 					}
 				}

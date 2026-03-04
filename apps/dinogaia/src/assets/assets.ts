@@ -213,7 +213,25 @@ const images: Record<string, string> = {
 } as const;
 
 const jobImages: Record<string, string> = {
-	unemployed: unemployed.src,
+	unemployed: apple.src,
+	swindler: unemployed.src,
+	worker: unemployed.src,
+	thief: unemployed.src,
+	"police officer": unemployed.src,
+	firefighter: unemployed.src,
+	"royal guard": unemployed.src,
+	seer: unemployed.src,
+	teacher: unemployed.src,
+	mage: unemployed.src,
+	"professional hunter": unemployed.src,
+	sorcerer: unemployed.src,
+	"royal guard captain": unemployed.src,
+	vendor: unemployed.src,
+	"indigenous hunter": unemployed.src,
+	"apprentice chemist": unemployed.src,
+	chemist: unemployed.src,
+	"general of the royal brigades": unemployed.src,
+	"general of the royal armies": unemployed.src,
 };
 
 const navigation = {

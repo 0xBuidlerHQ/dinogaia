@@ -3,7 +3,6 @@ import "./system.css";
 import { inter, montserrat, sourceCodePro, spaceGrotesk, syne } from "@0xbuidlerhq/ui/fonts";
 import { cn } from "@0xbuidlerhq/ui/shadcn/lib/utils";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
-import { Loader } from "@components/Loader";
 import { Footer } from "@components/layout/footer";
 import { Header } from "@components/layout/header";
 import { tronicaMono } from "@config/fonts";
@@ -33,17 +32,15 @@ const Layout = ({ children }: PropsWithChildren) => {
 				)}
 			>
 				<Providers>
-					<Loader>
-						<main className="grow flex flex-col min-h-dvh">
-							<Header />
+					<main className="grow flex flex-col min-h-dvh">
+						<Header />
 
-							<Box className="flex grow min-h-0">
-								<Box className="grow">{children}</Box>
-							</Box>
+						<Box className="flex grow min-h-0">
+							<Box className="grow">{children}</Box>
+						</Box>
 
-							<Footer />
-						</main>
-					</Loader>
+						<Footer />
+					</main>
 				</Providers>
 			</body>
 		</html>

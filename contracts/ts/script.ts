@@ -70,6 +70,14 @@ const normalizeTypeString = (typeString: string): string => {
 	return trimmed;
 };
 
+const canFitInNumber = (bits: number) => bits <= 53;
+
+const integerTypeToTs = (typeString: string): string => {
+	const match = typeString.match(/^(u?)int([0-9]*)$/);
+	const width = match?.[2] ? Number(match[2]) : 256;
+	return canFitInNumber(width) ? "number" : "bigint";
+};
+
 const mapBaseType = (typeString: string): string => {
 	const normalized = normalizeTypeString(typeString);
 
@@ -85,7 +93,8 @@ const mapBaseType = (typeString: string): string => {
 	if (normalized === "bool") return "boolean";
 	if (normalized === "string") return "string";
 	if (normalized.startsWith("bytes")) return "Bytes";
-	if (normalized.startsWith("uint") || normalized.startsWith("int")) return "bigint";
+	if (normalized.startsWith("uint") || normalized.startsWith("int"))
+		return integerTypeToTs(normalized);
 
 	return normalized;
 };

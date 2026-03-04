@@ -87,7 +87,7 @@ const QuickAction = (props: QuickActionProps) => {
 
 const DinoStats = (props: DinoStatsProps) => {
 	return (
-		<Box className="grid grid-cols-12 items-stretch *:border-l *:border-muted *:border-b border-t border-muted">
+		<Box className="grid grid-cols-12 items-stretch *:border *:border-muted">
 			<Box className="col-span-6">
 				<StatItem title="Name">
 					<H1 className="text-[#a3e635]">{props.name}</H1>
@@ -242,7 +242,7 @@ const Page = () => {
 			<DinoStats
 				name={currentDino?.data?.genesis.name!}
 				age={timestampToAge(currentDino?.data?.genesis.birthTimestamp ?? 0n)}
-				species={currentDino?.data?.genesis.speciesId!}
+				species={currentDino?.species?.name}
 				vitals={{
 					life: Number(currentDino?.data?.stats.health ?? 0n),
 					lifeMax: 100,

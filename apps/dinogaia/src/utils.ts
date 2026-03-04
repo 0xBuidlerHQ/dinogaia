@@ -110,3 +110,17 @@ const itemBaseType = (item: ItemsSet.ItemType) => {
 };
 
 export { timestampToAge, itemBaseType, type DinoAge };
+
+const ItemTypeNameByEnumId: Record<number, string> = Object.fromEntries(
+	Object.entries(ItemsSet.ItemType)
+		.filter(([key]) => !Number.isNaN(Number(key)))
+		.map(([key, value]) => [Number(key), String(value)]),
+);
+
+const ItemEffectKindNameByEnumId: Record<number, string> = Object.fromEntries(
+	Object.entries(ItemsSet.EffectKind)
+		.filter(([key]) => !Number.isNaN(Number(key)))
+		.map(([key, value]) => [Number(key), String(value)]),
+);
+
+export { ItemTypeNameByEnumId, ItemEffectKindNameByEnumId };

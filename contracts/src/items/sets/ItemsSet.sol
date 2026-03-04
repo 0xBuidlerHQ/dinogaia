@@ -62,7 +62,7 @@ abstract contract ItemsSet is ERC6909Metadata, ERC6909TokenSupply, AccessControl
      */
     struct Effect {
         EffectKind kind;
-        int256 magnitude;
+        int32 magnitude;
     }
 
     /**
@@ -79,7 +79,7 @@ abstract contract ItemsSet is ERC6909Metadata, ERC6909TokenSupply, AccessControl
     struct ItemTrading {
         bool tradable;
         bool sellable;
-        uint256 price;
+        uint32 price;
     }
 
     /**
@@ -94,7 +94,7 @@ abstract contract ItemsSet is ERC6909Metadata, ERC6909TokenSupply, AccessControl
      * @dev Struct ItemRequirements.
      */
     struct ItemRequirements {
-        uint256 requiredLevel;
+        uint32 requiredLevel;
     }
 
     /**

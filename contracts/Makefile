@@ -24,7 +24,7 @@ dev:
 
 .PHONY: build
 build:
-	forge build --ast
+	forge build
 
 FORGE_DEPLOY_FLAGS=--rpc-url $(LOCAL_RPC) --broadcast
 .PHONY: deploy

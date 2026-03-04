@@ -1,29 +1,32 @@
 "use client";
 
-import { Box } from "@0xbuidlerhq/ui/system/base/box";
+import { Container } from "@0xbuidlerhq/ui/system/base/container";
 import { H4 } from "@0xbuidlerhq/ui/system/base/typography";
 import { ButtonBase } from "@0xbuidlerhq/ui/system/buttons/ButtonBase";
 import { PAGES } from "@config/pages";
+import { useRouter } from "@hooks/useRouter";
+import { useDinogaia } from "@providers/dinogaia";
 import { useWeb3 } from "@providers/web3";
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 const Page = () => {
 	const { ready, isConnected, connect } = useWeb3();
 	const router = useRouter();
+	const { q, myDinos } = useDinogaia();
 
 	useEffect(() => {
-		if (ready && isConnected) {
-			return router.push(PAGES.app.homepage);
+		if (ready && isConnected && q.qMyDinos.data) {
+			if (myDinos.length > 0) return router.push(PAGES.app.homepage);
+			return router.push(PAGES.app.new);
 		}
-	}, [ready, isConnected]);
+	}, [ready, isConnected, q.qMyDinos.data]);
 
 	return (
-		<Box className="h-full flex items-center justify-center border border-muted">
+		<Container>
 			<ButtonBase onClick={connect}>
 				<H4>Connect</H4>
 			</ButtonBase>
-		</Box>
+		</Container>
 	);
 };
 

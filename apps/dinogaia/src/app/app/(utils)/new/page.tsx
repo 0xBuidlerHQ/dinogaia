@@ -2,15 +2,12 @@
 
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { withAuth } from "@components/AuthComponent";
-import { ShopView } from "@features/shop/Shop";
-import { useDinogaia } from "@providers/dinogaia";
+import { MintModal } from "@features/dinos/mint/MintModal";
 
 const Page = () => {
-	const { items } = useDinogaia();
-
 	return (
 		<Box>
-			<ShopView items={items} />
+			<MintModal />
 		</Box>
 	);
 };

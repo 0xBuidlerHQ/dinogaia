@@ -1,9 +1,11 @@
-const APP = "/app/";
+const APP = "/app";
 
 const PAGES = {
 	homepage: "/",
 
 	app: {
+		new: `${APP}/new`,
+		//
 		homepage: APP,
 		cave: `${APP}/cave`,
 		shop: `${APP}/shop`,
@@ -22,8 +24,11 @@ const PAGES = {
 	},
 
 	login: "/login",
-	new: "/new",
 } as const;
 const allPages = Object.values(PAGES);
 
-export { PAGES, allPages };
+const isPathApp = (pathname: string) => {
+	return pathname.includes(APP);
+};
+
+export { PAGES, allPages, isPathApp };

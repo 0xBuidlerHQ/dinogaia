@@ -35,10 +35,10 @@ export namespace Dino {
 	};
 	export type Stats = {
 		health: bigint;
-		force: bigint;
-		endurance: bigint;
-		agility: bigint;
-		intelligence: bigint;
+		force: number;
+		endurance: number;
+		agility: number;
+		intelligence: number;
 	};
 	export type Status = {
 		alive: boolean;
@@ -97,7 +97,7 @@ export namespace ItemsSet {
 	}
 	export type Effect = {
 		kind: ItemsSet.EffectKind;
-		magnitude: bigint;
+		magnitude: number;
 	};
 	export type Item = {
 		name: string;
@@ -111,19 +111,28 @@ export namespace ItemsSet {
 	};
 	export type ItemMetadata = {
 		symbol: string;
-		decimals: bigint;
+		decimals: number;
 	};
 	export type ItemRequirements = {
-		requiredLevel: bigint;
+		requiredLevel: number;
 	};
 	export type ItemTrading = {
 		tradable: boolean;
 		sellable: boolean;
-		price: bigint;
+		price: number;
 	};
 	export type ItemUsage = {
 		destroyOnUse: boolean;
 		soulbound: boolean;
+	};
+}
+
+export namespace JobsRegistry {
+	export type Job = {
+		name: string;
+		dailyPay: bigint;
+		trainingCost: bigint;
+		requiredLevel: number;
 	};
 }
 
@@ -133,9 +142,9 @@ export namespace SpeciesRegistry {
 		stats: SpeciesRegistry.Stats;
 	};
 	export type Stats = {
-		force: bigint;
-		endurance: bigint;
-		agility: bigint;
-		intelligence: bigint;
+		force: number;
+		endurance: number;
+		agility: number;
+		intelligence: number;
 	};
 }

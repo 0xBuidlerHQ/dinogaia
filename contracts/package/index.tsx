@@ -450,7 +450,7 @@ export const caveConsumeModuleAbi = [
       { name: '_dinoId', internalType: 'uint256', type: 'uint256' },
       { name: '_itemsSet', internalType: 'contract ItemsSet', type: 'address' },
       { name: '_itemId', internalType: 'uint256', type: 'uint256' },
-      { name: '_amount', internalType: 'int256', type: 'int256' },
+      { name: '_amount', internalType: 'int32', type: 'int32' },
     ],
     name: 'useConsumable',
     outputs: [],
@@ -888,7 +888,7 @@ export const caveModuleAbi = [
       { name: '_dinoId', internalType: 'uint256', type: 'uint256' },
       { name: '_itemsSet', internalType: 'contract ItemsSet', type: 'address' },
       { name: '_itemId', internalType: 'uint256', type: 'uint256' },
-      { name: '_amount', internalType: 'int256', type: 'int256' },
+      { name: '_amount', internalType: 'int32', type: 'int32' },
     ],
     name: 'useConsumable',
     outputs: [],
@@ -972,7 +972,7 @@ export const caveModuleAbi = [
  *
  */
 export const caveModuleAddress = {
-  31337: '0xec2058962F97ccCbd9b204F58aDFD3A3F57eB89C',
+  31337: '0x30b13D68F543cf779f99Ffd0a9777B8DA8a13743',
 } as const
 
 /**
@@ -5867,7 +5867,7 @@ export const itemsSetAbi = [
             components: [
               { name: 'tradable', internalType: 'bool', type: 'bool' },
               { name: 'sellable', internalType: 'bool', type: 'bool' },
-              { name: 'price', internalType: 'uint256', type: 'uint256' },
+              { name: 'price', internalType: 'uint32', type: 'uint32' },
             ],
           },
           {
@@ -5884,11 +5884,7 @@ export const itemsSetAbi = [
             internalType: 'struct ItemsSet.ItemRequirements',
             type: 'tuple',
             components: [
-              {
-                name: 'requiredLevel',
-                internalType: 'uint256',
-                type: 'uint256',
-              },
+              { name: 'requiredLevel', internalType: 'uint32', type: 'uint32' },
             ],
           },
           {
@@ -5910,7 +5906,7 @@ export const itemsSetAbi = [
                 internalType: 'enum ItemsSet.EffectKind',
                 type: 'uint8',
               },
-              { name: 'magnitude', internalType: 'int256', type: 'int256' },
+              { name: 'magnitude', internalType: 'int32', type: 'int32' },
             ],
           },
         ],
@@ -5946,7 +5942,7 @@ export const itemsSetAbi = [
             components: [
               { name: 'tradable', internalType: 'bool', type: 'bool' },
               { name: 'sellable', internalType: 'bool', type: 'bool' },
-              { name: 'price', internalType: 'uint256', type: 'uint256' },
+              { name: 'price', internalType: 'uint32', type: 'uint32' },
             ],
           },
           {
@@ -5963,11 +5959,7 @@ export const itemsSetAbi = [
             internalType: 'struct ItemsSet.ItemRequirements',
             type: 'tuple',
             components: [
-              {
-                name: 'requiredLevel',
-                internalType: 'uint256',
-                type: 'uint256',
-              },
+              { name: 'requiredLevel', internalType: 'uint32', type: 'uint32' },
             ],
           },
           {
@@ -5989,7 +5981,7 @@ export const itemsSetAbi = [
                 internalType: 'enum ItemsSet.EffectKind',
                 type: 'uint8',
               },
-              { name: 'magnitude', internalType: 'int256', type: 'int256' },
+              { name: 'magnitude', internalType: 'int32', type: 'int32' },
             ],
           },
         ],
@@ -6229,7 +6221,7 @@ export const itemsSetAbi = [
             components: [
               { name: 'tradable', internalType: 'bool', type: 'bool' },
               { name: 'sellable', internalType: 'bool', type: 'bool' },
-              { name: 'price', internalType: 'uint256', type: 'uint256' },
+              { name: 'price', internalType: 'uint32', type: 'uint32' },
             ],
           },
           {
@@ -6246,11 +6238,7 @@ export const itemsSetAbi = [
             internalType: 'struct ItemsSet.ItemRequirements',
             type: 'tuple',
             components: [
-              {
-                name: 'requiredLevel',
-                internalType: 'uint256',
-                type: 'uint256',
-              },
+              { name: 'requiredLevel', internalType: 'uint32', type: 'uint32' },
             ],
           },
           {
@@ -6272,7 +6260,7 @@ export const itemsSetAbi = [
                 internalType: 'enum ItemsSet.EffectKind',
                 type: 'uint8',
               },
-              { name: 'magnitude', internalType: 'int256', type: 'int256' },
+              { name: 'magnitude', internalType: 'int32', type: 'int32' },
             ],
           },
         ],
@@ -6550,7 +6538,7 @@ export const itemsSet0Abi = [
             components: [
               { name: 'tradable', internalType: 'bool', type: 'bool' },
               { name: 'sellable', internalType: 'bool', type: 'bool' },
-              { name: 'price', internalType: 'uint256', type: 'uint256' },
+              { name: 'price', internalType: 'uint32', type: 'uint32' },
             ],
           },
           {
@@ -6567,11 +6555,7 @@ export const itemsSet0Abi = [
             internalType: 'struct ItemsSet.ItemRequirements',
             type: 'tuple',
             components: [
-              {
-                name: 'requiredLevel',
-                internalType: 'uint256',
-                type: 'uint256',
-              },
+              { name: 'requiredLevel', internalType: 'uint32', type: 'uint32' },
             ],
           },
           {
@@ -6593,7 +6577,7 @@ export const itemsSet0Abi = [
                 internalType: 'enum ItemsSet.EffectKind',
                 type: 'uint8',
               },
-              { name: 'magnitude', internalType: 'int256', type: 'int256' },
+              { name: 'magnitude', internalType: 'int32', type: 'int32' },
             ],
           },
         ],
@@ -6629,7 +6613,7 @@ export const itemsSet0Abi = [
             components: [
               { name: 'tradable', internalType: 'bool', type: 'bool' },
               { name: 'sellable', internalType: 'bool', type: 'bool' },
-              { name: 'price', internalType: 'uint256', type: 'uint256' },
+              { name: 'price', internalType: 'uint32', type: 'uint32' },
             ],
           },
           {
@@ -6646,11 +6630,7 @@ export const itemsSet0Abi = [
             internalType: 'struct ItemsSet.ItemRequirements',
             type: 'tuple',
             components: [
-              {
-                name: 'requiredLevel',
-                internalType: 'uint256',
-                type: 'uint256',
-              },
+              { name: 'requiredLevel', internalType: 'uint32', type: 'uint32' },
             ],
           },
           {
@@ -6672,7 +6652,7 @@ export const itemsSet0Abi = [
                 internalType: 'enum ItemsSet.EffectKind',
                 type: 'uint8',
               },
-              { name: 'magnitude', internalType: 'int256', type: 'int256' },
+              { name: 'magnitude', internalType: 'int32', type: 'int32' },
             ],
           },
         ],
@@ -6912,7 +6892,7 @@ export const itemsSet0Abi = [
             components: [
               { name: 'tradable', internalType: 'bool', type: 'bool' },
               { name: 'sellable', internalType: 'bool', type: 'bool' },
-              { name: 'price', internalType: 'uint256', type: 'uint256' },
+              { name: 'price', internalType: 'uint32', type: 'uint32' },
             ],
           },
           {
@@ -6929,11 +6909,7 @@ export const itemsSet0Abi = [
             internalType: 'struct ItemsSet.ItemRequirements',
             type: 'tuple',
             components: [
-              {
-                name: 'requiredLevel',
-                internalType: 'uint256',
-                type: 'uint256',
-              },
+              { name: 'requiredLevel', internalType: 'uint32', type: 'uint32' },
             ],
           },
           {
@@ -6955,7 +6931,7 @@ export const itemsSet0Abi = [
                 internalType: 'enum ItemsSet.EffectKind',
                 type: 'uint8',
               },
-              { name: 'magnitude', internalType: 'int256', type: 'int256' },
+              { name: 'magnitude', internalType: 'int32', type: 'int32' },
             ],
           },
         ],
@@ -7132,7 +7108,7 @@ export const itemsSet0Abi = [
  *
  */
 export const itemsSet0Address = {
-  31337: '0x2029e9a94202949269Af7af0f703097C1A16C0Ce',
+  31337: '0xd821D810dA386A80AdD5DEEB8304a115Ba1974e4',
 } as const
 
 /**
@@ -8033,7 +8009,7 @@ export const shopModuleAbi = [
             components: [
               { name: 'tradable', internalType: 'bool', type: 'bool' },
               { name: 'sellable', internalType: 'bool', type: 'bool' },
-              { name: 'price', internalType: 'uint256', type: 'uint256' },
+              { name: 'price', internalType: 'uint32', type: 'uint32' },
             ],
           },
           {
@@ -8050,11 +8026,7 @@ export const shopModuleAbi = [
             internalType: 'struct ItemsSet.ItemRequirements',
             type: 'tuple',
             components: [
-              {
-                name: 'requiredLevel',
-                internalType: 'uint256',
-                type: 'uint256',
-              },
+              { name: 'requiredLevel', internalType: 'uint32', type: 'uint32' },
             ],
           },
           {
@@ -8076,7 +8048,7 @@ export const shopModuleAbi = [
                 internalType: 'enum ItemsSet.EffectKind',
                 type: 'uint8',
               },
-              { name: 'magnitude', internalType: 'int256', type: 'int256' },
+              { name: 'magnitude', internalType: 'int32', type: 'int32' },
             ],
           },
         ],
@@ -8273,7 +8245,7 @@ export const shopModuleAbi = [
  *
  */
 export const shopModuleAddress = {
-  31337: '0xE195d793c030eD79DA7f47b3e84d2Cb345B90F78',
+  31337: '0xA462179794b067D9D0b3c0eB673Da836631bA504',
 } as const
 
 /**

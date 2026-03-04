@@ -24,7 +24,7 @@ const Header = () => {
 	const { isConnected } = useWeb3();
 	const pathname = usePathname();
 
-	const isDiff = pathname !== PAGES.login && pathname !== PAGES.new;
+	const isDiff = pathname !== PAGES.login;
 
 	return (
 		<Box className="flex flex-col">
@@ -33,8 +33,8 @@ const Header = () => {
 
 			<Box
 				className={cn(
-					"pointer-events-none opacity-25",
-					isDiff && isConnected && "pointer-events-auto opacity-100",
+					"pointer-events-none opacity-0 h-0",
+					isDiff && isConnected && "pointer-events-auto opacity-100 h-full",
 				)}
 			>
 				<Navigation />

@@ -80,7 +80,7 @@ const Navigation = () => {
 			<Box className={cn("flex justify-between border-x border-muted", NAVIGATION_HEIGHT)}>
 				<Box className="flex">
 					{pages.map((item) => {
-						const isCurrentPage = item.href === "/" ? path === "/" : path.includes(item.href);
+						const isCurrentPage = item.href === "/app" ? path === "/app" : path.includes(item.href);
 
 						return (
 							<ButtonBase

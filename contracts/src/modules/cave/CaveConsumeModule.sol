@@ -26,7 +26,7 @@ abstract contract CaveConsumeModule is ModuleBase, CaveBase {
         ItemsSet _itemsSet,
         uint256 _itemId,
         //
-        int256 _amount
+        int32 _amount
     )
         external
     {
@@ -45,7 +45,7 @@ abstract contract CaveConsumeModule is ModuleBase, CaveBase {
     /**
      * @dev
      */
-    function _applyConsumableEffects(uint256 _dinoId, ItemsSet.Effect[] memory effects, int256 _amount) internal {
+    function _applyConsumableEffects(uint256 _dinoId, ItemsSet.Effect[] memory effects, int32 _amount) internal {
         for (uint256 i = 0; i < effects.length; i++) {
             ItemsSet.Effect memory effect = effects[i];
 

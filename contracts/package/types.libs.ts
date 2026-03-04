@@ -12,7 +12,7 @@ export namespace AccessControl {
 export namespace Actors {
 	export type Actor = {
 		name: string;
-		index: bigint;
+		index: number;
 		pk: bigint;
 		addr: Address;
 	};
@@ -22,7 +22,7 @@ export namespace ERC6909Metadata {
 	export type TokenMetadata = {
 		name: string;
 		symbol: string;
-		decimals: bigint;
+		decimals: number;
 	};
 }
 
@@ -210,7 +210,7 @@ export namespace StdCheatsSafe {
 		s: Bytes;
 		txType: bigint;
 		to: Address;
-		v: bigint;
+		v: number;
 		value: bigint;
 	};
 	export type TxLegacy = {
@@ -306,7 +306,7 @@ export namespace VmSafe {
 	export type DebugStep = {
 		stack: Array<bigint>;
 		memoryInput: Bytes;
-		opcode: bigint;
+		opcode: number;
 		depth: bigint;
 		isOutOfGas: boolean;
 		contractAddr: Address;
@@ -330,7 +330,7 @@ export namespace VmSafe {
 		removed: boolean;
 	};
 	export type FfiResult = {
-		exitCode: bigint;
+		exitCode: number;
 		stdout: Bytes;
 		stderr: Bytes;
 	};
@@ -365,7 +365,7 @@ export namespace VmSafe {
 		url: string;
 	};
 	export type SignedDelegation = {
-		v: bigint;
+		v: number;
 		r: Bytes;
 		s: Bytes;
 		nonce: bigint;

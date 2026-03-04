@@ -4,7 +4,6 @@ import {
 	useReadDinoGetDino,
 	useReadEmeraldErc20BalanceOf,
 	useReadJobsModuleJobOf,
-	useReadJobsRegistryGetJob,
 } from "@0xbuidlerhq/dinogaia.contracts";
 import { SubgraphQueries } from "@hooks/subgraph";
 import { useWeb3 } from "@providers/web3";
@@ -24,10 +23,13 @@ const useDinogaiaPrimitive = () => {
 	 * @dev Global Subgraph Queries.
 	 */
 	const qJobs = SubgraphQueries.useJobs({});
-	const jobs = qJobs.data;
+	const jobs = qJobs.data || [];
 
 	const qSpecies = SubgraphQueries.useSpecies({});
-	const species = qSpecies.data;
+	const species = qSpecies.data || [];
+
+	const qItems = SubgraphQueries.useItems({});
+	const items = qItems.data || [];
 
 	/**
 	 * @dev Subgraph Queries.
@@ -64,32 +66,31 @@ const useDinogaiaPrimitive = () => {
 	});
 
 	const dinoJobId = useReadJobsModuleJobOf({
-		args: [activeDinoId!],
-		query: { enabled },
-	});
-
-	const dinoJob = useReadJobsRegistryGetJob({
-		args: [dinoJobId.data!],
+		args: [currentDinoContext?.dinoId!],
 		query: { enabled },
 	});
 
 	const currentDino = {
+		raw: dinoData.data,
 		data: dinoData.data,
-		job: dinoJob.data,
+		job: jobs.find((item) => item.jobId === dinoJobId.data),
+		species: species.find((item) => item.speciesId === dinoData.data?.genesis.speciesId),
 		emeraldBalance: dinoEmeraldBalance.data,
 	};
 
 	return {
+		currentDino,
+
 		jobs,
 		species,
-		//
-		currentDino,
+		items,
 		myDinos,
 		//
 		q: {
 			qJobs,
 			qSpecies,
 			qMyDinos,
+			qItems,
 		},
 	};
 };

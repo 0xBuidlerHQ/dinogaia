@@ -57,5 +57,13 @@ ponder.on("ItemsSet0:ItemCreated", async ({ event, context }) => {
 		itemId: event.args.id,
 		//
 		name: event.args.meta.name,
+		//
+		rarity: event.args.meta.rarity,
+		itemType: event.args.meta.rarity,
+		trading: event.args.meta.trading,
+		usage: event.args.meta.usage,
+		requirements: event.args.meta.requirements,
+		metadata: event.args.meta.metadata,
+		effects: event.args.meta.effects,
 	});
 });
