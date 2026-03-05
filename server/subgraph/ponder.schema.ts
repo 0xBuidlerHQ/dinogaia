@@ -7,6 +7,7 @@ const dinos = onchainTable("dinos", (t) => ({
 	owner: t.hex().notNull(),
 	account: t.hex().notNull(),
 }));
+type Dino = typeof dinos.$inferSelect;
 
 const species = onchainTable("species", (t) => ({
 	speciesId: t.bigint().primaryKey().notNull(),
@@ -15,6 +16,7 @@ const species = onchainTable("species", (t) => ({
 	//
 	stats: jsonb("stats").$type<SpeciesRegistry.Stats>().notNull(),
 }));
+type Species = typeof species.$inferSelect;
 
 const jobs = onchainTable("jobs", (t) => ({
 	jobId: t.bigint().primaryKey().notNull(),
@@ -25,6 +27,7 @@ const jobs = onchainTable("jobs", (t) => ({
 	trainingCost: t.bigint().notNull(),
 	requiredLevel: t.integer().notNull(),
 }));
+type Job = typeof jobs.$inferSelect;
 
 const items = onchainTable("items", (t) => ({
 	itemId: t.bigint().primaryKey().notNull(),
@@ -39,5 +42,19 @@ const items = onchainTable("items", (t) => ({
 	metadata: jsonb("metadata").$type<ItemsSet.ItemMetadata>().notNull(),
 	effects: jsonb("effects").$type<ItemsSet.Effect[]>().notNull(),
 }));
+type Item = typeof items.$inferSelect;
+type ItemRarity = Item["rarity"];
+type ItemType = Item["itemType"];
 
-export { dinos, species, jobs, items };
+export {
+	dinos,
+	species,
+	jobs,
+	items,
+	type Item,
+	type Dino,
+	type Species,
+	type Job,
+	type ItemRarity,
+	type ItemType,
+};

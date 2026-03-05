@@ -1,3 +1,4 @@
+import type { Address } from "viem";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
@@ -6,6 +7,9 @@ type StoreState = {
 
 	activeDinoId: bigint | undefined;
 	setActiveDinoId: (id: bigint | undefined) => void;
+
+	activeDinoAccount: Address | undefined;
+	setActiveDinoAccount: (dinoAccount: Address | undefined) => void;
 
 	mintModal: boolean;
 	openMintModal: () => void;
@@ -23,6 +27,9 @@ export const useStore = create<StoreState>()(
 
 			activeDinoId: undefined,
 			setActiveDinoId: (id) => set({ activeDinoId: id }),
+
+			activeDinoAccount: undefined,
+			setActiveDinoAccount: (dinoAccount) => set({ activeDinoAccount: dinoAccount }),
 
 			mintModal: false,
 			openMintModal: () => set({ mintModal: true }),

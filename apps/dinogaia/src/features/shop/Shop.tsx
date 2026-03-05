@@ -1,4 +1,4 @@
-import type { ItemsSet } from "@0xbuidlerhq/dinogaia.contracts/types.user";
+import type { Item, ItemType } from "@0xbuidlerhq/dinogaia.subgraph";
 import { Separator } from "@0xbuidlerhq/ui/shadcn/components/separator";
 import { cn } from "@0xbuidlerhq/ui/shadcn/lib/utils";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
@@ -11,7 +11,7 @@ import { ItemTypeNameByEnumId } from "../../utils";
 
 type ShopItemTypeViewProps = {
 	itemTypeLabel: string;
-	items: ItemsSet.Item[];
+	items: Item[];
 };
 const ShopItemTypeView = (props: ShopItemTypeViewProps) => {
 	const [open, setOpen] = React.useState(true);
@@ -22,7 +22,11 @@ const ShopItemTypeView = (props: ShopItemTypeViewProps) => {
 				<H1_0 className="font-black text-[#a3e635]">{props.itemTypeLabel}</H1_0>
 
 				<ButtonBase onClick={() => setOpen(!open)}>
-					<H1_2 className={cn("text-[#a3e635] rotate-90 transition-all")}>{">"}</H1_2>
+					<H1_2
+						className={cn("text-[#a3e635] rotate-90 transition-all mr-1", open && "-rotate-45")}
+					>
+						{">"}
+					</H1_2>
 				</ButtonBase>
 			</Box>
 
@@ -42,11 +46,11 @@ const ShopItemTypeView = (props: ShopItemTypeViewProps) => {
 };
 
 type ShopViewProps = {
-	items: ItemsSet.Item[];
+	items: Item[];
 };
 const ShopView = (props: ShopViewProps) => {
 	const itemsByType = (() => {
-		const itemsByType: Partial<Record<ItemsSet.ItemType, ItemsSet.Item[]>> = {};
+		const itemsByType: Partial<Record<ItemType, Item[]>> = {};
 
 		props.items.forEach((item) => {
 			if (!itemsByType[item.itemType]) {

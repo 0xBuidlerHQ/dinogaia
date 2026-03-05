@@ -15,7 +15,7 @@ import React from "react";
  */
 const useDinogaiaPrimitive = () => {
 	const { eoa } = useWeb3();
-	const { activeDinoId, setActiveDinoId } = useStore();
+	const { activeDinoId, setActiveDinoId, setActiveDinoAccount } = useStore();
 
 	const enabled = !!eoa.address;
 
@@ -47,6 +47,7 @@ const useDinogaiaPrimitive = () => {
 
 				dino = myDinos[0];
 				setActiveDinoId(dino.dinoId);
+				setActiveDinoAccount(dino.account);
 				return dino;
 			}
 		}

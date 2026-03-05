@@ -1,0 +1,24 @@
+{
+	"name": "@0xbuidlerhq/relay",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"dependencies": {
+		"react": "catalog:react19",
+		"react-dom": "catalog:react19",
+		"zustand": "catalog:react19"
+	},
+	"devDependencies": {
+		"@0xbuidlerhq/config-typescript": "workspace:^",
+
+		"@types/node": "catalog:react19",
+		"@types/react": "catalog:react19",
+		"@types/react-dom": "catalog:react19",
+		"typescript": "catalog:react19"
+	},
+	"exports": {
+		".": "./src/index.tsx"
+	}
+}

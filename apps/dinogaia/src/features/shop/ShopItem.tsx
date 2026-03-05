@@ -1,15 +1,16 @@
 "use client";
 
-import type { ItemsSet } from "@0xbuidlerhq/dinogaia.contracts/types.user";
+import type { Item } from "@0xbuidlerhq/dinogaia.subgraph";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { H4, H5, H7 } from "@0xbuidlerhq/ui/system/base/typography";
 import { ButtonBase } from "@0xbuidlerhq/ui/system/buttons/ButtonBase";
+import { useBuyItem } from "@features/shop/useShop";
 import { images } from "../../assets/assets";
 import { EthereumLogo } from "../../assets/emerald";
 import { ItemEffectKindNameByEnumId } from "../../utils";
 
 type Props = {
-	item: ItemsSet.Item;
+	item: Item;
 };
 
 const ItemImage = (props: Props) => {
@@ -24,6 +25,16 @@ const ItemImage = (props: Props) => {
 	);
 };
 
+const BuyShopItemButton = (props: Props) => {
+	const { execute } = useBuyItem(props);
+
+	return (
+		<ButtonBase className="bg-accent/50 rounded px-2" onClick={execute}>
+			<H5>Buy</H5>
+		</ButtonBase>
+	);
+};
+
 const ShopItem = (props: Props) => {
 	const { item } = props;
 
@@ -31,14 +42,12 @@ const ShopItem = (props: Props) => {
 		<Box key={item.name} className="border border-muted">
 			<Box className="aspect-square h-full w-full">
 				<Box className="flex flex-col h-full">
-					<Box className="flex justify-between border-muted border-b p-1 bg-muted/25">
+					<Box className="flex justify-between border-muted border-b p-1 bg-accent/25">
 						<Box>
 							<H5 className="capitalize text-white">{item.name}</H5>
 						</Box>
 
-						<ButtonBase className="bg-muted rounded px-2">
-							<H5>Buy</H5>
-						</ButtonBase>
+						<BuyShopItemButton item={item} />
 					</Box>
 
 					<Box className="grow relative min-h-0">
@@ -73,18 +82,3 @@ const ShopItem = (props: Props) => {
 };
 
 export { ShopItem };
-
-// {/* <Box className="h-20 border-t border-muted p-2 flex flex-col gap-2">
-// 						{/* <Box className="flex gap-1">
-// 							<ItemRarity item={item} />
-// 							<ItemType item={item} />
-// 						</Box> */}
-
-// 						<Box className="flex">
-// 							<Box className="grow flex flex-col">
-// 								<H4 className="font-source-code-pro tracking-tighter">{item.name}</H4>
-// 							</Box>
-
-//
-// 						</Box>
-// 					</Box> */}
