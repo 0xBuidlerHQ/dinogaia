@@ -3,8 +3,7 @@
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
-	"main": "dist/index.js",
-	"types": "dist/index.d.ts",
+
 	"dependencies": {
 		"react": "catalog:react19",
 		"react-dom": "catalog:react19",
@@ -19,6 +18,7 @@
 		"typescript": "catalog:react19"
 	},
 	"exports": {
-		".": "./src/index.tsx"
+		".": "./src/useRelay.tsx",
+		"./relay": "./src/relay.tsx"
 	}
 }

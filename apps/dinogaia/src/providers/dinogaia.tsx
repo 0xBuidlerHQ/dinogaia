@@ -5,7 +5,7 @@ import {
 	useReadEmeraldErc20BalanceOf,
 	useReadJobsModuleJobOf,
 } from "@0xbuidlerhq/dinogaia.contracts";
-import { SubgraphQueries } from "@hooks/subgraph";
+import { SubgraphQueries } from "@api/subgraph";
 import { useWeb3 } from "@providers/web3";
 import { useStore } from "@stores/useStore";
 import React from "react";

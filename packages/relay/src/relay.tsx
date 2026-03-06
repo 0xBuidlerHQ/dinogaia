@@ -1,11 +1,11 @@
 import { create } from "zustand";
 
 /**
- * @dev A base step in the stepper process.
+ * @dev A base step in the relay process.
  * This represents a single step, with an ID, a function to execute, and an optional disabled flag.
  * The generic `B` is for extra metadata, `S` is for success payload, and `E` is for error payload.
  */
-type StepBase<B, S, _> = B & {
+type RelayStepBase<B, S, _> = B & {
 	id: string;
 	fn: () => Promise<S>;
 	disabled?: boolean | undefined;
@@ -19,77 +19,77 @@ type StepStatus = "idle" | "loading" | "success" | "error" | "disabled";
 /**
  * @dev The state of a single step with discriminated union based on status.
  */
-type StepStateSuccess<S> = {
+type RelayStepStateSuccess<S> = {
 	index: number;
 	status: "success";
 	payload: S;
 };
 
-type StepStateError<E> = {
+type RelayStepStateError<E> = {
 	index: number;
 	status: "error";
 	payload: E;
 };
 
-type StepStateOther = {
+type RelayStepStateOther = {
 	index: number;
 	status: "idle" | "loading" | "disabled";
 	payload?: undefined;
 };
 
-type StepState<S, E> = StepStateSuccess<S> | StepStateError<E> | StepStateOther;
+type RelayStepState<S, E> = RelayStepStateSuccess<S> | RelayStepStateError<E> | RelayStepStateOther;
 
 /**
  * @dev Cached state of a step (used when restoring state later).
- * It is the same as StepState but without the index.
+ * It is the same as RelayStepState but without the index.
  */
-type CachedStepStateSuccess<S> = Omit<StepStateSuccess<S>, "index">;
+type CachedRelayStepStateSuccess<S> = Omit<RelayStepStateSuccess<S>, "index">;
 
-type CachedStepStateError<E> = Omit<StepStateError<E>, "index">;
+type CachedRelayStepStateError<E> = Omit<RelayStepStateError<E>, "index">;
 
-type CachedStepStateOther = Omit<StepStateOther, "index">;
+type CachedRelayStepStateOther = Omit<RelayStepStateOther, "index">;
 
-type CachedStepState<S, E> =
-	| CachedStepStateSuccess<S>
-	| CachedStepStateError<E>
-	| CachedStepStateOther;
+type CachedRelayStepState<S, E> =
+	| CachedRelayStepStateSuccess<S>
+	| CachedRelayStepStateError<E>
+	| CachedRelayStepStateOther;
 
 /**
- * @dev Configuration options for the stepper.
- * - `name`: Identifier for the stepper.
+ * @dev Configuration options for the relay.
+ * - `name`: Identifier for the relay.
  * - `autoExecute`: Whether steps should automatically execute one after another.
  * - `executeOnNext`: Whether the next step should be executed when moving to it.
  */
-type StepperConfig = {
+type RelayConfig = {
 	name: string;
 	autoExecute?: boolean;
 	executeOnNext?: boolean;
 };
 
 /**
- * @dev The full state of the stepper, including steps, active step, and configuration.
+ * @dev The full state of the relay, including steps, active step, and configuration.
  */
-type StepperState<B, S, E> = {
+type RelayState<B, S, E> = {
 	activeStep: number;
-	stepsState: StepState<S, E>[];
-	stepsBase: StepBase<B, S, E>[];
-	activeStepState: StepState<S, E> | undefined;
-	activeStepBase: StepBase<B, S, E> | undefined;
+	stepsState: RelayStepState<S, E>[];
+	stepsBase: RelayStepBase<B, S, E>[];
+	activeRelayStepState: RelayStepState<S, E> | undefined;
+	activeRelayStepBase: RelayStepBase<B, S, E> | undefined;
 	isRunning: boolean;
 	isDone: boolean;
 	isError: boolean;
-	config: StepperConfig;
+	config: RelayConfig;
 };
 
 /**
- * @dev Actions the stepper can perform.
+ * @dev Actions the relay can perform.
  */
-type StepperActions<B, S, E> = {
+type RelayActions<B, S, E> = {
 	executeStep: (stepIndex: number) => void;
 
 	setActiveStep: (step: number) => void;
-	setStepsState: (state: StepState<S, E>[]) => void;
-	setStepsBase: (state: StepBase<B, S, E>[]) => void;
+	setStepsState: (state: RelayStepState<S, E>[]) => void;
+	setStepsBase: (state: RelayStepBase<B, S, E>[]) => void;
 	setIsRunning: (isRunning: boolean) => void;
 	setIsDone: (isDone: boolean) => void;
 	setIsError: (isError: boolean) => void;
@@ -101,11 +101,11 @@ type StepperActions<B, S, E> = {
 	prev: () => void;
 	reset: () => void;
 
-	initialize: (steps: StepBase<B, S, E>[], newConfig?: StepperConfig) => void;
+	initialize: (steps: RelayStepBase<B, S, E>[], newConfig?: RelayConfig) => void;
 	initializeFromCache: (
-		cachedState: CachedStepState<S, E>[],
-		steps: StepBase<B, S, E>[],
-		newConfig?: StepperConfig,
+		cachedState: CachedRelayStepState<S, E>[],
+		steps: RelayStepBase<B, S, E>[],
+		newConfig?: RelayConfig,
 	) => void;
 };
 
@@ -113,31 +113,31 @@ type StepperActions<B, S, E> = {
  * @dev The complete Zustand store type that holds both state and actions.
  *
  * This defines the overall shape of the store, which includes both the
- * current state of the stepper process and the actions that manipulate it.
+ * current state of the relay process and the actions that manipulate it.
  *
  * The generics used are:
  * - `B`: Represents any extra metadata or data that is associated with a step (can be an object type).
  * - `S`: Represents the success payload type when a step completes successfully.
  * - `E`: Represents the error payload type when a step fails.
  */
-type StepperStore<B, S, E> = StepperState<B, S, E> & StepperActions<B, S, E>;
+type RelayStore<B, S, E> = RelayState<B, S, E> & RelayActions<B, S, E>;
 
 /**
- * @dev Return type of createStepper, containing the store hook and step creation function.
+ * @dev Return type of `relay`, containing the store hook and step creation function.
  */
-type StepperStoreReturn<B, S, E> = {
-	useStepperStore: () => StepperStore<B, S, E>;
-	createStep: (props: Omit<StepBase<B, S, E>, "index">) => StepBase<B, S, E>;
+type RelayStoreReturn<B, S, E> = {
+	useRelay: () => RelayStore<B, S, E>;
+	createRelayStep: (props: Omit<RelayStepBase<B, S, E>, "index">) => RelayStepBase<B, S, E>;
 
-	ActionSuccess: (data: S) => S;
-	ActionError: (data: E) => E;
+	StepSuccess: (data: S) => S;
+	StepError: (data: E) => E;
 };
 
 /**
  * @dev Creates a Zustand store for managing a step-by-step process.
  *
  * This function returns an object with:
- * - `useStepperStore`: A Zustand hook for accessing the stepper state and actions
+ * - `useRelay`: A Zustand hook for accessing the relay state and actions
  * - `createStep`: A helper function to create properly typed steps for this specific store
  *
  * The generics used are:
@@ -145,14 +145,14 @@ type StepperStoreReturn<B, S, E> = {
  * - `S`: Represents the success payload type when a step completes successfully.
  * - `E`: Represents the error payload type when a step fails.
  */
-const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
+const relay = <B, S, E>(): RelayStoreReturn<B, S, E> => {
 	// Create the Zustand store
-	const useStepperStore = create<StepperStore<B, S, E>>()((set, get) => ({
+	const useRelay = create<RelayStore<B, S, E>>()((set, get) => ({
 		activeStep: 0,
 		stepsState: [],
 		stepsBase: [],
-		activeStepState: undefined,
-		activeStepBase: undefined,
+		activeRelayStepState: undefined,
+		activeRelayStepBase: undefined,
 		isRunning: false,
 		isDone: false,
 		isError: false,
@@ -167,22 +167,22 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 			const state = get();
 			set({
 				activeStep: step,
-				activeStepState: state.stepsState[step],
-				activeStepBase: state.stepsBase[step],
+				activeRelayStepState: state.stepsState[step],
+				activeRelayStepBase: state.stepsBase[step],
 			});
 		},
 		setStepsState: (state) => {
 			const currentState = get();
 			set({
 				stepsState: state,
-				activeStepState: state[currentState.activeStep],
+				activeRelayStepState: state[currentState.activeStep],
 			});
 		},
 		setStepsBase: (state) => {
 			const currentState = get();
 			set({
 				stepsBase: state,
-				activeStepBase: state[currentState.activeStep],
+				activeRelayStepBase: state[currentState.activeStep],
 			});
 		},
 		setIsRunning: (isRunning) => set({ isRunning }),
@@ -191,12 +191,12 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 
 		// Initialize function
 		initialize: (steps, newConfig) => {
-			const initialStepsState: StepState<S, E>[] = steps.map((_, index) => ({
+			const initialStepsState: RelayStepState<S, E>[] = steps.map((_, index) => ({
 				index,
 				status: "idle",
 			}));
 
-			const stepsBase: StepBase<B, S, E>[] = steps.map((item, index) => ({
+			const stepsBase: RelayStepBase<B, S, E>[] = steps.map((item, index) => ({
 				index,
 				...item,
 			}));
@@ -206,8 +206,8 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 				stepsBase: [...stepsBase],
 				config: { ...get().config, ...newConfig },
 				activeStep: 0,
-				activeStepState: initialStepsState[0],
-				activeStepBase: stepsBase[0],
+				activeRelayStepState: initialStepsState[0],
+				activeRelayStepBase: stepsBase[0],
 				isRunning: false,
 				isDone: false,
 				isError: false,
@@ -215,7 +215,7 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 		},
 
 		/**
-		 * @dev Initializes the stepper using a cached state.
+		 * @dev Initializes the relay using a cached state.
 		 * Useful for resuming progress from a previous session.
 		 *
 		 * - It merges saved progress (`cachedState`) with the new step definitions (`steps`).
@@ -227,11 +227,11 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 		 * @param newConfig - Optional configuration overrides.
 		 */
 		initializeFromCache: (
-			cachedState: CachedStepState<S, E>[],
-			steps: StepBase<B, S, E>[],
-			newConfig?: StepperConfig,
+			cachedState: CachedRelayStepState<S, E>[],
+			steps: RelayStepBase<B, S, E>[],
+			newConfig?: RelayConfig,
 		) => {
-			const stepsBase: StepBase<B, S, E>[] = steps.map((item, index) => ({
+			const stepsBase: RelayStepBase<B, S, E>[] = steps.map((item, index) => ({
 				index,
 				...item,
 			}));
@@ -240,7 +240,7 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 			let isError = false;
 
 			// Merge cached step state with new steps
-			const stepsState: StepState<S, E>[] = stepsBase.map((_, index) => {
+			const stepsState: RelayStepState<S, E>[] = stepsBase.map((_, index) => {
 				const cachedStep = cachedState?.[index];
 
 				if (cachedStep) {
@@ -270,8 +270,8 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 				stepsBase: [...stepsBase], // Set the step definitions
 				config: { ...get().config, ...newConfig }, // Merge config
 				activeStep: safeActiveStep, // Resume from last completed step
-				activeStepState: stepsState[safeActiveStep], // Set active step state
-				activeStepBase: stepsBase[safeActiveStep], // Set active step base
+				activeRelayStepState: stepsState[safeActiveStep], // Set active step state
+				activeRelayStepBase: stepsBase[safeActiveStep], // Set active step base
 				isRunning: false, // Initially not running
 				isDone: isDone, // Mark as done if all steps were completed
 				isError: isError, // Mark as error if any step had an issue
@@ -292,7 +292,7 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 			if (!stepBase || !stepState) return;
 
 			// Create a new loading state
-			const loadingState: StepState<S, E> = {
+			const loadingState: RelayStepState<S, E> = {
 				index: stepIndex,
 				status: "loading",
 			};
@@ -300,13 +300,13 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 			// Update current step to loading
 			stepsState[stepIndex] = loadingState;
 
-			// If the step being executed is the active step, update activeStepState too
-			const updates: Partial<StepperState<B, S, E>> = {
+			// If the step being executed is the active step, update activeRelayStepState too
+			const updates: Partial<RelayState<B, S, E>> = {
 				stepsState: [...stepsState],
 			};
 
 			if (stepIndex === state.activeStep) {
-				updates.activeStepState = loadingState;
+				updates.activeRelayStepState = loadingState;
 			}
 
 			set(updates);
@@ -315,7 +315,7 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 				.fn()
 				.then((data) => {
 					// Create success state with properly typed payload
-					const successState: StepStateSuccess<S> = {
+					const successState: RelayStepStateSuccess<S> = {
 						index: stepIndex,
 						status: "success",
 						payload: data,
@@ -324,13 +324,13 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 					stepsState[stepIndex] = successState;
 
 					// Prepare updates
-					const successUpdates: Partial<StepperState<B, S, E>> = {
+					const successUpdates: Partial<RelayState<B, S, E>> = {
 						stepsState: [...stepsState],
 					};
 
-					// If the step being executed is the active step, update activeStepState too
+					// If the step being executed is the active step, update activeRelayStepState too
 					if (stepIndex === state.activeStep) {
-						successUpdates.activeStepState = successState;
+						successUpdates.activeRelayStepState = successState;
 					}
 
 					set(successUpdates);
@@ -344,7 +344,7 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 				})
 				.catch((error) => {
 					// Create error state with properly typed payload
-					const errorState: StepStateError<E> = {
+					const errorState: RelayStepStateError<E> = {
 						index: stepIndex,
 						status: "error",
 						payload: error as E,
@@ -353,13 +353,13 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 					stepsState[stepIndex] = errorState;
 
 					// Prepare updates
-					const errorUpdates: Partial<StepperState<B, S, E>> = {
+					const errorUpdates: Partial<RelayState<B, S, E>> = {
 						stepsState: [...stepsState],
 					};
 
-					// If the step being executed is the active step, update activeStepState too
+					// If the step being executed is the active step, update activeRelayStepState too
 					if (stepIndex === state.activeStep) {
-						errorUpdates.activeStepState = errorState;
+						errorUpdates.activeRelayStepState = errorState;
 					}
 
 					set(errorUpdates);
@@ -369,7 +369,7 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 		},
 
 		/**
-		 * @dev Starts executing the first step in the stepper.
+		 * @dev Starts executing the first step in the relay.
 		 * If there are steps to run, it marks the process as "running"
 		 * and executes the first step (step index 0).
 		 */
@@ -441,7 +441,7 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 		},
 
 		/**
-		 * @dev Returns the current stepper state.
+		 * @dev Returns the current relay state.
 		 * This allows external components to read the current progress.
 		 */
 		get: () => {
@@ -450,7 +450,7 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 		},
 
 		/**
-		 * @dev Resets the stepper to its initial state.
+		 * @dev Resets the relay to its initial state.
 		 * Clears all steps, progress, and resets status flags.
 		 */
 		reset: () => {
@@ -459,8 +459,8 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 			state.setStepsBase([]); // Clear all step definitions
 			state.setActiveStep(0); // Reset to step 0
 			set({
-				activeStepState: undefined,
-				activeStepBase: undefined,
+				activeRelayStepState: undefined,
+				activeRelayStepBase: undefined,
 			});
 			state.setIsRunning(false); // Mark as not running
 			state.setIsDone(false); // Mark as not done
@@ -469,38 +469,39 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 	}));
 
 	// Create a properly typed step creation function
-	const createStep = (props: Omit<StepBase<B, S, E>, "index">) => props as StepBase<B, S, E>;
+	const createRelayStep = (props: Omit<RelayStepBase<B, S, E>, "index">) =>
+		props as RelayStepBase<B, S, E>;
 
-	const ActionSuccess = (data: S) => data;
-	const ActionError = (data: E) => data;
+	const StepSuccess = (data: S) => data;
+	const StepError = (data: E) => data;
 
 	// Return the store hook and step creation function
 	return {
-		useStepperStore,
-		createStep,
+		useRelay,
+		createRelayStep,
 
-		ActionSuccess,
-		ActionError,
+		StepSuccess,
+		StepError,
 	};
 };
 
-export { createStepper };
+export { relay };
 
 // No longer need the standalone createStep function since
 // each store instance returns its own typed createStep
 
 export type {
-	StepBase,
-	StepState,
-	StepStateSuccess,
-	StepStateError,
-	StepStateOther,
+	RelayStepBase,
+	RelayStepState,
+	RelayStepStateSuccess,
+	RelayStepStateError,
+	RelayStepStateOther,
 	StepStatus,
-	StepperConfig,
-	StepperStore,
-	StepperStoreReturn,
-	CachedStepState,
-	CachedStepStateSuccess,
-	CachedStepStateError,
-	CachedStepStateOther,
+	RelayConfig,
+	RelayStore,
+	RelayStoreReturn,
+	CachedRelayStepState,
+	CachedRelayStepStateSuccess,
+	CachedRelayStepStateError,
+	CachedRelayStepStateOther,
 };

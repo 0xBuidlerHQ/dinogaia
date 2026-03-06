@@ -4,12 +4,12 @@ import { cn } from "@0xbuidlerhq/ui/shadcn/lib/utils";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { H1 } from "@0xbuidlerhq/ui/system/base/typography";
 import { PAGES } from "@config/pages";
-import { useRouter } from "@hooks/useRouter";
 import { useDinogaia } from "@providers/dinogaia";
 import { useWeb3 } from "@providers/web3";
 import { useLoader } from "@stores/useStore";
 import { usePathname } from "next/navigation";
 import { type PropsWithChildren, useEffect } from "react";
+import { useRouter } from "../utils/useRouter";
 
 type LoaderProps = PropsWithChildren;
 

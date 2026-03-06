@@ -1,95 +1,95 @@
 import { create } from "zustand";
 
 /**
- * @dev A base step in the stepper process.
- * This represents a single step, with an ID, a function to execute, and an optional disabled flag.
+ * @dev A base stage in the pipeline process.
+ * This represents a single stage, with an ID, a function to execute, and an optional disabled flag.
  * The generic `B` is for extra metadata, `S` is for success payload, and `E` is for error payload.
  */
-type StepBase<B, S, _> = B & {
+type StageBase<B, S, _> = B & {
 	id: string;
 	fn: () => Promise<S>;
 	disabled?: boolean | undefined;
 };
 
 /**
- * @dev Possible statuses a step can have.
+ * @dev Possible statuses a stage can have.
  */
-type StepStatus = "idle" | "loading" | "success" | "error" | "disabled";
+type StageStatus = "idle" | "loading" | "success" | "error" | "disabled";
 
 /**
- * @dev The state of a single step with discriminated union based on status.
+ * @dev The state of a single stage with discriminated union based on status.
  */
-type StepStateSuccess<S> = {
+type StageStateSuccess<S> = {
 	index: number;
 	status: "success";
 	payload: S;
 };
 
-type StepStateError<E> = {
+type StageStateError<E> = {
 	index: number;
 	status: "error";
 	payload: E;
 };
 
-type StepStateOther = {
+type StageStateOther = {
 	index: number;
 	status: "idle" | "loading" | "disabled";
 	payload?: undefined;
 };
 
-type StepState<S, E> = StepStateSuccess<S> | StepStateError<E> | StepStateOther;
+type StageState<S, E> = StageStateSuccess<S> | StageStateError<E> | StageStateOther;
 
 /**
- * @dev Cached state of a step (used when restoring state later).
- * It is the same as StepState but without the index.
+ * @dev Cached state of a stage (used when restoring state later).
+ * It is the same as StageState but without the index.
  */
-type CachedStepStateSuccess<S> = Omit<StepStateSuccess<S>, "index">;
+type CachedStageStateSuccess<S> = Omit<StageStateSuccess<S>, "index">;
 
-type CachedStepStateError<E> = Omit<StepStateError<E>, "index">;
+type CachedStageStateError<E> = Omit<StageStateError<E>, "index">;
 
-type CachedStepStateOther = Omit<StepStateOther, "index">;
+type CachedStageStateOther = Omit<StageStateOther, "index">;
 
-type CachedStepState<S, E> =
-	| CachedStepStateSuccess<S>
-	| CachedStepStateError<E>
-	| CachedStepStateOther;
+type CachedStageState<S, E> =
+	| CachedStageStateSuccess<S>
+	| CachedStageStateError<E>
+	| CachedStageStateOther;
 
 /**
- * @dev Configuration options for the stepper.
- * - `name`: Identifier for the stepper.
- * - `autoExecute`: Whether steps should automatically execute one after another.
- * - `executeOnNext`: Whether the next step should be executed when moving to it.
+ * @dev Configuration options for the pipeline.
+ * - `name`: Identifier for the pipeline.
+ * - `autoExecute`: Whether stages should automatically execute one after another.
+ * - `executeOnNext`: Whether the next stage should be executed when moving to it.
  */
-type StepperConfig = {
+type PipelineConfig = {
 	name: string;
 	autoExecute?: boolean;
 	executeOnNext?: boolean;
 };
 
 /**
- * @dev The full state of the stepper, including steps, active step, and configuration.
+ * @dev The full state of the pipeline, including stages, active stage, and configuration.
  */
-type StepperState<B, S, E> = {
-	activeStep: number;
-	stepsState: StepState<S, E>[];
-	stepsBase: StepBase<B, S, E>[];
-	activeStepState: StepState<S, E> | undefined;
-	activeStepBase: StepBase<B, S, E> | undefined;
+type PipelineState<B, S, E> = {
+	activeStage: number;
+	baton: StageState<S, E>[];
+	stages: StageBase<B, S, E>[];
+	activeStageState: StageState<S, E> | undefined;
+	activeStageBase: StageBase<B, S, E> | undefined;
 	isRunning: boolean;
 	isDone: boolean;
 	isError: boolean;
-	config: StepperConfig;
+	config: PipelineConfig;
 };
 
 /**
- * @dev Actions the stepper can perform.
+ * @dev Actions the pipeline can perform.
  */
-type StepperActions<B, S, E> = {
-	executeStep: (stepIndex: number) => void;
+type PipelineActions<B, S, E> = {
+	executeStage: (stageIndex: number) => void;
 
-	setActiveStep: (step: number) => void;
-	setStepsState: (state: StepState<S, E>[]) => void;
-	setStepsBase: (state: StepBase<B, S, E>[]) => void;
+	setActiveStage: (stage: number) => void;
+	setBaton: (state: StageState<S, E>[]) => void;
+	setStages: (state: StageBase<B, S, E>[]) => void;
 	setIsRunning: (isRunning: boolean) => void;
 	setIsDone: (isDone: boolean) => void;
 	setIsError: (isError: boolean) => void;
@@ -101,11 +101,11 @@ type StepperActions<B, S, E> = {
 	prev: () => void;
 	reset: () => void;
 
-	initialize: (steps: StepBase<B, S, E>[], newConfig?: StepperConfig) => void;
+	initialize: (stages: StageBase<B, S, E>[], newConfig?: PipelineConfig) => void;
 	initializeFromCache: (
-		cachedState: CachedStepState<S, E>[],
-		steps: StepBase<B, S, E>[],
-		newConfig?: StepperConfig,
+		cachedState: CachedStageState<S, E>[],
+		stages: StageBase<B, S, E>[],
+		newConfig?: PipelineConfig,
 	) => void;
 };
 
@@ -113,46 +113,46 @@ type StepperActions<B, S, E> = {
  * @dev The complete Zustand store type that holds both state and actions.
  *
  * This defines the overall shape of the store, which includes both the
- * current state of the stepper process and the actions that manipulate it.
+ * current state of the pipeline and the actions that manipulate it.
  *
  * The generics used are:
- * - `B`: Represents any extra metadata or data that is associated with a step (can be an object type).
- * - `S`: Represents the success payload type when a step completes successfully.
- * - `E`: Represents the error payload type when a step fails.
+ * - `B`: Represents any extra metadata or data that is associated with a stage (can be an object type).
+ * - `S`: Represents the success payload type when a stage completes successfully.
+ * - `E`: Represents the error payload type when a stage fails.
  */
-type StepperStore<B, S, E> = StepperState<B, S, E> & StepperActions<B, S, E>;
+type PipelineStore<B, S, E> = PipelineState<B, S, E> & PipelineActions<B, S, E>;
 
 /**
- * @dev Return type of createStepper, containing the store hook and step creation function.
+ * @dev Return type of createRelay, containing the store hook and stage creation helper.
  */
-type StepperStoreReturn<B, S, E> = {
-	useStepperStore: () => StepperStore<B, S, E>;
-	createStep: (props: Omit<StepBase<B, S, E>, "index">) => StepBase<B, S, E>;
+type RelayStoreReturn<B, S, E> = {
+	usePipelineStore: () => PipelineStore<B, S, E>;
+	createStage: (props: Omit<StageBase<B, S, E>, "index">) => StageBase<B, S, E>;
 
 	ActionSuccess: (data: S) => S;
 	ActionError: (data: E) => E;
 };
 
 /**
- * @dev Creates a Zustand store for managing a step-by-step process.
+ * @dev Creates a Zustand store for managing a stage-driven pipeline.
  *
  * This function returns an object with:
- * - `useStepperStore`: A Zustand hook for accessing the stepper state and actions
- * - `createStep`: A helper function to create properly typed steps for this specific store
+ * - `usePipelineStore`: A Zustand hook for accessing pipeline state and actions
+ * - `createStage`: A helper function to create properly typed stages for this specific store
  *
  * The generics used are:
- * - `B`: Represents any extra metadata or data that is associated with a step.
- * - `S`: Represents the success payload type when a step completes successfully.
- * - `E`: Represents the error payload type when a step fails.
+ * - `B`: Represents any extra metadata or data that is associated with a stage.
+ * - `S`: Represents the success payload type when a stage completes successfully.
+ * - `E`: Represents the error payload type when a stage fails.
  */
-const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
+const createRelay = <B, S, E>(): RelayStoreReturn<B, S, E> => {
 	// Create the Zustand store
-	const useStepperStore = create<StepperStore<B, S, E>>()((set, get) => ({
-		activeStep: 0,
-		stepsState: [],
-		stepsBase: [],
-		activeStepState: undefined,
-		activeStepBase: undefined,
+	const usePipelineStore = create<PipelineStore<B, S, E>>()((set, get) => ({
+		activeStage: 0,
+		baton: [],
+		stages: [],
+		activeStageState: undefined,
+		activeStageBase: undefined,
 		isRunning: false,
 		isDone: false,
 		isError: false,
@@ -163,26 +163,26 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 		},
 
 		// State setters
-		setActiveStep: (step) => {
+		setActiveStage: (stage) => {
 			const state = get();
 			set({
-				activeStep: step,
-				activeStepState: state.stepsState[step],
-				activeStepBase: state.stepsBase[step],
+				activeStage: stage,
+				activeStageState: state.baton[stage],
+				activeStageBase: state.stages[stage],
 			});
 		},
-		setStepsState: (state) => {
+		setBaton: (state) => {
 			const currentState = get();
 			set({
-				stepsState: state,
-				activeStepState: state[currentState.activeStep],
+				baton: state,
+				activeStageState: state[currentState.activeStage],
 			});
 		},
-		setStepsBase: (state) => {
+		setStages: (state) => {
 			const currentState = get();
 			set({
-				stepsBase: state,
-				activeStepBase: state[currentState.activeStep],
+				stages: state,
+				activeStageBase: state[currentState.activeStage],
 			});
 		},
 		setIsRunning: (isRunning) => set({ isRunning }),
@@ -190,24 +190,24 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 		setIsError: (isError) => set({ isError }),
 
 		// Initialize function
-		initialize: (steps, newConfig) => {
-			const initialStepsState: StepState<S, E>[] = steps.map((_, index) => ({
+		initialize: (stages, newConfig) => {
+			const initialBaton: StageState<S, E>[] = stages.map((_, index) => ({
 				index,
 				status: "idle",
 			}));
 
-			const stepsBase: StepBase<B, S, E>[] = steps.map((item, index) => ({
+			const stageDefinitions: StageBase<B, S, E>[] = stages.map((item, index) => ({
 				index,
 				...item,
 			}));
 
 			set({
-				stepsState: [...initialStepsState],
-				stepsBase: [...stepsBase],
+				baton: [...initialBaton],
+				stages: [...stageDefinitions],
 				config: { ...get().config, ...newConfig },
-				activeStep: 0,
-				activeStepState: initialStepsState[0],
-				activeStepBase: stepsBase[0],
+				activeStage: 0,
+				activeStageState: initialBaton[0],
+				activeStageBase: stageDefinitions[0],
 				isRunning: false,
 				isDone: false,
 				isError: false,
@@ -215,40 +215,40 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 		},
 
 		/**
-		 * @dev Initializes the stepper using a cached state.
-		 * Useful for resuming progress from a previous session.
+		 * @dev Restores the pipeline using a cached baton.
+		 * This allows resuming the relay mid-flight.
 		 *
-		 * - It merges saved progress (`cachedState`) with the new step definitions (`steps`).
-		 * - Automatically determines the next step to execute based on success/error states.
-		 * - If all steps are completed, it marks the process as "done."
+		 * - It merges saved progress (`cachedState`) with the new stage definitions (`stageDefinitions`).
+		 * - Automatically determines the next stage to run based on success/error states.
+		 * - Marks the pipeline as done if every stage already completed.
 		 *
-		 * @param cachedState - Previously saved progress of steps.
-		 * @param steps - The steps that should be executed.
+		 * @param cachedState - Previously saved baton data for each stage.
+		 * @param stageDefinitions - The stage definitions that should be executed.
 		 * @param newConfig - Optional configuration overrides.
 		 */
 		initializeFromCache: (
-			cachedState: CachedStepState<S, E>[],
-			steps: StepBase<B, S, E>[],
-			newConfig?: StepperConfig,
+			cachedState: CachedStageState<S, E>[],
+			stageDefinitions: StageBase<B, S, E>[],
+			newConfig?: PipelineConfig,
 		) => {
-			const stepsBase: StepBase<B, S, E>[] = steps.map((item, index) => ({
+			const stages: StageBase<B, S, E>[] = stageDefinitions.map((item, index) => ({
 				index,
 				...item,
 			}));
 
-			let activeStep = 0;
+			let activeStage = 0;
 			let isError = false;
 
-			// Merge cached step state with new steps
-			const stepsState: StepState<S, E>[] = stepsBase.map((_, index) => {
-				const cachedStep = cachedState?.[index];
+			// Merge cached baton with the latest stage definitions
+			const baton: StageState<S, E>[] = stages.map((_, index) => {
+				const cachedStage = cachedState?.[index];
 
-				if (cachedStep) {
-					if (cachedStep.status === "success") activeStep = index + 1;
-					if (cachedStep.status === "error") isError = true;
+				if (cachedStage) {
+					if (cachedStage.status === "success") activeStage = index + 1;
+					if (cachedStage.status === "error") isError = true;
 
 					return {
-						...cachedStep,
+						...cachedStage,
 						index,
 					};
 				}
@@ -259,83 +259,83 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 				};
 			});
 
-			// Check if all steps are done
-			const isDone = activeStep === steps.length;
+			// Check if all stages are done
+			const isDone = activeStage === stages.length;
 
 			// Make sure we don't go out of bounds
-			const safeActiveStep = Math.min(activeStep, steps.length - 1);
+			const safeActiveStage = Math.min(activeStage, stages.length - 1);
 
 			set({
-				stepsState: [...stepsState], // Set the restored step state
-				stepsBase: [...stepsBase], // Set the step definitions
+				baton: [...baton], // Set the restored baton
+				stages: [...stages], // Set the stage definitions
 				config: { ...get().config, ...newConfig }, // Merge config
-				activeStep: safeActiveStep, // Resume from last completed step
-				activeStepState: stepsState[safeActiveStep], // Set active step state
-				activeStepBase: stepsBase[safeActiveStep], // Set active step base
+				activeStage: safeActiveStage, // Resume from last completed stage
+				activeStageState: baton[safeActiveStage], // Set active stage state
+				activeStageBase: stages[safeActiveStage], // Set active stage definition
 				isRunning: false, // Initially not running
-				isDone: isDone, // Mark as done if all steps were completed
-				isError: isError, // Mark as error if any step had an issue
+				isDone: isDone, // Mark as done if all stages were completed
+				isError: isError, // Mark as error if any stage had an issue
 			});
 		},
 
 		/**
-		 * @dev Executes a step by running its function and updating the state accordingly.
+		 * @dev Executes a stage by running its function and updating the baton accordingly.
 		 */
-		executeStep: (stepIndex: number) => {
-			console.log("Executing: ", stepIndex);
+		executeStage: (stageIndex: number) => {
+			console.log("Executing stage:", stageIndex);
 			const state = get();
-			const { stepsBase, stepsState, config } = state;
+			const { stages, baton, config } = state;
 
-			const stepBase = stepsBase[stepIndex];
-			const stepState = stepsState[stepIndex];
+			const stageDefinition = stages[stageIndex];
+			const stageState = baton[stageIndex];
 
-			if (!stepBase || !stepState) return;
+			if (!stageDefinition || !stageState) return;
 
-			// Create a new loading state
-			const loadingState: StepState<S, E> = {
-				index: stepIndex,
+			// Create a new loading state for the current stage
+			const loadingState: StageState<S, E> = {
+				index: stageIndex,
 				status: "loading",
 			};
 
-			// Update current step to loading
-			stepsState[stepIndex] = loadingState;
+			// Update baton to mark the stage as loading
+			baton[stageIndex] = loadingState;
 
-			// If the step being executed is the active step, update activeStepState too
-			const updates: Partial<StepperState<B, S, E>> = {
-				stepsState: [...stepsState],
+			// If the stage being executed is the active stage, update activeStageState too
+			const updates: Partial<PipelineState<B, S, E>> = {
+				baton: [...baton],
 			};
 
-			if (stepIndex === state.activeStep) {
-				updates.activeStepState = loadingState;
+			if (stageIndex === state.activeStage) {
+				updates.activeStageState = loadingState;
 			}
 
 			set(updates);
 
-			stepBase
+			stageDefinition
 				.fn()
 				.then((data) => {
 					// Create success state with properly typed payload
-					const successState: StepStateSuccess<S> = {
-						index: stepIndex,
+					const successState: StageStateSuccess<S> = {
+						index: stageIndex,
 						status: "success",
 						payload: data,
 					};
 
-					stepsState[stepIndex] = successState;
+					baton[stageIndex] = successState;
 
 					// Prepare updates
-					const successUpdates: Partial<StepperState<B, S, E>> = {
-						stepsState: [...stepsState],
+					const successUpdates: Partial<PipelineState<B, S, E>> = {
+						baton: [...baton],
 					};
 
-					// If the step being executed is the active step, update activeStepState too
-					if (stepIndex === state.activeStep) {
-						successUpdates.activeStepState = successState;
+					// If the stage being executed is the active stage, update activeStageState too
+					if (stageIndex === state.activeStage) {
+						successUpdates.activeStageState = successState;
 					}
 
 					set(successUpdates);
 
-					if (stepIndex === stepsBase.length - 1) {
+					if (stageIndex === stages.length - 1) {
 						state.setIsRunning(false);
 						state.setIsDone(true);
 					} else if (config.autoExecute) {
@@ -344,22 +344,22 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 				})
 				.catch((error) => {
 					// Create error state with properly typed payload
-					const errorState: StepStateError<E> = {
-						index: stepIndex,
+					const errorState: StageStateError<E> = {
+						index: stageIndex,
 						status: "error",
 						payload: error as E,
 					};
 
-					stepsState[stepIndex] = errorState;
+					baton[stageIndex] = errorState;
 
 					// Prepare updates
-					const errorUpdates: Partial<StepperState<B, S, E>> = {
-						stepsState: [...stepsState],
+					const errorUpdates: Partial<PipelineState<B, S, E>> = {
+						baton: [...baton],
 					};
 
-					// If the step being executed is the active step, update activeStepState too
-					if (stepIndex === state.activeStep) {
-						errorUpdates.activeStepState = errorState;
+					// If the stage being executed is the active stage, update activeStageState too
+					if (stageIndex === state.activeStage) {
+						errorUpdates.activeStageState = errorState;
 					}
 
 					set(errorUpdates);
@@ -369,33 +369,33 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 		},
 
 		/**
-		 * @dev Starts executing the first step in the stepper.
-		 * If there are steps to run, it marks the process as "running"
-		 * and executes the first step (step index 0).
+		 * @dev Starts executing the first stage of the pipeline.
+		 * If there are stages to run, it marks the relay as running
+		 * and executes the first stage (index 0).
 		 */
 		start: () => {
 			const state = get();
-			if (state.stepsState.length > 0) {
+			if (state.baton.length > 0) {
 				state.setIsRunning(true); // Mark as running
-				state.executeStep(0); // Start from the first step
+				state.executeStage(0); // Start from the first stage
 			}
 		},
 
 		/**
-		 * @dev Resumes execution from the current active step.
-		 * If steps exist, it marks the process as "running" and runs the current step.
+		 * @dev Resumes execution from the current active stage.
+		 * If stages exist, it marks the relay as running and runs that stage.
 		 */
 		resume: () => {
 			const state = get();
-			if (state.stepsState.length > 0) {
+			if (state.baton.length > 0) {
 				state.setIsRunning(true);
-				state.executeStep(state.activeStep); // Resume from where we left off
+				state.executeStage(state.activeStage); // Resume from where we left off
 			}
 		},
 
 		/**
-		 * @dev Retries the current step if it's not already running.
-		 * If there was an error before, it resets the error state and tries again.
+		 * @dev Retries the current stage if it's not already running.
+		 * If there was an error before, it resets the baton entry and retries.
 		 */
 		retry: () => {
 			const state = get();
@@ -403,45 +403,45 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 			if (!state.isRunning) {
 				state.setIsError(false); // Clear any error
 				state.setIsRunning(true); // Start running again
-				state.executeStep(state.activeStep); // Retry current step
+				state.executeStage(state.activeStage); // Retry current stage
 			}
 		},
 
 		/**
-		 * @dev Moves to the next step in the sequence.
-		 * If 'executeOnNext' is enabled in the config, it runs the step immediately.
+		 * @dev Moves to the next stage in the sequence.
+		 * If 'executeOnNext' is enabled in the config, it runs that stage immediately.
 		 */
 		next: () => {
 			const state = get();
-			const { activeStep, config } = state;
+			const { activeStage, config } = state;
 
 			if (config.executeOnNext) {
-				state.executeStep(activeStep);
+				state.executeStage(activeStage);
 			}
 
-			if (activeStep < state.stepsState.length - 1) {
-				const nextStep = activeStep + 1;
-				state.setActiveStep(nextStep);
+			if (activeStage < state.baton.length - 1) {
+				const nextStage = activeStage + 1;
+				state.setActiveStage(nextStage);
 
 				if (!config.executeOnNext) {
-					state.executeStep(nextStep); // Automatically execute the next step if allowed
+					state.executeStage(nextStage); // Automatically execute the next stage if allowed
 				}
 			}
 		},
 
 		/**
-		 * @dev Moves to the previous step in the sequence, if possible.
-		 * Does not execute it automatically, just updates the active step.
+		 * @dev Moves to the previous stage in the sequence, if possible.
+		 * Does not execute it automatically, just updates the active stage.
 		 */
 		prev: () => {
 			const state = get();
-			if (state.activeStep > 0) {
-				state.setActiveStep(state.activeStep - 1);
+			if (state.activeStage > 0) {
+				state.setActiveStage(state.activeStage - 1);
 			}
 		},
 
 		/**
-		 * @dev Returns the current stepper state.
+		 * @dev Returns the current pipeline state.
 		 * This allows external components to read the current progress.
 		 */
 		get: () => {
@@ -450,17 +450,17 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 		},
 
 		/**
-		 * @dev Resets the stepper to its initial state.
-		 * Clears all steps, progress, and resets status flags.
+		 * @dev Resets the pipeline to its initial state.
+		 * Clears the baton, stage definitions, and status flags.
 		 */
 		reset: () => {
 			const state = get();
-			state.setStepsState([]); // Clear all steps state
-			state.setStepsBase([]); // Clear all step definitions
-			state.setActiveStep(0); // Reset to step 0
+			state.setBaton([]); // Clear the baton
+			state.setStages([]); // Clear all stage definitions
+			state.setActiveStage(0); // Reset to stage 0
 			set({
-				activeStepState: undefined,
-				activeStepBase: undefined,
+				activeStageState: undefined,
+				activeStageBase: undefined,
 			});
 			state.setIsRunning(false); // Mark as not running
 			state.setIsDone(false); // Mark as not done
@@ -468,39 +468,39 @@ const createStepper = <B, S, E>(): StepperStoreReturn<B, S, E> => {
 		},
 	}));
 
-	// Create a properly typed step creation function
-	const createStep = (props: Omit<StepBase<B, S, E>, "index">) => props as StepBase<B, S, E>;
+	// Create a properly typed stage creation helper
+	const createStage = (props: Omit<StageBase<B, S, E>, "index">) => props as StageBase<B, S, E>;
 
 	const ActionSuccess = (data: S) => data;
 	const ActionError = (data: E) => data;
 
-	// Return the store hook and step creation function
+	// Return the store hook and stage creation helper
 	return {
-		useStepperStore,
-		createStep,
+		usePipelineStore,
+		createStage,
 
 		ActionSuccess,
 		ActionError,
 	};
 };
 
-export { createStepper };
+export { createRelay };
 
-// No longer need the standalone createStep function since
-// each store instance returns its own typed createStep
+// No longer need the standalone createStage function since
+// each store instance returns its own typed createStage
 
 export type {
-	StepBase,
-	StepState,
-	StepStateSuccess,
-	StepStateError,
-	StepStateOther,
-	StepStatus,
-	StepperConfig,
-	StepperStore,
-	StepperStoreReturn,
-	CachedStepState,
-	CachedStepStateSuccess,
-	CachedStepStateError,
-	CachedStepStateOther,
+	StageBase,
+	StageState,
+	StageStateSuccess,
+	StageStateError,
+	StageStateOther,
+	StageStatus,
+	PipelineConfig,
+	PipelineStore,
+	RelayStoreReturn,
+	CachedStageState,
+	CachedStageStateSuccess,
+	CachedStageStateError,
+	CachedStageStateOther,
 };

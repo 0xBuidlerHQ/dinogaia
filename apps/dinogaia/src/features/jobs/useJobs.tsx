@@ -4,10 +4,15 @@ import {
 	useReadJobsRegistryGetAllJobs,
 	useWriteDinoAccountExecuteBatch,
 } from "@0xbuidlerhq/dinogaia.contracts";
+import { Relays } from "@config/relay";
 import { useStore } from "@stores/useStore";
 import { encodeFunctionData } from "viem";
 
+const Relay = Relays.claimSalary;
+
 const useClaimSalary = () => {
+	const relay = Relay.useRelay();
+
 	const { activeDinoAccount, activeDinoId } = useStore();
 
 	const sendCalls = useWriteDinoAccountExecuteBatch({});
@@ -18,22 +23,35 @@ const useClaimSalary = () => {
 		args: [activeDinoId!],
 	});
 
-	console.log(activeDinoAccount);
-	console.log(activeDinoId);
+	const relaySteps = [
+		Relay.createRelayStep({
+			id: "claimSalary",
+			fn: async () => {
+				try {
+					await sendCalls.writeContractAsync({
+						address: activeDinoAccount!,
+						args: [
+							[
+								{
+									target: jobsModuleAddress["31337"],
+									data: calldataClaimSalary,
+									value: 0n,
+								},
+							],
+						],
+					});
+
+					return Relay.StepSuccess({});
+				} catch (_) {
+					throw Relay.StepError({});
+				}
+			},
+		}),
+	];
 
 	const execute = () => {
-		sendCalls.writeContract({
-			address: activeDinoAccount!,
-			args: [
-				[
-					{
-						target: jobsModuleAddress["31337"],
-						data: calldataClaimSalary,
-						value: 0n,
-					},
-				],
-			],
-		});
+		relay.initialize(relaySteps);
+		relay.start();
 	};
 
 	return { execute, sendCalls };

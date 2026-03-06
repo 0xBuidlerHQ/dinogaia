@@ -1,9 +1,9 @@
 "use client";
 
 import { PAGES } from "@config/pages";
-import { useRouter } from "@hooks/useRouter";
 import { useWeb3 } from "@providers/web3";
 import React, { type PropsWithChildren, useEffect } from "react";
+import { useRouter } from "../utils/useRouter";
 
 type AuthComponentProps = PropsWithChildren;
 const AuthComponent = (props: AuthComponentProps) => {

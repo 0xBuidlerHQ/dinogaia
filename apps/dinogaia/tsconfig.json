@@ -28,6 +28,7 @@
 			"@lib/*": ["./src/lib/*"],
 			"@stores/*": ["./src/stores/*"],
 			"@providers/*": ["./src/providers/*"],
+			"@api/*": ["./src/api/*"],
 			"@types/*": ["./src/types/*"],
 			//
 			"@0xbuidlerhq/ui/*": ["../../packages/ui/src/*"],

@@ -3,17 +3,21 @@ import {
 	emeraldErc20Address,
 	shopModuleAbi,
 	shopModuleAddress,
-	useReadShopModuleGetItems,
 	useWriteDinoAccountExecuteBatch,
 } from "@0xbuidlerhq/dinogaia.contracts";
 import type { Item } from "@0xbuidlerhq/dinogaia.subgraph";
+import { Relays } from "@config/relay";
 import { useStore } from "@stores/useStore";
 import { encodeFunctionData } from "viem";
+
+const Relay = Relays.buyShopItem;
 
 type useBuyItemProps = {
 	item: Item;
 };
 const useBuyItem = (props: useBuyItemProps) => {
+	const relay = Relay.useRelay();
+
 	const AMOUNT = 1n;
 	const { activeDinoAccount, activeDinoId } = useStore();
 
@@ -31,33 +35,43 @@ const useBuyItem = (props: useBuyItemProps) => {
 		args: [activeDinoId!, props.item.itemId, AMOUNT],
 	});
 
+	const relaySteps = [
+		Relay.createRelayStep({
+			id: "approve-buy",
+			fn: async () => {
+				try {
+					await sendCalls.mutateAsync({
+						address: activeDinoAccount!,
+						args: [
+							[
+								{
+									target: emeraldErc20Address["31337"],
+									data: calldataApproveErc20,
+									value: 0n,
+								},
+								{
+									target: shopModuleAddress["31337"],
+									data: calldataBuyShopItem,
+									value: 0n,
+								},
+							],
+						],
+					});
+
+					return Relay.StepSuccess({});
+				} catch (_) {
+					throw Relay.StepError({});
+				}
+			},
+		}),
+	];
+
 	const execute = () => {
-		sendCalls.writeContract({
-			address: activeDinoAccount!,
-			args: [
-				[
-					{
-						target: emeraldErc20Address["31337"],
-						data: calldataApproveErc20,
-						value: 0n,
-					},
-					{
-						target: shopModuleAddress["31337"],
-						data: calldataBuyShopItem,
-						value: 0n,
-					},
-				],
-			],
-		});
+		relay.initialize(relaySteps);
+		relay.start();
 	};
 
 	return { execute, sendCalls };
 };
 
-const useShop = () => {
-	const items = useReadShopModuleGetItems({});
-
-	return { items };
-};
-
-export { useShop, useBuyItem };
+export { useBuyItem };

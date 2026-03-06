@@ -4,10 +4,10 @@ import { Container } from "@0xbuidlerhq/ui/system/base/container";
 import { H4 } from "@0xbuidlerhq/ui/system/base/typography";
 import { ButtonBase } from "@0xbuidlerhq/ui/system/buttons/ButtonBase";
 import { PAGES } from "@config/pages";
-import { useRouter } from "@hooks/useRouter";
 import { useDinogaia } from "@providers/dinogaia";
 import { useWeb3 } from "@providers/web3";
 import { useEffect } from "react";
+import { useRouter } from "../../utils/useRouter";
 
 const Page = () => {
 	const { ready, isConnected, connect } = useWeb3();

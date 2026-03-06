@@ -1,6 +1,7 @@
 import "./system.css";
 
 import { inter, montserrat, sourceCodePro, spaceGrotesk, syne } from "@0xbuidlerhq/ui/fonts";
+import { Toaster } from "@0xbuidlerhq/ui/shadcn/components/toaster";
 import { cn } from "@0xbuidlerhq/ui/shadcn/lib/utils";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { Footer } from "@components/layout/footer";
@@ -41,6 +42,8 @@ const Layout = ({ children }: PropsWithChildren) => {
 
 						<Footer />
 					</main>
+
+					<Toaster />
 				</Providers>
 			</body>
 		</html>

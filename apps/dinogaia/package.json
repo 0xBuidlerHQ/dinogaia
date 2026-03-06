@@ -9,6 +9,7 @@
 		"lint": "next lint"
 	},
 	"dependencies": {
+		"@0xbuidlerhq/relay": "workspace:*",
 		"@0xbuidlerhq/dinogaia.contracts": "workspace:*",
 		"@0xbuidlerhq/dinogaia.subgraph": "workspace:*",
 		"@0xbuidlerhq/ui": "workspace:*",

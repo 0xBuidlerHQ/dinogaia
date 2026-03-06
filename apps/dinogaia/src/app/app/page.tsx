@@ -1,10 +1,12 @@
 "use client";
 
+import { toastPrimitive } from "@0xbuidlerhq/ui/shadcn/components/toaster";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { H1, H6 } from "@0xbuidlerhq/ui/system/base/typography";
 import { ButtonBase } from "@0xbuidlerhq/ui/system/buttons/ButtonBase";
 import { withAuth } from "@components/AuthComponent";
 import ProgressBar from "@components/ProgressBar";
+import { Relays } from "@config/relay";
 import { useDinogaia } from "@providers/dinogaia";
 import {
 	IconBow,
@@ -13,8 +15,8 @@ import {
 	IconFountain,
 	IconMeat,
 } from "@tabler/icons-react";
-import type React from "react";
 import type { PropsWithChildren } from "react";
+import React from "react";
 import { type DinoAge, timestampToAge } from "../../utils";
 
 type DinoStatsProps = {
@@ -121,14 +123,6 @@ const DinoStats = (props: DinoStatsProps) => {
 				</StatItem>
 			</Box>
 
-			{/* <Box className="col-span-12">
-				<StatItem title="Vitals">
-					<Box className="flex flex-col gap-2">
-						
-					</Box>
-				</StatItem>
-			</Box> */}
-
 			<Box className="col-span-12">
 				<StatItem title="Quick Actions">
 					<Box className="flex flex-wrap gap-2">
@@ -216,7 +210,7 @@ const DinoStats = (props: DinoStatsProps) => {
 							}}
 						/>
 
-						<Box className="h-[1px] bg-muted my-4" />
+						<Box className="h-px bg-muted my-4" />
 
 						<ProgressBar
 							value={props.characteristics.intelligence}
@@ -234,15 +228,93 @@ const DinoStats = (props: DinoStatsProps) => {
 	);
 };
 
+const Relay = Relays.buyShopItem;
+
+const Test = () => {
+	const { stepsState, stepsBase } = Relay.useRelay();
+
+	return (
+		<Box>
+			{stepsState.map((stepState) => {
+				const stepBase = stepsBase[stepState.index];
+
+				return (
+					<Box key={stepState.index}>
+						{stepBase.id}: {stepState.status}
+					</Box>
+				);
+			})}
+		</Box>
+	);
+};
+
+const PromiseToast = ({ promise }: { promise: Promise<unknown> }) => {
+	const [status, setStatus] = React.useState<"pending" | "success" | "error">("pending");
+
+	React.useEffect(() => {
+		promise.then(() => setStatus("success")).catch(() => setStatus("error"));
+	}, [promise]);
+
+	return (
+		<Box className="bg-muted w-75">
+			{status === "pending" && <Box>Processing…</Box>}
+			{status === "success" && <Box>✅ Done</Box>}
+			{status === "error" && <Box>⚠️ Something failed.</Box>}
+		</Box>
+	);
+};
+
 const Page = () => {
 	const { currentDino } = useDinogaia();
 
+	const { initialize, start } = Relay.useRelay();
+
+	const processSteps = [
+		Relay.createRelayStep({
+			id: "name",
+			fn: async () => {
+				try {
+					const pro = new Promise((resolve) => setTimeout(resolve, 2500));
+
+					toastPrimitive(<PromiseToast promise={pro} />);
+
+					return Relay.StepSuccess({});
+				} catch (_) {
+					throw Relay.StepError({});
+				}
+			},
+		}),
+
+		Relay.createRelayStep({
+			id: "name2",
+			fn: async () => {
+				try {
+					await new Promise((resolve) => setTimeout(resolve, 2500));
+					return Relay.StepSuccess({});
+				} catch (_) {
+					throw Relay.StepError({});
+				}
+			},
+		}),
+	];
 	return (
-		<Box className="col-span-6">
+		<Box>
+			<Test />
+			<Box>
+				<ButtonBase
+					onClick={() => {
+						initialize(processSteps);
+						start();
+					}}
+				>
+					Add
+				</ButtonBase>
+			</Box>
+
 			<DinoStats
 				name={currentDino?.data?.genesis.name!}
 				age={timestampToAge(currentDino?.data?.genesis.birthTimestamp ?? 0n)}
-				species={currentDino?.species?.name}
+				species={currentDino?.species?.name!}
 				vitals={{
 					life: Number(currentDino?.data?.stats.health ?? 0n),
 					lifeMax: 100,
