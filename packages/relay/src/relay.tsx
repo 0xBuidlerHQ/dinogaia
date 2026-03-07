@@ -19,25 +19,30 @@ type StepStatus = "idle" | "loading" | "success" | "error" | "disabled";
 /**
  * @dev The state of a single step with discriminated union based on status.
  */
-type RelayStepStateSuccess<S> = {
+type RelayStepStateBase<S> = {
 	index: number;
+	promise?: Promise<S>;
+};
+
+type RelayStepStateSuccess<S> = RelayStepStateBase<S> & {
 	status: "success";
 	payload: S;
 };
 
-type RelayStepStateError<E> = {
-	index: number;
+type RelayStepStateError<E, S> = RelayStepStateBase<S> & {
 	status: "error";
 	payload: E;
 };
 
-type RelayStepStateOther = {
-	index: number;
+type RelayStepStateOther<S> = RelayStepStateBase<S> & {
 	status: "idle" | "loading" | "disabled";
 	payload?: undefined;
 };
 
-type RelayStepState<S, E> = RelayStepStateSuccess<S> | RelayStepStateError<E> | RelayStepStateOther;
+type RelayStepState<S, E> =
+	| RelayStepStateSuccess<S>
+	| RelayStepStateError<E, S>
+	| RelayStepStateOther<S>;
 
 /**
  * @dev Cached state of a step (used when restoring state later).
@@ -45,14 +50,14 @@ type RelayStepState<S, E> = RelayStepStateSuccess<S> | RelayStepStateError<E> | 
  */
 type CachedRelayStepStateSuccess<S> = Omit<RelayStepStateSuccess<S>, "index">;
 
-type CachedRelayStepStateError<E> = Omit<RelayStepStateError<E>, "index">;
+type CachedRelayStepStateError<E, S> = Omit<RelayStepStateError<E, S>, "index">;
 
-type CachedRelayStepStateOther = Omit<RelayStepStateOther, "index">;
+type CachedRelayStepStateOther<S> = Omit<RelayStepStateOther<S>, "index">;
 
 type CachedRelayStepState<S, E> =
 	| CachedRelayStepStateSuccess<S>
-	| CachedRelayStepStateError<E>
-	| CachedRelayStepStateOther;
+	| CachedRelayStepStateError<E, S>
+	| CachedRelayStepStateOther<S>;
 
 /**
  * @dev Configuration options for the relay.
@@ -291,10 +296,13 @@ const relay = <B, S, E>(): RelayStoreReturn<B, S, E> => {
 
 			if (!stepBase || !stepState) return;
 
+			const stepPromise = stepBase.fn();
+
 			// Create a new loading state
 			const loadingState: RelayStepState<S, E> = {
 				index: stepIndex,
 				status: "loading",
+				promise: stepPromise,
 			};
 
 			// Update current step to loading
@@ -311,14 +319,14 @@ const relay = <B, S, E>(): RelayStoreReturn<B, S, E> => {
 
 			set(updates);
 
-			stepBase
-				.fn()
+			stepPromise
 				.then((data) => {
 					// Create success state with properly typed payload
 					const successState: RelayStepStateSuccess<S> = {
 						index: stepIndex,
 						status: "success",
 						payload: data,
+						promise: stepPromise,
 					};
 
 					stepsState[stepIndex] = successState;
@@ -344,10 +352,11 @@ const relay = <B, S, E>(): RelayStoreReturn<B, S, E> => {
 				})
 				.catch((error) => {
 					// Create error state with properly typed payload
-					const errorState: RelayStepStateError<E> = {
+					const errorState: RelayStepStateError<E, S> = {
 						index: stepIndex,
 						status: "error",
 						payload: error as E,
+						promise: stepPromise,
 					};
 
 					stepsState[stepIndex] = errorState;

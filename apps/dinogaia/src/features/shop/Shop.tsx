@@ -2,7 +2,7 @@ import type { Item, ItemType } from "@0xbuidlerhq/dinogaia.subgraph";
 import { Separator } from "@0xbuidlerhq/ui/shadcn/components/separator";
 import { cn } from "@0xbuidlerhq/ui/shadcn/lib/utils";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
-import { H1_0, H1_2 } from "@0xbuidlerhq/ui/system/base/typography";
+import { H1, H1_0, H1_2, H4 } from "@0xbuidlerhq/ui/system/base/typography";
 import { ButtonBase } from "@0xbuidlerhq/ui/system/buttons/ButtonBase";
 import { Collapsible } from "@components/layout/Collapsible";
 import { ShopItem } from "@features/shop/ShopItem";
@@ -66,18 +66,30 @@ const ShopView = (props: ShopViewProps) => {
 	const itemTypeEntries = Object.entries(itemsByType);
 
 	return (
-		<Box className="flex flex-col gap-4">
-			{itemTypeEntries.map(([key, value], index) => {
-				const isLastItem = index === itemTypeEntries.length - 1;
+		<Box className="flex flex-col gap-1">
+			<Box className="h-0.5 bg-muted" />
 
-				return (
-					<Fragment key={key}>
-						<ShopItemTypeView itemTypeLabel={ItemTypeNameByEnumId[Number(key)]} items={value} />
+			<Box className="flex items-center justify-between">
+				<H1>/</H1>
+				<H4 className="font-black text-accent-foreground">SHOP</H4>
+				<H1>/</H1>
+			</Box>
 
-						{!isLastItem && <Separator className="self-stretch" />}
-					</Fragment>
-				);
-			})}
+			<Box className="h-0.5 bg-muted" />
+
+			<Box className="flex flex-col gap-4">
+				{itemTypeEntries.map(([key, value], index) => {
+					const isLastItem = index === itemTypeEntries.length - 1;
+
+					return (
+						<Fragment key={key}>
+							<ShopItemTypeView itemTypeLabel={ItemTypeNameByEnumId[Number(key)]} items={value} />
+
+							{!isLastItem && <Separator className="self-stretch" />}
+						</Fragment>
+					);
+				})}
+			</Box>
 		</Box>
 	);
 };

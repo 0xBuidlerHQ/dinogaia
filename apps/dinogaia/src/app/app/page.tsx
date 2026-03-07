@@ -15,8 +15,9 @@ import {
 	IconFountain,
 	IconMeat,
 } from "@tabler/icons-react";
+import type React from "react";
 import type { PropsWithChildren } from "react";
-import React from "react";
+import { useEffect } from "react";
 import { type DinoAge, timestampToAge } from "../../utils";
 
 type DinoStatsProps = {
@@ -230,8 +231,55 @@ const DinoStats = (props: DinoStatsProps) => {
 
 const Relay = Relays.buyShopItem;
 
-const Test = () => {
+const StepPromiseToast = ({ stepIndex }: { stepIndex: number }) => {
 	const { stepsState, stepsBase } = Relay.useRelay();
+	const stepState = stepsState[stepIndex];
+	const stepBase = stepsBase[stepIndex];
+
+	if (!stepState) return null;
+
+	const statusLabel: Record<string, string> = {
+		idle: "Waiting",
+		loading: "Processing",
+		success: "Done",
+		error: "Failed",
+		disabled: "Disabled",
+	};
+
+	const details =
+		stepState.status === "loading"
+			? "Waiting for the relay to finish."
+			: stepState.status === "success"
+				? "Step completed successfully."
+				: stepState.status === "error"
+					? "There was an error in this step."
+					: stepState.status === "idle"
+						? "Queued for execution."
+						: "Step is currently disabled.";
+
+	return (
+		<Box className="flex flex-col gap-1 rounded-xs border border-[#a3e635]/25 bg-muted p-3 shadow-lg">
+			<Box className="flex items-center justify-between">
+				<H6 className="text-[#a3e635] tracking-tighter">
+					{stepBase?.id ?? `Step ${stepIndex + 1}`}
+				</H6>
+				<Box className="text-[0.6rem] uppercase tracking-[0.3em] text-[#a3e635]/80">
+					{statusLabel[stepState.status] ?? stepState.status}
+				</Box>
+			</Box>
+			<Box className="text-[0.85rem] text-muted-foreground">{details}</Box>
+		</Box>
+	);
+};
+
+const Test = () => {
+	const { stepsState, stepsBase, activeRelayStepState } = Relay.useRelay();
+
+	useEffect(() => {
+		if (!activeRelayStepState?.promise) return;
+
+		toastPrimitive.custom(() => <StepPromiseToast stepIndex={activeRelayStepState.index} />);
+	}, [activeRelayStepState?.promise]);
 
 	return (
 		<Box>
@@ -248,22 +296,6 @@ const Test = () => {
 	);
 };
 
-const PromiseToast = ({ promise }: { promise: Promise<unknown> }) => {
-	const [status, setStatus] = React.useState<"pending" | "success" | "error">("pending");
-
-	React.useEffect(() => {
-		promise.then(() => setStatus("success")).catch(() => setStatus("error"));
-	}, [promise]);
-
-	return (
-		<Box className="bg-muted w-75">
-			{status === "pending" && <Box>Processing…</Box>}
-			{status === "success" && <Box>✅ Done</Box>}
-			{status === "error" && <Box>⚠️ Something failed.</Box>}
-		</Box>
-	);
-};
-
 const Page = () => {
 	const { currentDino } = useDinogaia();
 
@@ -274,10 +306,7 @@ const Page = () => {
 			id: "name",
 			fn: async () => {
 				try {
-					const pro = new Promise((resolve) => setTimeout(resolve, 2500));
-
-					toastPrimitive(<PromiseToast promise={pro} />);
-
+					await new Promise((resolve) => setTimeout(resolve, 2500));
 					return Relay.StepSuccess({});
 				} catch (_) {
 					throw Relay.StepError({});
