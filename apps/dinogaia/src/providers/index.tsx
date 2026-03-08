@@ -1,3 +1,4 @@
+import { RelayProvider } from "@config/relay";
 import { BlockchainProvider } from "@providers/blockchain";
 import { DinogaiaProvider } from "@providers/dinogaia";
 import { PonderProvider } from "@providers/ponder";
@@ -23,7 +24,9 @@ const LogicProviders = ({ children }: PropsWithChildren) => {
 			<QueryProvider>
 				<BlockchainProvider>
 					<Web3Provider>
-						<DinogaiaProvider>{children}</DinogaiaProvider>
+						<DinogaiaProvider>
+							<RelayProvider>{children}</RelayProvider>
+						</DinogaiaProvider>
 					</Web3Provider>
 				</BlockchainProvider>
 			</QueryProvider>

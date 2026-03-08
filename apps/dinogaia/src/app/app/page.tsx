@@ -1,12 +1,10 @@
 "use client";
 
-import { toastPrimitive } from "@0xbuidlerhq/ui/shadcn/components/toaster";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { H1, H6 } from "@0xbuidlerhq/ui/system/base/typography";
 import { ButtonBase } from "@0xbuidlerhq/ui/system/buttons/ButtonBase";
 import { withAuth } from "@components/AuthComponent";
 import ProgressBar from "@components/ProgressBar";
-import { Relays } from "@config/relay";
 import { useDinogaia } from "@providers/dinogaia";
 import {
 	IconBow,
@@ -17,7 +15,6 @@ import {
 } from "@tabler/icons-react";
 import type React from "react";
 import type { PropsWithChildren } from "react";
-import { useEffect } from "react";
 import { type DinoAge, timestampToAge } from "../../utils";
 
 type DinoStatsProps = {
@@ -229,117 +226,11 @@ const DinoStats = (props: DinoStatsProps) => {
 	);
 };
 
-const Relay = Relays.buyShopItem;
-
-const StepPromiseToast = ({ stepIndex }: { stepIndex: number }) => {
-	const { stepsState, stepsBase } = Relay.useRelay();
-	const stepState = stepsState[stepIndex];
-	const stepBase = stepsBase[stepIndex];
-
-	if (!stepState) return null;
-
-	const statusLabel: Record<string, string> = {
-		idle: "Waiting",
-		loading: "Processing",
-		success: "Done",
-		error: "Failed",
-		disabled: "Disabled",
-	};
-
-	const details =
-		stepState.status === "loading"
-			? "Waiting for the relay to finish."
-			: stepState.status === "success"
-				? "Step completed successfully."
-				: stepState.status === "error"
-					? "There was an error in this step."
-					: stepState.status === "idle"
-						? "Queued for execution."
-						: "Step is currently disabled.";
-
-	return (
-		<Box className="flex flex-col gap-1 rounded-xs border border-[#a3e635]/25 bg-muted p-3 shadow-lg">
-			<Box className="flex items-center justify-between">
-				<H6 className="text-[#a3e635] tracking-tighter">
-					{stepBase?.id ?? `Step ${stepIndex + 1}`}
-				</H6>
-				<Box className="text-[0.6rem] uppercase tracking-[0.3em] text-[#a3e635]/80">
-					{statusLabel[stepState.status] ?? stepState.status}
-				</Box>
-			</Box>
-			<Box className="text-[0.85rem] text-muted-foreground">{details}</Box>
-		</Box>
-	);
-};
-
-const Test = () => {
-	const { stepsState, stepsBase, activeRelayStepState } = Relay.useRelay();
-
-	useEffect(() => {
-		if (!activeRelayStepState?.promise) return;
-
-		toastPrimitive.custom(() => <StepPromiseToast stepIndex={activeRelayStepState.index} />);
-	}, [activeRelayStepState?.promise]);
-
-	return (
-		<Box>
-			{stepsState.map((stepState) => {
-				const stepBase = stepsBase[stepState.index];
-
-				return (
-					<Box key={stepState.index}>
-						{stepBase.id}: {stepState.status}
-					</Box>
-				);
-			})}
-		</Box>
-	);
-};
-
 const Page = () => {
 	const { currentDino } = useDinogaia();
 
-	const { initialize, start } = Relay.useRelay();
-
-	const processSteps = [
-		Relay.createRelayStep({
-			id: "name",
-			fn: async () => {
-				try {
-					await new Promise((resolve) => setTimeout(resolve, 2500));
-					return Relay.StepSuccess({});
-				} catch (_) {
-					throw Relay.StepError({});
-				}
-			},
-		}),
-
-		Relay.createRelayStep({
-			id: "name2",
-			fn: async () => {
-				try {
-					await new Promise((resolve) => setTimeout(resolve, 2500));
-					return Relay.StepSuccess({});
-				} catch (_) {
-					throw Relay.StepError({});
-				}
-			},
-		}),
-	];
 	return (
 		<Box>
-			<Test />
-			<Box>
-				<ButtonBase
-					onClick={() => {
-						initialize(processSteps);
-						start();
-					}}
-				>
-					Add
-				</ButtonBase>
-			</Box>
-
 			<DinoStats
 				name={currentDino?.data?.genesis.name!}
 				age={timestampToAge(currentDino?.data?.genesis.birthTimestamp ?? 0n)}

@@ -40,7 +40,7 @@ const useBuyItem = (props: useBuyItemProps) => {
 			id: "approve-buy",
 			fn: async () => {
 				try {
-					await sendCalls.mutateAsync({
+					await sendCalls.writeContractAsync({
 						address: activeDinoAccount!,
 						args: [
 							[
@@ -59,7 +59,8 @@ const useBuyItem = (props: useBuyItemProps) => {
 					});
 
 					return Relay.StepSuccess({});
-				} catch (_) {
+				} catch (e) {
+					console.log(e);
 					throw Relay.StepError({});
 				}
 			},
