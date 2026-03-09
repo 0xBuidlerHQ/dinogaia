@@ -1,18 +1,10 @@
 "use client";
 
-import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { withAuth } from "@components/AuthComponent";
-import { JobView } from "@features/jobs/Job";
-import { useDinogaia } from "@providers/dinogaia";
+import { JobsPage } from "@features/jobs/Page";
 
 const Page = () => {
-	const { jobs } = useDinogaia();
-
-	return (
-		<Box>
-			<JobView jobs={jobs} />
-		</Box>
-	);
+	return <JobsPage />;
 };
 
 export default withAuth(Page);

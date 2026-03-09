@@ -56,6 +56,17 @@ contract JobsModule is ModuleBase {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
+     * @dev Returns whether `_dinoId` already claimed salary for the current day.
+     */
+    function hasClaimedToday(uint256 _dinoId) public view returns (bool) {
+        uint256 dayStart = block.timestamp - (block.timestamp % DAY);
+        return lastClaimDayStart[_dinoId] == dayStart;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
      * @dev
      */
     function switchJob(uint256 _dinoId, uint256 _jobId) external onlyDinoAccount(_dinoId) {
@@ -78,8 +89,8 @@ contract JobsModule is ModuleBase {
         uint256 jobId = jobOf[_dinoId];
         if (!jobsRegistry.jobExists(jobId)) revert InvalidJobId();
 
+        if (hasClaimedToday(_dinoId)) revert AlreadyClaimed();
         uint256 dayStart = block.timestamp - (block.timestamp % DAY);
-        if (lastClaimDayStart[_dinoId] == dayStart) revert AlreadyClaimed();
         lastClaimDayStart[_dinoId] = dayStart;
 
         JobsRegistry.Job memory job = jobsRegistry.getJob(jobId);

@@ -5,7 +5,7 @@ import {
 	shopModuleAddress,
 	useWriteDinoAccountExecuteBatch,
 } from "@0xbuidlerhq/dinogaia.contracts";
-import type { Item } from "@0xbuidlerhq/dinogaia.subgraph";
+import type { SubgraphTypes } from "@0xbuidlerhq/dinogaia.subgraph";
 import { Relays } from "@config/relay";
 import { useStore } from "@stores/useStore";
 import { encodeFunctionData } from "viem";
@@ -13,9 +13,9 @@ import { encodeFunctionData } from "viem";
 const Relay = Relays.buyShopItem;
 
 type useBuyItemProps = {
-	item: Item;
+	item: SubgraphTypes.Item;
 };
-const useBuyItem = (props: useBuyItemProps) => {
+const useShopBuyItem = (props: useBuyItemProps) => {
 	const relay = Relay.useRelay();
 
 	const AMOUNT = 1n;
@@ -75,4 +75,4 @@ const useBuyItem = (props: useBuyItemProps) => {
 	return { execute, sendCalls };
 };
 
-export { useBuyItem };
+export { useShopBuyItem };

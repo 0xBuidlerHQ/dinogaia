@@ -1,7 +1,6 @@
 import {
 	jobsModuleAbi,
 	jobsModuleAddress,
-	useReadJobsRegistryGetAllJobs,
 	useWriteDinoAccountExecuteBatch,
 } from "@0xbuidlerhq/dinogaia.contracts";
 import { Relays } from "@config/relay";
@@ -10,7 +9,7 @@ import { encodeFunctionData } from "viem";
 
 const Relay = Relays.claimSalary;
 
-const useClaimSalary = () => {
+const useJobsClaimSalary = () => {
 	const relay = Relay.useRelay();
 
 	const { activeDinoAccount, activeDinoId } = useStore();
@@ -57,10 +56,4 @@ const useClaimSalary = () => {
 	return { execute, sendCalls };
 };
 
-const useJobs = () => {
-	const jobs = useReadJobsRegistryGetAllJobs({});
-
-	return { jobs };
-};
-
-export { useJobs, useClaimSalary };
+export { useJobsClaimSalary };

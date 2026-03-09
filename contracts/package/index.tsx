@@ -7200,6 +7200,13 @@ export const jobsModuleAbi = [
   },
   {
     type: 'function',
+    inputs: [{ name: '_dinoId', internalType: 'uint256', type: 'uint256' }],
+    name: 'hasClaimedToday',
+    outputs: [{ name: '', internalType: 'bool', type: 'bool' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
     inputs: [
       { name: 'role', internalType: 'bytes32', type: 'bytes32' },
       { name: 'account', internalType: 'address', type: 'address' },
@@ -7404,7 +7411,7 @@ export const jobsModuleAbi = [
  *
  */
 export const jobsModuleAddress = {
-  31337: '0x1a1c85666B780F179998e7ab5b1EAC0337acbEbf',
+  31337: '0xFa0642a07Cf605a0A27b01d7a834d93CD9Db21fa',
 } as const
 
 /**
@@ -15017,6 +15024,18 @@ export const useReadJobsModuleGetRoleAdmin =
     abi: jobsModuleAbi,
     address: jobsModuleAddress,
     functionName: 'getRoleAdmin',
+  })
+
+/**
+ * Wraps __{@link useReadContract}__ with `abi` set to __{@link jobsModuleAbi}__ and `functionName` set to `"hasClaimedToday"`
+ *
+ *
+ */
+export const useReadJobsModuleHasClaimedToday =
+  /*#__PURE__*/ createUseReadContract({
+    abi: jobsModuleAbi,
+    address: jobsModuleAddress,
+    functionName: 'hasClaimedToday',
   })
 
 /**

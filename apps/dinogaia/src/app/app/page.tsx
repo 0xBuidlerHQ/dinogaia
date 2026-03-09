@@ -49,13 +49,13 @@ type StatItemProps = PropsWithChildren & {
 };
 const StatItem = (props: StatItemProps) => {
 	return (
-		<Box className="h-full flex flex-col gap-4 p-4 group hover:bg-olive-600/50 border border-transparent hover:border hover:border-[#a3e635]/25">
+		<Box className="h-full flex flex-col gap-4 p-4 group hover:bg-olive-600/50 border border-transparent hover:border hover:border-brand/25">
 			<Box className="flex items-center gap-1 text-muted-foreground">
-				<H6 className="mr-0.5 group-hover:mr-px transition-all duration-300 tracking-[-2px] group-hover:text-[#a3e635]">
+				<H6 className="mr-0.5 group-hover:mr-px transition-all duration-300 tracking-[-2px] group-hover:text-brand">
 					{"//"}
 				</H6>
 
-				<H6 className="uppercase font-black transition-all duration-300 group-hover:text-[#a3e635] tracking-tighter">
+				<H6 className="uppercase font-black transition-all duration-300 group-hover:text-brand tracking-tighter">
 					{props.title}
 				</H6>
 
@@ -90,7 +90,7 @@ const DinoStats = (props: DinoStatsProps) => {
 		<Box className="grid grid-cols-12 items-stretch *:border *:border-muted">
 			<Box className="col-span-6">
 				<StatItem title="Name">
-					<H1 className="text-[#a3e635]">{props.name}</H1>
+					<H1 className="text-brand">{props.name}</H1>
 				</StatItem>
 			</Box>
 
@@ -106,7 +106,7 @@ const DinoStats = (props: DinoStatsProps) => {
 				<StatItem
 					title="Job"
 					addon={
-						<Box className="text-[#a3e635] tracking-tighter">
+						<Box className="text-brand tracking-tighter">
 							<H6>100 Emerald /day</H6>
 						</Box>
 					}

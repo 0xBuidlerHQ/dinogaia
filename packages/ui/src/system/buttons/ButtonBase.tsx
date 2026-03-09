@@ -15,18 +15,16 @@ interface ButtonBaseProps extends React.HTMLAttributes<HTMLButtonElement> {
 const ButtonBase = (props: ButtonBaseProps) => {
 	const { children, onClick, href, className, external, disabled } = props;
 
-	if (disabled)
-		return (
-			<div className={cn("group relative opacity-25 pointer-events-none", className)}>
-				{children}
-			</div>
-		);
-
 	if (onClick)
 		return (
 			<button
 				type="button"
-				className={cn("group relative hover:cursor-pointer", className)}
+				className={cn(
+					"group relative hover:cursor-pointer",
+					disabled && "opacity-10",
+					className,
+					disabled && "pointer-events-none!",
+				)}
 				onClick={onClick}
 			>
 				{children}
@@ -38,8 +36,13 @@ const ButtonBase = (props: ButtonBaseProps) => {
 			//
 			target={external ? "_blank" : undefined}
 			href={href ?? "https://google.com"}
+			className={cn("", disabled && "pointer-events-none!")}
 		>
-			<Box className={cn("group relative hover:cursor-pointer", className)}>{children}</Box>
+			<Box
+				className={cn("group relative hover:cursor-pointer", disabled && "opacity-10", className)}
+			>
+				{children}
+			</Box>
 		</Link>
 	);
 };

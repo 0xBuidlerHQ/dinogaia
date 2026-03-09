@@ -44,7 +44,7 @@ const QuickViewActions = () => {
 			<Box className="flex items-center gap-4 w-full">
 				<Box className="flex gap-2 items-center">
 					<QuickViewActionsItem title="Name" className="px-2">
-						<H3 className="font-tronica-mono text-[#a3e635]">{currentDino.data?.genesis.name}</H3>
+						<H3 className="font-tronica-mono text-brand">{currentDino.data?.genesis.name}</H3>
 					</QuickViewActionsItem>
 
 					<Seperator />

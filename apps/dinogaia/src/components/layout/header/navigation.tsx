@@ -88,15 +88,15 @@ const Navigation = () => {
 								href={item.href}
 								disabled={item.disabled}
 								className={cn(
-									"group h-full flex border-r border-muted hover:bg-[#a3e635]/2 px-2 gap-2 items-center border-b border-b-transparent transition-all",
-									isCurrentPage && "border-b-[#a3e635] bg-[#a3e635]/5 hover:bg-[#a3e635]/5",
+									"group h-full flex border-r border-muted hover:bg-brand/2 px-2 gap-2 items-center border-b border-b-transparent transition-all",
+									isCurrentPage && "border-b-brand bg-brand/5 hover:bg-brand/5",
 								)}
 							>
 								<Box className="h-full flex items-center">
 									<H5
 										className={cn(
-											"font-tronica-mono group-hover:font-black group-hover:text-[#a3e635] transition-all whitespace-nowrap",
-											isCurrentPage && "text-[#a3e635] font-black",
+											"font-tronica-mono group-hover:font-black group-hover:text-brand transition-all whitespace-nowrap",
+											isCurrentPage && "text-brand font-black",
 										)}
 									>
 										{item.title}

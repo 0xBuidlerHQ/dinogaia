@@ -1,19 +1,19 @@
 "use client";
 
-import type { Item } from "@0xbuidlerhq/dinogaia.subgraph";
+import type { SubgraphTypes } from "@0xbuidlerhq/dinogaia.subgraph";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { H4, H5, H7 } from "@0xbuidlerhq/ui/system/base/typography";
 import { ButtonBase } from "@0xbuidlerhq/ui/system/buttons/ButtonBase";
-import { useBuyItem } from "@features/shop/useShop";
-import { images } from "../../assets/assets";
-import { EthereumLogo } from "../../assets/emerald";
-import { ItemEffectKindNameByEnumId } from "../../utils";
+import { useShopBuyItem } from "@features/shop/hooks/useShopBuyItem";
+import { images } from "../../../assets/assets";
+import { EthereumLogo } from "../../../assets/emerald";
+import { ItemEffectKindNameByEnumId } from "../../../utils";
 
 type Props = {
-	item: Item;
+	item: SubgraphTypes.Item;
 };
 
-const ItemImage = (props: Props) => {
+const ShopImage = (props: Props) => {
 	const { item } = props;
 
 	const image = images[item.name];
@@ -25,8 +25,8 @@ const ItemImage = (props: Props) => {
 	);
 };
 
-const BuyShopItemButton = (props: Props) => {
-	const { execute } = useBuyItem(props);
+const ShopBuyButton = (props: Props) => {
+	const { execute } = useShopBuyItem(props);
 
 	return (
 		<ButtonBase className="bg-accent/50 rounded px-2" onClick={execute}>
@@ -41,18 +41,18 @@ const ShopItem = (props: Props) => {
 	return (
 		<Box key={item.name} className="border border-muted">
 			<Box className="aspect-square h-full w-full">
-				<Box className="flex flex-col h-full">
+				<Box className="flex flex-col h-full bg-background/25">
 					<Box className="flex justify-between border-muted border-b p-1 bg-accent/25">
 						<Box>
 							<H5 className="capitalize text-white">{item.name}</H5>
 						</Box>
 
-						<BuyShopItemButton item={item} />
+						<ShopBuyButton item={item} />
 					</Box>
 
 					<Box className="grow relative min-h-0">
 						<Box className="h-full w-full">
-							<ItemImage item={item} />
+							<ShopImage item={item} />
 						</Box>
 					</Box>
 

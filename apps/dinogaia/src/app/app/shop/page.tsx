@@ -1,18 +1,10 @@
 "use client";
 
-import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { withAuth } from "@components/AuthComponent";
-import { ShopView } from "@features/shop/Shop";
-import { useDinogaia } from "@providers/dinogaia";
+import { ShopPage } from "@features/shop/Page";
 
 const Page = () => {
-	const { items } = useDinogaia();
-
-	return (
-		<Box>
-			<ShopView items={items} />
-		</Box>
-	);
+	return <ShopPage />;
 };
 
 export default withAuth(Page);

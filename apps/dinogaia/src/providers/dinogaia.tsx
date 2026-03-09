@@ -3,6 +3,7 @@
 import {
 	useReadDinoGetDino,
 	useReadEmeraldErc20BalanceOf,
+	useReadJobsModuleHasClaimedToday,
 	useReadJobsModuleJobOf,
 } from "@0xbuidlerhq/dinogaia.contracts";
 import { SubgraphQueries } from "@api/subgraph";
@@ -71,10 +72,16 @@ const useDinogaiaPrimitive = () => {
 		query: { enabled },
 	});
 
+	const hasClaimedToday = useReadJobsModuleHasClaimedToday({
+		args: [currentDinoContext?.dinoId!],
+		query: { enabled },
+	});
+
 	const currentDino = {
 		raw: dinoData.data,
 		data: dinoData.data,
 		job: jobs.find((item) => item.jobId === dinoJobId.data),
+		hasClaimedToday: hasClaimedToday.data,
 		species: species.find((item) => item.speciesId === dinoData.data?.genesis.speciesId),
 		emeraldBalance: dinoEmeraldBalance.data,
 	};

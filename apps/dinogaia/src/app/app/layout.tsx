@@ -42,7 +42,7 @@ const Layout = ({ children }: PropsWithChildren) => {
 							</Box>
 						</Box>
 
-						<Box className="col-span-5 min-h-screen flex flex-col">
+						<Box className="col-span-5 min-h-screen flex flex-col bg-olive-900/25">
 							<Box className="grow p-2 border border-muted">{children}</Box>
 						</Box>
 					</Box>

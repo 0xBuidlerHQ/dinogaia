@@ -213,7 +213,7 @@ const images: Record<string, string> = {
 } as const;
 
 const jobImages: Record<string, string> = {
-	unemployed: apple.src,
+	unemployed: unemployed.src,
 	swindler: unemployed.src,
 	worker: unemployed.src,
 	thief: unemployed.src,

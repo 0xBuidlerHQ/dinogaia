@@ -1,0 +1,3 @@
+const CavePage = () => {};
+
+export { CavePage };
