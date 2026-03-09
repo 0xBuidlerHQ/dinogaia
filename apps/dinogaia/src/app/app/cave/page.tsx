@@ -1,10 +1,10 @@
 "use client";
 
-import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { withAuth } from "@components/AuthComponent";
+import { CavePage } from "@features/cave/Page";
 
 const Page = () => {
-	return <Box>To do.</Box>;
+	return <CavePage />;
 };
 
 export default withAuth(Page);

@@ -1,6 +1,7 @@
 "use client";
 
 import {
+	useReadCaveStateModuleGetCave,
 	useReadDinoGetDino,
 	useReadEmeraldErc20BalanceOf,
 	useReadJobsModuleHasClaimedToday,
@@ -77,6 +78,11 @@ const useDinogaiaPrimitive = () => {
 		query: { enabled },
 	});
 
+	const dinoCaveState = useReadCaveStateModuleGetCave({
+		args: [currentDinoContext?.dinoId!],
+		query: { enabled },
+	});
+
 	const currentDino = {
 		raw: dinoData.data,
 		data: dinoData.data,
@@ -84,6 +90,7 @@ const useDinogaiaPrimitive = () => {
 		hasClaimedToday: hasClaimedToday.data,
 		species: species.find((item) => item.speciesId === dinoData.data?.genesis.speciesId),
 		emeraldBalance: dinoEmeraldBalance.data,
+		caveState: dinoCaveState.data,
 	};
 
 	return {

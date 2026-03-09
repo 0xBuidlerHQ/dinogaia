@@ -1,6 +1,6 @@
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { H4 } from "@0xbuidlerhq/ui/system/base/typography";
-import { ShopDescription } from "@features/shop/components/ShopDescription";
+import { CaveDescription } from "@features/cave/components/CaveDescription";
 
 const CaveHeader = () => {
 	return (
@@ -11,7 +11,7 @@ const CaveHeader = () => {
 
 			<Box className="w-full h-0.5 bg-muted" />
 
-			<ShopDescription />
+			<CaveDescription />
 
 			<Box className="w-full h-0.5 bg-muted" />
 		</Box>

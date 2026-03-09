@@ -10,7 +10,7 @@ import {ModuleBase} from "@modules/ModuleBase.sol";
 /**
  * @dev
  */
-contract CaveBase is ModuleBase {
+abstract contract CaveBase is ModuleBase {
     /**
      * @dev Immutables.
      */

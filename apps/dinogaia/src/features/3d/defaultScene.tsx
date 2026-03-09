@@ -1,4 +1,4 @@
-import { OrbitControls } from "@react-three/drei";
+import { AsciiRenderer, OrbitControls } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import type { Mesh } from "three";
@@ -33,6 +33,7 @@ const GroundPlane = () => (
 
 const DefaultScene = () => (
 	<Canvas shadows camera={{ position: [2.25, 2.25, 4], fov: 50 }}>
+		<color attach="background" args={["black"]} />
 		<ambientLight intensity={0.5} />
 		<directionalLight
 			castShadow
@@ -48,6 +49,7 @@ const DefaultScene = () => (
 		<RotatingBox />
 		<GroundPlane />
 		<OrbitControls makeDefault enablePan enableZoom={false} enableRotate />
+		<AsciiRenderer bgColor="transparent" />
 	</Canvas>
 );
 
