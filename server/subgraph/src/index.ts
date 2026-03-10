@@ -64,6 +64,6 @@ ponder.on("ItemsSet0:ItemCreated", async ({ event, context }) => {
 		usage: event.args.meta.usage,
 		requirements: event.args.meta.requirements,
 		metadata: event.args.meta.metadata,
-		effects: event.args.meta.effects,
+		effects: [...event.args.meta.effects],
 	});
 });

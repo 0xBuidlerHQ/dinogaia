@@ -1,13 +1,14 @@
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
 import { CaveHeader } from "@features/cave/components/CaveHeader";
-import { CaveState } from "@features/cave/components/CaveState";
+import { CaveItems } from "@features/cave/components/CaveItems";
 
 const CavePage = () => {
 	return (
 		<Box>
 			<CaveHeader />
 
-			<CaveState />
+			{/* <CaveState /> */}
+			<CaveItems />
 		</Box>
 	);
 };
