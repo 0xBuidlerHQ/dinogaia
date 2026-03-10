@@ -1,7 +1,8 @@
 "use client";
 
 import {
-	useReadCaveStateModuleGetCave,
+	caveModuleAddress,
+	useReadCaveHabitatModuleGetCave,
 	useReadDinoGetDino,
 	useReadEmeraldErc20BalanceOf,
 	useReadJobsModuleHasClaimedToday,
@@ -78,10 +79,13 @@ const useDinogaiaPrimitive = () => {
 		query: { enabled },
 	});
 
-	const dinoCaveState = useReadCaveStateModuleGetCave({
+	const dinoCaveState = useReadCaveHabitatModuleGetCave({
 		args: [currentDinoContext?.dinoId!],
+		address: caveModuleAddress["31337"],
 		query: { enabled },
 	});
+
+	console.log(dinoCaveState.data);
 
 	const currentDino = {
 		raw: dinoData.data,

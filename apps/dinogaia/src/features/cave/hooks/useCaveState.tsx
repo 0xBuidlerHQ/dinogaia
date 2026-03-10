@@ -3,7 +3,9 @@
 import { useDinogaia } from "@providers/dinogaia";
 
 const useCaveState = () => {
-	const {} = useDinogaia();
+	const { currentDino } = useDinogaia();
+
+	return { caveState: currentDino.caveState };
 };
 
 export { useCaveState };
