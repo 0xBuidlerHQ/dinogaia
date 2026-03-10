@@ -10,14 +10,16 @@ import React, { type PropsWithChildren } from "react";
 
 const buyShopItem = createRelay<{}, {}, {}>("relay-buyShopItem");
 const claimSalary = createRelay<{}, {}, {}>("relay-claimSalary");
+const consumeCaveItem = createRelay<{}, {}, {}>("relay-consumeCaveItem");
 
 const Relays = {
 	buyShopItem,
 	claimSalary,
+	consumeCaveItem,
 };
 
 type RelayComponentProps = {
-	relay: typeof buyShopItem | typeof claimSalary;
+	relay: typeof buyShopItem | typeof claimSalary | typeof consumeCaveItem;
 };
 const RelayComponent = (props: RelayComponentProps) => {
 	const { activeRelayStepState } = props.relay.useRelay();
@@ -116,6 +118,7 @@ const RelayProvider = (props: PropsWithChildren) => {
 		<>
 			<RelayComponent relay={Relays.buyShopItem} />
 			<RelayComponent relay={Relays.claimSalary} />
+			<RelayComponent relay={Relays.consumeCaveItem} />
 
 			{props.children}
 		</>

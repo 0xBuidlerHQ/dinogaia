@@ -1,7 +1,7 @@
 import type { SubgraphTypes } from "@0xbuidlerhq/dinogaia.subgraph";
 import { cn } from "@0xbuidlerhq/ui/shadcn/lib/utils";
 import { Box } from "@0xbuidlerhq/ui/system/base/box";
-import { H1_0, H1_2 } from "@0xbuidlerhq/ui/system/base/typography";
+import { H1, H1_2 } from "@0xbuidlerhq/ui/system/base/typography";
 import { ButtonBase } from "@0xbuidlerhq/ui/system/buttons/ButtonBase";
 import { Collapsible } from "@components/layout/Collapsible";
 import { ShopItem } from "@features/shop/components/ShopItem";
@@ -16,15 +16,15 @@ const ShopItemTypeGroup = (props: ShopItemTypeGroupProps) => {
 
 	return (
 		<Box className="flex flex-col gap-4">
-			<Box className="flex justify-between items-center">
-				<H1_0 className="font-black text-brand">{props.itemTypeLabel}</H1_0>
+			<ButtonBase onClick={() => setOpen(!open)}>
+				<Box className="flex justify-between items-center">
+					<H1 className="font-black text-brand">{props.itemTypeLabel}</H1>
 
-				<ButtonBase onClick={() => setOpen(!open)}>
 					<H1_2 className={cn("text-brand rotate-90 transition-all mr-1", open && "-rotate-45")}>
 						{">"}
 					</H1_2>
-				</ButtonBase>
-			</Box>
+				</Box>
+			</ButtonBase>
 
 			<Collapsible open={open}>
 				<Box className="grid grid-cols-12 gap-2">

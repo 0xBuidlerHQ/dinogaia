@@ -35,14 +35,14 @@ const Layout = ({ children }: PropsWithChildren) => {
 		<Loader>
 			<Box className="min-h-screen">
 				<Container className="h-full">
-					<Box className="grid grid-cols-12 min-h-screen ">
-						<Box className="col-span-7 border border-muted">
+					<Box className="grid grid-cols-20 min-h-screen ">
+						<Box className="col-span-11 border border-muted">
 							<Box className="sticky top-0 h-screen">
 								<DinoScene />
 							</Box>
 						</Box>
 
-						<Box className="col-span-5 min-h-screen flex flex-col bg-olive-900/25">
+						<Box className="col-span-9 min-h-screen flex flex-col bg-olive-900/25">
 							<Box className="grow p-2 border border-muted">{children}</Box>
 						</Box>
 					</Box>

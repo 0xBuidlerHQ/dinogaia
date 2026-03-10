@@ -1,12 +1,12 @@
 "use client";
 
-import { useMemo } from "react";
+import { itemsSet0Abi, itemsSet0Address } from "@0xbuidlerhq/dinogaia.contracts";
 
 import type { SubgraphTypes } from "@0xbuidlerhq/dinogaia.subgraph";
-import { itemsSet0Abi, itemsSet0Address } from "@0xbuidlerhq/dinogaia.contracts";
 import { useDinogaia } from "@providers/dinogaia";
 import { useWeb3 } from "@providers/web3";
 import { useStore } from "@stores/useStore";
+import { useMemo } from "react";
 import { useReadContracts } from "wagmi";
 
 type ItemWithBalance = SubgraphTypes.Item & { balance: bigint };
